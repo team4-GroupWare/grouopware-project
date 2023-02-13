@@ -14,4 +14,6 @@ public class Approval {
 	private String status;
 	private boolean tempApproval;
 	private String type;
+	
+	
 }
