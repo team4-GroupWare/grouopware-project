@@ -8,6 +8,6 @@ public class EmailContent {
 	private String title;
 	private String content;
 	private int originEmailId;
-	private boolean important;
+	private boolean important; 
 	
 }
