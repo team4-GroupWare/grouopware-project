@@ -17,5 +17,6 @@ public class Vacation {
 	private String vacationFileContentType;
 	private Blob vacationFileData;
 	private String vacationFileSize;
+	private String vacationFileSize2;
 	
 }
