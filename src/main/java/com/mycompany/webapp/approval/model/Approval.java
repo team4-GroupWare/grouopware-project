@@ -15,5 +15,5 @@ public class Approval {
 	private boolean tempApproval;
 	private String type;
 	
-	
+	//깃 테스트
 }
