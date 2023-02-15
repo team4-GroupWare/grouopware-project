@@ -28,6 +28,15 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+
+  <!-- 텍스트 에디터 -->
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script> -->
+  <script src="../ckeditor/build/ckeditor.js"></script>
+  <style>
+     .ck-editor__editable { height: 400px; }
+     .ck-content { font-size: 12px; }
+  </style>
+  
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -112,10 +121,10 @@
       </li>
       
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#">
               <span>전체</span>
@@ -145,12 +154,12 @@
       </li><!-- End 결재 문서함 -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="myapproval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#" class="active">
+            <a href="#">
               <span>전체</span>
             </a>
           </li>
@@ -180,7 +189,7 @@
       </li><!-- End 열람함 -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
+        <a class="nav-link collapsed" href="#">
           <i class="bi bi-file-earmark"></i>
           <span>임시저장함</span>
         </a>
@@ -208,7 +217,7 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">General Form Elements</h5>
+              <h5 class="card-title">전자결재</h5>
 
               <!-- General Form Elements -->
               <form>
@@ -221,23 +230,22 @@
                 
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">결재 양식</label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <select class="form-select" aria-label="Default select example">
-                      <option selected="">Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option selected="">기안서</option>
+                      <option value="1">지출 품위서</option>
+                      <option value="2">사직서</option>
+                      <option value="3">휴일 근무 신청서</option>
+                      <option value="4">연장 근무 신청서</option>
+                      <option value="5">경조사 신청서(결혼)</option>
+                      <option value="6">경조사 신청서(사망)</option>
+                      <option value="7">경조사 신청서(출산)</option>
+                      <option value="8">외근/출장 신청서</option>
+                      <option value="9">근무 상태 변경 신청서</option>
                     </select>
                   </div>
                 </div>
                 
-                
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Number</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control">
-                  </div>
-                </div>
                 <div class="row mb-3">
                   <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                   <div class="col-sm-10">
@@ -250,33 +258,19 @@
                     <input type="date" class="form-control">
                   </div>
                 </div>
+                
                 <div class="row mb-3">
-                  <label for="inputTime" class="col-sm-2 col-form-label">Time</label>
-                  <div class="col-sm-10">
-                    <input type="time" class="form-control">
-                  </div>
-                </div>
-				<div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Multi Select</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" multiple="" aria-label="multiple select example">
-                      <option selected="">Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputColor" class="col-sm-2 col-form-label">Color Picker</label>
-                  <div class="col-sm-10">
-                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Textarea</label>
-                  <div class="col-sm-10">
-                    <textarea class="form-control" style="height: 100px"></textarea>
+                  
+                  <div class="col-sm-12">
+                    <textarea rows="5" cols="50" id="approval-text" name="approval-text" style="height:400px;"></textarea>
+                    
+                    <script>
+	                    ClassicEditor
+	                    .create(document.querySelector('#approval-text'))
+	                    .catch(error => {
+	                        console.error(error);
+	                    });
+					</script>
                   </div>
                 </div>
                 <fieldset class="row mb-3">
