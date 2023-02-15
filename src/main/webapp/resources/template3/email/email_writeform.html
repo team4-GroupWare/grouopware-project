@@ -8,6 +8,8 @@
   <title>엑사아이엔티 그룹웨어</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  
+  
 
   <!-- Favicons -->
   <link href="../assets/img/exaint_logo.png" rel="icon">
@@ -27,6 +29,17 @@
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
+  
+  <!-- 텍스트 에디터 -->
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script> -->
+  <script src="../../ckeditor/build/ckeditor.js"></script>
+ 
+  <style>
+     .ck-editor__editable { height: 400px; }
+     .ck-content { font-size: 12px; }
+  </style>
+  
+  
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
@@ -149,97 +162,82 @@
 
   </aside><!-- End Sidebar -->
 
-  <main id="main" class="main bg-white">
-
-    <section class="section dashboard">
+  <main id="main" class="main ">
+	<section class="section">
       <div class="row">
+        <div class="col-lg-12">
 
-        <!-- Left side columns -->
-        <!-- 
-        <div class="col-lg-2" style="border-right: 1px solid black;">
-          <div class="row">
-            
-            <div class="col-12">
-              <div>
-              	
-              </div>
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title"><b>메일 작성</b></h2>
+
+              <!-- General Form Elements -->
+              <form enctype="multipart/form-data">
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="receiver">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">제목</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title">
+                  </div>
+                </div>
+                
+                <fieldset class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">중요 메일</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="important">
+                      <label class="form-check-label" for="gridCheck1">
+                      	중요
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+                
+                <div class="row mb-3">
+                  <div class="insert">
+        
+                  <label class="btn btn-primary btn-sm mb-2" for="input-file">
+  						파일선택
+				</label>
+		        	<input id="input-file" type="file"  onchange="addFile(this);" style="display:none" multiple />
+			        <div class="file-list"></div>
+				</div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-sm-12">
+                    <textarea rows="5" cols="50" id="email-text" name="email-text" style="height:400px;"></textarea>
+                    
+                    <script>
+	                    ClassicEditor
+	                    .create(document.querySelector('#email-text'))
+	                    .catch(error => {
+	                        console.error(error);
+	                    });
+					</script>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-12" style="text-align:center">
+                    <button type="submit" class="btn btn-secondary">임시저장</button>
+                    <button type="submit" class="btn btn-primary">보내기</button>
+                  </div>
+                </div>
+
+              </form><!-- End General Form Elements -->
+
             </div>
           </div>
-        </div> 
-        -->
-        <!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        
-        <div class="col-lg-12">
-         	<h1><b>메일 작성</b></h1>
-       	  	<!-- Horizontal Form -->
-             <form>
-               <div class="row mb-3">
-                 <label for="inputEmail3" class="col-sm-2 col-form-label">Your Name</label>
-                 <div class="col-sm-10">
-                   <input type="text" class="form-control" id="inputText">
-                 </div>
-               </div>
-               <div class="row mb-3">
-                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                 <div class="col-sm-10">
-                   <input type="email" class="form-control" id="inputEmail">
-                 </div>
-               </div>
-               <div class="row mb-3">
-                 <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                 <div class="col-sm-10">
-                   <input type="password" class="form-control" id="inputPassword">
-                 </div>
-               </div>
-               <div class="row mb-3">
-                 <div class="col-sm-12">
-                   <textarea class="form-control" style="width:100%" id="inputContent"></textarea>
-                 </div>
-               </div>
-               <fieldset class="row mb-3">
-                 <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                 <div class="col-sm-10">
-                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                     <label class="form-check-label" for="gridRadios1">
-                       First radio
-                     </label>
-                   </div>
-                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                     <label class="form-check-label" for="gridRadios2">
-                       Second radio
-                     </label>
-                   </div>
-                   <div class="form-check disabled">
-                     <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-                     <label class="form-check-label" for="gridRadios3">
-                       Third disabled radio
-                     </label>
-                   </div>
-                 </div>
-               </fieldset>
-               <div class="row mb-3">
-                 <div class="col-sm-10 offset-sm-2">
-                   <div class="form-check">
-                     <input class="form-check-input" type="checkbox" id="gridCheck1">
-                     <label class="form-check-label" for="gridCheck1">
-                       Example checkbox
-                     </label>
-                   </div>
-                 </div>
-               </div>
-               <div class="text-center">
-                 <button type="submit" class="btn btn-primary">Submit</button>
-                 <button type="reset" class="btn btn-secondary">Reset</button>
-               </div>
-             </form><!-- End Horizontal Form -->
-	      </div>
-        </div><!-- End Right side columns -->
-
+        </div>
+      </div>
     </section>
+    
 
   </main><!-- End #main -->
 
@@ -260,6 +258,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="../assets/js/jquery.js"></script>
   <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/vendor/chart.js/chart.umd.js"></script>
@@ -268,6 +267,11 @@
   <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="../assets/vendor/php-email-form/validate.js"></script>
+  
+   <!-- 파일 다중 업로드  -->
+  <script src="../assets/js/file.js"></script>
+  
+  
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
