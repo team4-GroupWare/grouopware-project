@@ -629,8 +629,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #EEF2F4;
-  ;
+  background-color: #fff;
 }
 
 @media (max-width: 1199px) {
@@ -649,6 +648,13 @@ h6 {
   background-color: #aab7cf;
 }
 
+@media (min-width: 1200px) {
+
+  #main,
+  #footer {
+    margin-left: 300px;
+  }
+}
 
 @media (max-width: 1199px) {
   .toggle-sidebar .sidebar {
@@ -699,7 +705,7 @@ h6 {
   font-weight: 600;
   color: #4154f1;
   transition: 0.3;
-  background: #EEF2F4;
+  background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -712,7 +718,7 @@ h6 {
 
 .sidebar-nav .nav-link.collapsed {
   color: #012970;
-  background: #EEF2F4;
+  background: #fff;
 }
 
 .sidebar-nav .nav-link.collapsed i {
@@ -1234,27 +1240,10 @@ h6 {
   }
 }
 
+
 /*--------------------------------------------------------------
-# Footer
+#section calendar 
 --------------------------------------------------------------*/
-.footer {
-  padding: 20px 0;
-  font-size: 14px;
-  transition: all 0.3s;
-  border-top: 1px solid #cddfff;
-}
-
-.footer .copyright {
-  text-align: center;
-  color: #012970;
-}
-
-.footer .credits {
-  padding-top: 5px;
-  text-align: center;
-  font-size: 13px;
-  color: #012970;
-}
 
 .sec_cal {
     width: 360px;
@@ -1365,4 +1354,26 @@ h6 {
 
 .sec_cal .cal_wrap .day.disable {
     color: #ddd;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.footer {
+  padding: 20px 0;
+  font-size: 14px;
+  transition: all 0.3s;
+  border-top: 1px solid #cddfff;
+}
+
+.footer .copyright {
+  text-align: center;
+  color: #012970;
+}
+
+.footer .credits {
+  padding-top: 5px;
+  text-align: center;
+  font-size: 13px;
+  color: #012970;
 }
