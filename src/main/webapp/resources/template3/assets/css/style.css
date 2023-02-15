@@ -376,7 +376,10 @@ h6 {
 
 @media (min-width: 1200px) {
   .logo {
-    width: 280px;
+    width: 180px;
+  }
+  .menudropbar {
+  	width: 150px;
   }
 }
 

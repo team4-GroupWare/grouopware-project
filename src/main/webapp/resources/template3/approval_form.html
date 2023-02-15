@@ -28,6 +28,15 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+
+  <!-- 텍스트 에디터 -->
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script> -->
+  <script src="../ckeditor/build/ckeditor.js"></script>
+  <style>
+     .ck-editor__editable { height: 400px; }
+     .ck-content { font-size: 12px; }
+  </style>
+  
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -104,19 +113,18 @@
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="btn btn-primary" type="button" href="index.html" style="width:100%">
+	  <li class="nav-item">
+        <a class="btn btn-primary" type="button" href="#" style="width:100%">
           <i class="bi bi-pencil-square"></i> 
           <span>결재 작성</span>
         </a>
-      </li><!-- End Dashboard Nav -->
-
+      </li>
+      
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="#">
               <span>전체</span>
@@ -143,15 +151,15 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Charts Nav -->
+      </li><!-- End 결재 문서함 -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <ul id="myapproval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#" class="active">
+            <a href="#">
               <span>전체</span>
             </a>
           </li>
@@ -171,38 +179,37 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Icons Nav -->
+      </li><!-- End 내 문서함 -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-eye"></i>
           <span>열람함</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li><!-- End 열람함 -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-file-earmark"></i>
           <span>임시저장함</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li><!-- End 임시저장함 -->
 
     </ul>
 
-  </aside><!-- End Sidebar -->
+  </aside>
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>내 문서함</h1>
+      <h1>결재 작성</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">전자결재</a></li>
-          <li class="breadcrumb-item"><a href="index.html">내 문서함</a></li>
-          <li class="breadcrumb-item">전체</li>
+          <li class="breadcrumb-item"><a href="#">전자결재</a></li>
+          <li class="breadcrumb-item">결재 작성</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section">
       <div class="row">
@@ -210,123 +217,102 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"></h5>
+              <h5 class="card-title">전자결재</h5>
 
-              <!-- Table with hoverable rows -->
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">결재 양식</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">기안자/부서</th>
-                    <th scope="col">상태</th>
-                    <th scope="col">기안일시</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">10</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Table with hoverable rows -->
-              <div class="d-flex justify-content-center">
-				  <nav aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">«</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">»</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
-              </div>
+              <!-- General Form Elements -->
+              <form>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Text</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">결재 양식</label>
+                  <div class="col-sm-4">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected="">기안서</option>
+                      <option value="1">지출 품위서</option>
+                      <option value="2">사직서</option>
+                      <option value="3">휴일 근무 신청서</option>
+                      <option value="4">연장 근무 신청서</option>
+                      <option value="5">경조사 신청서(결혼)</option>
+                      <option value="6">경조사 신청서(사망)</option>
+                      <option value="7">경조사 신청서(출산)</option>
+                      <option value="8">외근/출장 신청서</option>
+                      <option value="9">근무 상태 변경 신청서</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  
+                  <div class="col-sm-12">
+                    <textarea rows="5" cols="50" id="approval-text" name="approval-text" style="height:400px;"></textarea>
+                    
+                    <script>
+	                    ClassicEditor
+	                    .create(document.querySelector('#approval-text'))
+	                    .catch(error => {
+	                        console.error(error);
+	                    });
+					</script>
+                  </div>
+                </div>
+                <fieldset class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked="">
+                      <label class="form-check-label" for="gridRadios1">
+                        First radio
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <label class="form-check-label" for="gridRadios2">
+                        Second radio
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option" disabled="">
+                      <label class="form-check-label" for="gridRadios3">
+                        Third disabled radio
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Disabled</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="Read only / Disabled" disabled="">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Submit Button</label>
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Submit Form</button>
+                  </div>
+                </div>
+
+              </form><!-- End General Form Elements -->
+
             </div>
           </div>
         </div>
