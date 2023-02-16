@@ -1377,6 +1377,17 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+.filebox p {
+	font-size: 14px;
+    display: inline-block;
+}
+.filebox {
+	height: 70px;
+    overflow: auto;
+    border: 1px solid #F6F6F6;
+    border-radius: 4px;
+    padding: 10px;
+}
 
 .insert {
     -webkit-box-sizing: border-box;
@@ -1397,4 +1408,11 @@ h6 {
 .insert .file-list .filebox .delete i{
     color: #ff5353;
     margin-left: 5px;
+}
+
+.mail-content {
+	overflow: auto;
+	border: 1px solid #CED4DA;
+    border-radius: 4px;
+    padding: 10px;
 }

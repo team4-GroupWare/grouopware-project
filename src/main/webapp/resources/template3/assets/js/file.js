@@ -3,12 +3,10 @@ var filesArr = new Array();
 
 /* 첨부파일 추가 */
 function addFile(obj){
-	console.log("addFile() 실행");
     var maxFileCnt = 5;   // 첨부파일 최대 개수
     var attFileCnt = document.querySelectorAll('.filebox').length;    // 기존 추가된 첨부파일 개수
     var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
     var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
-    console.log(attFileCnt + "= 첨부파일의 수");
 
     // 첨부파일 개수 확인
     if (curFileCnt > remainFileCnt) {
