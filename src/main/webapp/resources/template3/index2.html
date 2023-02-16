@@ -158,19 +158,21 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main1" class="main1 bg-white" style="margin:0 200px">
+		<div id="main" class="main bg-white" style="margin:0 200px">
 			<section class="section dashboard">
 				<div class="row">
 					
 					<!-- Left side columns -->
 					<div class="col-lg-4">
-						
-						<!-- attendance Card -->
-			          	<div class="card info-card sales-card">
-			           		<div class="card-body">
-			              		<h5 class="card-title">근무확인</h5>
-					            <div> 
-									오늘의 날짜
+						<!-- attendance Title -->
+						<div class="pagetitle">
+							<h1>근무확인</h1>
+						</div>
+			          	<!-- attendance Card -->
+			          	<div class="card info-card sales-card "  style="height:330px; ">
+			           		<div class="card-body mt-4">
+					            <div class="mb-3"> 
+									<h5>오늘의 날짜</h5>
 					            </div>
 				                <div class="d-flex">
 				                	<div><h2>12:00:00 </h2></div>
@@ -231,12 +233,14 @@
 			            	</div>
 		        		</div><!-- End attendance Card -->
 					
-						<!-- schedule card -->
-						<div class="col-12">
+							<!-- schedule Title -->
+							<div class="pagetitle">
+								<h1>캘린더</h1>
+							</div>
+							<!-- schedule Card -->
 							<div class="card recent-sales overflow-auto">
 							
 								<div class="card-body">
-									<h5 class="card-title">캘린더</h5>
 									<div class="sec_cal">
 										<div class="cal_nav">
 											<a href="javascript:;" class="nav-btn go-prev">prev</a>
@@ -259,19 +263,18 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- End attendance Card -->
+						<!-- End attendance Card -->
 					</div><!-- End Left side columns -->
 					
 					<!-- Right side columns -->
 					<div class="col-lg-8">
-						
+						<!-- mail Title -->
+						<div class="pagetitle">
+							<h1>메일함</h1>
+						</div>
 						<!-- mail card -->
 						<div class="card">
 							<div class="card-body">
-							
-								<!-- mail Title -->
-								<h5 class="card-title">메일함</h5>
-						
 						        <!-- mail Tabs -->
 							    <ul class="nav nav-tabs nav-tabs-bordered" id="mailTab" role="tablist">
 								    <li class="nav-item" role="presentation">
@@ -397,13 +400,13 @@
 						</div><!--End mail Card --> 
 					
 					
+						<!-- notice Title -->
+						<div class="pagetitle">
+							<h1>메일함</h1>
+						</div>
 						<!-- notice card -->
 						<div class="card">
 							<div class="card-body">
-							
-								<!-- notice Title -->
-								<h5 class="card-title">게시판</h5>
-						
 								<!-- notice Tabs -->
 								<ul class="nav nav-tabs nav-tabs-bordered" id="noticeTab" role="tablist">
 									<li class="nav-item" role="presentation">
