@@ -238,7 +238,7 @@
 					
 
 					});
-					console.log('바보');
+					
 					</script>
                     
                     <input type="radio" name="tp_cd" value="1" checked="checked"> 정기휴가
@@ -247,47 +247,40 @@
 					
 					<input type="radio" name="tp_cd" value="3" > 공가
 					
-					
-					
-					<!-- <div id="POP1"><p>POP1의 영역이 보임</p></div>
-					
-					<div id="POP2" style="display: none;"><p>POP2의 영역이 보임</p></div>
-					
-					<div id="POP3" style="display: none;"><p>POP3의 영역이 보임</p></div> -->
 						
                   </div>
                 </div>
-                 <div id="POP1" class="row mb-3">
+                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"><b>휴가 종류</b></label>
-                  <div class="col-sm-4">
+                  
+                  <div id="POP1" class="col-sm-4">
                     <select class="form-select" aria-label="Default select example">
                       <option value="0">연차</option>
                       <option value="1">오전 반차</option>
                       <option value="2">오후 반차</option>
                     </select>
                   </div>
-                </div>
-                
-                <div id="POP2" style="display: none;" class="row mb-3">
-                  <label class="col-sm-2 col-form-label"><b>휴가 종류</b></label>
-                  <div class="col-sm-4">
+                   
+                   <div id="POP2" style="display: none;" class="col-sm-4">
                     <select class="form-select" aria-label="Default select example">
                       <option value="0">결혼</option>
                       <option value="1">출산</option>
                       <option value="2">사망</option>
                     </select>
-                  </div>
-                </div>
+                    </div>
                 
-                <div id="POP3" style="display: none;" class="row mb-3">
-                  <label class="col-sm-2 col-form-label"><b>휴가 종류</b></label>
-                  <div class="col-sm-4">
+                  <div id="POP3" style="display: none;"  class="col-sm-4">
                     <select class="form-select" aria-label="Default select example">
                       <option value="0">병가</option>
                       <option value="1">예비군</option>
                     </select>
                   </div>
+                
+                
                 </div>
+                
+                
+                 
                 
                 <div class="row mb-3">
                   <label for="inputDate" class="col-sm-2 col-form-label"><b>시작날짜</b></label>
@@ -350,21 +343,7 @@
 				            </div>
 				        </div>
                     </div>
-                    <div class="col-sm-3">
-	                    <div class="card mb-3" style="background-color:#FCF6C2;">
-				            <div class="row g-0">
-				              <div class="col-md-12">
-				                <div class="card-body">
-				                  <div class="row">
-				                  	<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-		                    		<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-		                    	  </div>
-				                  <p>공공사업1 / 솔루션개발팀</p>
-				                </div>
-				              </div>
-				            </div>
-				        </div>
-                    </div>
+                    
                     <div class="col-sm-3">
 	                    <div class="card mb-3" style="background-color:#FCF6C2;">
 				            <div class="row g-0">
@@ -404,6 +383,34 @@
                     </div>
                   </div>
                 </div><!-- End Basic Modal-->
+                   <div id="box">
+            <ul>
+                <li class="main1">
+                  Security
+                  <ul class="sub" style="display:none">
+                      <li>web</li>
+                      <il>system</il>
+                  </ul>
+                </li>
+                <li class="main1">
+                  hack
+                  <ul class="sub" style="display:none">
+                      <li>server</li>
+                      <il>webhack</il>
+                  </ul>
+                </li>
+            </ul>
+        </div>
+        <script>
+            $(".main1").click(function(){
+                if($(this).find(".sub").is(":visible")){
+                    $(this).find(".sub").slideUp();
+                }
+                else{
+                    $(this).find(".sub").slideDown();
+                }
+            })
+        </script>
               </form><!-- End General Form Elements -->
 
             </div>
