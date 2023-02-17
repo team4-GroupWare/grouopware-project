@@ -335,23 +335,98 @@
                   
                 </div>
                 <!-- Basic Modal -->
-                <div class="modal fade" id="verticalycentered" tabindex="-1" aria-hidden="true" style="display: none;">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">결재선 설정</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">확인</button>
-                      </div>
+                 <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="Modal_button">
+    Open modal
+  </button>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body mb-0 pb-0 mt-0">
+        <div class="container ">
+            <!-- custom radio button -->
+            <div class="holder">
+                <div class="row mb-1">
+                <div class="col">
+                <h2>Choose File Types</h2>
+                </div>
+            </div>
+                <form action="#" class="customRadio customCheckbox m-0 p-0">
+                <div class="row mb-0">
+                <div class="row justify-content-start">
+                    <div class="col-12">
+                    <div class="row">
+                        
+                        <input type="radio" name="textEditor" id="dreamweaver" checked>
+                        <label for="dreamweaver">Back up all files folders</label>
                     </div>
-                  </div>
-                </div><!-- End Basic Modal-->
+                    <div class="row">
+                        <input type="radio" name="textEditor" id="sublime">
+                        <label for="sublime">Back up photos and videos</label>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row mt-0 ml-4">
+                    <div class="col-12 my_checkbox ">
+                    <div class="row">
+                    <input type="checkbox" id="screenshots" checked>
+                    <label for="javascript" id="screenshots_label">Back up screenshots</label>
+                    </div>
+                    <div class="row">
+                    <input type="checkbox" id="RAW">
+                    <label for="RAW">Back up RAW files</label>
+                    </div>
+                    <div class="row">
+                    <input type="checkbox" id="Library">
+                    <label for="Library">Back up Photos Library metadata</label>
+                    </div>
+        
+                    </div>
+                </div>  
+                <div class="row mt-4">
+                    <div class="col-12 Advanced_setting" >
+                    <!-- <b> <a class="Advanced_setting"  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Advanced setting &nbsp;<i class="icon-action fa fa-chevron-down"></i>
+                    </a></b> -->
+                    Advanced Setting &nbsp;<i class="icon-action fa fa-chevron-down"></i>
+                    </div>
+                </div>
+                </form>
+            </div>  
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer pt-0 mt-0 pb-5 pr-6 m-1 ">
+          <div class="col-2">
+            
+          </div>
+           <div class="col-6 justify-content-start">
+           
+            <a href="#" id="modal_footer_support" data-toggle="popover" title="Support" data-content="Support Message" class="modal_footer"><i class="fa fa-question-circle-o modal_footer"  aria-hidden="true"></i> <span class="modal_footer" >Support</span>
+            </a>
+           </div>
+           <div class="col-2 justify-content-end ">
+              <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+              <button type="button" class="btn btn-outline-light modal_footer"  data-dismiss="modal">Cancel</button>
+           </div>
+           <div class="col-2 justify-content-start m-0 p-0">
+              <button type="button" class="btn btn-success box-shadow--16dp" data-dismiss="modal">OK</button> 
+         </div>  
+        </div> 
+      </div>
+    </div>
+  </div> <!-- End Basic Modal-->
                 
                 <div class="row mb-3">
                   <div class="col-sm-12">
