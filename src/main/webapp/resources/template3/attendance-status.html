@@ -42,22 +42,22 @@
 			<!-- Logo -->
 			<div class="d-flex align-items-center justify-content-between">
 				<img src="assets/img/exaint_logo.png" width="100px" height="100px">
-			<a href="index.html" class="logo d-flex align-items-center">
+			<a href="index2.html" class="logo d-flex align-items-center">
 				<span class="d-none d-lg-block">엑사아이엔티</span>
 			</a>
 			</div>
 			
 			<!-- Dropbar -->
 			<div class="menudropbar d-flex align-items-center justify-content-between">
-				<select class="form-select" aria-label="Default select example">
-					<option selected="">오피스 홈</option>
-					<option value="1">근태관리</option>
-					<option value="2">인사</option>
-					<option value="3">전자결재</option>
-					<option value="4">메일</option>
-					<option value="5">공지사항</option>
-				</select>
-			</div>
+	      		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
+	        		<option value="index2.html">오피스 홈</option>
+	        		<option value="attendance-status.html" selected>근태관리</option>
+	        		<option value="hr.html">인사</option>
+	        		<option value="approval_list.html">전자결재</option>
+	        		<option value="email/email_list.html">메일</option>
+	        		<option value="5">공지사항</option>
+	      		</select>
+	    	</div><!-- End Dropbar -->
 			
 			<!-- Icons Navigation -->
 			<nav class="header-nav ms-auto">
@@ -109,7 +109,7 @@
 			 
 				<!--휴가 작성 -->
 				<li class="nav-item">
-					<a class="btn btn-primary" type="button" href="#" style="width:100%">
+					<a class="btn btn-primary" type="button" href="vacation_form.html" style="width:100%">
 					    <i class="bi bi-pencil-square"></i> 
 					    <span>휴가 작성</span>
 				  	</a>
@@ -117,7 +117,7 @@
 			
 				<!--근무 현황 -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#">
+					<a class="nav-link collapsed" href="attendance-status.html">
 				    	<i class="bi bi-eye"></i>
 				    	<span>근무 현황</span>
 				  	</a>
@@ -125,7 +125,7 @@
 			
 				<!--휴가 문서 -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#">
+					<a class="nav-link collapsed" href="vacation_document.html">
 				    	<i class="bi bi-eye"></i>
 				    	<span>휴가 문서</span>
 					</a>
@@ -133,7 +133,7 @@
 			
 				<!--부서 근무 현황 -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#dept-attendance-status.html">
 				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span><i class="bi bi-chevron-down ms-auto"></i>
 				  	</a>
 					<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
