@@ -41,22 +41,22 @@
 			<!-- Logo -->
 			<div class="d-flex align-items-center justify-content-between">
 				<img src="assets/img/exaint_logo.png" width="100px" height="100px">
-			<a href="index.html" class="logo d-flex align-items-center">
+			<a href="index2.html" class="logo d-flex align-items-center">
 				<span class="d-none d-lg-block">엑사아이엔티</span>
 			</a>
 			</div>
 			
 			<!-- Dropbar -->
 			<div class="menudropbar d-flex align-items-center justify-content-between">
-				<select class="form-select" aria-label="Default select example">
-					<option selected="">오피스 홈</option>
-					<option value="1">근태관리</option>
-					<option value="2">인사</option>
-					<option value="3">전자결재</option>
-					<option value="4">메일</option>
-					<option value="5">공지사항</option>
-				</select>
-			</div>
+	      		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
+	        		<option value="index2.html" selected>오피스 홈</option>
+	        		<option value="attendance-status.html">근태관리</option>
+	        		<option value="hr.html">인사</option>
+	        		<option value="approval_list.html">전자결재</option>
+	        		<option value="email/email_list.html">메일</option>
+	        		<option value="5">공지사항</option>
+	      		</select>
+	    	</div><!-- End Dropbar -->
 			
 			<!-- Icons Navigation -->
 			<nav class="header-nav ms-auto">
@@ -66,7 +66,7 @@
 					
 					<!-- Profile Nav -->
 					<li class="nav-item dropdown pe-4">
-						<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+						<a class="nav-link nav-profile d-flex align-items-center pe-0" href="vacation_document.html" data-bs-toggle="dropdown">
 							<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">이지호</span>
 						</a>
 						<span class=" ps-2">공공사업1 Div / 솔루션 개발팀</span>
