@@ -181,50 +181,74 @@
 					<div class="col-lg-12">
 						<div class="card mt-2">
 							<div class="card-body mt-3">
-								<!-- departments Tabs -->
+								<!-- =============================================departments Tabs================================= -->
 								<ul class="nav nav-tabs nav-tabs-bordered" id="departmentsTab" role="tablist">
 									<li class="nav-item" role="presentation">
-										<button class="nav-link active" id="att-tab" 
-										data-bs-toggle="tab" data-bs-target="#dep-att" type="button" 
-										role="tab" aria-controls="receive" aria-selected="true"
-										onclick="att()">근무 현황</button>
+										<button class="nav-link active" id="vacation-tab" 
+										data-bs-toggle="tab" data-bs-target="#dep-vacation" type="button" 
+										role="tab"  aria-selected="true"
+										onclick="vacation()">휴가 현황</button>
 									</li>
 									<li class="nav-item" role="presentation">
-										<button class="nav-link" id="vacation-tab" 
-										data-bs-toggle="tab" data-bs-target="#dep-vacation" type="button" 
-										role="tab" aria-controls="send" aria-selected="false"
-										onclick="vacation()">휴가 현황</button>
+										<button class="nav-link " id="att-tab" 
+										data-bs-toggle="tab" data-bs-target="#dep-att" type="button" 
+										role="tab"  aria-selected="false"
+										onclick="att()">근무 현황</button>
 									</li>
 								</ul>
 								
 								<script>
 								
-								function att()  {
-									  const target1 = document.getElementById('dep-vacation');
-									  target1.Class('show active')
-								}
 								function vacation()  {
 									  const target1 = document.getElementById('dep-vacation');
 									  target1.addClass('show active')
 								}
+								function att()  {
+									  const target1 = document.getElementById('dep-vacation');
+									  target1.Class('show active')
+								}
 								
 								</script>
 								
-								<div class="tab-content mt-2" id="mailTabContent">
-										<!--================================= 근무 현황 Tab ==========================================================-->
-									<div class="tab-pane fade show active" id="dep-att" role="tabpanel" aria-labelledby="att-tab">
+								<div class="tab-content mt-2" id="deptTabContent">
+									<!--================================= 휴가현황 Tab ==========================================================-->
+									<div class="tab-pane fade show active" id="dep-vacation" role="tabpanel" aria-labelledby="vacation-tab">
+										<script>
+											document.addEventListener('DOMContentLoaded', function() {
+												var calendarEl = document.getElementById('calendar');
+											
+												var calendar = new FullCalendar.Calendar(calendarEl, {
+											    	googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+											    	eventSources: [
+											    		{
+											        	googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+											        	color: '#be5683' 
+											         	
+											        	}
+											    	]
+											  	});
+											  calendar.render();
+											});
+										</script>
+										<div class="d-flex justify-content-center">
+									  		<div id='calendar' class="m-5" style="width:1000px" ></div>
+									  	</div>
+									</div><!--=================================End 휴가 현황 Tab ==========================================================-->
+									
+									<!--================================= 근무 현황 Tab ==========================================================-->
+									<div class="tab-pane fade" id="dep-att" role="tabpanel" aria-labelledby="att-tab">
 										
 										<!-- 주중 nav -->
 										<div class="d-flex justify-content-center">
 											<nav aria-label="Page navigation example">
 												<ul class="pagination">
-													<li class="page-item">
+													<li class="page-item d-flex align-items-center">
 														<a class="page-link" href="#" aria-label="Previous">
 														  <span aria-hidden="true">«</span>
 														</a>
 													</li>
-													<li>2023년 02월 16일</li>
-													<li class="page-item">
+													<li class="d-flex align-items-center">2023년 02월 16일</li>
+													<li class="page-item d-flex align-items-center">
 														<a class="page-link" href="#" aria-label="Next">
 														  <span aria-hidden="true">»</span>
 														</a>
@@ -348,29 +372,6 @@
 										</table>
 									</div><!--================================= End 근무 현황 Tab ==========================================================-->
 								
-									<!--================================= 휴가현황 Tab ==========================================================-->
-									<div class="tab-pane fade" id="dep-vacation" role="tabpanel" aria-labelledby="vacation-tab">
-										<script>
-											document.addEventListener('DOMContentLoaded', function() {
-												var calendarEl = document.getElementById('calendar');
-											
-												var calendar = new FullCalendar.Calendar(calendarEl, {
-											    	googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-											    	eventSources: [
-											    		{
-											        	googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-											        	color: '#be5683' 
-											         	
-											        	}
-											    	]
-											  	});
-											  calendar.render();
-											});
-										</script>
-										<div class="d-flex justify-content-center">
-									  		<div id='calendar' class="m-5" style="width:1000px" ></div>
-									  	</div>
-									</div><!--=================================End 휴가 현황 Tab ==========================================================-->
 								</div>
 							</div>
 						</div>
