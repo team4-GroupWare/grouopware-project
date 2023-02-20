@@ -25,3 +25,6 @@
 
 <!-- Template Main CSS File -->
 <link href="${pageContext.request.contextPath}/resources/assets/css/style.css" rel="stylesheet">
+
+<!-- JQuery 자바 스크립트 -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.6.3.min.js"></script>

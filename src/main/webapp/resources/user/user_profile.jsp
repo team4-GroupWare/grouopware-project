@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<html>
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>엑사아이엔티 그룹웨어</title>
+  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../assets/img/exaint_logo.png" rel="icon">
-  
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -37,7 +38,8 @@
 </head>
 
 <body>
-	<!-- ======= Header ======= -->
+
+  <!-- ======= Header ======= -->
   	<header id="header" class="header fixed-top d-flex align-items-center">
 
     	<div class="d-flex align-items-center justify-content-between">
@@ -50,11 +52,11 @@
 		<!-- Dropbar -->
 		<div class="menudropbar d-flex align-items-center justify-content-between">
       		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
-        		<option value="index2.html">오피스 홈</option>
+        		<option value="index2.html" selected>오피스 홈</option>
         		<option value="vacation_document.html">근태관리</option>
         		<option value="hr.html">인사</option>
         		<option value="approval_list.html">전자결재</option>
-        		<option value="email/email_list.html" selected>메일</option>
+        		<option value="email/email_list.html" >메일</option>
         		<option value="#">공지사항</option>
       		</select>
     	</div><!-- End Dropbar -->
@@ -98,125 +100,113 @@
       		</ul>
     	</nav><!-- End Icons Navigation -->
   	</header><!-- End Header -->
-  
+
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="btn btn-primary" type="button" href="index.html" style="width:100%">
-          <i class="bi bi-pencil-square"></i> 
-          <span>메일 작성</span>
+        <a class="btn btn-primary" type="button" href="../email/email_writeform.html" style="width:100%">
+          <i class="bi bi-person-rolodex"></i> 
+          <span>마이페이지</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed"  href="#">
-          <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
+        <a class="nav-link collapsed"  href="user_profile.html">
+          <i class="bi bi-person-vcard-fill"></i><span>나의 정보</span><i></i>
         </a>
       </li><!-- End Charts Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-envelope"></i><span>보낸 메일함</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#" class="active">
-              <span>미수신 메일</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>수신 메일</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Icons Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-star-fill"></i>
-          <span>중요 메일함</span>
-        </a>
+        <a class="nav-link collapsed">
+          <i class="bi bi-key-fill"></i>
+          <span>비밀번호 변경</span>
+        </a> 
       </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-envelope-exclamation"></i>
-          <span>임시저장함</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-trash3-fill"></i>
-          <span>휴지통</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
     </ul>
-
   </aside><!-- End Sidebar -->
+  <!-- ======= Main====== -->
+  <main id="main" class="main" >
 
-  <main id="main" class="main">
+    <div class="pagetitle mt-2">
+      <h1>마이페이지</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Users</li>
+          <li class="breadcrumb-item active">마이페이지</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
 
-    <section class="section dashboard">
+    <section class="section profile">
       <div class="row">
-
-        <!-- Left side columns -->
-        <!-- 
-        <div class="col-lg-2" style="border-right: 1px solid black;">
-          <div class="row">
-            
-            <div class="col-12">
-              <div>
-              	
-              </div>
-            </div>
+          <div class="card col-9">
+          	<div class="row my-4">
+	           <div class="col-4 card-body profile-card pt-4 d-flex flex-column align-items-center">
+				  <div class="mb-1" style="width:250px;height:250px">
+					 <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
+				  </div>
+	              <h2>아저씨</h2>
+	              <p style="color: grey;size:20px">사원</p>
+	             <a class="btn btn-primary" href="user_profileupdate.html">회원정보 수정</a>
+	            </div>
+	            <div class="col-8 card-body pt-3">
+	              <div class="tab-content pt-2">
+	
+	                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+	                  <h4 class="card-title"><b>나의 정보</b></h4>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label ">이름</div>
+	                    <div class="col-lg-9 col-md-8">아저씨</div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">부서</div>
+	                    <div class="col-lg-9 col-md-8">공공사업 1Div</div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">팀</div>
+	                    <div class="col-lg-9 col-md-8">프론트엔드팀</div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">직급</div>
+	                    <div class="col-lg-9 col-md-8">사원</div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">Phone</div>
+	                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+	                  </div>
+	                  
+	                   <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">생년월일</div>
+	                    <div class="col-lg-9 col-md-8">2023-02-14</div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-lg-3 col-md-4 label">Email</div>
+	                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+	                  </div>
+	
+	                </div>
+	
+	                <div class="tab-pane fade profile-edit pt-3" id="profile-edit"></div>
+	            </div>
+           	</div>
           </div>
-        </div> 
-        -->
-        <!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        
-        	<div class="col-lg-12" >
-	         	<div class="card">
-	            	<div class="card-body"style="padding-top:200px;padding-bottom:250px">
-		        		<div style="text-align:center">
-			         		<i class="bi bi-envelope" style="font-size:100px"></i>
-			         		<i class="bi bi-list-nested" style="font-size:100px"></i>
-		         		</div>
-		         		<div style="text-align:center">
-		         			<p style="color:grey;font-size:14px">메일이 성공적으로 발송되었습니다!</p>
-		         		</div>
-		         		<div class="mx-auto" style="width:100px;">
-		                	<button class="btn btn-primary w-100" type="submit" style="display:inline-block">홈으로</button>
-		            	</div>
-			    	</div>
-			  	</div>
-			</div>
-      </div><!-- End Right side columns -->
-
+      	</div>
+      </div>
     </section>
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+  <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
