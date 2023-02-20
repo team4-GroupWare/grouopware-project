@@ -16,9 +16,13 @@ public class DepartmentService implements IDepartmentService {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 
+	/**
+	 * 
+	 */
 	@Override
 	public List<Department> getDeptList() {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("실행");
+		List<Department> departments = departmentRepository.selectDeptAll();
+		return departments;
 	}
 }

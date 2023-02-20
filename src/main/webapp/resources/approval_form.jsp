@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html; charset=UTF-8" %>
+<html>
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
   	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   	<title>엑사아이엔티 그룹웨어</title>
