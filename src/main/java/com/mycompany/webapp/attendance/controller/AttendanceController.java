@@ -1,17 +1,19 @@
 package com.mycompany.webapp.attendance.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.log4j.Log4j2;
+
+@Controller
+@Log4j2
+@RequestMapping("/attendance")
 public class AttendanceController {
-	public static void main(String[] args) {
-		Date date1 = new Date();
-		System.out.println(date1);
-		
-		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
-		
-		String attDate = simpleDateFormat1.format(date1);
-		System.out.println(attDate);
-		
+	
+	@GetMapping("/attendance")
+	String attendance(){
+		return "main";
 	}
+	
 }
