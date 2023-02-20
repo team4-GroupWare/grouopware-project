@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<html>
+
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>비밀번호 변경</title>
+  <title>로그인</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/img/exaint_logo.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -55,28 +55,31 @@
     	  	  </div><!-- End Logo -->
 
               <div class="card" style="margin-bottom: 300px">
+
                 <div class="card-body">
+
                   <div class="pt-2 pb-1">
-                    <h5 class="card-title text-center pb-0 fs-4">비밀번호 변경</h5>
-                    <p class="text-center small">현재 비밀번호는 초기 비밀번호이며 변경이 필요합니다.</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Login</h5>
+                    <p class="text-center small">아이디와 비밀번호를 입력해주세요</p>
                   </div>
 
                   <form class="row g-3 needs-validation" novalidate>
+
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">비밀번호</label>
+                      <label for="yourUsername" class="form-label">아이디</label>
                       <div class="input-group has-validation">
-                        <input type="password" name="password" class="form-control" placeholder="비밀번호 입력" required>
-                        <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                        <input type="text" name="username" class="form-control" id="yourUsername" placeholder="ID" required>
+                        <div class="invalid-feedback">아이디를 입력해주세요.</div>
                       </div>
                     </div>
 
                     <div class="col-12 pb-3">
-                      <label for="yourPassword" class="form-label">비밀번호 확인</label>
-                      <input type="password" name="password" class="form-control" placeholder="비밀번호 재입력" id="yourPassword" required>
+                      <label for="yourPassword" class="form-label">비밀번호</label>
+                      <input type="password" name="password" class="form-control" placeholder="Password" id="yourPassword" required>
                       <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                     </div>
                     <div class="col-12 pb-2 mx-auto" style="width:250px;">
-                      <button class="btn btn-primary w-100" type="submit">비밀번호 변경</button>
+                      <button class="btn btn-primary w-100" type="submit">로그인</button>
                     </div>
                   </form>
                 </div>
