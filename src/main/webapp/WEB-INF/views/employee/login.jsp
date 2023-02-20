@@ -1,44 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 
-  <title>로그인</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="../assets/img/exaint_logo.png" rel="icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="../assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.5.0
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
-
-<body>
-
+	<body>
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
   <main>
     <div class="container">
 
@@ -48,9 +17,9 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 			  <!-- Start Logo -->
               <div class="d-flex align-items-center justify-content-between">
-      		  <img src="../assets/img/exaint_logo.png" width="100px" height="100px">
+      		  <img src="${pageContext.request.contextPath}/resources//assets/img/exaint_logo.png" width="100px" height="100px">
       			<a href="index2.html" class="logo d-flex align-items-center">
-        		<span class="d-none d-lg-block">엑사아이엔티</span>
+        		<span class="d-none d-lg-block">엑사아이엔티 </span>
       			</a>
     	  	  </div><!-- End Logo -->
 
@@ -63,12 +32,12 @@
                     <p class="text-center small">아이디와 비밀번호를 입력해주세요</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation" method="post" action="login" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">아이디</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" placeholder="ID" required>
+                        <input type="text" name="empId" class="form-control" id="yourUsername" placeholder="ID" required>
                         <div class="invalid-feedback">아이디를 입력해주세요.</div>
                       </div>
                     </div>
@@ -82,6 +51,31 @@
                       <button class="btn btn-primary w-100" type="submit">로그인</button>
                     </div>
                   </form>
+                  
+                  <c:if test="${not empty result}">
+                  <script>
+		   			$( function(){ 
+		    			$('#errorModal').modal('show');
+		   			 } )
+				  </script>
+				   </c:if>
+                  	<!-- ERROR Modal -->
+					<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h1 class="modal-title fs-5" id="errorModalLabel">로그인 실패</h1>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					        ${result}
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
                 </div>
               </div>
 
@@ -101,20 +95,7 @@
     </div>
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="../assets/vendor/echarts/echarts.min.js"></script>
-  <script src="../assets/vendor/quill/quill.min.js"></script>
-  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js"></script>
+  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 
