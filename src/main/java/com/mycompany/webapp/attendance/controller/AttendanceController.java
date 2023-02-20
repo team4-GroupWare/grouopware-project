@@ -10,9 +10,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/attendance")
 public class AttendanceController {
-	
 	@GetMapping("/attendance")
 	String attendance(){
+		log.info("실행");
 		return "main";
 	}
 	
