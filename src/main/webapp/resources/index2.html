@@ -158,13 +158,38 @@
 							<h1>근무확인</h1>
 						</div>
 			          	<!-- attendance Card -->
+			          	<!-- 오늘의 날짜 & 현재 시간을 가져옴 -->
+			          	<script>
+				          	function setClock(){
+				          	    var dateInfo = new Date(); 
+				          	    var hour = modifyNumber(dateInfo.getHours());
+				          	    var min = modifyNumber(dateInfo.getMinutes());
+				          	    var sec = modifyNumber(dateInfo.getSeconds());
+				          	    var year = dateInfo.getFullYear();
+				          	    var month = dateInfo.getMonth()+1; //monthIndex를 반환해주기 때문에 1을 더해준다.
+				          	    var date = dateInfo.getDate();
+				          	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
+				          	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
+				          	}
+				          	function modifyNumber(time){
+				          	    if(parseInt(time)<10){
+				          	        return "0"+ time;
+				          	    }
+				          	    else
+				          	        return time;
+				          	}
+				          	window.onload = function(){
+				          	    setClock();
+				          	    setInterval(setClock,1000); //1초마다 setClock 함수 실행
+				          	}
+			          	</script>
 			          	<div class="card info-card sales-card "  style="height:330px; ">
 			           		<div class="card-body mt-4">
 					            <div class="mb-3"> 
-									<h5>오늘의 날짜</h5>
+									<h5 id="date"></h5>
 					            </div>
 				                <div class="d-flex">
-				                	<div><h2>12:00:00 </h2></div>
+				                	<div><h2 id="time"></h2></div>
 				                	<div class="mt-2 mx-2"><span class="badge bg-success">근무중</span></div>
 				                </div>
 								
@@ -228,7 +253,6 @@
 							</div>
 							<!-- schedule Card -->
 							<div class="card recent-sales overflow-auto">
-							
 								<div class="card-body">
 									<div class="sec_cal">
 										<div class="cal_nav">

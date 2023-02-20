@@ -290,6 +290,16 @@
 										</div>
 									</div>
 									
+									<!-- 첨부파일 -->
+									<div class="row mb-3">
+                						<label for="text" class="col-sm-2 col-form-label"><b>파일선택</b></label>	
+											<div class="insert col-sm-10">
+												<input id="input-file" type="file"  onchange="addFile(this);" style="display:none" multiple />
+											    <label class="btn btn-secondary btn-sm mb-2 " for="input-file">파일선택</label>
+											    <div class="file-list"></div>
+											</div>
+					                </div>
+					                
 									<!-- 결재선 -->
 									<div class="row mb-3">
 										<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
@@ -531,6 +541,6 @@
 		
 		
 		<!-- 파일 다중 업로드  -->
-		<script src="../assets/js/file.js"></script>
+		<script src="assets/js/file.js"></script>
 	</body>
 </html>
