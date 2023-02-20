@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.attendance.model.Attendance;
 import com.mycompany.webapp.attendance.service.IAttendanceService;
@@ -22,14 +23,15 @@ import lombok.extern.log4j.Log4j2;
 
 @Controller
 @Log4j2
-@RequestMapping("/attendanceinfo")
+
 public class AttendanceController {
 	
 	@Autowired
 	IAttendanceService attendanceService;
 	
-	@GetMapping("/attendance")
-	void attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
+	@GetMapping("/attendanceinfo")
+	@ResponseBody
+	public Attendance attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
 		
 		log.info("실행");
 		//로그인한 사원의 ID
@@ -42,16 +44,7 @@ public class AttendanceController {
 		attendance = attendanceService.getAttendance(attDate,empId);
 		log.info(attendance);
 		
-		JSONObject jsonobject = new JSONObject();
-		jsonobject.put("attendance", attendance);
-		String json = jsonobject.toString();
-		
-		response.setContentType("application/json; charset=UTF-8");
-		
-		PrintWriter pw = response.getWriter();
-		pw.println(json);
-		pw.flush();
-		pw.close();
+		return attendance;
 	}
 	
 }

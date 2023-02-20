@@ -13,7 +13,7 @@
 	  			$.ajax({
 	  				url : "/webapp/attendanceinfo"
 	  				
-	  			}).done(()=>{
+	  			}).done((data)=>{
 	  				let status; 
 	  				let clockIn;
 	  				let clockOut;
@@ -22,19 +22,19 @@
 	  				console.log(clockIn);
 	  				console.log(clockOut);
 	  				
-	  				if(data.status === null){
+	  				if(data.status == null){
 	  					status = "미출근";
 	  				} else{
 	  					status = data.status;
 	  				}
 	  				
-	  				if(data.clockIn === null){
+	  				if(data.clockIn == null){
 	  					clockIn = "-- : -- :--";
 	  				} else{
 	  					clockIn = data.status;
 	  				}
 	  				
-	  				if(data.clockOut === null){
+	  				if(data.clockOut == null){
 	  					clockOut = "-- : -- :--";
 	  				} else{
 	  					clockOut = data.clockOut;
