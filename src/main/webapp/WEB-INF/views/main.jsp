@@ -1,5 +1,6 @@
 <%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -7,6 +8,46 @@
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  	<script>
+	  		$(document).ready(function() {
+	  			$.ajax({
+	  				url : "/webapp/attendanceinfo"
+	  				
+	  			}).done(()=>{
+	  				let status; 
+	  				let clockIn;
+	  				let clockOut;
+	  				
+	  				console.log(status);
+	  				console.log(clockIn);
+	  				console.log(clockOut);
+	  				
+	  				if(data.status === null){
+	  					status = "미출근";
+	  				} else{
+	  					status = data.status;
+	  				}
+	  				
+	  				if(data.clockIn === null){
+	  					clockIn = "-- : -- :--";
+	  				} else{
+	  					clockIn = data.status;
+	  				}
+	  				
+	  				if(data.clockOut === null){
+	  					clockOut = "-- : -- :--";
+	  				} else{
+	  					clockOut = data.clockOut;
+	  				}
+	  				
+	  				$("#status").html(status);
+	  				$("#clockIn").html(clockIn);
+	  				$("#clockOut").html(clockOut);
+	  				
+	  				
+	  			});
+	  		});
+	  	</script>
 	  	
 	  	<!-- menubar background -->
 		<div class="row" style="height:300px; background-color:#EEF2F4">
@@ -97,29 +138,32 @@
 			          	<div class="card info-card sales-card "  style="height:330px; ">
 			           		<div class="card-body mt-4">
 					            <div class="mb-3"> 
+					            	<!-- 오늘날짜 -->
 									<h5 id="date"></h5>
 					            </div>
 				                <div class="d-flex">
+				                	<!-- 현재시간 -->
 				                	<div><h2 id="time"></h2></div>
-				                	<div class="mt-2 mx-2"><span class="badge bg-success">근무중</span></div>
+				                	<!-- 출근 상태 -->
+				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
 				                </div>
 								
 								<!-- 출퇴근 버튼 -->
 								<div>
 									<script>
 									function btnAtt()  {
-										  const target1 = document.getElementById('btn-attendance');
-										  target1.disabled = true;
-										  target1.setAttribute( 'style', 'opacity: 0.1' )
-										  
-										  const target2 = document.getElementById('btn-leave');
-										  target2.disabled = false;
-										  target2.removeAttribute( 'style' )
+										const target1 = document.getElementById('btn-attendance');
+										target1.disabled = true;
+										target1.setAttribute( 'style', 'opacity: 0.1' )
+										
+										const target2 = document.getElementById('btn-leave');
+										target2.disabled = false;
+										target2.removeAttribute( 'style' )
 									}
 									function btnLeave()  {
-										  const target1 = document.getElementById('btn-leave');
-										  target1.disabled = true;
-										  target1.setAttribute( 'style', 'opacity: 0.1' )
+										const target1 = document.getElementById('btn-leave');
+										target1.disabled = true;
+										target1.setAttribute( 'style', 'opacity: 0.1' )
 									}
 									</script>
 									
@@ -129,12 +173,12 @@
 											<input 
 											id="btn-attendance"
 											type='image'
-											src="assets/img/attbtn.png" 
+											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
 											width="100"
 											onclick="btnAtt()"
 											/>
-										    <div>출근하기</div>   
-											<div>000000</div>
+										    <div>출근하기</div> 
+										    <div id="clockIn">-- : -- : --</div>
 										</div><!-- End 출근하기 버튼 -->
 										
 										<!-- 퇴근하기 버튼 -->
@@ -144,12 +188,12 @@
 											disabled 
 											style="opacity: 0.1"
 											type='image'
-											src="assets/img/leavebtn.png" 
+											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
 											width="100"
 											onclick="btnLeave()" 
 											/>
 											<div>퇴근하기</div>
-											<div>000000</div>
+											<div id="clockOut">-- : -- : --</div>
 										</div><!-- End퇴근하기 버튼 -->
 									</div>
 								
@@ -348,31 +392,31 @@
 									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
 										<div class="news">
 											<div class="post-item clearfix">
-												<img src="assets/img/news-1.jpg" alt="">
+												<img src="${pageContext.request.contextPath}/resources/assets/img/news-1.jpg" alt="">
 											    <h4><a href="#">공지사항</a></h4>
 											    <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-												<img src="assets/img/news-2.jpg" alt="">
+												<img src="${pageContext.request.contextPath}/resources/assets/img/news-2.jpg" alt="">
 											    <h4><a href="#">Quidem autem et impedit</a></h4>
 											    <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-3.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-3.jpg" alt="">
 											    <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
 											    <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-4.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-4.jpg" alt="">
 											    <h4><a href="#">Laborum corporis quo dara net para</a></h4>
 											    <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-5.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-5.jpg" alt="">
 											    <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
 											    <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
 											</div>
@@ -384,31 +428,31 @@
 									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
 										<div class="news">
 											<div class="post-item clearfix">
-												<img src="assets/img/news-1.jpg" alt="">
+												<img src="${pageContext.request.contextPath}/resources/assets/img/news-1.jpg" alt="">
 											    <h4><a href="#">경사났다</a></h4>
 											    <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-												<img src="assets/img/news-2.jpg" alt="">
+												<img src="${pageContext.request.contextPath}/resources/assets/img/news-2.jpg" alt="">
 											    <h4><a href="#">Quidem autem et impedit</a></h4>
 											    <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-3.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-3.jpg" alt="">
 											    <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
 											    <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-4.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-4.jpg" alt="">
 											    <h4><a href="#">Laborum corporis quo dara net para</a></h4>
 											    <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <img src="assets/img/news-5.jpg" alt="">
+											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-5.jpg" alt="">
 											    <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
 											    <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
 											</div>
@@ -423,5 +467,9 @@
 			</section>
 		</div><!-- End #main -->
 	  	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	  	
+	  	<!-- 추가한 링크 -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/js/schedule.js"></script>
 	</body>
 </html>
