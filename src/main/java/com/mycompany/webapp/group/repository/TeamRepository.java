@@ -1,5 +1,9 @@
 package com.mycompany.webapp.group.repository;
 
-public interface TeamRepository {
+import java.util.List;
 
+import com.mycompany.webapp.group.model.Team;
+
+public interface TeamRepository {
+	public List<Team> selectTeamByDept(int deptId);
 }

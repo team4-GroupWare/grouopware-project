@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 
 <head>
@@ -22,43 +24,22 @@
 	        		<a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
 	          			<span>엑사아이엔티</span><i class="bi bi-chevron-down ms-auto"></i>
 	        		</a>
-	        		<ul id="hr-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+	        		
+	        		<ul id="hr-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+	        			<c:forEach var="dept" items="${departments}" varStatus="status">
 	          			<li class="nav-item">
-		            		<a class="nav-link collapsed" data-bs-target="#dept1-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-		              			<span>공공사업1 Div</span><i class="bi bi-chevron-down ms-auto"></i>
+		            		<a class="nav-link collapsed" data-bs-target="#nav-dept${status.count}" data-bs-toggle="collapse" href="#" aria-expanded="false">
+		              			<span>${dept.deptName}</span><i class="bi bi-chevron-down ms-auto"></i>
 		            		</a>
-			            	<ul id="dept1-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+			            	<ul id="nav-dept${status.count}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+				              	<c:forEach var="team" items="${teamList[status.index]}">
 				              	<li>
-				              		<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;프론트엔드팀</span></a>
+				              		<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
 				              	</li>
-				              	<li>
-				              		<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;솔루션개발팀</span></a>
-				              	</li>
+				              	</c:forEach>
 			            	</ul>
 	          			</li>
-	          			<li class="nav-item">
-				            <a class="nav-link collapsed" data-bs-target="#dept2-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-				            	<span>공공사업2 Div</span><i class="bi bi-chevron-down ms-auto"></i>
-				            </a>
-	            			<ul id="dept2-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-	              				<li>
-	              					<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;프론트엔드팀</span></a>
-	              				</li>
-	              				<li>
-	              					<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;솔루션개발팀</span></a>
-	              				</li>
-	            			</ul>
-	          			</li>
-	          			<li class="nav-item">
-	            			<a class="nav-link collapsed" data-bs-target="#dept3-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-	              				<span>경영지원실</span><i class="bi bi-chevron-down ms-auto"></i>
-	            			</a>
-	            			<ul id="dept3-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-	              				<li>
-	              					<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;인사팀</span></a>
-	              				</li>
-	            			</ul>
-	          			</li>
+	          			</c:forEach>
 	        		</ul>
 		  		</li>
 			</ul>
