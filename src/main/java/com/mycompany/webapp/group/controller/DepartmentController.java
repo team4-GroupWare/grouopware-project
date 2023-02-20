@@ -26,6 +26,6 @@ public class DepartmentController {
 		
 		log.info(departments);
 		model.addAttribute("departments", departments);
-		return "hr/hr.jsp";
+		return "hr/hr";
 	}
 }
