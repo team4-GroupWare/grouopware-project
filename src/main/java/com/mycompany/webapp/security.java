@@ -9,7 +9,7 @@ public class security {
 		enc.setPassword("wldusdP");
 		System.out.println(enc.encrypt("oracle.jdbc.driver.OracleDriver"));
 		System.out.println(enc.encrypt("jdbc:oracle:thin:@kosa402.iptime.org:50041:orcl"));
-		System.out.println(enc.encrypt("team5"));
+		System.out.println(enc.encrypt("team4"));
 		System.out.println(enc.encrypt("oracle"));
 	}
 
