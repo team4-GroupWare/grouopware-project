@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h3>
+		문제1. test01 태그에 "dom test"라는 내용을 가진 div태그 생성하기
+	</h3>
+	<button onclick="addTest();">클릭</button>
+	<h3>
+		문제2. test01 태그 안에 생성된 div 태그들을 test02 태그 안으로 이동하기
+	</h3>
+	<button onclick="moveTest();">클릭</button>
+	<br>
+	*test01
+	<div id="test01"></div>
+	*test02
+	<div id="test02"></div>
+
+	
+<script type="text/javascript">
+	var tmp = 1;
+	
+	function addTest(){
+		var div = document.createElement("div");
+		div.textContent = "dom test" + (tmp++);
+		
+		document.getElementById("test01").appendChild(div);
+	}
+	
+	function moveTest(){
+		var div = document.querySelector("#test01").children[0];
+		var test02 = document.querySelector("#test02");
+		test02.appendChild(div);
+	}
+</script>
+</body>
+<style>
+	#test01, #test02{
+		width: 300px;
+		height: 300px;
+		border: 1px dotted blue;
+	}
+</style>
+</html>
