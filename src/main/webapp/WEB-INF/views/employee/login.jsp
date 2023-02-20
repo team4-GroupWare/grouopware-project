@@ -7,7 +7,6 @@
 
 </head>
 	<body>
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
   <main>
     <div class="container">
 
