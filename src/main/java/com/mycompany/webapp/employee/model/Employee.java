@@ -1,4 +1,4 @@
-package com.mycompany.webapp;
+package com.mycompany.webapp.employee.model;
 
 import java.sql.Date;
 
