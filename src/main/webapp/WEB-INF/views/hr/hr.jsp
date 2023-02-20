@@ -1,12 +1,11 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 </head>
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<body>
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	<!-- ======= Sidebar ======= -->
 	    <aside id="sidebar" class="sidebar">
 	

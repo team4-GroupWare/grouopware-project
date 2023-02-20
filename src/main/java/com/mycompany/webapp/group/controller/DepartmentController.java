@@ -24,7 +24,8 @@ public class DepartmentController {
 		
 		List<Department> departments = departmentService.getDeptList();
 		
+		log.info(departments);
 		model.addAttribute("departments", departments);
-		return "hr/hr.jsp";
+		return "hr/hr";
 	}
 }

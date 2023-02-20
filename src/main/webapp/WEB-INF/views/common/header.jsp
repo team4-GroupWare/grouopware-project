@@ -5,7 +5,7 @@
 
 	<!-- Logo -->
 	<div class="d-flex align-items-center justify-content-between">
-		<img src="assets/img/exaint_logo.png" width="100px" height="100px">
+		<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
 	<a href="index2.html" class="logo d-flex align-items-center">
 		<span class="d-none d-lg-block">엑사아이엔티</span>
 	</a>
@@ -27,7 +27,7 @@
 	<nav class="header-nav ms-auto">
 		<ul class="d-flex align-items-center">
 			<!-- 프로필 사진 -->
-			<li><img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px"></li>
+			<li><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px"></li>
 			
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">

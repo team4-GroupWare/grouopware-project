@@ -15,5 +15,5 @@
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.mycompany.webapp.board.repositiorty"/>
+	<mybatis-spring:scan base-package="com.mycompany.webapp.group.repository"/>
 </beans>
