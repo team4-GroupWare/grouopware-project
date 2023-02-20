@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		
+		<title>엑사아이엔티 그룹웨어</title>
+		<meta content="" name="description">
+		<meta content="" name="keywords">
+		
+		<!-- Favicons -->
+		<link href="assets/img/exaint_logo.png" rel="icon">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.gstatic.com" rel="preconnect">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+		
+		<!-- Vendor CSS Files -->
+		<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+		<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+		<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+		<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+		<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+		<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+		
+		<!-- Template Main CSS File -->
+		<link href="assets/css/style.css" rel="stylesheet">
+		
+		<!-- 달력  -->
+		<link href="fullcalendar-5.6.0/lib/main.css" rel="stylesheet">
+		<script src="fullcalendar-5.6.0/lib/main1.js"></script>
+	</head>
+
+	<body>	
+		<!-- =========================Header=============================== -->
+		<header id="header" class="header fixed-top d-flex align-items-center">
+		
+			<!-- Logo -->
+			<div class="d-flex align-items-center justify-content-between">
+				<img src="assets/img/exaint_logo.png" width="100px" height="100px">
+			<a href="index.html" class="logo d-flex align-items-center">
+				<span class="d-none d-lg-block">엑사아이엔티</span>
+			</a>
+			</div>
+			
+			<!-- Dropbar -->
+			<div class="menudropbar d-flex align-items-center justify-content-between">
+				<select class="form-select" aria-label="Default select example">
+					<option selected="">오피스 홈</option>
+					<option value="1">근태관리</option>
+					<option value="2">인사</option>
+					<option value="3">전자결재</option>
+					<option value="4">메일</option>
+					<option value="5">공지사항</option>
+				</select>
+			</div>
+			
+			<!-- Icons Navigation -->
+			<nav class="header-nav ms-auto">
+				<ul class="d-flex align-items-center">
+					<!-- 프로필 사진 -->
+					<li><img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px"></li>
+					
+					<!-- Profile Nav -->
+					<li class="nav-item dropdown pe-4">
+						<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+							<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">이지호</span>
+						</a>
+						<span class=" ps-2">공공사업1 Div / 솔루션 개발팀</span>
+						
+						<!-- dropbar -->
+						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+							<li class="dropdown-header">
+								<h6>이지호</h6>
+								<span>공공사업1 Div / 솔루션 개발팀</span>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+							    	<i class="bi bi-person"></i>
+							    	<span>My Profile</span>
+							  	</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+							    	<i class="bi bi-box-arrow-right"></i>
+							    	<span>Sign Out</span>
+							  	</a>
+							</li>
+						</ul><!-- End dropbar -->
+					</li><!-- End Profile Nav -->
+				</ul>
+			</nav><!-- End Icons Navigation -->
+		</header><!-- =========================End Header=============================== -->
+	
+		<!-- =========================sideber=============================== -->
+		<aside id="sidebar" class="sidebar">
+			<ul class="sidebar-nav" id="sidebar-nav">
+			 
+				<!--휴가 작성 -->
+				<li class="nav-item">
+					<a class="btn btn-primary" type="button" href="#" style="width:100%">
+					    <i class="bi bi-pencil-square"></i> 
+					    <span>휴가 작성</span>
+				  	</a>
+				</li>
+			
+				<!--근무 현황 -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>근무 현황</span>
+				  	</a>
+				</li>
+			
+				<!--휴가 문서 -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>휴가 문서</span>
+					</a>
+				</li>
+			
+				<!--부서 근무 현황 -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span><i class="bi bi-chevron-down ms-auto"></i>
+				  	</a>
+					<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+						<li>
+					    	<a href="#">
+					      		<span>공공사업1</span>
+					    	</a>
+					  	</li>
+					  	<li>
+					    	<a href="#">
+					      		<span>공공사업2</span>
+					    	</a>
+					  	</li>
+					  	<li>
+					    	<a href="#">
+					      		<span>전략사업</span>
+					    	</a>
+					  	</li>
+					  	<li>
+				    		<a href="#">
+					      		<span>경영관리</span>
+					    	</a>
+					  	</li>
+					</ul>
+				</li>
+			
+			</ul>
+		</aside>
+		<!-- ======================================End Sidebar ============================================ -->
+		
+		<!-- ====================================== Main ============================================ -->	
+		<main id="main" class="main">
+			
+			<!-- 페이지 제목 -->
+			<div class="pagetitle">
+				<h1>부서 근무 현황</h1>
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.html">근태관리</a></li>
+					    <li class="breadcrumb-item"><a href="index.html">부서 근무 현황</a></li>
+					</ol>
+				</nav>
+			</div>
+		
+			<!-- 페이지 내용 -->
+			<section class="section">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card mt-2">
+							<div class="card-body mt-3">
+								<!-- =============================================departments Tabs================================= -->
+								<ul class="nav nav-tabs nav-tabs-bordered" id="departmentsTab" role="tablist">
+									<li class="nav-item" role="presentation">
+										<button class="nav-link active" id="vacation-tab" 
+										data-bs-toggle="tab" data-bs-target="#dep-vacation" type="button" 
+										role="tab"  aria-selected="true"
+										onclick="vacation()">휴가 현황</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link " id="att-tab" 
+										data-bs-toggle="tab" data-bs-target="#dep-att" type="button" 
+										role="tab"  aria-selected="false"
+										onclick="att()">근무 현황</button>
+									</li>
+								</ul>
+								
+								<script>
+								
+								function vacation()  {
+									  const target1 = document.getElementById('dep-vacation');
+									  target1.addClass('show active')
+								}
+								function att()  {
+									  const target1 = document.getElementById('dep-vacation');
+									  target1.Class('show active')
+								}
+								
+								</script>
+								
+								<div class="tab-content mt-2" id="deptTabContent">
+									<!--================================= 휴가현황 Tab ==========================================================-->
+									<div class="tab-pane fade show active" id="dep-vacation" role="tabpanel" aria-labelledby="vacation-tab">
+										<script>
+											document.addEventListener('DOMContentLoaded', function() {
+												var calendarEl = document.getElementById('calendar');
+											
+												var calendar = new FullCalendar.Calendar(calendarEl, {
+											    	googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+											    	eventSources: [
+											    		{
+											        	googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+											        	color: '#be5683' 
+											         	
+											        	}
+											    	]
+											  	});
+											  calendar.render();
+											});
+										</script>
+										<div class="d-flex justify-content-center">
+									  		<div id='calendar' class="m-5" style="width:1000px" ></div>
+									  	</div>
+									</div><!--=================================End 휴가 현황 Tab ==========================================================-->
+									
+									<!--================================= 근무 현황 Tab ==========================================================-->
+									<div class="tab-pane fade" id="dep-att" role="tabpanel" aria-labelledby="att-tab">
+										
+										<!-- 주중 nav -->
+										<div class="d-flex justify-content-center">
+											<nav aria-label="Page navigation example">
+												<ul class="pagination">
+													<li class="page-item d-flex align-items-center">
+														<a class="page-link" href="#" aria-label="Previous">
+														  <span aria-hidden="true">«</span>
+														</a>
+													</li>
+													<li class="d-flex align-items-center">2023년 02월 16일</li>
+													<li class="page-item d-flex align-items-center">
+														<a class="page-link" href="#" aria-label="Next">
+														  <span aria-hidden="true">»</span>
+														</a>
+													</li>
+												</ul>
+											</nav>
+										</div>
+										
+										<!-- Table -->
+										<table class="type02">
+										  	<tr>
+											    <th scope="row">이름</th>
+											    <th scope="row">부서</th>
+											    <td>13일</td>
+											    <td>14일</td>
+											    <td>15일</td>
+											    <td>16일</td>
+											    <td>17일</td>
+											    <td>18일</td>
+											    <td>19일</td>
+										  	</tr>
+										  	<tr class="table-content" >
+											    <th scope="row">이연희</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										 	 </tr>
+										  	<tr class="table-content">
+											    <th scope="row">이지호</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										 	 </tr>
+										 	 <tr class="table-content">
+											   	<th scope="row">이예승</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td>휴일근무</td>
+										  	</tr>
+										  	<tr class="table-content" >
+											    <th scope="row">강지성</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										  	</tr>
+										 	 <tr class="table-content">
+											    <th scope="row">장현</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										 	 </tr>
+										  	 <tr class="table-content">
+											   	<th scope="row">송영훈</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td>휴일근무</td>
+											</tr>
+										  	<tr class="table-content" >
+											    <th scope="row">김지영</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										 	 </tr>
+										 	 <tr class="table-content">
+											    <th scope="row">한송민</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td>지각</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td></td>
+										 	 </tr>
+										 	 <tr class="table-content">
+											    <th scope="row">신문ㅇㄴ</th>
+											    <th scope="row">공공사업1</th>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td>정상근무</td>
+											    <td></td>
+											    <td>휴일근무</td>
+											</tr>
+										</table>
+									</div><!--================================= End 근무 현황 Tab ==========================================================-->
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main><!--=============================End Main============================================-->
+
+  		<!-- ======= Footer ======= -->
+		<footer id="footer" class="footer">
+			<div class="copyright">
+				&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+			</div>
+			<div class="credits">
+				Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+			</div>
+		</footer><!-- End Footer -->
+		
+		<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+		
+		<!-- Vendor JS Files -->
+		<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/vendor/chart.js/chart.umd.js"></script>
+		<script src="assets/vendor/echarts/echarts.min.js"></script>
+		<script src="assets/vendor/quill/quill.min.js"></script>
+		<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+		<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+		<script src="assets/vendor/php-email-form/validate.js"></script>
+		
+		<!-- Template Main JS File -->
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>
