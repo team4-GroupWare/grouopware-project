@@ -6,7 +6,7 @@
 	<bean id="propertyConfigurer"
 		class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
 		<constructor-arg ref="configurationEncryptor" />
-      	<property name="locations">
+      	<property name="locations">           
         	<list>
             	<value>classpath:/database/jdbc.properties</value>
          	</list>

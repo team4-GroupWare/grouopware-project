@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.mycompany.webapp.noticeboard.model.NoticeBoard" alias="board"/>
+		<typeAlias type="com.mycompany.webapp.group.model.Department" alias="department"/>
 		<typeAlias type="com.mycompany.webapp.Pager" alias="pager"/>
 	</typeAliases>
 </configuration>
