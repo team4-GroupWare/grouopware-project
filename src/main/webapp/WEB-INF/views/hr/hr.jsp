@@ -58,6 +58,7 @@
 			          			<c:forEach var="team" items="${teams[status.index]}">
 			          				<h5><b>&nbsp;&nbsp;${team.teamName}</b></h5>
 			          				<c:forEach var="employee" items="${employees[status.index]}">
+			          					
 							        		<div class="col-lg-6">
 								          		<!-- Card with an image on left -->
 								          		<div class="card mb-3">
@@ -96,11 +97,7 @@
 				        		</c:forEach>
 				      		</div>
 			      		</c:forEach>
-			      		
 			      		<!-- ********대표이사 끝******** -->
-			      
-			      		
-			        		
 		        	</div><!-- End Right side columns -->
 	      		</div>
 			</section>
