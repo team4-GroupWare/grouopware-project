@@ -36,7 +36,7 @@
 	  				} else{
 	  					clockOut = data.clockOut;
 	  				}
-	  				
+	  				 
 	  				$("#status").html(status);
 	  				$("#clockIn").html(clockIn);
 	  				$("#clockOut").html(clockOut);
