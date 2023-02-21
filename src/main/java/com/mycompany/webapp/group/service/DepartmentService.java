@@ -22,7 +22,7 @@ public class DepartmentService implements IDepartmentService {
 	@Override
 	public List<Department> getDeptList() {
 		log.info("실행");
-		List<Department> departments = departmentRepository.selectDeptAll();
+		List<Department> departments = departmentRepository.selectDeptList();
 		return departments;
 	}
 }

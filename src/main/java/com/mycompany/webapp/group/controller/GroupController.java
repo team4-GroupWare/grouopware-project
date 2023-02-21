@@ -47,7 +47,7 @@ public class GroupController {
 		
 		//부서 별 팀목록
 		for(Department dept : departments) {
-			teams.add(teamService.getTeamList(dept.getDeptId()));
+			teams.add(teamService.getTeamListById(dept.getDeptId()));
 			log.info(teams);
 		}
 		

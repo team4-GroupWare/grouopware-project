@@ -1,5 +1,8 @@
 package com.mycompany.webapp.employee.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.service.EmployeeService;
+import com.mycompany.webapp.group.model.Department;
+import com.mycompany.webapp.group.model.Grade;
+import com.mycompany.webapp.group.model.Team;
+import com.mycompany.webapp.group.service.DepartmentService;
+import com.mycompany.webapp.group.service.GradeService;
+import com.mycompany.webapp.group.service.TeamService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +32,12 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private DepartmentService departmentService;
+	@Autowired
+	private TeamService teamService;
+	@Autowired
+	private GradeService gradeService;
 
 	/**
 	 * 
@@ -60,7 +76,7 @@ public class EmployeeController {
 		}
 		
 		session.setAttribute("loginEmployee", employee);
-		return "redirect:/";
+		return "redirect:/employee/register";
 	}
 	
 	/**
@@ -72,10 +88,27 @@ public class EmployeeController {
 	public String register(Model model) {
 		log.info("실행");
 		//부서 List
+		List<Department> departments = departmentService.getDeptList();
+		System.out.println(departments);
+		model.addAttribute("departments", departments);
 		//팀 List
+		List<Team> teams = teamService.getTeamList();
+		model.addAttribute("teams", teams);
 		//직급 List
-		//manager List
+		List<Grade> grades = gradeService.getGradeList();
+		model.addAttribute("grades", grades);
+		
 		return "employee/register";
+	}
+	
+	@PostMapping(value="/teamlist")
+	@ResponseBody
+	public List<Team> teamListAjax(String deptId) throws IOException {
+		log.info("실행");
+		int id = Integer.parseInt(deptId);
+		List<Team> teamList = teamService.getTeamListById(id);
+		
+		return teamList;
 	}
 
 }

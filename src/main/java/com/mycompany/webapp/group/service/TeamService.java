@@ -18,9 +18,19 @@ public class TeamService implements ITeamService {
 	private TeamRepository teamRepository;
 	
 	@Override
-	public List<Team> getTeamList(int deptId) {
+	public List<Team> getTeamListById(int deptId) {
 		log.info("실행");
 		List<Team> teams = teamRepository.selectTeamByDept(deptId);
+		return teams;
+	}
+
+	/**
+	 * @return 모든 teamList 
+	 */
+	@Override
+	public List<Team> getTeamList() {
+		log.info("실행");
+		List<Team> teams = teamRepository.selectTeam();
 		return teams;
 	}
 }

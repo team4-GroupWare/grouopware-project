@@ -9,5 +9,12 @@
 			where dept_id = #{deptId}
 		]]>
 	</select>
+	
+	<select id="selectTeam" resultType="team">
+		<![CDATA[
+			select team_id as teamId, team_name as teamName
+			from teams
+		]]>
+	</select>
 
 </mapper>

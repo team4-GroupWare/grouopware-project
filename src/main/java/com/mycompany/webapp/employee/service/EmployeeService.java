@@ -66,5 +66,6 @@ public class EmployeeService implements IEmployeeService {
 	public List<Employee> getEmpList() {
 		return employeeRepository.selectEmpList();
 	}
+
 	
 }

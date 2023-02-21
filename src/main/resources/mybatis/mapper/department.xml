@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.group.repository.DepartmentRepository">
 
-	<select id="selectDeptAll" resultType="department">
+	<select id="selectDeptList" resultType="department">
 		<![CDATA[
 			SELECT dept_id as deptId, dept_name as deptName
 			FROM departments

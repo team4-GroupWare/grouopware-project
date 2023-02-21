@@ -1,5 +1,9 @@
 package com.mycompany.webapp.group.service;
 
-public interface IGradeService {
+import java.util.List;
 
+import com.mycompany.webapp.group.model.Grade;
+
+public interface IGradeService {
+	public List<Grade> getGradeList();
 }
