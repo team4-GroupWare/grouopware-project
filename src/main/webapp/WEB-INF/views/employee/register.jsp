@@ -7,16 +7,17 @@
 	<script>
 		function getTeam() {
 			var value = $("#departmentId > option:selected").val();
-			console.log("value:"+value);
-			let data = {deptId : value};
-			console.log("getTeam() 실행");
-			$.ajax({
-				url: "${pageContext.request.contextPath}/employee/teamlist",
-				method: "post",
-				data: JSON.stringify(data)	
-			}).done(function(data) {
-				console.log(data);
-			});
+			if(value != "선택"){
+				$.ajax({
+					url: "${pageContext.request.contextPath}/employee/teamlist",
+					method: "post",
+					data: {"deptId": value}
+				}).done(function(data) {
+					console.log(data);
+					//list를 가져와 목록으로 출력
+				    
+				});
+			}
 		}
 	</script>
 </head>
@@ -90,10 +91,10 @@
                      <div class="col-4" style="width:170px">
                       <label for="yourDepartment" class="form-label">부서</label>
                       <div class="input-group has-validation">
-                        <select class="form-select" aria-label="Default select example" name="departmentId" onchange="javascript:getTeam()" id="departmentId">
+                        <select class="form-select" aria-label="Default select example" name="departmentId" onchange="getTeam()" id="departmentId">
 						    <option value="선택">선택</option>
 						    <c:forEach var="department" items="${departments}" varStatus="status">
-						    	<option value="${departement.deptId}">${department.deptName}</option>
+						    	<option value="${department.deptId}">${department.deptName}</option>
 						    </c:forEach>
 						</select>
                       </div>
@@ -102,7 +103,7 @@
                      <div id="teamDiv" class="col-4" style="width:170px;" >
                       <label for="yourDepartment" class="form-label">팀</label>
                       <div class="input-group has-validation">
-                        <select class="form-select" aria-label="Default select example" name="userdepartment" id="yourTeam">
+                        <select class="form-select" aria-label="Default select example" name="teamId" id="teamId">
 						    <c:forEach var="team" items="${teams}" varStatus="status">
 						    	<option value="${team.teamId}">${team.teamName}</option>
 						    </c:forEach>
@@ -113,7 +114,7 @@
                      <div class="col-4 pb-2" style="width:140px">
                       	<label for="yourDepartment" class="form-label">직급</label>
                       	<div class="input-group has-validation">
-                        	<select class="form-select" aria-label="Default select example" name="userteam" id="yourDepartment">
+                        	<select class="form-select" aria-label="Default select example" name="gradeId" id="gradeId">
 					    		<c:forEach var="grade" items="${grades}" varStatus="status">
 						    		<option value="${grade.gradeId}">${grade.gradeName}</option>
 						    	</c:forEach>

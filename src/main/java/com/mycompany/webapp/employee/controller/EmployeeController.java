@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,7 +104,7 @@ public class EmployeeController {
 	
 	@PostMapping(value="/teamlist")
 	@ResponseBody
-	public List<Team> teamListAjax(String deptId) throws IOException {
+	public List<Team> teamListAjax(@Param("deptId") String deptId) throws IOException {
 		log.info("실행");
 		int id = Integer.parseInt(deptId);
 		List<Team> teamList = teamService.getTeamListById(id);
