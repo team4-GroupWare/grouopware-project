@@ -77,7 +77,7 @@ public class EmployeeController {
 		}
 		
 		session.setAttribute("loginEmployee", employee);
-		return "redirect:/employee/register";
+		return "redirect:/";
 	}
 	
 	/**
