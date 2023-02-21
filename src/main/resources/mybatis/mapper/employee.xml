@@ -50,5 +50,16 @@
 		]]>
 	</select>
 	
+	<select id="selectEmpId" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from employees
+			where EMP_ID = #{empId}
+	
+		]]>
+	
+	
+	</select>
+	
 	
 </mapper>

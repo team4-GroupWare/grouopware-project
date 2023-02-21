@@ -6,6 +6,7 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script>
 		function getTeam() {
+			//선택된 부서 아이디 가져옴
 			var value = $("#departmentId > option:selected").val();
 			if(value != "선택"){
 				$.ajax({
@@ -13,11 +14,41 @@
 					method: "post",
 					data: {"deptId": value}
 				}).done(function(data) {
-					console.log(data);
-					//list를 가져와 목록으로 출력
+					var teamHtml = "";
+					$('#teamId').empty();
+					//teamlist를 가져와 목록으로 출력
+					for(var i in data) {
+					  teamHtml += "<option value='"+data[i].teamId+"'>"+data[i].teamName+"</option>";
+					}
+					
+					$('#teamId').html(teamHtml);
 				    
 				});
+			} else {
+				//기본 '선택'이라면 team목록이 공백으로 나타남
+				$('#teamId').empty();
 			}
+		}
+		
+		function check() {
+			var id = $("#empId").val();
+			console.log(id);
+			$.ajax({
+				url: "${pageContext.request.contextPath}/employee/check",
+				method: "post",
+				data: {"empId": id}
+			}).done(function(data){
+				console.log(data);
+				var message = "";
+				if(data){
+					message = "아이디가 이미 존재합니다";
+				} else {
+					message = "사용가능한 아이디 입니다";
+				}
+				$("#idMessage").text(message);
+				
+				
+			});
 		}
 	</script>
 </head>
@@ -51,13 +82,14 @@
                   <form class="row g-3 needs-validation" novalidate>
                   	<div class="row">
 		                 <div class="col-9 form-floating mb-3"> 
-			                  <input type="text" class="form-control" name="empId" id="floatingName" placeholder="아이디">
+			                  <input type="text" class="form-control" name="empId" id="empId" placeholder="아이디">
 			                  <div class="invalid-feedback">아이디를 입력해주세요</div> 
 			                  <label for="floatingName">아이디</label>
+			                  <p id="idMessage" style="color:red;font-size:12px;margin-top:5px"></p>
 		                 </div>
 		                 <div class="col-3" style="vertical-align:middle;" >
 		                 	  <!-- onclick시 중복확인하는 javascript : ajax 실행 -->
-		                      <button class="btn btn-secondary btn-sm" type="submit">중복확인</button>
+		                      <div class="btn btn-secondary btn-sm" onclick="check()">중복확인</div>
 		                 </div>
 	                 </div>
 	                 <div class="row">   
@@ -104,9 +136,7 @@
                       <label for="yourDepartment" class="form-label">팀</label>
                       <div class="input-group has-validation">
                         <select class="form-select" aria-label="Default select example" name="teamId" id="teamId">
-						    <c:forEach var="team" items="${teams}" varStatus="status">
-						    	<option value="${team.teamId}">${team.teamName}</option>
-						    </c:forEach>
+						   
 						</select>
                       </div>
                     </div>
@@ -146,7 +176,7 @@
             </div>
           </div>
         </div>
-
+        
       </section>
 
     </div>

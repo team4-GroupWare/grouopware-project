@@ -67,5 +67,14 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.selectEmpList();
 	}
 
+	@Override
+	public boolean checkId(String empId) {
+		boolean result = false;
+		if(employeeRepository.selectEmpId(empId)==1) {
+			result=true;
+		}
+		return result;
+	}
+
 	
 }

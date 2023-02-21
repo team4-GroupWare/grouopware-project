@@ -8,4 +8,5 @@ import com.mycompany.webapp.employee.service.EmployeeService.LoginResult;
 public interface IEmployeeService {
 	public LoginResult login(Employee employee);
 	public List<Employee> getEmpList();
+	public boolean checkId(String empId);
 }

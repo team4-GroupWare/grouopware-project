@@ -3,6 +3,7 @@ package com.mycompany.webapp.employee.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -102,6 +103,13 @@ public class EmployeeController {
 		return "employee/register";
 	}
 	
+	/**
+	 * 
+	 * @author : LEEYESEUNG
+	 * @param deptId
+	 * @return teamList
+	 * @throws IOException
+	 */
 	@PostMapping(value="/teamlist")
 	@ResponseBody
 	public List<Team> teamListAjax(@Param("deptId") String deptId) throws IOException {
@@ -110,6 +118,15 @@ public class EmployeeController {
 		List<Team> teamList = teamService.getTeamListById(id);
 		
 		return teamList;
+	}
+	
+	@PostMapping(value="/check")
+	@ResponseBody
+	public boolean checkId(@Param("empId") String empId) throws IOException {
+		System.out.println(empId);
+		log.info("실행");
+		boolean result = employeeService.checkId(empId);
+		return result;
 	}
 
 }
