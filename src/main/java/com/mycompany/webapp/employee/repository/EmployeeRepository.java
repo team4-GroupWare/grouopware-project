@@ -9,6 +9,5 @@ import com.mycompany.webapp.employee.model.Employee;
 @Repository
 public interface EmployeeRepository {
 	public Employee selectByEmpId(String empId);
-
-	public List<Employee> selectEmpListByDeptId(int deptId);
+	public List<Employee> selectEmpList();
 }

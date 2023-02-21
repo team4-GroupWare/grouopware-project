@@ -42,28 +42,24 @@ public class GroupController {
 		log.info("실행");
 		
 		List<List<Team>> teams = new ArrayList<>();
-		List<List<Employee>> employees = new ArrayList<>();		
 		//부서 목록
 		List<Department> departments = departmentService.getDeptList();
 		
 		//부서 별 팀목록
 		for(Department dept : departments) {
-			teams.add(teamService.getTeamList(dept.getDeptId()));
-			employees.add(employeeService.getEmpListByDeptId(dept.getDeptId()));
-			
+			teams.add(teamService.getTeamListById(dept.getDeptId()));
 			log.info(teams);
-			log.info(employees);
 		}
 		
 		//사원 목록
-		//List<Employee> employees = employeeService.getEmpList();
-		//log.info(employees);
+		List<Employee> employees = employeeService.getEmpList();
+		log.info(employees);
 		
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		model.addAttribute("employees", employees);
 		
-		return "hr/hr";
+		return "hr/hr2";
 	}
 	
 }

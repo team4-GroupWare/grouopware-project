@@ -63,8 +63,9 @@ public class EmployeeService implements IEmployeeService {
 	}
 
 	@Override
-	public List<Employee> getEmpListByDeptId(int deptId) {
-		return employeeRepository.selectEmpListByDeptId(deptId);
+	public List<Employee> getEmpList() {
+		return employeeRepository.selectEmpList();
 	}
+
 	
 }
