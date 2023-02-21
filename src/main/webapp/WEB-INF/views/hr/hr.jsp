@@ -51,52 +51,53 @@
 		        	<div class="col-lg-12">
 		          		<div style="text-align: right"><button type="button" class="btn btn-primary">+ 사원추가</button></div>
 		          		<!-- ********대표이사******** -->
+		          		
 		          		<c:forEach var="dept" items="${departments}" varStatus="status">
 			          		<div class="row align-items-top mb-5">
 			          			<h4><b>${dept.deptName}</b></h4>
-				        		<div class="col-lg-6">
-					          		<!-- Card with an image on left -->
-					          		<c:forEach var="team" items="${teams[status.index]}">
-						          		<h5><b>&nbsp;&nbsp;${team.teamName}</b></h5>
-						          		<div class="card mb-3">
-						            		<div class="row g-0">
-						              			<div class="col-md-4">
-						                			<img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" class="img-fluid rounded-start" style="height:100%">
-						              			</div>
-						              			<div class="col-md-8">
-						                			<div class="card-body">
-						                  				<h5 class="card-title"><b>아저씨</b> <span>대표이사</span></h5>
-						                  				<div class="row">
-						                  					<div class="col-4">
-						                  	  					<i class="bi bi-telephone-fill"></i>   <span style="color:#808080">Phone</span>
-						                  					</div>
-															<div class="col-8">
-																<p>010-1111-1111</p>
-															</div>
-						                  				</div>
-						                  				<div class="row">
-						                  					<div class="col-4">
-						                  	  					<i class="bi bi-envelope"></i>   <span style="color:#808080">Email</span>
-						                  					</div>
-															<div class="col-8">
-																<p>test@mycompany.com</p>
-															</div>
-						                  				</div>
-						                  				<div style="text-align: right">
-						                  					<button type="button" class="btn btn-outline-primary">Send Email</button>
-						                  				</div>
-						                			</div>
-						              			</div>
-						            		</div>
-						          		</div><!-- End Card with an image on left -->
-					          		</c:forEach>
-				        		</div>
+			          			<c:forEach var="team" items="${teams[status.index]}">
+			          				<h5><b>&nbsp;&nbsp;${team.teamName}</b></h5>
+			          				<c:forEach var="employee" items="${employees[status.index]}">
+			          					
+							        		<div class="col-lg-6">
+								          		<!-- Card with an image on left -->
+								          		<div class="card mb-3">
+								            		<div class="row g-0">
+								              			<div class="col-md-4">
+								                			<img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" class="img-fluid rounded-start" style="height:100%">
+								              			</div>
+								              			<div class="col-md-8">
+								                			<div class="card-body">
+								                  				<h5 class="card-title"><b>${employee.name}</b> <span>${employee.gradeId}</span></h5>
+								                  				<div class="row">
+								                  					<div class="col-4">
+								                  	  					<i class="bi bi-telephone-fill"></i>   <span style="color:#808080">Phone</span>
+								                  					</div>
+																	<div class="col-8">
+																		<p>${employee.phone}</p>
+																	</div>
+								                  				</div>
+								                  				<div class="row">
+								                  					<div class="col-4">
+								                  	  					<i class="bi bi-envelope"></i>   <span style="color:#808080">Email</span>
+								                  					</div>
+																	<div class="col-8">
+																		<p>${employee.empId}@mycompany.com</p>
+																	</div>
+								                  				</div>
+								                  				<div style="text-align: right">
+								                  					<button type="button" class="btn btn-outline-primary">Send Email</button>
+								                  				</div>
+								                			</div>
+								              			</div>
+								            		</div>
+								          		</div><!-- End Card-->
+				        					</div>
+				        			</c:forEach>
+				        		</c:forEach>
 				      		</div>
 			      		</c:forEach>
 			      		<!-- ********대표이사 끝******** -->
-			      
-			      		
-			        		
 		        	</div><!-- End Right side columns -->
 	      		</div>
 			</section>

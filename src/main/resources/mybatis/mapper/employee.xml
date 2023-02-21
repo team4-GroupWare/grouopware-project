@@ -25,9 +25,12 @@
 
 	<select id="selectEmpList" resultType="employee">
 		<![CDATA[
-			SELECT EMP_ID as empId, 
+			SELECT e.EMP_ID as empId, 
 				MANAGER_ID as managerId, 
-				DEPT_ID as deptId, TEAM_ID as teamId,
+				e.DEPT_ID as deptId,
+                dept_name as deptName,
+                e.TEAM_ID as teamId,
+                team_name as teamName,
        			GRADE_ID as gradeId, 
        			EMP_NO as empNo, 
        			PASSWORD, 
@@ -41,8 +44,9 @@
       			DAYOFF_REMAIN as dayoffRemain, 
       			ADD_DAYOFF_REMAIN as addDayoffRemain, 
       			INITIAL_PASSWORD as initialPassword
-      		FROM EMPLOYEES
-			ORDER BY dept_id, team_id, grade_id desc
+      		FROM EMPLOYEES e, departments d, teams t
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id
+			ORDER BY grade_id
 		]]>
 	</select>
 	

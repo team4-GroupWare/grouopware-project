@@ -36,14 +36,14 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">아이디</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="empId" class="form-control" id="yourUsername" placeholder="ID" required>
+                        <input type="text" name="empId" class="form-control" id="yourUsername" placeholder="test1" value="test1" required>
                         <div class="invalid-feedback">아이디를 입력해주세요.</div>
                       </div>
                     </div>
 
                     <div class="col-12 pb-3">
                       <label for="yourPassword" class="form-label">비밀번호</label>
-                      <input type="password" name="password" class="form-control" placeholder="Password" id="yourPassword" required>
+                      <input type="password" name="password" class="form-control" placeholder="1234" value="1234" id="yourPassword" required>
                       <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                     </div>
                     <div class="col-12 pb-2 mx-auto" style="width:250px;">

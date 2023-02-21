@@ -41,7 +41,7 @@ public class GroupController {
 	public String getDeptList(Model model) {
 		log.info("실행");
 		
-		List<List<Team>> teams = new ArrayList<>();		
+		List<List<Team>> teams = new ArrayList<>();
 		//부서 목록
 		List<Department> departments = departmentService.getDeptList();
 		
@@ -58,7 +58,8 @@ public class GroupController {
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		model.addAttribute("employees", employees);
-		return "hr/hr";
+		
+		return "hr/hr2";
 	}
 	
 }

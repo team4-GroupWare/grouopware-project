@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// true 리턴시 controller를 실행 (false는 실행x)
 		log.info("실행");
 		HttpSession session = request.getSession();
-		Employee employee = (Employee) session.getAttribute("employee");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		if(employee == null) {
 			response.sendRedirect(request.getContextPath() + "/employee/login");
 			return false;
