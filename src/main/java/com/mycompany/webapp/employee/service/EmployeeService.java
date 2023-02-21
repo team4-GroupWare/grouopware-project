@@ -1,5 +1,7 @@
 package com.mycompany.webapp.employee.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,6 +60,11 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	private Employee getEmployee(String empId) {
 		return employeeRepository.selectByEmpId(empId);
+	}
+
+	@Override
+	public List<Employee> getEmpList() {
+		return employeeRepository.selectEmpList();
 	}
 	
 }

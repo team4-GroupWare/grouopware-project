@@ -2,12 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.employee.repository.EmployeeRepository">
 
-	<select id="selectByEmpId" parameterType="String" resultType="com.mycompany.webapp.employee.model.Employee">
-		select EMP_ID as empId , MANAGER_ID as managerId, DEPT_ID as deptId, TEAM_ID as teamId,
-		 GRADE_ID as gradeId, EMP_NO as empNo, PASSWORD, NAME, PHONE, BIRTH, HIRE_DATE as hireDate, RESIGN_DATE as resignDate, PROFILE_CONTENT_TYPE as profileContentType,
-		PROFILE_DATA as profileData, DAYOFF_REMAIN as dayoffRemain, ADD_DAYOFF_REMAIN as addDayoffRemain, INITIAL_PASSWORD as initialPassword
-		from EMPLOYEES
-		where EMP_ID = #{empId}
+	<select id="selectByEmpId" parameterType="String" resultType="employee">
+		select EMP_ID as empId, 
+				MANAGER_ID as managerId, 
+				DEPT_ID as deptId, TEAM_ID as teamId,
+       			GRADE_ID as gradeId, 
+       			EMP_NO as empNo, 
+       			PASSWORD, 
+       			NAME, 
+       			PHONE, 
+       			BIRTH, 
+       			HIRE_DATE as hireDate, 
+       			RESIGN_DATE as resignDate, 
+       			PROFILE_CONTENT_TYPE as profileContentType,
+      			PROFILE_DATA as profileData, 
+      			DAYOFF_REMAIN as dayoffRemain, 
+      			ADD_DAYOFF_REMAIN as addDayoffRemain, 
+      			INITIAL_PASSWORD as initialPassword
+      from EMPLOYEES
+      where EMP_ID = #{empId}
 	</select>
 
+	<select id="selectEmpList" resultType="employee">
+		<![CDATA[
+			SELECT EMP_ID as empId, 
+				MANAGER_ID as managerId, 
+				DEPT_ID as deptId, TEAM_ID as teamId,
+       			GRADE_ID as gradeId, 
+       			EMP_NO as empNo, 
+       			PASSWORD, 
+       			NAME, 
+       			PHONE, 
+       			BIRTH, 
+       			HIRE_DATE as hireDate, 
+       			RESIGN_DATE as resignDate, 
+       			PROFILE_CONTENT_TYPE as profileContentType,
+      			PROFILE_DATA as profileData, 
+      			DAYOFF_REMAIN as dayoffRemain, 
+      			ADD_DAYOFF_REMAIN as addDayoffRemain, 
+      			INITIAL_PASSWORD as initialPassword
+      		FROM EMPLOYEES
+			ORDER BY dept_id, team_id, grade_id desc
+		]]>
+	</select>
 </mapper>

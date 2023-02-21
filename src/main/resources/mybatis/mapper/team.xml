@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.group.repository.TeamRepository">
+
+	<select id="selectTeamByDept" parameterType="int" resultType="team">
+		<![CDATA[
+			select team_id as teamId, team_name as teamName
+			from teams
+			where dept_id = #{deptId}
+		]]>
+	</select>
+
+</mapper>

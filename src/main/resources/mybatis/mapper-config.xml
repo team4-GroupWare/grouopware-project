@@ -4,6 +4,8 @@
 	<typeAliases>
 		<typeAlias type="com.mycompany.webapp.noticeboard.model.NoticeBoard" alias="board"/>
 		<typeAlias type="com.mycompany.webapp.group.model.Department" alias="department"/>
+		<typeAlias type="com.mycompany.webapp.group.model.Team" alias="team"/>
+		<typeAlias type="com.mycompany.webapp.employee.model.Employee" alias="employee"/>
 		<typeAlias type="com.mycompany.webapp.Pager" alias="pager"/>
 	</typeAliases>
 </configuration>

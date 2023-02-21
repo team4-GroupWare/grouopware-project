@@ -4,8 +4,8 @@
 
 	<select id="selectDeptAll" resultType="department">
 		<![CDATA[
-			select dept_id, dept_name
-			from departments
+			SELECT dept_id as deptId, dept_name as deptName
+			FROM departments
 		]]>
 	</select>
 

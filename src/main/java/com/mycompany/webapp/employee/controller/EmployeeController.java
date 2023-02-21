@@ -60,7 +60,7 @@ public class EmployeeController {
 		}
 		
 		session.setAttribute("loginEmployee", employee);
-		return "home";
+		return "redirect:/";
 	}
 	
 	/**
