@@ -24,5 +24,7 @@ public class Employee {
 	private int addDayoffRemain;
 	private boolean initialPassword;
 	
+	private String teamName;
+	private String deptName;
 	
 }
