@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Team;
 import com.mycompany.webapp.group.service.IDepartmentService;
@@ -26,10 +28,10 @@ public class GroupController {
 	private ITeamService teamService;
 	
 	@Autowired
-	//private IEmployeeService employeeService;
+	private IEmployeeService employeeService;
 	
 	/**
-	 * 부서 이름 목록 메서드
+	 * 조직도 기능
 	 * 
 	 * @author : LEEJIHO
 	 * @param model
@@ -39,14 +41,23 @@ public class GroupController {
 	public String getDeptList(Model model) {
 		log.info("실행");
 		
-		List<List<Team>> teamList = new ArrayList<>();		
+		List<List<Team>> teams = new ArrayList<>();		
+		//부서 목록
 		List<Department> departments = departmentService.getDeptList();
+		
+		//부서 별 팀목록
 		for(Department dept : departments) {
-			teamList.add(teamService.getTeamList(dept.getDeptId()));
-			log.info(teamList);
+			teams.add(teamService.getTeamList(dept.getDeptId()));
+			log.info(teams);
 		}
+		
+		//사원 목록
+		List<Employee> employees = employeeService.getEmpList();
+		log.info(employees);
+		
 		model.addAttribute("departments", departments);
-		model.addAttribute("teamList", teamList);
+		model.addAttribute("teams", teams);
+		model.addAttribute("employees", employees);
 		return "hr/hr";
 	}
 	
