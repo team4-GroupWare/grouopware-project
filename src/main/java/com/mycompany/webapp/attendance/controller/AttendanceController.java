@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.attendance.model.Attendance;
@@ -89,4 +88,20 @@ public class AttendanceController {
 		
 	}
 	
+	@GetMapping("/leave")
+	public void leave(HttpSession session){
+		log.info("실행");
+		//로그인한 사원의 ID
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		
+		//오늘날짜 생성
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
+		String attDate = simpleDateFormat1.format(date);
+		
+		int result = attendanceService.updateLeave(attDate,empId);
+		System.out.println(result+ "=result");
+		
+	}
 }

@@ -31,6 +31,13 @@ public class AttendanceService implements IAttendanceService {
 		return result;
 	}
 
+	@Override
+	public int updateLeave(String attDate, String empId) {
+		log.info("실행");
+		int result = attendanceRepository.updateLeave(attDate, empId);
+		return 0;
+	}
+
 	
 
 }

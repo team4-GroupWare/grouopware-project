@@ -10,6 +10,7 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	<script>
 	  		$(document).ready(function() {
+	  			/* 페이지 로드되면 로그인한 사원의 출근정보 가져오기 */
 	  			$.ajax({
 	  				url : "/webapp/attendanceinfo"
 	  				
@@ -17,8 +18,6 @@
 	  				let status; 
 	  				let clockIn;
 	  				let clockOut;
-	  				
-	  				
 	  				
 	  				if(data.status == null){
 	  					status = "미출근";
@@ -42,8 +41,28 @@
 	  				$("#clockIn").html(clockIn);
 	  				$("#clockOut").html(clockOut);
 	  				
+	  				/* 출근 정보에 따른 버튼 활성화 유무 */
+	  				if(data.clockIn != null && data.clockOut == null){
+		  				/* 출근o, 퇴근x
+		  				퇴근버튼만 활성화 */
+		  				const target1 = document.getElementById('btn-attendance');
+						target1.disabled = true;
+						target1.setAttribute( 'style', 'opacity: 0.1' )
+						
+						const target2 = document.getElementById('btn-leave');
+						target2.disabled = false;
+						target2.removeAttribute( 'style' )
+	  				}	
+	  					else if(data.clockIn != null && data.clockOut != null){
+		  				/* 출근o, 퇴근o or status==휴가
+		  				둘다 비활성화 */
+		  				const target1 = document.getElementById('btn-attendance');
+						target1.disabled = true;
+						target1.setAttribute( 'style', 'opacity: 0.1' )
+	  				}
 	  				
 	  			});
+	  			
 	  		});
 	  	</script>
 	  	
@@ -149,12 +168,22 @@
 								<!-- 출퇴근 버튼 -->
 								<div>
 									<script>
+									function setClock2(){
+										console.log("setClock2() 실행");
+						          	    var dateInfo = new Date(); 
+						          	    var hour = modifyNumber1(dateInfo.getHours());
+						          	    var min = modifyNumber1(dateInfo.getMinutes());
+						          	    var sec = modifyNumber1(dateInfo.getSeconds());
+						          	    document.getElementById("clockOut").innerHTML = hour + ":" + min  + ":" + sec;
+						          	    console.log(hour);
+						          	}
 									function setClock1(){
 						          	    var dateInfo = new Date(); 
 						          	    var hour = modifyNumber1(dateInfo.getHours());
 						          	    var min = modifyNumber1(dateInfo.getMinutes());
 						          	    var sec = modifyNumber1(dateInfo.getSeconds());
 						          	    document.getElementById("clockIn").innerHTML = hour + ":" + min  + ":" + sec;
+						          	    console.log(hour);
 						          	}
 						          	function modifyNumber1(time){
 						          	    if(parseInt(time)<10){
@@ -183,6 +212,15 @@
 										target2.removeAttribute( 'style' )
 									}
 									function btnLeave()  {
+										console.log("btnLeave()실행")
+										$.ajax({
+											url:"/webapp/leave"
+											
+										}).done((data)=>{
+											console.log(data);
+											setClock2();
+											
+										});
 										const target1 = document.getElementById('btn-leave');
 										target1.disabled = true;
 										target1.setAttribute( 'style', 'opacity: 0.1' )

@@ -8,6 +8,8 @@ public interface IAttendanceService {
 
 	int insertAttendance(Attendance attendance);
 
+	int updateLeave(String attDate, String empId);
+
 
 
 }

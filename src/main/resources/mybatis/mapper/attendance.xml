@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.attendance.repository.AttendanceRepository">
 
 	<select id="selectAttendance" parameterType="map" resultType="attendance">
-		select TO_char(clock_in, 'HH:MI:SS') as clockIn ,TO_char(clock_out, 'HH:MI:SS') as clockOut, attendance_date as attendanceDate, status
+		select TO_char(clock_in, 'HH24:MI:SS') as clockIn ,TO_char(clock_out, 'HH24:MI:SS') as clockOut, attendance_date as attendanceDate, status
 		from attendance
 		where emp_id= #{empId} 
 		and TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate} 	
@@ -16,4 +16,10 @@
 		VALUES
 			(seq_attendance.NEXTVAL,#{empId} ,sysdate, null ,sysdate, #{status})
 	</insert>
+	
+	<update id="updateLeave" parameterType="map">
+		UPDATE ATTENDANCE
+		SET CLOCK_OUT = SYSDATE
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate}
+	</update>
 </mapper>

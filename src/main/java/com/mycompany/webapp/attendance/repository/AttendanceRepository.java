@@ -10,4 +10,6 @@ public interface AttendanceRepository {
 
 	public int insertAttendance(Attendance attendance);
 
+	public int updateLeave(@Param("attDate")String attDate, @Param("empId")String empId);
+
 }
