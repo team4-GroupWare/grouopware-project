@@ -61,7 +61,7 @@ public class GroupController {
 		
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
-		model.addAttribute("employees", teams);
+		model.addAttribute("employees", employees);
 		
 		return "hr/hr";
 	}
