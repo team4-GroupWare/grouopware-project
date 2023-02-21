@@ -23,7 +23,7 @@
       where EMP_ID = #{empId}
 	</select>
 
-	<select id="selectEmpList" resultType="employee">
+	<select id="selectEmpListByDeptId" parameterType="int" resultType="employee">
 		<![CDATA[
 			SELECT EMP_ID as empId, 
 				MANAGER_ID as managerId, 
@@ -42,7 +42,8 @@
       			ADD_DAYOFF_REMAIN as addDayoffRemain, 
       			INITIAL_PASSWORD as initialPassword
       		FROM EMPLOYEES
-			ORDER BY dept_id, team_id, grade_id desc
+      		WHERE dept_id = #{deptId}
+			ORDER BY dept_id, team_id, grade_id
 		]]>
 	</select>
 </mapper>
