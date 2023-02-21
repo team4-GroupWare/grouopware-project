@@ -53,7 +53,7 @@ public class GroupController {
 		
 		//사원 목록
 		List<Employee> employees = employeeService.getEmpList();
-		log.info(employees);
+		log.info(employees.size());
 		
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
