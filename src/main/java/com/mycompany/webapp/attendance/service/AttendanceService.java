@@ -26,8 +26,9 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public int insertAttendance(Attendance attendance) {
-		
-		return 0;
+		log.info("실행");
+		int result = attendanceRepository.insertAttendance(attendance);
+		return result;
 	}
 
 	

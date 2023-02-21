@@ -18,9 +18,7 @@
 	  				let clockIn;
 	  				let clockOut;
 	  				
-	  				console.log(status);
-	  				console.log(clockIn);
-	  				console.log(clockOut);
+	  				
 	  				
 	  				if(data.status == null){
 	  					status = "미출근";
@@ -31,7 +29,7 @@
 	  				if(data.clockIn == null){
 	  					clockIn = "-- : -- : --";
 	  				} else{
-	  					clockIn = data.status;
+	  					clockIn = data.clockIn;
 	  				}
 	  				
 	  				if(data.clockOut == null){
@@ -151,11 +149,29 @@
 								<!-- 출퇴근 버튼 -->
 								<div>
 									<script>
-									function btnAtt()  {
+									function setClock1(){
+						          	    var dateInfo = new Date(); 
+						          	    var hour = modifyNumber1(dateInfo.getHours());
+						          	    var min = modifyNumber1(dateInfo.getMinutes());
+						          	    var sec = modifyNumber1(dateInfo.getSeconds());
+						          	    document.getElementById("clockIn").innerHTML = hour + ":" + min  + ":" + sec;
+						          	}
+						          	function modifyNumber1(time){
+						          	    if(parseInt(time)<10){
+						          	        return "0"+ time;
+						          	    }
+						          	    else
+						          	        return time;
+						          	}
+									function btnAtt(){
+										console.log("btnAtt()실행")
 										$.ajax({
 											url:"/webapp/attendance"
 											
 										}).done((data)=>{
+											console.log(data);
+											$("#status").html(data.status);
+											setClock1();
 											
 										});
 										const target1 = document.getElementById('btn-attendance');

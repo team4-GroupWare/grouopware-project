@@ -9,8 +9,8 @@ import lombok.Data;
 public class Attendance {
 	private int attendanceId;
 	private String empId;
-	private Timestamp clockIn;
-	private Timestamp clockOut;
+	private String clockIn;
+	private String clockOut;
 	private Date attendanceDate;
 	private String status;
 }

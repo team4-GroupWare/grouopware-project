@@ -8,4 +8,6 @@ public interface AttendanceRepository {
 
 	public Attendance selectAttendance(@Param("attDate")String attDate, @Param("empId")String empId);
 
+	public int insertAttendance(Attendance attendance);
+
 }

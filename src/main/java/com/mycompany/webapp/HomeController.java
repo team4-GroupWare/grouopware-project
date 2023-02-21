@@ -20,6 +20,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
+		log.info("실행");
 		return "main";
 	}
 	

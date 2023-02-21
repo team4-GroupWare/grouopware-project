@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.attendance.model.Attendance;
 import com.mycompany.webapp.attendance.service.IAttendanceService;
+import com.mycompany.webapp.employee.model.Employee;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -34,11 +35,14 @@ public class AttendanceController {
 	public Attendance attendanceInfo(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
 		log.info("실행");
 		//로그인한 사원의 ID
-		String empId = "yeoni";
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
 		//오늘의 날짜
 		Date date = new Date();
-		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMDD");
+		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
 		String attDate = simpleDateFormat1.format(date);
+		log.info(empId);
+		log.info(attDate);
 		//로그인한 사원의 오늘의 출결 정보 가져오기
 		attendance = attendanceService.getAttendance(attDate,empId);
 		log.info(attendance);
@@ -48,10 +52,11 @@ public class AttendanceController {
 	
 	@GetMapping("/attendance")
 	@ResponseBody
-	public Attendance attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
+	public void attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
 		log.info("실행");
 		//로그인한 사원의 ID
-		String empId = "yeoni";
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
 		attendance.setEmpId(empId);
 		//현재시간 생성
 		Date date = new Date();
@@ -70,9 +75,18 @@ public class AttendanceController {
 		}
 		//출근 행 넣어줌
 		int result = attendanceService.insertAttendance(attendance);
-		if()
+		//status
+		JSONObject jsonobject = new JSONObject();
+		jsonobject.put("status", attendance.getStatus());
+		String json = jsonobject.toString();
 		
-		return attendance;
+		response.setContentType("application/json; charset=UTF-8");
+		
+		PrintWriter pw = response.getWriter();
+		pw.println(json);
+		pw.flush();
+		pw.close();
+		
 	}
 	
 }
