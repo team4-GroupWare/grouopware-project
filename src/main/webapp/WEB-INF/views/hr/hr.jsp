@@ -55,9 +55,9 @@
 		          		<c:forEach var="dept" items="${departments}" varStatus="status">
 			          		<div class="row align-items-top mb-5">
 			          			<h4><b>${dept.deptName}</b></h4>
-			          			<c:forEach var="team" items="${teams[status.index]}">
+			          			<c:forEach var="team" items="${teams[status.index]}" >
 			          				<h5><b>&nbsp;&nbsp;${team.teamName}</b></h5>
-			          				<c:forEach var="employee" items="${employees[status.index]}">
+			          				<c:forEach var="employee" begin="1" end="${fn:length(team)}" items="${employees[status.index]}">
 			          					
 							        		<div class="col-lg-6">
 								          		<!-- Card with an image on left -->
