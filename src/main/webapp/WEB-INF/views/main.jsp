@@ -29,13 +29,13 @@
 	  				}
 	  				
 	  				if(data.clockIn == null){
-	  					clockIn = "-- : -- :--";
+	  					clockIn = "-- : -- : --";
 	  				} else{
 	  					clockIn = data.status;
 	  				}
 	  				
 	  				if(data.clockOut == null){
-	  					clockOut = "-- : -- :--";
+	  					clockOut = "-- : -- : --";
 	  				} else{
 	  					clockOut = data.clockOut;
 	  				}
@@ -152,6 +152,12 @@
 								<div>
 									<script>
 									function btnAtt()  {
+										$.ajax({
+											url:"/webapp/attendance"
+											
+										}).done((data)=>{
+											
+										});
 										const target1 = document.getElementById('btn-attendance');
 										target1.disabled = true;
 										target1.setAttribute( 'style', 'opacity: 0.1' )
@@ -178,7 +184,7 @@
 											onclick="btnAtt()"
 											/>
 										    <div>출근하기</div> 
-										    <div id="clockIn">-- : -- : --</div>
+										    <div id="clockIn"></div>
 										</div><!-- End 출근하기 버튼 -->
 										
 										<!-- 퇴근하기 버튼 -->
@@ -193,7 +199,7 @@
 											onclick="btnLeave()" 
 											/>
 											<div>퇴근하기</div>
-											<div id="clockOut">-- : -- : --</div>
+											<div id="clockOut"></div>
 										</div><!-- End퇴근하기 버튼 -->
 									</div>
 								

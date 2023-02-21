@@ -6,4 +6,8 @@ public interface IAttendanceService {
 
 	Attendance getAttendance(String attDate, String empId);
 
+	int insertAttendance(Attendance attendance);
+
+
+
 }

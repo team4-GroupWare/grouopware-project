@@ -24,4 +24,12 @@ public class AttendanceService implements IAttendanceService {
 		return attendance;
 	}
 
+	@Override
+	public int insertAttendance(Attendance attendance) {
+		
+		return 0;
+	}
+
+	
+
 }

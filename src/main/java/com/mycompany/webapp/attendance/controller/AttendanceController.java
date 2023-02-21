@@ -31,8 +31,7 @@ public class AttendanceController {
 	
 	@GetMapping("/attendanceinfo")
 	@ResponseBody
-	public Attendance attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
-		
+	public Attendance attendanceInfo(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
 		log.info("실행");
 		//로그인한 사원의 ID
 		String empId = "yeoni";
@@ -43,6 +42,35 @@ public class AttendanceController {
 		//로그인한 사원의 오늘의 출결 정보 가져오기
 		attendance = attendanceService.getAttendance(attDate,empId);
 		log.info(attendance);
+		
+		return attendance;
+	}
+	
+	@GetMapping("/attendance")
+	@ResponseBody
+	public Attendance attendance(Attendance attendance, HttpSession session,HttpServletResponse response ,Model model) throws IOException{
+		log.info("실행");
+		//로그인한 사원의 ID
+		String empId = "yeoni";
+		attendance.setEmpId(empId);
+		//현재시간 생성
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH");
+		int time = Integer.parseInt(simpleDateFormat2.format(date));
+		
+		// 시간에 따른 status attendance에 추가
+		// 1) 반차를 쓰지 않았을 경우
+		if (time <= 8) {
+			// 8시 전에 출근을 눌렀을 때
+			attendance.setStatus("출근");
+		
+		} else if(8 < time && time < 18) {
+			// 9시 이후 ~ 18시이전에 출근을 눌렀을 때
+			attendance.setStatus("지각");
+		}
+		//출근 행 넣어줌
+		int result = attendanceService.insertAttendance(attendance);
+		if()
 		
 		return attendance;
 	}
