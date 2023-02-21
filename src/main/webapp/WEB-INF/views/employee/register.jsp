@@ -34,12 +34,12 @@
                   <form class="row g-3 needs-validation" novalidate>
                     <div class="col-6"  style="width:400px" >
                       <label for="yourName" class="form-label">아이디</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
+                      <input type="text" name="empId" class="form-control" id="empId" required>
                       <div class="invalid-feedback">아이디를 입력해주세요</div>
                     </div>
                     
                     <div class="col-4"  style="width:150px" >
-                      <label for="yourName" class="form-label d-none d-lg-block" style="color:white">중복확인</label>
+                      <label for="check" class="form-label d-none d-lg-block" style="color:white">중복확인</label>
                       <button class="btn btn-secondary btn-sm" type="submit">중복확인</button>
                     </div>
                     
@@ -54,7 +54,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">이름</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input type="text" name="name" class="form-control" id="name" required>
                         <div class="invalid-feedback">이름을 입력해주세요.</div>
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="col-12">
                       <label for="yourPhone" class="form-label">전화번호</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="userphone" class="form-control" id="yourPhone" required>
+                        <input type="text" name="phone" class="form-control" id="phone" required>
                         <div class="invalid-feedback">전화번호를 입력해주세요.</div>
                       </div>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="col-12">
                       <label for="yourBirthday" class="form-label">생년월일</label>
                       <div class="input-group has-validation" style="width:250px">
-                        <input type="date" name="userbirthday" class="form-control" id="yourBirthday"  required>
+                        <input type="date" name="birth" class="form-control" id="birth"  required>
                         <div class="invalid-feedback">생년월일을 입력해주세요.</div>
                       </div>
                     </div>

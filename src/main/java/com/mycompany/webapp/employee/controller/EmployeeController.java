@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,13 @@ public class EmployeeController {
 		return "employee/login";
 	}
 	
+	/**
+	 * 
+	 * @param employee : 사원 정보 DTO
+	 * @param model : 화면에 로그인 에러 메세지 나타냄
+	 * @param session : loginEmployee을 담을 세션
+	 * @return : 잘못된 로그인일 때 login, 초기 비밀번호시 change 페이지로 리다이렉트, 그렇지 않으면 홈으로 리다이렉트
+	 */
 	@PostMapping("/login")
 	public String login(Employee employee, Model model, HttpSession session) {
 		log.info("실행");
@@ -53,6 +61,21 @@ public class EmployeeController {
 		
 		session.setAttribute("loginEmployee", employee);
 		return "home";
+	}
+	
+	/**
+	 * 
+	 * @return 회원 등록 페이지
+	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
+	 */
+	@GetMapping("/register")
+	public String register(Model model) {
+		log.info("실행");
+		//부서 List
+		//팀 List
+		//직급 List
+		//manager List
+		return "employee/register";
 	}
 
 }
