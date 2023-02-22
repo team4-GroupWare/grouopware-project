@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 
 @Repository
 public interface EmployeeRepository {
 	public Employee selectByEmpId(String empId);
-	public List<Employee> selectEmpList();
+	public List<Employee> selectEmpList(Pager pager);
+	public int selectEmpCount();
+	public int selectSearchEmpCount(Employee employee);
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.employee.model.Employee;
@@ -110,6 +111,15 @@ public class EmployeeController {
 		List<Team> teamList = teamService.getTeamListById(id);
 		
 		return teamList;
+	}
+	
+	@GetMapping("/empinfo")
+	@ResponseBody
+	public Employee employeeInfo(@RequestParam("empId") String empId) {
+		log.info("실행");
+		Employee employee = employeeService.getEmp(empId);
+		log.info(employee);
+		return employee;
 	}
 
 }

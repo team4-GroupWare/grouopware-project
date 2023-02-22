@@ -6,7 +6,7 @@
 	<!-- Logo -->
 	<div class="d-flex align-items-center justify-content-between">
 		<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
-	<a href="index2.html" class="logo d-flex align-items-center">
+	<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
 		<span class="d-none d-lg-block">엑사아이엔티</span>
 	</a>
 	</div>
@@ -14,9 +14,9 @@
 	<!-- Dropbar -->
 	<div class="menudropbar d-flex align-items-center justify-content-between">
    		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
-     		<option value="index2.html">오피스 홈</option>
+     		<option value="${pageContext.request.contextPath}/">오피스 홈</option>
      		<option value="attendance-status.html">근태관리</option>
-     		<option value="hr.html" selected>인사</option>
+     		<option value="${pageContext.request.contextPath}/hr/list">인사</option>
      		<option value="approval_list.html">전자결재</option>
      		<option value="email/email_list.html">메일</option>
      		<option value="5">공지사항</option>

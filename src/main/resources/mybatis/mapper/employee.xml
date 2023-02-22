@@ -3,52 +3,72 @@
 <mapper namespace="com.mycompany.webapp.employee.repository.EmployeeRepository">
 
 	<select id="selectByEmpId" parameterType="String" resultType="employee">
-		select EMP_ID as empId, 
-				MANAGER_ID as managerId, 
-				DEPT_ID as deptId, TEAM_ID as teamId,
-       			GRADE_ID as gradeId, 
-       			EMP_NO as empNo, 
+		<![CDATA[
+			SELECT e.EMP_ID as "empId", 
+				MANAGER_ID as "managerId", 
+				e.DEPT_ID as "deptId",
+                dept_name as "deptName",
+                e.TEAM_ID as "teamId",
+                team_name as "teamName",
+       			e.GRADE_ID as "gradeId", 
+                grade_name as "gradeName",
+       			EMP_NO as "empNo", 
        			PASSWORD, 
        			NAME, 
        			PHONE, 
        			BIRTH, 
-       			HIRE_DATE as hireDate, 
-       			RESIGN_DATE as resignDate, 
-       			PROFILE_CONTENT_TYPE as profileContentType,
-      			PROFILE_DATA as profileData, 
-      			DAYOFF_REMAIN as dayoffRemain, 
-      			ADD_DAYOFF_REMAIN as addDayoffRemain, 
-      			INITIAL_PASSWORD as initialPassword
-      from EMPLOYEES
-      where EMP_ID = #{empId}
+       			HIRE_DATE as "hireDate", 
+       			RESIGN_DATE as "resignDate", 
+       			PROFILE_CONTENT_TYPE as "profileContentType",
+      			PROFILE_DATA as "profileData", 
+      			DAYOFF_REMAIN as "dayoffRemain", 
+      			ADD_DAYOFF_REMAIN as "addDayoffRemain", 
+      			INITIAL_PASSWORD as "initialPassword"
+      		FROM EMPLOYEES e, departments d, teams t, grade g
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id and g.grade_id=e.grade_id
+                and e.emp_id=#{empId}
+		]]>
 	</select>
 
-	<select id="selectEmpList" resultType="employee">
+	<select id="selectEmpList" parameterType="pager" resultType="employee">
 		<![CDATA[
-			SELECT e.EMP_ID as empId, 
-				MANAGER_ID as managerId, 
-				e.DEPT_ID as deptId,
-                dept_name as deptName,
-                e.TEAM_ID as teamId,
-                team_name as teamName,
-       			GRADE_ID as gradeId, 
-       			EMP_NO as empNo, 
+			SELECT e.EMP_ID as "empId", 
+				MANAGER_ID as "managerId", 
+				e.DEPT_ID as "deptId",
+                dept_name as "deptName",
+                e.TEAM_ID as "teamId",
+                team_name as "teamName",
+       			e.GRADE_ID as "gradeId", 
+                grade_name as "gradeName",
+       			EMP_NO as "empNo", 
        			PASSWORD, 
        			NAME, 
        			PHONE, 
        			BIRTH, 
-       			HIRE_DATE as hireDate, 
-       			RESIGN_DATE as resignDate, 
-       			PROFILE_CONTENT_TYPE as profileContentType,
-      			PROFILE_DATA as profileData, 
-      			DAYOFF_REMAIN as dayoffRemain, 
-      			ADD_DAYOFF_REMAIN as addDayoffRemain, 
-      			INITIAL_PASSWORD as initialPassword
-      		FROM EMPLOYEES e, departments d, teams t
-            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id
-			ORDER BY grade_id
+       			HIRE_DATE as "hireDate", 
+       			RESIGN_DATE as "resignDate", 
+       			PROFILE_CONTENT_TYPE as "profileContentType",
+      			PROFILE_DATA as "profileData", 
+      			DAYOFF_REMAIN as "dayoffRemain", 
+      			ADD_DAYOFF_REMAIN as "addDayoffRemain", 
+      			INITIAL_PASSWORD as "initialPassword"
+      		FROM EMPLOYEES e, departments d, teams t, grade g
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id and g.grade_id=e.grade_id
+			ORDER BY e.grade_id
+			OFFSET #{startRowNo}-1 ROWS
+			FETCH FIRST 10 ROWS ONLY
 		]]>
 	</select>
 	
+	<select id="selectEmpCount" resultType="int">
+		<![CDATA[
+			SELECT count(*) from EMPLOYEES
+		]]>
+	</select>
+	
+	<select id="selectSearchEmpCount" parameterType="employee" resultType="int">
+		<![CDATA[
+		]]>
+	</select>
 	
 </mapper>
