@@ -82,10 +82,14 @@ public class GroupController {
 		
 		int searchEmpRow = employeeService.getSearchEmpRows(employee);
 		Pager pager = new Pager(10, 5, searchEmpRow, pageNo);
-		log.info("행수: " + searchEmpRow);
+		log.info("검색 행수: " + searchEmpRow);
 		
+		//검색한 사원 목록
+		List<Employee> employees = employeeService.getSearchEmpList(pager, employee);
+		log.info("검색 사원: "+ employees);
 		model.addAttribute("pager", pager);
-		return null;
+		model.addAttribute("employees", employees);
+		return employees;
 		
 	}
 	

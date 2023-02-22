@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.employee.repository.EmployeeRepository">
-
+	<!-- 회원 정보 -->
 	<select id="selectByEmpId" parameterType="String" resultType="employee">
 		<![CDATA[
 			SELECT e.EMP_ID as "empId", 
@@ -30,56 +30,108 @@
 		]]>
 	</select>
 
+	<!-- 모든 사원 목록 -->
 	<select id="selectEmpList" parameterType="pager" resultType="employee">
 		<![CDATA[
 			SELECT e.EMP_ID as "empId", 
-				MANAGER_ID as "managerId", 
-				e.DEPT_ID as "deptId",
+            	MANAGER_ID as "managerId", 
+            	e.DEPT_ID as "deptId",
                 dept_name as "deptName",
                 e.TEAM_ID as "teamId",
                 team_name as "teamName",
-       			e.GRADE_ID as "gradeId", 
+                e.GRADE_ID as "gradeId", 
                 grade_name as "gradeName",
-       			EMP_NO as "empNo", 
-       			PASSWORD, 
-       			NAME, 
-       			PHONE, 
-       			BIRTH, 
-       			HIRE_DATE as "hireDate", 
-       			RESIGN_DATE as "resignDate", 
-       			PROFILE_CONTENT_TYPE as "profileContentType",
-      			PROFILE_DATA as "profileData", 
-      			DAYOFF_REMAIN as "dayoffRemain", 
-      			ADD_DAYOFF_REMAIN as "addDayoffRemain", 
-      			INITIAL_PASSWORD as "initialPassword"
-      		FROM EMPLOYEES e, departments d, teams t, grade g
+                EMP_NO as "empNo", 
+                PASSWORD, 
+                NAME, 
+                PHONE, 
+                BIRTH, 
+                HIRE_DATE as "hireDate", 
+                RESIGN_DATE as "resignDate", 
+                PROFILE_CONTENT_TYPE as "profileContentType",
+               	PROFILE_DATA as "profileData", 
+               	DAYOFF_REMAIN as "dayoffRemain", 
+               	ADD_DAYOFF_REMAIN as "addDayoffRemain", 
+               	INITIAL_PASSWORD as "initialPassword"
+            FROM EMPLOYEES e, departments d, teams t, grade g
             WHERE e.dept_id=d.dept_id and e.team_id=t.team_id and g.grade_id=e.grade_id
-			ORDER BY e.grade_id
-			OFFSET #{startRowNo}-1 ROWS
-			FETCH FIRST 10 ROWS ONLY
-		]]>
+         	ORDER BY e.grade_id
+         	OFFSET #{startRowNo}-1 ROWS
+         	FETCH FIRST 10 ROWS ONLY
+    	]]>
 	</select>
 	
+	<!-- 전체 사원 수 -->
 	<select id="selectEmpCount" resultType="int">
 		<![CDATA[
 			SELECT count(*) from EMPLOYEES
 		]]>
 	</select>
 	
+	<!-- 검색한 사원 수 -->
 	<select id="selectSearchEmpCount" parameterType="employee" resultType="int">
-		<![CDATA[
-		]]>
+		SELECT count(*)
+		FROM EMPLOYEES e, departments d, teams t
+		WHERE e.dept_id=d.dept_id and e.team_id=t.team_id
+		<choose>
+			<when test="type != null and type.equals('deptName')">
+				AND dept_name LIKE '%' ||  #{keyword} || '%'
+			</when>
+			<when test="type != null and type.equals('teamName')">
+				AND team_name LIKE '%' ||  #{keyword} || '%'
+			</when>
+			<when test="type != null and type.equals('name')">
+				AND name LIKE '%' ||  #{keyword} || '%'
+			</when>
+		</choose>
 	</select>
+	
+	<!-- 검색한 사원 목록 -->
+	<select id="selectSearchEmpList" parameterType="map" resultType="employee">
+		SELECT e.EMP_ID as "empId", 
+            	MANAGER_ID as "managerId", 
+            	e.DEPT_ID as "deptId",
+                dept_name as "deptName",
+                e.TEAM_ID as "teamId",
+                team_name as "teamName",
+                e.GRADE_ID as "gradeId", 
+                grade_name as "gradeName",
+                EMP_NO as "empNo", 
+                PASSWORD, 
+                NAME, 
+                PHONE, 
+                BIRTH, 
+                HIRE_DATE as "hireDate", 
+                RESIGN_DATE as "resignDate", 
+                PROFILE_CONTENT_TYPE as "profileContentType",
+               	PROFILE_DATA as "profileData", 
+               	DAYOFF_REMAIN as "dayoffRemain", 
+               	ADD_DAYOFF_REMAIN as "addDayoffRemain"
+		FROM EMPLOYEES e, departments d, teams t, grade g
+		WHERE e.dept_id=d.dept_id and e.team_id=t.team_id and g.grade_id=e.grade_id
+		<choose>
+			<when test="employee.type != null and employee.type.equals('deptName')">
+				AND dept_name LIKE '%' ||  #{employee.keyword} || '%'
+			</when>
+			<when test="employee.type != null and employee.type.equals('teamName')">
+				AND team_name LIKE '%' ||  #{employee.keyword} || '%'
+			</when>
+			<when test="employee.type != null and employee.type.equals('name')">
+				AND name LIKE '%' ||  #{employee.keyword} || '%'
+			</when>
+		</choose>
+		ORDER BY e.grade_id
+         	OFFSET #{pager.startRowNo}-1 ROWS
+         	FETCH FIRST 10 ROWS ONLY
+	</select>
+	
 	
 	<select id="selectEmpId" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*)
 			from employees
 			where EMP_ID = #{empId}
-	
 		]]>
-	
-	
 	</select>
 	
 	<insert id="insertEmployee" parameterType="employee">
@@ -89,7 +141,6 @@
 			values(#{empId}, #{managerId}, #{deptId}, #{teamId}, #{gradeId}, #{empNo}, 
 			#{password}, #{name}, #{phone}, #{birth}, default, default)
 		]]>
-	
 	</insert>
 	
 </mapper>
