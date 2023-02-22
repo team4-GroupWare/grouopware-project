@@ -5,6 +5,138 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<!--  -->
+	<style type="text/css">
+		/* IE */
+	select {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+	}
+	select::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
+	</style>
+	<script type="text/javascript">
+	function ListSubmit(form) {
+		if (confirm("카테고리의 배열순서를 변경하시겠습니까?")) {
+			gnum = form.category_list.options.length;
+			value_arr = "";
+
+			for (i = 0; i < gnum; i++) {
+				if (i == 0) {
+					value_arr = form.category_list.options[i].value;
+				} else {
+					value_arr = value_arr + ","
+							+ form.category_list.options[i].value;
+				}
+			}
+
+			form.category_code.value = value_arr;
+			form.submit();
+		} else {
+
+		}
+	}
+
+	// 상,하 이동
+	function moveCategory(type, form) {
+		var movewidth = 1;
+		var thisform = eval(form);
+		var sel = thisform.category_list.selectedIndex;
+		var targetpos = sel - movewidth;
+
+		if (type == "U") {
+			if (sel > 0) {
+				if (targetpos < 0)
+					targetpos = 0;
+				curvalue = thisform.category_list.options[sel].value;
+				curtext = thisform.category_list.options[sel].text;
+
+				for (i = sel - 1; i >= targetpos; i--) {
+					thisform.category_list.options[i + 1].text = thisform.category_list.options[i].text;
+				}
+				thisform.category_list.options[targetpos].text = curtext;
+				thisform.category_list.options[targetpos].selected = true;
+			}
+		} else if (type == "D") {
+			if (sel == -1) {
+				alert("이동할 항목을 선택하세요");
+				thisform.category_list.focus();
+				return;
+			} else {
+				lastpos = thisform.category_list.options.length - 1;
+				if (sel >= lastpos || sel < 0)
+					return;
+				targetpos = sel + movewidth;
+				if (targetpos > lastpos)
+					targetpos = lastpos;
+				curvalue = thisform.category_list.options[sel].value;
+				curtext = thisform.category_list.options[sel].text;
+
+				for (i = sel + 1; i <= targetpos; i++) {
+					thisform.category_list.options[i - 1].text = thisform.category_list.options[i].text;
+				}
+
+				thisform.category_list.options[targetpos].text = curtext;
+				thisform.category_list.options[targetpos].selected = true;
+
+			}
+		}
+	}
+	function btnInsert(){
+		let value1 = document.querySelector('input[name="employee"]:checked').value;
+		let selectEl = document.querySelector("#selectEl");
+	    var objOption = document.createElement("option");
+	    objOption.text = value1;
+	    objOption.value = selectEl.length+1;
+	    objOption.id='empid'+objOption.value;
+	    console.log(objOption.id);
+	    var type = 'false';
+	    var home_page_count = document.getElementById('selectEl').length;
+	    for (i = 0; i < home_page_count; i++) {
+			console.log(selectEl.options[i].id)
+			if(objOption.id == selectEl.options[i].id){
+				type = 'true';
+				break;
+			}
+			
+		}
+	    console.log(type)
+	    if(type == 'false' ){
+	    	selectEl.options.add(objOption);
+	    }
+	   
+	}
+	function btnDelete(form){
+		var thisform = eval(form);
+		var sel = thisform.category_list.selectedIndex;
+		var movewidth=thisform.category_list.options.length - thisform.category_list.options[sel].value+1 ;
+		console.log(movewidth);
+		var targetpos = sel - movewidth;
+		
+		if (sel == -1) {
+			alert("이동할 항목을 선택하세요");
+			thisform.category_list.focus();
+			return;
+		} else {
+			lastpos = thisform.category_list.options.length - 1;
+			if (sel >= lastpos || sel < 0)
+				return;
+			targetpos = sel + movewidth;
+			if (targetpos > lastpos)
+				targetpos = lastpos;
+			curvalue = thisform.category_list.options[sel].value;
+			curtext = thisform.category_list.options[sel].text;
+
+			for (i = sel + 1; i <= targetpos; i++) {
+				thisform.category_list.options[i - 1].text = thisform.category_list.options[i].text;
+			}
+
+			thisform.category_list.options[targetpos].text = curtext;
+			thisform.category_list.options.length = thisform.category_list.options.length-1;
+		}
+	}
+	</script>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -285,10 +417,10 @@
 													<!-- 순서 변경 버튼 -->
 													<div class="row d-flex justify-content-end">
 														<div class=col-1>
-															<button class="btn btn-light">↑</button>
+															<button type="button" class="btn btn-light" OnClick="moveCategory('U',this.form)">↑</button>
 														</div>
 														<div class=col-1>
-															<button class="btn btn-light">↓</button>
+															<button  type="button" class="btn btn-light" OnClick="moveCategory('D',this.form)">↓</button>
 														</div>
 													</div>
 													
@@ -343,22 +475,22 @@
 														<!-- 사원 -->
 														<div class="col-4 border">
 															<div class="mt-3" >
-																<label   class="test_obj" style="width:100%">
-																    <input type="radio" name="fruit" value="apple">
+																<label  class="test_obj" style="width:100%">
+																    <input type="radio" name="employee" value="이예승">
 																    <span style="width:100%">이예승(사원)</span>
 																</label>
 															</div>
 														 
 														<div>
 															<label class="test_obj" style="width:100%">
-														    	<input type="radio" name="fruit" value="banana">
+														    	<input type="radio" name="employee" value="이연희">
 														    	<span style="width:100%">이연희(차장)</span>
 															</label>
 														</div>
 														 
 														<div>
 															<label class="test_obj" style="width:100%">
-															    <input type="radio" name="fruit" value="lemon">
+															    <input type="radio" name="employee" value="이지호">
 															    <span style="width:100%">이지호(과장)</span>
 															</label>
 														</div>
@@ -368,13 +500,13 @@
 														<!-- 이동 Button -->
 														<div class="col-1 ">
 															<div>
-																<button class="btn btn-light">
+																<button type="button" class="btn btn-light" onclick="btnInsert()">
 																>
-																</button>
+																</button >
 															</div>
 															
 															<div>
-																<button class="btn btn-light">
+																<button type="button" class="btn btn-light" onclick="btnDelete(this.form)">
 																	<
 																</button>
 															</div>
@@ -382,7 +514,11 @@
 														
 														<!-- 선택된 사원 -->
 														<div class="col-3 border">
-															이동
+															<form id="seq"  name="categoryform" method="post" action="./test3.php">
+																<select  id = "selectEl" name="category_list" size="10" style="width: 120px;">
+																	
+																</select> <input type="hidden" name="category_code" value=""><br>
+															</form>
 														</div>
 													
 													</div><!-- End Content -->
@@ -391,7 +527,7 @@
 												<!-- Footer -->
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-													<button type="button" class="btn btn-primary">확인</button>
+													<button  class="btn btn-primary" form="seq"  onclick="ListSubmit(this.form)">확인</button>
 												</div>
 											</div>
 										</div>
