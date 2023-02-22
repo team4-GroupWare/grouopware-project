@@ -326,24 +326,10 @@
 									<div class="row mb-3">
 										<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
 										<div class="col-sm-10">
-											
-											<script>
-												function showModal(){
-													console.log('들어옴');
-													$.ajax({
-														url: "${pageContext.request.contextPath}/vacation/list",
-														success: function(data){
-															console.log(data);
-															$('#verticalycentered').modal('show');
-														}
-													});
-												}
-											</script>
-											
 											<!-- 결재선 선택 Button -->
 											<div class="row mb-3">
 												<div class="col-sm-10">
-													<button type="button" onclick="showModal()" class="btn btn-primary">
+													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#verticalycentered">
 													 		결재선 선택
 													</button>
 												</div>

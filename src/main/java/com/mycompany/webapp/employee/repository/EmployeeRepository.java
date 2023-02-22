@@ -11,6 +11,7 @@ import com.mycompany.webapp.employee.model.Employee;
 public interface EmployeeRepository {
 	   public Employee selectByEmpId(String empId);
 	   public List<Employee> selectEmpList(Pager pager);
+	   public List<Employee> selectEmpList();
 	   public int selectEmpCount();
 	   public int selectSearchEmpCount(Employee employee);
 	   public int selectEmpId(String empId);

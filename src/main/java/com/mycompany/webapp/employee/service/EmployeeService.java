@@ -123,10 +123,14 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return employeeRepository.insertEmployee(employee);
 	}
-
+	
+	/**
+	 * 전체 사원 목록 메소드(페이징 x)
+	 * @author : LEEYEONHEE	
+	 * @return List<Employee>
+	 */
 	@Override
 	public List<Employee> getEmpList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
