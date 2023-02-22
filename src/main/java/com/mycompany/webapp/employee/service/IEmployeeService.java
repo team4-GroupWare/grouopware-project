@@ -9,4 +9,5 @@ public interface IEmployeeService {
 	public LoginResult login(Employee employee);
 	public List<Employee> getEmpList();
 	public boolean checkId(String empId);
+	public int register(Employee employee) throws Exception;
 }

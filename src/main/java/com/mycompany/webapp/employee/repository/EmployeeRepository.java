@@ -11,4 +11,6 @@ public interface EmployeeRepository {
 	public Employee selectByEmpId(String empId);
 	public List<Employee> selectEmpList();
 	public int selectEmpId(String empId);
+	public int insertEmployee(Employee employee);
+	public int selectManagerNo(int empNo);
 }

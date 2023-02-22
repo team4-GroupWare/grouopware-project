@@ -7,6 +7,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.employee.controller.AlreadyExistingIdException;
+import com.mycompany.webapp.employee.controller.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 
@@ -74,6 +76,18 @@ public class EmployeeService implements IEmployeeService {
 			result=true;
 		}
 		return result;
+	}
+
+	public int register(Employee employee) throws Exception{
+		int checkId = employeeRepository.selectEmpId(employee.getEmpId());
+		if(checkId==1) {
+			throw new AlreadyExistingIdException("duplicate ID");
+		}
+		int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
+		if(checkManager==0) {
+			throw new NotExistingManagerException("No exist manager");
+		}
+		return employeeRepository.insertEmployee(employee);
 	}
 
 	

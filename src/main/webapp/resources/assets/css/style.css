@@ -1450,3 +1450,7 @@ table. type02. table-content{
     border-radius: 4px;
     padding: 10px;
 }
+
+.errors{
+	color:red;
+}
