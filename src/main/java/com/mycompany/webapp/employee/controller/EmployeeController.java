@@ -90,8 +90,9 @@ public class EmployeeController {
 			//초기 비밀번호인 경우
 			return "redirect:/employee/chagepwd";
 		}
-		
-		session.setAttribute("loginEmployee", employee);
+		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
+		session.setAttribute("loginEmployee", dbEmployee);
+		System.out.println(dbEmployee);
 		return "redirect:/";
 	}
 	
@@ -188,7 +189,14 @@ public class EmployeeController {
 			return "employee/register";
 		}
 		
-		return "employee/register";
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		log.info("실행");
+		session.removeAttribute("loginEmployee");
+		return "redirect:/";
 	}
 	
 }
