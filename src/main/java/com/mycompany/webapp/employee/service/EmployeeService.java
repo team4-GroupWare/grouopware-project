@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.employee.controller.AlreadyExistingIdException;
+import com.mycompany.webapp.employee.controller.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 
@@ -99,6 +101,27 @@ public class EmployeeService implements IEmployeeService {
 	@Override
 	public int getSearchEmpRows(Employee employee) {
 		return employeeRepository.selectSearchEmpCount(employee);
+	}
+
+	@Override
+	public boolean checkId(String empId) {
+		boolean result = false;
+		if(employeeRepository.selectEmpId(empId)==1) {
+			result=true;
+		}
+		return result;
+	}
+
+	public int register(Employee employee) throws Exception{
+		int checkId = employeeRepository.selectEmpId(employee.getEmpId());
+		if(checkId==1) {
+			throw new AlreadyExistingIdException("duplicate ID");
+		}
+		int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
+		if(checkManager==0) {
+			throw new NotExistingManagerException("No exist manager");
+		}
+		return employeeRepository.insertEmployee(employee);
 	}
 
 	

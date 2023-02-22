@@ -71,4 +71,25 @@
 		]]>
 	</select>
 	
+	<select id="selectEmpId" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from employees
+			where EMP_ID = #{empId}
+	
+		]]>
+	
+	
+	</select>
+	
+	<insert id="insertEmployee" parameterType="employee">
+		<![CDATA[
+			insert into employees (emp_id, manager_id, dept_id, team_id, grade_id, emp_no, 
+			password, name, phone, birth, hireDate, initial_password)
+			values(#{empId}, #{managerId}, #{deptId}, #{teamId}, #{gradeId}, #{empNo}, 
+			#{password}, #{name}, #{phone}, #{birth}, default, default)
+		]]>
+	
+	</insert>
+	
 </mapper>

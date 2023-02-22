@@ -13,4 +13,7 @@ public interface EmployeeRepository {
 	public List<Employee> selectEmpList(Pager pager);
 	public int selectEmpCount();
 	public int selectSearchEmpCount(Employee employee);
+	public int selectEmpId(String empId);
+	public int insertEmployee(Employee employee);
+	public int selectManagerNo(int empNo);
 }

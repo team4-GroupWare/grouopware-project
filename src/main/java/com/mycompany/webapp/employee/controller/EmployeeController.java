@@ -9,21 +9,28 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.employee.model.EmpValidator;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.service.EmployeeService;
+import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Grade;
 import com.mycompany.webapp.group.model.Team;
-import com.mycompany.webapp.group.service.DepartmentService;
-import com.mycompany.webapp.group.service.GradeService;
-import com.mycompany.webapp.group.service.TeamService;
+import com.mycompany.webapp.group.service.IDepartmentService;
+import com.mycompany.webapp.group.service.IGradeService;
+import com.mycompany.webapp.group.service.ITeamService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,13 +40,20 @@ import lombok.extern.log4j.Log4j2;
 public class EmployeeController {
 	
 	@Autowired
-	private EmployeeService employeeService;
+	private IEmployeeService employeeService;
 	@Autowired
-	private DepartmentService departmentService;
+	private IDepartmentService departmentService;
 	@Autowired
-	private TeamService teamService;
+	private ITeamService teamService;
 	@Autowired
-	private GradeService gradeService;
+	private IGradeService gradeService;
+	@Autowired
+	private EmpValidator empValidator;
+	
+	@InitBinder
+	   private void initBinder(WebDataBinder binder) {
+	      binder.setValidator(empValidator);
+	   }
 
 	/**
 	 * 
@@ -82,7 +96,7 @@ public class EmployeeController {
 	}
 	
 	/**
-	 * 
+	 * @author : LEEYESEUNG
 	 * @return 회원 등록 페이지
 	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
 	 */
@@ -91,28 +105,38 @@ public class EmployeeController {
 		log.info("실행");
 		//부서 List
 		List<Department> departments = departmentService.getDeptList();
-		System.out.println(departments);
 		model.addAttribute("departments", departments);
-		//팀 List
-		List<Team> teams = teamService.getTeamList();
-		model.addAttribute("teams", teams);
 		//직급 List
 		List<Grade> grades = gradeService.getGradeList();
 		model.addAttribute("grades", grades);
 		
+		model.addAttribute("result", "init");
+		
 		return "employee/register";
 	}
 	
+	/**
+	 * 
+	 * @author : LEEYESEUNG
+	 * @param deptId
+	 * @return teamList
+	 * @throws IOException
+	 */
 	@PostMapping(value="/teamlist")
 	@ResponseBody
 	public List<Team> teamListAjax(@Param("deptId") String deptId) throws IOException {
 		log.info("실행");
 		int id = Integer.parseInt(deptId);
 		List<Team> teamList = teamService.getTeamListById(id);
-		
 		return teamList;
 	}
 	
+	/**
+	 * 
+	 * @author : LEEJIHO
+	 * @param empId : 사원아이디
+	 * @return 사원 정보
+	 */
 	@GetMapping("/empinfo")
 	@ResponseBody
 	public Employee employeeInfo(@RequestParam("empId") String empId) {
@@ -121,5 +145,50 @@ public class EmployeeController {
 		log.info(employee);
 		return employee;
 	}
-
+	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param empId : 사원아이디
+	 * @return result : 중복 검사
+	 * @throws IOException
+	 */
+	@PostMapping(value="/check")
+	@ResponseBody
+	public boolean checkId(@Param("empId") String empId) throws IOException {
+		log.info("실행");
+		boolean result = employeeService.checkId(empId);
+		return result;
+	}
+	
+	@PostMapping(value="/register")
+	public String register(Model model, @ModelAttribute("employee") Employee employee,BindingResult errors) throws Exception{
+		log.info("실행");
+		System.out.println(employee.toString());
+		empValidator.validate(employee, errors);
+		if(errors.hasErrors()) {
+			System.out.println(errors);
+			
+			model.addAttribute("employee", employee);
+			model.addAttribute("result", "fail");
+			//부서 List
+			List<Department> departments = departmentService.getDeptList();
+			model.addAttribute("departments", departments);
+			//직급 List 
+			List<Grade> grades = gradeService.getGradeList();
+			model.addAttribute("grades", grades);
+			return "employee/register";
+		}
+		try {
+			int row = employeeService.register(employee);
+		} catch (AlreadyExistingIdException e) {
+			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			return "employee/register";
+		} catch (NotExistingManagerException e) {
+			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
+			return "employee/register";
+		}
+		
+		return "employee/register";
+	}
+	
 }

@@ -89,7 +89,7 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("/leave")
-	public void leave(HttpSession session){
+	public void leave(HttpSession session,HttpServletResponse response) throws IOException{
 		log.info("실행");
 		//로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
@@ -101,7 +101,22 @@ public class AttendanceController {
 		String attDate = simpleDateFormat1.format(date);
 		
 		int result = attendanceService.updateLeave(attDate,empId);
-		System.out.println(result+ "=result");
 		
+		JSONObject jsonobject = new JSONObject();
+		jsonobject.put("message", "성공");
+		String json = jsonobject.toString();
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		PrintWriter pw = response.getWriter();
+		pw.println(json);
+		pw.flush();
+		pw.close();
+				
+	}
+	@GetMapping("/attendance/status")
+	public String attendanceStatus() {
+		log.info("실행");
+		return "vacation/vacation_form";
 	}
 }

@@ -11,7 +11,6 @@ public interface IEmployeeService {
 	public List<Employee> getEmpList(Pager pager);
 	public int getTotalRows();
 	public Employee getEmp(String empId);
-	
 	/**
 	 * 
 	 * @author : LEEJIHO
@@ -19,4 +18,6 @@ public interface IEmployeeService {
 	 * @return 검색 조건에 부합한 사원 행 수 
 	 */
 	public int getSearchEmpRows(Employee employee);
+	public boolean checkId(String empId);
+	public int register(Employee employee) throws Exception;
 }

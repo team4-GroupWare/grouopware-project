@@ -31,7 +31,7 @@
                     <p class="text-center small">아이디와 비밀번호를 입력해주세요</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" action="login" novalidate>
+                  <form class="row g-3 needs-validation" method="post" action="login" >
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">아이디</label>
