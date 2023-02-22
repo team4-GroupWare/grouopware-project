@@ -3,10 +3,9 @@ package com.mycompany.webapp.employee.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.controller.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.controller.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
@@ -64,9 +63,44 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.selectByEmpId(empId);
 	}
 
+	/**
+	 * 전체 사원 목록 메소드
+	 * @author : LEEJIHO
+	 * @return List<Employee>
+	 */
 	@Override
-	public List<Employee> getEmpList() {
-		return employeeRepository.selectEmpList();
+	public List<Employee> getEmpList(Pager pager) {
+		return employeeRepository.selectEmpList(pager);
+	}
+
+	/**
+	 * 전체 사원 수
+	 * @author : LEEJIHO
+	 * @return 전체 사원수
+	 */
+	@Override
+	public int getTotalRows() {
+		return employeeRepository.selectEmpCount();
+	}
+
+	/**
+	 * 사원 상세정보
+	 * @author : LEEJIHO
+	 * @return 사원
+	 */
+	@Override
+	public Employee getEmp(String empId) {
+		return employeeRepository.selectByEmpId(empId);
+	}
+
+	/**
+	 * 검색한 사원 수
+	 * @author : LEEJIHO
+	 * @return 검색한 사원 수
+	 */
+	@Override
+	public int getSearchEmpRows(Employee employee) {
+		return employeeRepository.selectSearchEmpCount(employee);
 	}
 
 	@Override

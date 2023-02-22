@@ -132,6 +132,21 @@ public class EmployeeController {
 	}
 	
 	/**
+	 * 
+	 * @author : LEEJIHO
+	 * @param empId : 사원아이디
+	 * @return 사원 정보
+	 */
+	@GetMapping("/empinfo")
+	@ResponseBody
+	public Employee employeeInfo(@RequestParam("empId") String empId) {
+		log.info("실행");
+		Employee employee = employeeService.getEmp(empId);
+		log.info(employee);
+		return employee;
+	}
+	
+	/**
 	 * @author : LEEYESEUNG
 	 * @param empId : 사원아이디
 	 * @return result : 중복 검사
@@ -174,10 +189,6 @@ public class EmployeeController {
 		}
 		
 		return "employee/register";
-		
-		
-		
-		
 	}
-
+	
 }

@@ -26,5 +26,9 @@ public class Employee {
 	
 	private String teamName;
 	private String deptName;
+	private String gradeName;
+	
+	private String type;
+	private String keyword;
 	
 }
