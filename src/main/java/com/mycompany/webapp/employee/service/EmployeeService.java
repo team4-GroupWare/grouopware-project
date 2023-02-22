@@ -124,5 +124,11 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.insertEmployee(employee);
 	}
 
+	@Override
+	public List<Employee> getEmpList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

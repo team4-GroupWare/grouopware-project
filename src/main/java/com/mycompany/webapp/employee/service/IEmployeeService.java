@@ -20,4 +20,5 @@ public interface IEmployeeService {
 	public int getSearchEmpRows(Employee employee);
 	public boolean checkId(String empId);
 	public int register(Employee employee) throws Exception;
+	public List<Employee> getEmpList();
 }
