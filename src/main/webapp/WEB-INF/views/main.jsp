@@ -77,12 +77,11 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						
-						<div class="col"  >
+						<div class="col"  onclick="location.href='${pageContext.request.contextPath}/attendance/status'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-clock fs-1 " ></i>
 							</div>
-							<div style="text-align:center; margin-top:10px" onclick="location.href='${pageContext.request.contextPath}/attendance/status'">근태관리</div>
+							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
 						<div class="col" >
