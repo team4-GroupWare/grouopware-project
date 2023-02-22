@@ -31,7 +31,7 @@ public class VacationController {
 	private IEmployeeService employeeService;
 	
 	
-	@GetMapping("/approval/humanlist")
+	@GetMapping("/vacation/list")
 	public String getDepList(Model model) {
 		log.info("실행");
 		List<List<Team>> teams = new ArrayList<>();
@@ -41,17 +41,15 @@ public class VacationController {
 		//부서 별 팀목록
 		for(Department dept : departments) {
 			teams.add(teamService.getTeamListById(dept.getDeptId()));
-			log.info(teams);
 		}
 		
 		//사원 목록
 		List<Employee> employees = employeeService.getEmpList();
-		log.info(employees.size());
 		
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		model.addAttribute("employees", employees);
-		
-		return "";
+		log.info("끝");
+		return "hr/hr2";
 	}
 }
