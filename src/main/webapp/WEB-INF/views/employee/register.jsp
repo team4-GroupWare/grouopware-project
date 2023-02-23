@@ -81,7 +81,7 @@
                     <h5 class="card-title text-center pb-0 fs-4 mb-3"><b>회원등록</b></h5>
                   </div>
 
-                  <form:form commandName="employee" class="row g-3 needs-validation" method="post" action="register">
+                  <form:form commandName="employee" class="row g-3 needs-validation" method="post" action="${pageContext.request.contextPath}/employee/register">
                   	<div class="row">
 		                 <div class="col-9 form-floating mb-3">
 		                 	  <c:if test="${result == 'init'}">
