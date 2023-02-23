@@ -5,6 +5,9 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<!-- 달력  -->
+	<link href="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main1.js"></script>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -13,7 +16,7 @@
 			<ul class="sidebar-nav" id="sidebar-nav">
 			 
 				<!--휴가 작성 -->
-				<li class="nav-item">
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
 					<a class="btn btn-primary" type="button" href="#" style="width:100%">
 					    <i class="bi bi-pencil-square"></i> 
 					    <span>휴가 작성</span>
@@ -187,7 +190,7 @@
 											<input 
 											id="btn-attendance"
 											type='image'
-											src="assets/img/attbtn.png" 
+											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
 											width="100"
 											onclick="btnAtt()"
 											/>
@@ -202,7 +205,7 @@
 											disabled 
 											style="opacity: 0.1"
 											type='image'
-											src="assets/img/leavebtn.png" 
+											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
 											width="100"
 											onclick="btnLeave()" 
 											/>

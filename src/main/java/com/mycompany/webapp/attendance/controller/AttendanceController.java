@@ -72,6 +72,7 @@ public class AttendanceController {
 			// 9시 이후 ~ 18시이전에 출근을 눌렀을 때
 			attendance.setStatus("지각");
 		}
+		log.info(attendance);
 		//출근 행 넣어줌
 		int result = attendanceService.insertAttendance(attendance);
 		//status
@@ -117,6 +118,6 @@ public class AttendanceController {
 	@GetMapping("/attendance/status")
 	public String attendanceStatus() {
 		log.info("실행");
-		return "vacation/vacation_form";
+		return "attendance/attendance_status";
 	}
 }

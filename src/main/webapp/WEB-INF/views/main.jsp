@@ -19,6 +19,10 @@
 	  				let clockIn;
 	  				let clockOut;
 	  				
+	  				console.log(data.status)
+	  				console.log(data.clockIn)
+	  				console.log(data.clockOut)
+	  				
 	  				if(data.status == null){
 	  					status = "미출근";
 	  				} else{
