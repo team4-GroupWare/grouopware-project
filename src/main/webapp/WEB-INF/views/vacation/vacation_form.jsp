@@ -15,6 +15,15 @@
 		select::-webkit-scrollbar {
 		    display: none; /* Chrome, Safari, Opera*/
 		}
+		.nav-item {
+			list-style: none;
+		} 
+		.team {
+			list-style: none;
+		} 
+		input[name="employee"]{
+			display:none; margin:10px;
+		}
 	</style>
 	
 	<!-- modal -->
@@ -428,29 +437,22 @@
 														<!-- 부서 선택 -->
 														<div class="col-4 border m-0" style="min-height:300px">
 															<div class="mt-3" id="box">
-																<ul>
-																	<c:forEach var="dept" items="${departments}" varStatus="status">
-																		<li class="depts" >
-																		  ${dept.deptName}
-																			<ul class="teams" style="display:none">
-																				<c:forEach var="team" items="${teams[status.index]}">
-																				    <li class="team" id="${team.teamId}">${team.teamName}</li>
-																			    </c:forEach>
-																			</ul>
-																		</li>
-																	 </c:forEach>
-																</ul>
+																<c:forEach var="dept" items="${departments}" varStatus="status">
+												          			<li class="nav-item">
+													            		<a class="nav-link collapsed" data-bs-target="#nav-dept${status.count}" data-bs-toggle="collapse" href="#" aria-expanded="false">
+													              			<span>${dept.deptName}</span>
+													            		</a>
+														            	<ul id="nav-dept${status.count}" class="nav-content collapse m-0" data-bs-parent="#sidebar-nav">
+															              	<c:forEach var="team" items="${teams[status.index]}">
+															              	<li class="team" id="${team.teamId}">
+															              		${team.teamName}
+															              	</li>
+															              	</c:forEach>
+														            	</ul>
+												          			</li>
+												         			</c:forEach>
 															</div>
 															<script>
-																$(".depts").click(function(){
-																    if(! $(this).find(".teams").is(":visible")){
-																        $(this).find(".teams").slideDown();
-																    }
-																   /*  else{
-																        $(this).find(".teams").slideUp();
-																    } */
-																});
-																
 																$(".team").click(function(){
 																	var teamId = $(this).attr("id");
 																	console.log(teamId);
@@ -462,7 +464,7 @@
 																			var teamHtml = "";
 																			$("#empByteam").empty();
 																			for(var i in data){
-																				teamHtml += '<div class="mt-3" >'+'<label  style="width:100%">'+'<input type="radio" name="employee" value="'
+																				teamHtml += '<div>'+'<label  style="width:100%">'+'<input type="radio" name="employee" value="'
 																							+data[i].empId+'">'+
 																				    '<span id="'+data[i].empId+'" style="width:100%">'+data[i].name+'</span>'
 																				   +'</label>'+'</div>';
@@ -501,7 +503,7 @@
 														
 														<!-- 선택된 사원 -->
 														<div class="col-3 border">
-															<form id="seq"  name="categoryform" method="post" action="./test3.php">
+															<form id="seq"  name="categoryform" method="post" action="./test3.php" >
 																<select  id = "selectEl" name="category_list" size="10" style="width: 120px;">
 																	
 																</select> <input type="hidden" name="category_code" value=""><br>
