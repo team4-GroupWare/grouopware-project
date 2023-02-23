@@ -84,12 +84,7 @@
                   <form class="row g-3 needs-validation" method="post" action="${pageContext.request.contextPath}/employee/register">
                   	<div class="row">
 		                 <div class="col-9 form-floating mb-3">
-		                 	  <c:if test="${result == 'init'}">
-			                  <input type="text" class="form-control" name="empId" id="empId" placeholder="아이디" required>
-			                  </c:if>
-			                  <c:if test="${result == 'fail'}">
 			                  <input type="text" class="form-control" value="${employee.empId}" name="empId" id="empId" placeholder="아이디" required >
-			                  </c:if>
 			                  <div class="invalid-feedback">아이디를 입력해주세요</div> 
 			                  <label for="floatingName">아이디</label>
 			                  <p id="idMessage" style="color:red;font-size:12px;margin-top:5px"></p>
@@ -102,12 +97,7 @@
 	                 <form:errors path="empId" class="errors"/>
 	                 <div class="row">   
 		                 <div class="col-9 form-floating mb-3">
-		                 	  <c:if test="${result == 'init'}">
-			                  <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="비밀번호" required >
-			                  </c:if>
-			                  <c:if test="${result == 'fail'}">
-			                  <input type="password" class="form-control" value="${employee.password }" name="password" id="floatingPassword" placeholder="비밀번호" required >
-			                  </c:if>
+			                  <input type="password" class="form-control" value="${employee.password}" name="password" id="floatingPassword" placeholder="비밀번호" required >
 			                  <div class="invalid-feedback">비밀번호를 입력해주세요</div> 
 			                  <label for="floatingName">비밀번호</label>
 		                 </div>
@@ -115,24 +105,14 @@
 			         <form:errors path="password" class="errors"/>
 	                 
 	                 <div class="col-23 form-floating mb-3"> 
-	                 	  <c:if test="${result == 'init'}">
-		                  <input type="text" class="form-control" name="name" id="floatingName" placeholder="이름" required >
-		                  </c:if>
-		                  <c:if test="${result == 'fail'}">
 		                  <input type="text" class="form-control" value="${employee.name}" name="name" id="floatingName" placeholder="이름" required>
-		                  </c:if>
 		                  <div class="invalid-feedback">이름을 입력해주세요</div> 
 		                  <label for="floatingName">이름</label>
 	                 </div>
 	                 <form:errors path="name" class="errors"/>
 	                 
 	                 <div class="col-12 form-floating mb-3"> 
-	                 	  <c:if test="${result == 'init'}">
-		                  <input type="text" class="form-control" name="phone" id="floatingPhone" placeholder="번호" required>
-		                  </c:if>
-		                  <c:if test="${result == 'fail'}">
 		                  <input type="text" class="form-control" value="${employee.phone}" name="phone" id="floatingPhone" placeholder="번호" >
-		                  </c:if>
 		                  <div class="invalid-feedback">번호를 입력해주세요</div> 
 		                  <label for="floatingName">전화번호</label>
 	                 </div>
@@ -141,12 +121,7 @@
                     <div class="col-12">
                       <label for="yourBirthday" class="form-label">생년월일</label>
                       <div class="input-group has-validation" style="width:250px">
-                      	<c:if test="${result == 'init'}">
-                        <input type="date" name="birth" class="form-control" id="birth" required>
-                        </c:if>
-                        <c:if test="${result == 'fail'}">
                         <input type="date" name="birth" value="${employee.birth}" class="form-control" id="birth" required>
-                        </c:if>
                         <div class="invalid-feedback">생년월일을 입력해주세요.</div>
                       </div>
                     </div>
@@ -185,14 +160,7 @@
                     </div>
                     
                     <div class="col-12 form-floating mb-3">
-                    	 <c:if test="${result == 'init'}">
-		                 <input type="text" class="form-control" name="managerId" id="managerId" placeholder="매니저사번" required>
-		                 </c:if>
-		                 
-		                 <c:if test="${result == 'fail'}">
 		                 <input type="text" class="form-control" value="${employee.managerId}" name="managerId" id="managerId" placeholder="매니저사번" required>
-		                 </c:if>
-		                 
 		                  <label for="floatingName">매니저 사번</label>
 	                 </div>
 	                 <form:errors path="managerId" class="errors"/>
@@ -201,7 +169,7 @@
                     <div class="col-12 mx-auto" style="width:250px;">
                       <button class="btn btn-primary w-100" type="submit" style="display:inline-block">회원등록</button>
                     </div>
-                  </form:form>
+                  </form>
 
                 </div>
               </div>

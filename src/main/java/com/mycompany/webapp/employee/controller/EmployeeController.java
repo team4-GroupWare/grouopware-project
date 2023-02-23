@@ -148,7 +148,7 @@ public class EmployeeController {
 	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
 	 */
 	@GetMapping("/register")
-	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee) {
+	public String register(Model model, @ModelAttribute("employee") Employee employee) {
 		log.info("실행");
 		//부서 List
 		List<Department> departments = departmentService.getDeptList();
@@ -157,24 +157,15 @@ public class EmployeeController {
 		List<Grade> grades = gradeService.getGradeList();
 		model.addAttribute("grades", grades);
 		
-		model.addAttribute("result", "init");
-		
 		return "employee/register";
 	}	
 	
 	@PostMapping(value="/register")
 	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee, BindingResult errors) throws Exception{
 		log.info("실행");
-		//System.out.println(employee.toString());
-		//empValidator.validate(employee, errors);
-		
 		//정규식 유효성 검사
 		if(errors.hasErrors()) {
-			//System.out.println(errors);
-			
-			//model.addAttribute("employee", employee);
-			//model.addAttribute("result", "fail");
-			
+			log.info("errors: "+errors);
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
@@ -192,31 +183,26 @@ public class EmployeeController {
 			//아이디 중복 오류를 잡는다
 		} catch (AlreadyExistingIdException e) {
 			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
-			//사용자가 적었던 값 그대로 남도록
-			model.addAttribute("employee", employee);
-			model.addAttribute("result", "fail");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			System.out.println(errors.toString());
+			log.info("errors: "+errors);
 			return "employee/register";
 			
 			//매니저 아이디가 없으면 삽입할 수 없다
 		} catch (NotExistingManagerException e) {
 			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
 			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
-			model.addAttribute("employee", employee);
-			model.addAttribute("result", "fail");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			System.out.println(errors.toString());
+			log.info("errors: "+errors);
 			return "employee/register";
 		}
 		
