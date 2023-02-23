@@ -140,9 +140,9 @@
 		</selectKey>
 		<![CDATA[
 			insert into employees (emp_id, manager_id, dept_id, team_id, grade_id, emp_no, 
-			password, name, phone, birth, hire_date, initial_password)
+			password, name, phone, birth, hire_date, initial_password,DAYOFF_REMAIN)
 			values(#{empId}, #{managerId}, #{deptId}, #{teamId}, #{gradeId}, #{empNo}, 
-			#{password}, #{name}, #{phone}, #{birth}, default, default)
+			#{password}, #{name}, #{phone}, #{birth}, default, default, #{dayoffRemain})
 		]]>
 	</insert>
 	

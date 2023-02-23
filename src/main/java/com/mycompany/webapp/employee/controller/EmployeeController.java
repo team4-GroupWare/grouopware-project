@@ -1,6 +1,7 @@
 package com.mycompany.webapp.employee.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -176,6 +177,15 @@ public class EmployeeController {
 			
 			return "employee/register";
 		}
+		
+		//직급별 연차 개수
+		int dayOff = gradeService.getDayOffByGradeId(employee.getGradeId());
+		//해당 입사월(현재 월)
+		LocalDate now = LocalDate.now();
+		int monthValue = now.getMonthValue();
+		int dayoffRemain = dayOff - (monthValue);
+		employee.setDayoffRemain(dayoffRemain);
+		
 		try {
 			//insert했을 때 오류가 나면 catch로 오류 제어
 			int row = employeeService.register(employee);
