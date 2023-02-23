@@ -130,5 +130,16 @@ public class EmployeeService implements IEmployeeService {
 		return null;
 	}
 
+	/**
+	 * 검색한 사원 수
+	 * @author : LEEJIHO
+	 * @param pager : 페이징
+	 * @return 검색한 사원 목록
+	 */
+	@Override
+	public List<Employee> getSearchEmpList(Pager pager, Employee employee) {
+		return employeeRepository.selectSearchEmpList(pager, employee);
+	}
+
 	
 }
