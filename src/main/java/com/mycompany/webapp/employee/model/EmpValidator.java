@@ -46,6 +46,7 @@ public class EmpValidator implements Validator {
 			errors.rejectValue("password", null,"비밀번호는 8자 이상, 특수문자 하나를 포함해주세요.");
 		}
 		
+		
 		matcher = phonePattern.matcher(employee.getPhone());
 		if(!matcher.matches()) {
 			errors.rejectValue("phone", null, "010-0000-0000 형식으로 입력해주세요.");
@@ -55,6 +56,14 @@ public class EmpValidator implements Validator {
 			errors.rejectValue("deptId", null, "필수로 선택해주세요.");
 		}
 		
+		if(employee.getEmpId().equals("")) {
+			errors.rejectValue("empId", null, "아이디를 입력해주세요");
+		}
+		
+		
+		if(employee.getName().equals("")) {
+			errors.rejectValue("name", null, "이름을 입력해주세요");
+		}
 		
 	}
 

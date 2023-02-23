@@ -9,7 +9,7 @@
 		function getTeam() {
 			//선택된 부서 아이디 가져옴
 			var value = $("#deptId > option:selected").val();
-			if(value != "선택"){
+			if(value != 0){
 				$.ajax({
 					url: "${pageContext.request.contextPath}/employee/teamlist",
 					method: "post",
@@ -84,46 +84,45 @@
                   <form class="row g-3 needs-validation" method="post" action="${pageContext.request.contextPath}/employee/register">
                   	<div class="row">
 		                 <div class="col-9 form-floating mb-3">
-			                  <input type="text" class="form-control" value="${employee.empId}" name="empId" id="empId" placeholder="아이디" required >
-			                  <div class="invalid-feedback">아이디를 입력해주세요</div> 
+			                  <input type="text" class="form-control" value="${employee.empId}" name="empId" id="empId" placeholder="아이디"  >
 			                  <label for="floatingName">아이디</label>
-			                  <p id="idMessage" style="color:red;font-size:12px;margin-top:5px"></p>
+			                  <p id="idMessage" style="font-weight:bold;color:grey;font-size:12px;margin-top:5px;margin-bottom:0px"></p>
+                 		 	  <form:errors path="employee.empId" class="errors"/>
 		                 </div>
-                 		 <form:errors path="employee.empId" class="errors"/>
 		                 <div class="col-3" style="vertical-align:middle;" >
 		                 	  <!-- onclick시 중복확인하는 javascript : ajax 실행 -->
 		                      <div class="btn btn-secondary btn-sm" onclick="check()">중복확인</div>
 		                 </div>
 	                 </div>
-	                 <form:errors path="employee.empId" class="errors"/>
 	                 <div class="row">   
 		                 <div class="col-9 form-floating mb-3">
-			                  <input type="password" class="form-control" value="${employee.password}" name="password" id="floatingPassword" placeholder="비밀번호" required >
+			                  <input type="password" class="form-control" value="${employee.password}" name="password" id="floatingPassword" placeholder="비밀번호"  >
 			                  <div class="invalid-feedback">비밀번호를 입력해주세요</div> 
 			                  <label for="floatingName">비밀번호</label>
+			         	 	  <form:errors path="employee.password" class="errors"/>
 		                 </div>
 	                 </div>
-			         <form:errors path="employee.password" class="errors"/>
 	                 
 	                 <div class="col-23 form-floating mb-3"> 
-		                  <input type="text" class="form-control" value="${employee.name}" name="name" id="floatingName" placeholder="이름" required>
+		                  <input type="text" class="form-control" value="${employee.name}" name="name" id="floatingName" placeholder="이름" >
 		                  <div class="invalid-feedback">이름을 입력해주세요</div> 
 		                  <label for="floatingName">이름</label>
+	                 	  <form:errors path="employee.name" class="errors"/>
 	                 </div>
-	                 <form:errors path="employee.name" class="errors"/>
 	                 
 	                 <div class="col-12 form-floating mb-3"> 
 		                  <input type="text" class="form-control" value="${employee.phone}" name="phone" id="floatingPhone" placeholder="번호" >
 		                  <div class="invalid-feedback">번호를 입력해주세요</div> 
 		                  <label for="floatingName">전화번호</label>
+	                 	  <form:errors path="employee.phone" class="errors"/>
 	                 </div>
-	                 <form:errors path="employee.phone" class="errors"/>
                     
                     <div class="col-12">
                       <label for="yourBirthday" class="form-label">생년월일</label>
                       <div class="input-group has-validation" style="width:250px">
                         <input type="date" name="birth" value="${employee.birth}" class="form-control" id="birth" required>
                         <div class="invalid-feedback">생년월일을 입력해주세요.</div>
+                        <form:errors path="employee.birth" class="errors"/>
                       </div>
                     </div>
                     
@@ -131,14 +130,14 @@
                       <label for="yourDepartment" class="form-label">부서</label>
                       <div class="input-group has-validation">
                         <select class="form-select" aria-label="Default select example" name="deptId" onchange="getTeam()" id="deptId">
-						    <option value=" ">선택</option>
+						    <option value="0">선택</option>
 						    <c:forEach var="department" items="${departments}" varStatus="status">
 						    	<option value="${department.deptId}">${department.deptName}</option>
 						    </c:forEach>
 						</select>
+						<form:errors path="employee.deptId" class="errors"/>
                       </div>
                     </div>
-					<form:errors path="employee.deptId" class="errors"/>
                     
                      <div id="teamDiv" class="col-4" style="width:170px;" >
                       <label for="yourDepartment" class="form-label">팀</label>
@@ -161,10 +160,10 @@
                     </div>
                     
                     <div class="col-12 form-floating mb-3">
-		                 <input type="text" class="form-control" value="${employee.managerId}" name="managerId" id="managerId" placeholder="매니저사번" required>
-		                  <label for="floatingName">매니저 사번</label>
+		                 <input type="text" class="form-control" value="${employee.managerId}" name="managerId" id="managerId" placeholder="매니저사번" >
+		                 <label for="floatingName">매니저 아이디</label>
+	                 	 <form:errors path="employee.managerId" class="errors"/>
 	                 </div>
-	                 <form:errors path="employee.managerId" class="errors"/>
 
                   
                     <div class="col-12 mx-auto" style="width:250px;">
