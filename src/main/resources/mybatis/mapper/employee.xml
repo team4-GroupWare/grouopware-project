@@ -146,4 +146,29 @@
 		]]>
 	</insert>
 	
+	<!-- 팀별 사원 목록  -->
+	<select id="selectEmpListByTeamId" parameterType="int" resultType="employee">
+		<![CDATA[
+			select 
+				EMP_ID as "empId", 
+            	MANAGER_ID as "managerId", 
+            	DEPT_ID as "deptId",
+                TEAM_ID as "teamId",
+                GRADE_ID as "gradeId", 
+                EMP_NO as "empNo", 
+                PASSWORD, 
+                NAME, 
+                PHONE, 
+                BIRTH, 
+                HIRE_DATE as "hireDate", 
+                RESIGN_DATE as "resignDate", 
+                PROFILE_CONTENT_TYPE as "profileContentType",
+               	PROFILE_DATA as "profileData", 
+               	DAYOFF_REMAIN as "dayoffRemain", 
+               	ADD_DAYOFF_REMAIN as "addDayoffRemain"
+			from employees
+			where team_id = #{teamid}
+    	]]>
+	</select>
+	
 </mapper>

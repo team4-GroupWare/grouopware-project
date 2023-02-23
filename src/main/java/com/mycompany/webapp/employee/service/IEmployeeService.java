@@ -22,4 +22,5 @@ public interface IEmployeeService {
 	public int register(Employee employee) throws Exception;
 	public List<Employee> getEmpList();
 	public List<Employee> getSearchEmpList(Pager pager, Employee employee);
+	public List<Employee> getEmpList(int teamid);
 }
