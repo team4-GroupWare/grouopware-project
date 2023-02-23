@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -50,10 +50,10 @@ public class EmployeeController {
 	@Autowired
 	private EmpValidator empValidator;
 	
-	@InitBinder
-	   private void initBinder(WebDataBinder binder) {
-	      binder.setValidator(empValidator);
-	   }
+	@InitBinder("employee")
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(empValidator);
+	}
 
 	/**
 	 * 
@@ -96,25 +96,6 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	
-	/**
-	 * @author : LEEYESEUNG
-	 * @return 회원 등록 페이지
-	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
-	 */
-	@GetMapping("/register")
-	public String register(Model model) {
-		log.info("실행");
-		//부서 List
-		List<Department> departments = departmentService.getDeptList();
-		model.addAttribute("departments", departments);
-		//직급 List
-		List<Grade> grades = gradeService.getGradeList();
-		model.addAttribute("grades", grades);
-		
-		model.addAttribute("result", "init");
-		
-		return "employee/register";
-	}
 	
 	/**
 	 * 
@@ -161,50 +142,66 @@ public class EmployeeController {
 		return result;
 	}
 	
-	@PostMapping(value="/register")
-	public String register(Model model, @ModelAttribute("employee") Employee employee,BindingResult errors) throws Exception{
+	/**
+	 * @author : LEEYESEUNG
+	 * @return 회원 등록 페이지
+	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
+	 */
+	@GetMapping("/register")
+	public String register(Model model) {
 		log.info("실행");
-		System.out.println(employee.toString());
-		empValidator.validate(employee, errors);
+		//부서 List
+		List<Department> departments = departmentService.getDeptList();
+		model.addAttribute("departments", departments);
+		//직급 List
+		List<Grade> grades = gradeService.getGradeList();
+		model.addAttribute("grades", grades);
+		
+		return "employee/register";
+	}	
+	
+	@PostMapping(value="/register")
+	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee, BindingResult errors) throws Exception{
+		log.info("실행");
+		//정규식 유효성 검사
 		if(errors.hasErrors()) {
-			System.out.println(errors);
-			
-			model.addAttribute("employee", employee);
-			model.addAttribute("result", "fail");
+			log.info("errors: "+errors);
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
+			
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
+			
 			return "employee/register";
 		}
 		try {
+			//insert했을 때 오류가 나면 catch로 오류 제어
 			int row = employeeService.register(employee);
+			
+			//아이디 중복 오류를 잡는다
 		} catch (AlreadyExistingIdException e) {
-			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
-			model.addAttribute("employee", employee);
-			model.addAttribute("result", "fail");
+			errors.rejectValue("empId", null, "이미 가입된 아이디입니다.");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			System.out.println(errors.toString());
+			log.info("errors: "+errors);
 			return "employee/register";
+			
+			//매니저 아이디가 없으면 삽입할 수 없다
 		} catch (NotExistingManagerException e) {
-			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
-			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
-			model.addAttribute("employee", employee);
-			model.addAttribute("result", "fail");
+			errors.rejectValue("managerId",null, "없는 매니저 아이디 입니다.");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			System.out.println(errors.toString());
+			log.info("errors: "+errors);
 			return "employee/register";
 		}
 		
