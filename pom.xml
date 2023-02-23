@@ -181,6 +181,14 @@
 		    <artifactId>jasypt-spring31</artifactId>
 		    <version>1.9.3</version>
 		</dependency>
+		
+		<!-- Validation -->
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
+		
 	</dependencies>
     <build>
     	<plugins>

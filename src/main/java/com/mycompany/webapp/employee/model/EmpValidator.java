@@ -33,27 +33,26 @@ public class EmpValidator implements Validator {
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return clazz.isAssignableFrom(Employee.class);
+		log.info("실행");
+		return Employee.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
 		log.info("실행");
 		Employee employee = (Employee) target;
-		System.out.println(target.toString());
-		System.out.println(employee.toString());
 		Matcher matcher = passwordPattern.matcher(employee.getPassword());
 		if(!matcher.matches()) {
-			errors.rejectValue("password", "passwordError","비밀번호는 8자 이상, 특수문자 하나를 포함해주세요.");
+			errors.rejectValue("password", null,"비밀번호는 8자 이상, 특수문자 하나를 포함해주세요.");
 		}
 		
 		matcher = phonePattern.matcher(employee.getPhone());
 		if(!matcher.matches()) {
-			errors.rejectValue("phone", "phoneError","010-0000-0000 형식으로 입력해주세요.");
+			errors.rejectValue("phone", null, "010-0000-0000 형식으로 입력해주세요.");
 		}
 		
 		if(employee.getDeptId()==0) {
-			errors.rejectValue("deptId", "deptIdError","필수로 선택해주세요.");
+			errors.rejectValue("deptId", null, "필수로 선택해주세요.");
 		}
 		
 		
