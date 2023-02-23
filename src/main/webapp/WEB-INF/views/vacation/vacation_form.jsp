@@ -78,16 +78,18 @@
 		}
 		//선택된 사원 insert
 		function btnInsert(){
-			let name = document.querySelector('input[name="employee"]:checked').value;
+			let empId = $("input:radio[name=employee]:checked").attr("value");
+			let empName = $("span[id='"+empId+"']").text();
+			
 			let selectEl = document.querySelector("#selectEl");
 		    var objOption = document.createElement("option");
 		    
 		    //사원 이름
-		    objOption.text = name;
+		    objOption.text = empName;
 		    //순서
 		    objOption.value = selectEl.length+1;
 		    //사원 ID
-		    objOption.id='empid'+objOption.value;
+		    objOption.id = empId;
 		    
 		    var type = 'false';
 		    var length = document.getElementById('selectEl').length;
@@ -130,6 +132,7 @@
 				selectEl.options[selectEl.options.length-1].selected = true;
 			}
 			selectEl.options.length = selectEl.options.length-1;
+			selectEl.options[selectEl.options.length-1].selected = true;
 		}
 		
 	</script>
@@ -426,70 +429,59 @@
 														<div class="col-4 border m-0" style="min-height:300px">
 															<div class="mt-3" id="box">
 																<ul>
-																	<li class="main1">
-																	  공공사업1
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	공공사업2
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	전략본부
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	경영본부
-																		<ul class="sub" style="display:none">
-																			<li>인사팀</li>
-																		</ul>
-																	</li>
+																	<c:forEach var="dept" items="${departments}" varStatus="status">
+																		<li class="depts" >
+																		  ${dept.deptName}
+																			<ul class="teams" style="display:none">
+																				<c:forEach var="team" items="${teams[status.index]}">
+																				    <li class="team" id="${team.teamId}">${team.teamName}</li>
+																			    </c:forEach>
+																			</ul>
+																		</li>
+																	 </c:forEach>
 																</ul>
 															</div>
 															<script>
-																$(".main1").click(function(){
-																    if($(this).find(".sub").is(":visible")){
-																        $(this).find(".sub").slideUp();
+																$(".depts").click(function(){
+																    if(! $(this).find(".teams").is(":visible")){
+																        $(this).find(".teams").slideDown();
 																    }
-																    else{
-																        $(this).find(".sub").slideDown();
-																    }
+																   /*  else{
+																        $(this).find(".teams").slideUp();
+																    } */
+																});
+																
+																$(".team").click(function(){
+																	var teamId = $(this).attr("id");
+																	console.log(teamId);
+																	
+																	$.ajax({
+																		type: "GET",
+																		url: "${pageContext.request.contextPath}/vacation/getemps/"+teamId,
+																		success: function(data) {
+																			var teamHtml = "";
+																			$("#empByteam").empty();
+																			for(var i in data){
+																				teamHtml += '<div class="mt-3" >'+'<label  style="width:100%">'+'<input type="radio" name="employee" value="'
+																							+data[i].empId+'">'+
+																				    '<span id="'+data[i].empId+'" style="width:100%">'+data[i].name+'</span>'
+																				   +'</label>'+'</div>';
+																			}
+																			$("#empByteam").html(teamHtml);
+																		},
+																		error: function() {
+																			console.log("통신실패!");
+																		}
+																	});
+																	
 																});
 															</script>
 														</div>
 														
 														<!-- 사원 -->
-														<div class="col-4 border">
-															<div class="mt-3" >
-																<label  class="test_obj" style="width:100%">
-																    <input type="radio" name="employee" value="이예승">
-																    <span style="width:100%">이예승(사원)</span>
-																</label>
-															</div>
-														 
-														<div>
-															<label class="test_obj" style="width:100%">
-														    	<input type="radio" name="employee" value="이연희">
-														    	<span style="width:100%">이연희(차장)</span>
-															</label>
-														</div>
-														 
-														<div>
-															<label class="test_obj" style="width:100%">
-															    <input type="radio" name="employee" value="이지호">
-															    <span style="width:100%">이지호(과장)</span>
-															</label>
-														</div>
-																													
+														<div id="empByteam" class="col-4 border">
+															
+														
 														</div>
 														
 														<!-- 이동 Button -->
