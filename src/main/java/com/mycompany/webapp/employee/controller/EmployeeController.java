@@ -166,6 +166,8 @@ public class EmployeeController {
 		log.info("실행");
 		System.out.println(employee.toString());
 		empValidator.validate(employee, errors);
+		
+		//정규식 유효성 검사
 		if(errors.hasErrors()) {
 			System.out.println(errors);
 			
@@ -180,9 +182,13 @@ public class EmployeeController {
 			return "employee/register";
 		}
 		try {
+			//insert했을 때 오류가 나면 catch로 오류 제어
 			int row = employeeService.register(employee);
+			
+			//아이디 중복 오류를 잡는다
 		} catch (AlreadyExistingIdException e) {
 			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			//사용자가 적었던 값 그대로 남도록
 			model.addAttribute("employee", employee);
 			model.addAttribute("result", "fail");
 			//부서 List
@@ -193,6 +199,8 @@ public class EmployeeController {
 			model.addAttribute("grades", grades);
 			System.out.println(errors.toString());
 			return "employee/register";
+			
+			//매니저 아이디가 없으면 삽입할 수 없다
 		} catch (NotExistingManagerException e) {
 			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
 			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
