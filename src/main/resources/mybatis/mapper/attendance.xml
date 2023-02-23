@@ -14,7 +14,7 @@
 		attendance
 			(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
 		VALUES
-			(seq_attendance.NEXTVAL,#{empId} ,sysdate, null ,sysdate, #{status})
+			(seq_attendance.NEXTVAL,#{empId}, sysdate, null ,sysdate, #{status})
 	</insert>
 	
 	<update id="updateLeave" parameterType="map">
