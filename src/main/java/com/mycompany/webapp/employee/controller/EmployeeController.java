@@ -90,8 +90,9 @@ public class EmployeeController {
 			//초기 비밀번호인 경우
 			return "redirect:/employee/chagepwd";
 		}
-		
-		session.setAttribute("loginEmployee", employee);
+		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
+		session.setAttribute("loginEmployee", dbEmployee);
+		System.out.println(dbEmployee);
 		return "redirect:/";
 	}
 	
@@ -182,13 +183,39 @@ public class EmployeeController {
 			int row = employeeService.register(employee);
 		} catch (AlreadyExistingIdException e) {
 			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			model.addAttribute("employee", employee);
+			model.addAttribute("result", "fail");
+			//부서 List
+			List<Department> departments = departmentService.getDeptList();
+			model.addAttribute("departments", departments);
+			//직급 List 
+			List<Grade> grades = gradeService.getGradeList();
+			model.addAttribute("grades", grades);
+			System.out.println(errors.toString());
 			return "employee/register";
 		} catch (NotExistingManagerException e) {
 			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
+			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			model.addAttribute("employee", employee);
+			model.addAttribute("result", "fail");
+			//부서 List
+			List<Department> departments = departmentService.getDeptList();
+			model.addAttribute("departments", departments);
+			//직급 List 
+			List<Grade> grades = gradeService.getGradeList();
+			model.addAttribute("grades", grades);
+			System.out.println(errors.toString());
 			return "employee/register";
 		}
 		
-		return "employee/register";
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		log.info("실행");
+		session.removeAttribute("loginEmployee");
+		return "redirect:/";
 	}
 	
 }

@@ -32,15 +32,15 @@
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-					<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">이지호</span>
+					<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">${loginEmployee.name}</span>
 				</a>
-				<span class=" ps-2">공공사업1 Div / 솔루션 개발팀</span>
+				<span class=" ps-2">${loginEmployee.deptName} / ${loginEmployee.teamName}</span>
 				
 				<!-- dropbar -->
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 					<li class="dropdown-header">
-						<h6>이지호</h6>
-						<span>공공사업1 Div / 솔루션 개발팀</span>
+						<h6>${loginEmployee.name}</h6>
+						<span>${loginEmployee.deptName} / ${loginEmployee.teamName}</span>
 					</li>
 					<li>
 						<hr class="dropdown-divider">
@@ -55,7 +55,7 @@
 						<hr class="dropdown-divider">
 					</li>
 					<li>
-						<a class="dropdown-item d-flex align-items-center" href="#">
+						<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/employee/logout">
 					    	<i class="bi bi-box-arrow-right"></i>
 					    	<span>Sign Out</span>
 					  	</a>

@@ -8,7 +8,7 @@
 	<script>
 		function getTeam() {
 			//선택된 부서 아이디 가져옴
-			var value = $("#departmentId > option:selected").val();
+			var value = $("#deptId > option:selected").val();
 			if(value != "선택"){
 				$.ajax({
 					url: "${pageContext.request.contextPath}/employee/teamlist",
@@ -23,7 +23,7 @@
 					}
 					
 					$('#teamId').html(teamHtml);
-				    
+					console.log(value);
 				});
 			} else {
 				//기본 '선택'이라면 team목록이 공백으로 나타남
@@ -81,7 +81,7 @@
                     <h5 class="card-title text-center pb-0 fs-4 mb-3"><b>회원등록</b></h5>
                   </div>
 
-                  <form:form class="row g-3 needs-validation" method="post" action="register">
+                  <form:form commandName="employee" class="row g-3 needs-validation" method="post" action="register">
                   	<div class="row">
 		                 <div class="col-9 form-floating mb-3">
 		                 	  <c:if test="${result == 'init'}">
@@ -154,7 +154,7 @@
                      <div class="col-4" style="width:170px">
                       <label for="yourDepartment" class="form-label">부서</label>
                       <div class="input-group has-validation">
-                        <select class="form-select" aria-label="Default select example" name="departmentId" onchange="getTeam()" id="departmentId">
+                        <select class="form-select" aria-label="Default select example" name="deptId" onchange="getTeam()" id="deptId">
 						    <option value=" ">선택</option>
 						    <c:forEach var="department" items="${departments}" varStatus="status">
 						    	<option value="${department.deptId}">${department.deptName}</option>
