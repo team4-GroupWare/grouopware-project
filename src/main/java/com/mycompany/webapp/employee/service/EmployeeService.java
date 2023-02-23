@@ -157,14 +157,5 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.selectEmpListByTeamId(teamid);
 	}
 
-	/**
-	 * 팀별 사원 목록
-	 * @author : LEEYEONHEE
-	 * @param teamid : 팀아이디
-	 * @return 팀별 사원 목록
-	 */
-	@Override
-	public List<Employee> getEmpList(int teamid) {
-		return employeeRepository.selectEmpListByTeamId(teamid);
-	}
+	
 }
