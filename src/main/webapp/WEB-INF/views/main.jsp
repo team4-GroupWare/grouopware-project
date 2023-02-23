@@ -12,7 +12,7 @@
 	  		$(document).ready(function() {
 	  			/* 페이지 로드되면 로그인한 사원의 출근정보 가져오기 */
 	  			$.ajax({
-	  				url : "/webapp/attendanceinfo"
+	  				url : "${pageContext.request.contextPath}/attendanceinfo"
 	  				
 	  			}).done((data)=>{
 	  				let status; 
@@ -198,7 +198,7 @@
 									function btnAtt(){
 										console.log("btnAtt()실행")
 										$.ajax({
-											url:"/webapp/attendance"
+											url:"${pageContext.request.contextPath}/attendance"
 											
 										}).done((data)=>{
 											console.log(data);
@@ -217,7 +217,7 @@
 									function btnLeave()  {
 										console.log("btnLeave()실행")
 										$.ajax({
-											url:"/webapp/leave"
+											url:"${pageContext.request.contextPath}/leave"
 											
 										}).done((data)=>{
 											console.log(data);
