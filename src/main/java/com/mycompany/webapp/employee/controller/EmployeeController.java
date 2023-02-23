@@ -114,7 +114,7 @@ public class EmployeeController {
 	}
 	
 	/**
-	 * 
+	 * 사원 상세정보 보기
 	 * @author : LEEJIHO
 	 * @param empId : 사원아이디
 	 * @return 사원 정보

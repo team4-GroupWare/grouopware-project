@@ -1,5 +1,8 @@
 package com.mycompany.webapp.approval.repository;
 
-public interface IApprovalRepository {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public interface IApprovalRepository {
+	
 }

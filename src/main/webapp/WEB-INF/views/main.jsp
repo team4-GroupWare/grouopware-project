@@ -87,7 +87,7 @@
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col" onclick="location.href='${pageContext.request.contextPath}/approval/write'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class="bi bi-clipboard-check fs-1 " ></i>
 							</div>

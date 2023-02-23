@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,20 +34,20 @@ public class GroupController {
 	private IEmployeeService employeeService;
 	
 	/**
-	 * 조직도 기능
+	 * 조직도(인사) 사원 목록 조회
 	 * 
 	 * @author : LEEJIHO
+	 * @param pageNo
+	 * @param type
+	 * @param keyword
 	 * @param model
-	 * @return hr/hr.jsp
+	 * @return
 	 */
 	@GetMapping("/hr/list")
-	public String getDeptList(@RequestParam(defaultValue="1") int pageNo, Model model) {
+	public String getEmpList(@RequestParam(defaultValue="1") int pageNo,
+			@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String keyword, Model model) {
+		
 		log.info("실행");
-		
-		int rowEmployee = employeeService.getTotalRows();
-		Pager pager = new Pager(10, 5, rowEmployee, pageNo);
-		log.info("행수: " + rowEmployee);
-		
 		List<List<Team>> teams = new ArrayList<>();
 		
 		//부서 목록
@@ -57,39 +58,24 @@ public class GroupController {
 			teams.add(teamService.getTeamListById(dept.getDeptId()));
 		}
 		
-		//사원 목록
-		List<Employee> employees = employeeService.getEmpList(pager);
+		Employee employee = new Employee();
+		employee.setType(type);
+		employee.setKeyword(keyword);
+		
+		int searchEmpRow = employeeService.getSearchEmpRows(employee);
+		log.info("검색 행수: " + searchEmpRow);
+		
+		//검색한 사원 목록
+		Pager pager = new Pager(10, 5, searchEmpRow, pageNo);
+		List<Employee> employees = employeeService.getSearchEmpList(pager, employee);
+		log.info("검색 사원: "+ employees);
 		
 		model.addAttribute("pager", pager);
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		model.addAttribute("employees", employees);
 		
-		return "hr/hr2";
-	}
-	
-	// 검색
-	@GetMapping("/employee/search")
-	@ResponseBody
-	public List<Employee> getSearchEmpList(@RequestParam(defaultValue="1") int pageNo,
-			@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) {
-		
-		log.info("실행");
-		
-		Employee employee = new Employee();
-		employee.setType(type);
-		employee.setKeyword(keyword);
-		
-		int searchEmpRow = employeeService.getSearchEmpRows(employee);
-		Pager pager = new Pager(10, 5, searchEmpRow, pageNo);
-		log.info("검색 행수: " + searchEmpRow);
-		
-		//검색한 사원 목록
-		List<Employee> employees = employeeService.getSearchEmpList(pager, employee);
-		log.info("검색 사원: "+ employees);
-		model.addAttribute("pager", pager);
-		model.addAttribute("employees", employees);
-		return employees;
+		return "hr/hr";
 		
 	}
 	
