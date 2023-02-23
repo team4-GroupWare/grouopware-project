@@ -148,7 +148,7 @@ public class EmployeeController {
 	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
 	 */
 	@GetMapping("/register")
-	public String register(Model model, @ModelAttribute("employee") Employee employee) {
+	public String register(Model model) {
 		log.info("실행");
 		//부서 List
 		List<Department> departments = departmentService.getDeptList();
@@ -182,7 +182,7 @@ public class EmployeeController {
 			
 			//아이디 중복 오류를 잡는다
 		} catch (AlreadyExistingIdException e) {
-			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			errors.rejectValue("empId", null, "이미 가입된 아이디입니다.");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
@@ -194,8 +194,7 @@ public class EmployeeController {
 			
 			//매니저 아이디가 없으면 삽입할 수 없다
 		} catch (NotExistingManagerException e) {
-			errors.rejectValue("managerId", "없는 매니저 아이디 입니다.");
-			errors.rejectValue("empId", "이미 가입된 아이디입니다.");
+			errors.rejectValue("managerId",null, "없는 매니저 아이디 입니다.");
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);

@@ -95,28 +95,29 @@
 		                      <div class="btn btn-secondary btn-sm" onclick="check()">중복확인</div>
 		                 </div>
 	                 </div>
+	                 <form:errors path="employee.empId" class="errors"/>
 	                 <div class="row">   
 		                 <div class="col-9 form-floating mb-3">
 			                  <input type="password" class="form-control" value="${employee.password}" name="password" id="floatingPassword" placeholder="비밀번호" required >
 			                  <div class="invalid-feedback">비밀번호를 입력해주세요</div> 
 			                  <label for="floatingName">비밀번호</label>
-			         		  <form:errors path="password" class="errors"/>
 		                 </div>
 	                 </div>
+			         <form:errors path="employee.password" class="errors"/>
 	                 
 	                 <div class="col-23 form-floating mb-3"> 
 		                  <input type="text" class="form-control" value="${employee.name}" name="name" id="floatingName" placeholder="이름" required>
 		                  <div class="invalid-feedback">이름을 입력해주세요</div> 
 		                  <label for="floatingName">이름</label>
 	                 </div>
-	                 <form:errors path="name" class="errors"/>
+	                 <form:errors path="employee.name" class="errors"/>
 	                 
 	                 <div class="col-12 form-floating mb-3"> 
 		                  <input type="text" class="form-control" value="${employee.phone}" name="phone" id="floatingPhone" placeholder="번호" >
 		                  <div class="invalid-feedback">번호를 입력해주세요</div> 
 		                  <label for="floatingName">전화번호</label>
-	                 	  <form:errors path="phone" class="errors"/>	
 	                 </div>
+	                 <form:errors path="employee.phone" class="errors"/>
                     
                     <div class="col-12">
                       <label for="yourBirthday" class="form-label">생년월일</label>
@@ -137,7 +138,7 @@
 						</select>
                       </div>
                     </div>
-					<form:errors path="deptId" class="errors"/>
+					<form:errors path="employee.deptId" class="errors"/>
                     
                      <div id="teamDiv" class="col-4" style="width:170px;" >
                       <label for="yourDepartment" class="form-label">팀</label>
@@ -162,8 +163,8 @@
                     <div class="col-12 form-floating mb-3">
 		                 <input type="text" class="form-control" value="${employee.managerId}" name="managerId" id="managerId" placeholder="매니저사번" required>
 		                  <label for="floatingName">매니저 사번</label>
-	                 	  <form:errors path="managerId" class="errors"/>
 	                 </div>
+	                 <form:errors path="employee.managerId" class="errors"/>
 
                   
                     <div class="col-12 mx-auto" style="width:250px;">
