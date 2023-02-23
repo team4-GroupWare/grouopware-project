@@ -27,4 +27,11 @@ public class GradeService implements IGradeService {
 		return grades;
 	}
 
+	@Override
+	public int getDayOffByGradeId(int gradeId) {
+		log.info("실행");
+		int dayOff = gradeRepository.selectDayOff(gradeId);
+		return dayOff;
+	}
+
 }

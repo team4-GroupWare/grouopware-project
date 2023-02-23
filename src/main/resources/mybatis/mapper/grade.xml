@@ -8,6 +8,14 @@
 				from grade
 			]]>
 	</select>
+	
+	<select id="selectDayOff" parameterType="int" resultType="int">
+		<![CDATA[
+			select dayoff_count
+			from grade
+			where grade_id = #{gradId}
+		]]>	
+	</select>
 
 
 
