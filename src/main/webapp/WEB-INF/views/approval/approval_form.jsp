@@ -5,6 +5,10 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 
   	<!-- 텍스트 에디터 -->
+
+  <%-- 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor4/ckeditor.js"></script> --%>
+  	<script src="http://cdn.ckeditor.com/4.19.0/full/ckeditor.js"></script>
+
   	<!-- <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script> -->
   	<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/decoupled-document/ckeditor.js"></script>
   	<!-- <script src="../documentckeditor/build/ckeditor.js"></script> -->
