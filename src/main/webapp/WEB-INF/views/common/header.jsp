@@ -15,7 +15,7 @@
 	<div class="menudropbar d-flex align-items-center justify-content-between">
    		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
      		<option value="${pageContext.request.contextPath}/">오피스 홈</option>
-     		<option value="attendance-status.html">근태관리</option>
+     		<option value="${pageContext.request.contextPath}/attendance/status">근태관리</option>
      		<option value="${pageContext.request.contextPath}/hr/list">인사</option>
      		<option value="approval_list.html">전자결재</option>
      		<option value="email/email_list.html">메일</option>

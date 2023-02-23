@@ -205,9 +205,11 @@
 							url: "${pageContext.request.contextPath}/employee/search",
 							data: $("form[name=emp-search]").serialize(),
 							sueccess: function(result) {
+								console.log("성공");
 								$('#emptable > tbody').empty();
 								if(result.length >= 1) {
 									result.forEach(function(item) {
+										console.log(item)
 										str = "<tr class='modal-open' onclick='javascript:empInfo('" + item.empId + "')'>";
 										str += "<th scope='row'><img src='${pageContext.request.contextPath}/resources/assets/img/profile_img.png' alt='Profile' class='rounded-circle' width='40px'>" + item.name + "</th>"
 										str += "<td>" + item.phone + "</td>";
