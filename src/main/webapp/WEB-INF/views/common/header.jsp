@@ -17,7 +17,7 @@
      		<option value="${pageContext.request.contextPath}/">오피스 홈</option>
      		<option value="${pageContext.request.contextPath}/attendance/status">근태관리</option>
      		<option value="${pageContext.request.contextPath}/hr/list">인사</option>
-     		<option value="approval_list.html">전자결재</option>
+     		<option value="${pageContext.request.contextPath}/approval/write">전자결재</option>
      		<option value="email/email_list.html">메일</option>
      		<option value="5">공지사항</option>
    		</select>

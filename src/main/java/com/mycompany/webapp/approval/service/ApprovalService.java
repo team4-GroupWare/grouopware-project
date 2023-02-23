@@ -1,5 +1,8 @@
 package com.mycompany.webapp.approval.service;
 
-public class ApprovalService {
+import org.springframework.stereotype.Service;
 
+@Service
+public class ApprovalService implements IApprovalService {
+	
 }
