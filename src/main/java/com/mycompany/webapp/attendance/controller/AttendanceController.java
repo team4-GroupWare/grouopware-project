@@ -117,6 +117,6 @@ public class AttendanceController {
 	@GetMapping("/attendance/status")
 	public String attendanceStatus() {
 		log.info("실행");
-		return "vacation/vacation_form";
+		return "attendance/attendance_status";
 	}
 }

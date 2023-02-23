@@ -5,23 +5,24 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<!--  -->
-	<style type="text/css">
-		/* IE */
-	select {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-	}
-	select::-webkit-scrollbar {
-	    display: none; /* Chrome, Safari, Opera*/
-	}
+	
+	<!-- option scroll 제거 -->
+	<style>
+		select {
+	    -ms-overflow-style: none; /* IE and Edge */
+	    scrollbar-width: none; /* Firefox */
+		}
+		select::-webkit-scrollbar {
+		    display: none; /* Chrome, Safari, Opera*/
+		}
 	</style>
-	<script type="text/javascript">
-	function ListSubmit(form) {
-		if (confirm("카테고리의 배열순서를 변경하시겠습니까?")) {
-			gnum = form.category_list.options.length;
-			value_arr = "";
-
+	
+	<!-- modal -->
+	<script>
+		function ListSubmit(form) {
+			var gnum = form.category_list.options.length;
+			var value_arr = "";
+	
 			for (i = 0; i < gnum; i++) {
 				if (i == 0) {
 					value_arr = form.category_list.options[i].value;
@@ -30,112 +31,110 @@
 							+ form.category_list.options[i].value;
 				}
 			}
-
+	
 			form.category_code.value = value_arr;
 			form.submit();
-		} else {
-
+	
 		}
-	}
-
-	// 상,하 이동
-	function moveCategory(type, form) {
-		var movewidth = 1;
-		var thisform = eval(form);
-		var sel = thisform.category_list.selectedIndex;
-		var targetpos = sel - movewidth;
-
-		if (type == "U") {
-			if (sel > 0) {
-				if (targetpos < 0)
-					targetpos = 0;
-				curvalue = thisform.category_list.options[sel].value;
-				curtext = thisform.category_list.options[sel].text;
-
-				for (i = sel - 1; i >= targetpos; i--) {
-					thisform.category_list.options[i + 1].text = thisform.category_list.options[i].text;
-				}
-				thisform.category_list.options[targetpos].text = curtext;
-				thisform.category_list.options[targetpos].selected = true;
-			}
-		} else if (type == "D") {
-			if (sel == -1) {
-				alert("이동할 항목을 선택하세요");
-				thisform.category_list.focus();
-				return;
-			} else {
-				lastpos = thisform.category_list.options.length - 1;
-				if (sel >= lastpos || sel < 0)
-					return;
-				targetpos = sel + movewidth;
-				if (targetpos > lastpos)
-					targetpos = lastpos;
-				curvalue = thisform.category_list.options[sel].value;
-				curtext = thisform.category_list.options[sel].text;
-
-				for (i = sel + 1; i <= targetpos; i++) {
-					thisform.category_list.options[i - 1].text = thisform.category_list.options[i].text;
-				}
-
-				thisform.category_list.options[targetpos].text = curtext;
-				thisform.category_list.options[targetpos].selected = true;
-
-			}
-		}
-	}
-	function btnInsert(){
-		let value1 = document.querySelector('input[name="employee"]:checked').value;
-		let selectEl = document.querySelector("#selectEl");
-	    var objOption = document.createElement("option");
-	    objOption.text = value1;
-	    objOption.value = selectEl.length+1;
-	    objOption.id='empid'+objOption.value;
-	    console.log(objOption.id);
-	    var type = 'false';
-	    var home_page_count = document.getElementById('selectEl').length;
-	    for (i = 0; i < home_page_count; i++) {
-			console.log(selectEl.options[i].id)
-			if(objOption.id == selectEl.options[i].id){
-				type = 'true';
-				break;
-			}
-			
-		}
-	    console.log(type)
-	    if(type == 'false' ){
-	    	selectEl.options.add(objOption);
-	    }
-	   
-	}
-	function btnDelete(form){
-		var thisform = eval(form);
-		var sel = thisform.category_list.selectedIndex;
-		var movewidth=thisform.category_list.options.length - thisform.category_list.options[sel].value+1 ;
-		console.log(movewidth);
-		var targetpos = sel - movewidth;
 		
-		if (sel == -1) {
-			alert("이동할 항목을 선택하세요");
-			thisform.category_list.focus();
-			return;
-		} else {
-			lastpos = thisform.category_list.options.length - 1;
-			if (sel >= lastpos || sel < 0)
-				return;
-			targetpos = sel + movewidth;
-			if (targetpos > lastpos)
-				targetpos = lastpos;
-			curvalue = thisform.category_list.options[sel].value;
-			curtext = thisform.category_list.options[sel].text;
-
-			for (i = sel + 1; i <= targetpos; i++) {
-				thisform.category_list.options[i - 1].text = thisform.category_list.options[i].text;
+		function moveCategory(type) {
+			//select 박스 안
+			let selectEl = document.querySelector("#selectEl");
+			//선택된 option
+			var target = document.querySelector('select[name="category_list"]');
+			//선택된 option의 인덱스 번호
+			var index = target.selectedIndex;
+			
+			//위로 가는 버튼일 경우에
+			if (type == "U") {
+				if (index > 0) {
+					//값 변경
+					selText = selectEl.options[index].text;
+					selectEl.options[index].text = selectEl.options[index-1].text;
+					selectEl.options[index-1].text = selText;
+					
+					//ID 변경
+					selId = selectEl.options[index].id;
+					selectEl.options[index].id = selectEl.options[index-1].id;
+					selectEl.options[index-1].id = selId;
+					
+					selectEl.options[index-1].selected = true;
+				}
+			} else if (type == "D") {
+				if (index < selectEl.length-1) {
+					selText = selectEl.options[index].text;
+					selectEl.options[index].text = selectEl.options[index+1].text;
+					selectEl.options[index+1].text = selText;
+					
+					selId = selectEl.options[index].id;
+					selectEl.options[index].id = selectEl.options[index+1].id;
+					selectEl.options[index+1].id = selId;
+					
+					
+					selectEl.options[index+1].selected = true;
+				}
+				
 			}
-
-			thisform.category_list.options[targetpos].text = curtext;
-			thisform.category_list.options.length = thisform.category_list.options.length-1;
 		}
-	}
+		//선택된 사원 insert
+		function btnInsert(){
+			let empId = $("input:radio[name=employee]:checked").attr("value");
+			let empName = $("span[id='"+empId+"']").text();
+			
+			let selectEl = document.querySelector("#selectEl");
+		    var objOption = document.createElement("option");
+		    
+		    //사원 이름
+		    objOption.text = empName;
+		    //순서
+		    objOption.value = selectEl.length+1;
+		    //사원 ID
+		    objOption.id = empId;
+		    
+		    var type = 'false';
+		    var length = document.getElementById('selectEl').length;
+		   	//이미 있는 사원인지 검사
+		    for (i = 0; i < length; i++) {
+				if(objOption.id == selectEl.options[i].id){
+					type = 'true';
+					break;
+				}
+			}
+		   	//중복되지 않는 사원이면 넣어줌
+		    if(type == 'false' ){
+		    	selectEl.options.add(objOption);
+		    }
+		   	
+		    selectEl.options[selectEl.options.length-1].selected = true;
+		}
+		
+		//선택된 사원 delete
+		function btnDelete(){
+			//select 박스 안
+			let selectEl = document.querySelector("#selectEl");
+			//선택된 option
+			var target = document.querySelector('select[name="category_list"]');
+			//선택된 option의 인덱스 번호
+			var index = target.selectedIndex;
+			
+			if (index < selectEl.length-1) {
+				var moveCount = selectEl.options.length - index-1 ;
+				var selText = selectEl.options[index].text;
+				var selId = selectEl.options[index].id;
+				
+				for(i =selectEl.options.length-moveCount; i<= selectEl.options.length-1; i++){
+					
+					selectEl.options[i - 1].id = selectEl.options[i].id;
+					selectEl.options[i - 1].text = selectEl.options[i].text;
+				}
+				selectEl.options[selectEl.options.length-1].id = selId;
+				selectEl.options[selectEl.options.length-1].text = selText;
+				selectEl.options[selectEl.options.length-1].selected = true;
+			}
+			selectEl.options.length = selectEl.options.length-1;
+			selectEl.options[selectEl.options.length-1].selected = true;
+		}
+		
 	</script>
 </head>
 	<body>
@@ -326,26 +325,12 @@
 									<div class="row mb-3">
 										<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
 										<div class="col-sm-10">
-											
-											<script>
-												function showModal(){
-													console.log('들어옴');
-													$.ajax({
-														url: "${pageContext.request.contextPath}/vacation/list",
-														success: function(data){
-															console.log(data);
-															$('#verticalycentered').modal('show');
-														}
-													});
-												}
-											</script>
-											
 											<!-- 결재선 선택 Button -->
 											<div class="row mb-3">
 												<div class="col-sm-10">
-													<button type="button" onclick="showModal()" class="btn btn-primary">
-													 		결재선 선택
-													</button>
+													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                    								결재선 선택
+              										</button>
 												</div>
 											</div>
 											
@@ -430,10 +415,10 @@
 													<!-- 순서 변경 버튼 -->
 													<div class="row d-flex justify-content-end">
 														<div class=col-1>
-															<button type="button" class="btn btn-light" OnClick="moveCategory('U',this.form)">↑</button>
+															<button type="button" class="btn btn-light" OnClick="moveCategory('U')">↑</button>
 														</div>
 														<div class=col-1>
-															<button  type="button" class="btn btn-light" OnClick="moveCategory('D',this.form)">↓</button>
+															<button  type="button" class="btn btn-light" OnClick="moveCategory('D')">↓</button>
 														</div>
 													</div>
 													
@@ -444,70 +429,59 @@
 														<div class="col-4 border m-0" style="min-height:300px">
 															<div class="mt-3" id="box">
 																<ul>
-																	<li class="main1">
-																	  공공사업1
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	공공사업2
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	전략본부
-																		<ul class="sub" style="display:none">
-																		    <li>개발솔루션</li>
-																		    <il>프론트엔드</il>
-																		</ul>
-																	</li>
-																	<li class="main1">
-																	  	경영본부
-																		<ul class="sub" style="display:none">
-																			<li>인사팀</li>
-																		</ul>
-																	</li>
+																	<c:forEach var="dept" items="${departments}" varStatus="status">
+																		<li class="depts" >
+																		  ${dept.deptName}
+																			<ul class="teams" style="display:none">
+																				<c:forEach var="team" items="${teams[status.index]}">
+																				    <li class="team" id="${team.teamId}">${team.teamName}</li>
+																			    </c:forEach>
+																			</ul>
+																		</li>
+																	 </c:forEach>
 																</ul>
 															</div>
 															<script>
-																$(".main1").click(function(){
-																    if($(this).find(".sub").is(":visible")){
-																        $(this).find(".sub").slideUp();
+																$(".depts").click(function(){
+																    if(! $(this).find(".teams").is(":visible")){
+																        $(this).find(".teams").slideDown();
 																    }
-																    else{
-																        $(this).find(".sub").slideDown();
-																    }
+																   /*  else{
+																        $(this).find(".teams").slideUp();
+																    } */
+																});
+																
+																$(".team").click(function(){
+																	var teamId = $(this).attr("id");
+																	console.log(teamId);
+																	
+																	$.ajax({
+																		type: "GET",
+																		url: "${pageContext.request.contextPath}/vacation/getemps/"+teamId,
+																		success: function(data) {
+																			var teamHtml = "";
+																			$("#empByteam").empty();
+																			for(var i in data){
+																				teamHtml += '<div class="mt-3" >'+'<label  style="width:100%">'+'<input type="radio" name="employee" value="'
+																							+data[i].empId+'">'+
+																				    '<span id="'+data[i].empId+'" style="width:100%">'+data[i].name+'</span>'
+																				   +'</label>'+'</div>';
+																			}
+																			$("#empByteam").html(teamHtml);
+																		},
+																		error: function() {
+																			console.log("통신실패!");
+																		}
+																	});
+																	
 																});
 															</script>
 														</div>
 														
 														<!-- 사원 -->
-														<div class="col-4 border">
-															<div class="mt-3" >
-																<label  class="test_obj" style="width:100%">
-																    <input type="radio" name="employee" value="이예승">
-																    <span style="width:100%">이예승(사원)</span>
-																</label>
-															</div>
-														 
-														<div>
-															<label class="test_obj" style="width:100%">
-														    	<input type="radio" name="employee" value="이연희">
-														    	<span style="width:100%">이연희(차장)</span>
-															</label>
-														</div>
-														 
-														<div>
-															<label class="test_obj" style="width:100%">
-															    <input type="radio" name="employee" value="이지호">
-															    <span style="width:100%">이지호(과장)</span>
-															</label>
-														</div>
-																													
+														<div id="empByteam" class="col-4 border">
+															
+														
 														</div>
 														
 														<!-- 이동 Button -->
@@ -519,7 +493,7 @@
 															</div>
 															
 															<div>
-																<button type="button" class="btn btn-light" onclick="btnDelete(this.form)">
+																<button type="button" class="btn btn-light" onclick="btnDelete()">
 																	<
 																</button>
 															</div>
