@@ -20,7 +20,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed"  href="#">
+        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/email/receivelist">
           <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
         </a>
       </li><!-- End Charts Nav -->
@@ -30,6 +30,11 @@
           <i class="bi bi-envelope"></i><span>보낸 메일함</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+ 	 	  <li>
+            <a href="${pageContext.request.contextPath}/email/sendlist">
+              <span>전체</span>
+            </a>
+          </li>
           <li>
             <a href="#" class="active">
               <span>미수신 메일</span>

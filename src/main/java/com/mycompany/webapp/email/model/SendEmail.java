@@ -12,4 +12,7 @@ public class SendEmail {
 	private int emailContentId;
 	private boolean isDeleted;
 	private Date trashDate;
+	private int emailFileId;
+	private String emailFileName;
+	private int emailFileSize;
 }
