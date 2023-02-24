@@ -32,7 +32,7 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="../email/send_email_list.html">
+            <a href="${pageContext.request.contextPath}/email/sendlist">
               <span>전체</span>
             </a>
           </li>
@@ -79,7 +79,7 @@
 	      <h1>받은메일함</h1>
 	      <nav>
 	        <ol class="breadcrumb">
-	          <li class="breadcrumb-item"><a href="index.html">받은메일함</a></li>
+	          <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/email/receivelist">받은메일함</a></li>
 	        </ol>
 	      </nav>
 	    </div><!-- End Page Title -->
@@ -125,9 +125,9 @@
                 <tbody>
                   <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   	<tr>
-                  	<td><input type="checkbox"></td>
+                  	<td><input class="form-check-input" type="checkbox"></td>
                     <td>${emailList.sentId}</td>
-                    <td onClick="location.href='${pageContext.request.contextPath}/email/write'">${emailList.title}</td>
+                    <td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
                     <td>${emailList.sentDate}</td>
                     </tr>
                   </c:forEach>
@@ -139,35 +139,35 @@
   				<nav aria-label="Page navigation example">
 	   				<ul class="pagination">
 	   					<li class="page-item">
-	       					<a class="page-link" href="list?pageNo=1" aria-label="Previous">
+	       					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=1" aria-label="Previous">
 	         						<span aria-hidden="true">처음</span>
        						</a>
      					</li>	
    						<c:if test="${pager.groupNo>1}">
       					<li class="page-item">
-        					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+        					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
           						<span aria-hidden="true">이전</span>
         					</a>
       					</li>
      					</c:if>
      					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
      						<c:if test="${pager.pageNo != i}">
-							<li class="page-item"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
 							</c:if>
 							<c:if test="${pager.pageNo == i}">
-							<li class="page-item active"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
 							</c:if>
 						</c:forEach>
 								
 						<c:if test="${pager.groupNo<pager.totalGroupNo}">
 						<li class="page-item">
-            				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}" aria-label="Next">
+            				<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.endPageNo+1}" aria-label="Next">
            						<span aria-hidden="true">다음</span>
          					</a>
    						</li>
 						</c:if>
 						<li class="page-item">
-       						<a class="page-link" href="list?pageNo=${pager.totalPageNo}" aria-label="Previous">
+       						<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.totalPageNo}" aria-label="Previous">
     							<span aria-hidden="true">맨끝</span>
    							</a>
    						</li>	

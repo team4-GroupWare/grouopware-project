@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.email.repository.EmailRepository">
-
-	<select id="selectEmail" resultType="emailList" parameterType="map">
+	<!-- 받는 emailList -->
+	<select id="selectReceiveEmail" resultType="emailList" parameterType="map">
 		<![CDATA[
-			select r.sent_emp_id as sentId, c.title, s.sent_date as sentDate
+			select distinct r.sent_emp_id as sentId, c.title, s.sent_date as sentDate
 			from receive_email r, email_content c, send_email s
 			where s.RECEIVED_EMP_ID = #{receiveId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
 				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
@@ -15,14 +15,37 @@
 	
 	</select>
 	
+	<!-- 받은 email 총 개수 -->
 	<select id="selectReceiveEmailCount" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(s.send_email_id)
 			from email_content c, send_email s
 			where s.RECEIVED_EMP_ID = #{receiveId} and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		]]>
-		
 	
+	</select>
+	
+	<!-- 보낸 EMAIL 총 개수 -->
+	<select id="selectSendEmailCount" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT COUNT(R.RECEIVE_EMAIL_ID)
+			FROM EMAIL_CONTENT c, RECEIVE_EMAIL r
+			WHERE r.SENT_EMP_ID = #{sendId} and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID
+		]]>
+	
+	</select>
+	
+	<select id="selectSendEmail" parameterType="map" resultType="emailList">
+		<![CDATA[
+			select distinct s.received_emp_id as receiveId, c.title, s.sent_date as sentDate, r.read_date as readDate
+        	from receive_email r, email_content c, send_email s
+        	where r.SENT_EMP_ID = #{sendId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+        	order by s.sent_date desc
+        	offset #{pager.startRowNo}-1 rows
+        	fetch first 10 rows only
+		
+		]]>
 	</select>
 
 
