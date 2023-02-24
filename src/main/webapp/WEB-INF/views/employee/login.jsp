@@ -16,7 +16,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 			  <!-- Start Logo -->
               <div class="d-flex align-items-center justify-content-between">
-      		  <img src="${pageContext.request.contextPath}/resources//assets/img/exaint_logo.png" width="100px" height="100px">
+      		  <img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
       			<a href="index2.html" class="logo d-flex align-items-center">
         		<span class="d-none d-lg-block">엑사아이엔티 </span>
       			</a>
