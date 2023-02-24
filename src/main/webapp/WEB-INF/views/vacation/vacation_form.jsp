@@ -447,7 +447,7 @@
 													            		</a>
 														            	<ul id="nav-dept${status.count}" class="nav-content collapse m-0" data-bs-parent="#sidebar-nav">
 															              	<c:forEach var="team" items="${teams[status.index]}">
-															              	<li class="team" id="${team.teamId}">
+															              	<li style="" class="team" id="${team.teamId}">
 															              		${team.teamName}
 															              	</li>
 															              	</c:forEach>
