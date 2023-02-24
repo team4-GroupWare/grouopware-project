@@ -31,17 +31,28 @@ public class EmailController {
 	@Autowired
 	IEmailService emailService;
 	
-	@GetMapping("/list")
+	@GetMapping("/receivelist")
 	public String getReceiveEmail(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		int emailRow = emailService.getReceiveEmailRows(employee.getEmpId());
 		Pager pager = new Pager(10, 5, emailRow, pageNo);
-		List<EmailList> emailList = emailService.getEmailList(pager, employee.getEmpId());
+		List<EmailList> emailList = emailService.getReceiveEmailList(pager, employee.getEmpId());
 		log.info("list 개수: "+emailList.size());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
 		return "email/emaillist";
 	}
-
+	
+	@GetMapping("/sendlist")
+	public String getSendEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getSendEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getSendEmailList(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		return "email/sendlist";
+	}
 }

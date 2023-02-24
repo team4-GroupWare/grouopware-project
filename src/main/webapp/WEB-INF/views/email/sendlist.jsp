@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -19,7 +20,7 @@
 	      </li><!-- End Dashboard Nav -->
 	
 	      <li class="nav-item">
-	        <a class="nav-link collapsed"  href="../email/email_list.html">
+	        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/email/receivelist">
 	          <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
 	        </a>
 	      </li><!-- End Charts Nav -->
@@ -30,7 +31,7 @@
 	        </a>
 	        <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
 	          <li>
-	            <a href="../email/send_email_list.html">
+	            <a href="${pageContext.request.contextPath}/email/sendlist">
 	              <span>전체</span>
 	            </a>
 	          </li>
@@ -77,7 +78,7 @@
 		      <h1>보낸 메일함</h1>
 		      <nav>
 		        <ol class="breadcrumb">
-		          <li class="breadcrumb-item"><a href="index.html">보낸메일함</a></li>
+		          <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/email/sendlist">보낸메일함</a></li>
 		        </ol>
 		      </nav>
 		    </div><!-- End Page Title -->
@@ -118,98 +119,62 @@
 	                  </tr>
 	                </thead>
 	                <tbody>
-	                  <tr onClick="location.href='send_email_detail.html'">
-	                  	<td><input type="checkbox"></td>
-	                    <td>Brandon Jacob</td>
-	                    <td>Designer</td>
-	                    <td>2016-05-25</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Bridie Kessler</td>
-	                    <td>Developer</td>
-	                    <td>2014-12-05</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Ashleigh Langosh</td>
-	                    <td>Finance</td>
-	                    <td>2011-08-12</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Angus Grady</td>
-	                    <td>HR</td>
-	                    <td>2012-06-11</td>
-	                    <td>미수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>미수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                 	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>수신</td>
-	                  </tr>
-	                  <tr>
-	                  	<td><input class="form-check-input" type="checkbox"></td>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>2011-04-19</td>
-	                    <td>수신</td>
-	                  </tr>
+	                  <c:forEach var="emailList" items="${emailList}" varStatus="status">
+                  		<tr>
+                  			<td><input class="form-check-input" type="checkbox"></td>
+                    		<td>${emailList.receiveId}</td>
+                    		<td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
+                    		<td>${emailList.sentDate}</td>
+                    		<c:if test="${emailList.readDate == null} ">
+                    		<td>미수신</td>
+                    		</c:if>
+                    		<c:if test="${emailList.readDate != null} ">
+                    		<td>${emailList.readDate}</td>
+                    		</c:if>
+                    	</tr>
+                  	  </c:forEach>
 	                </tbody>
 	              </table>
 	              <!-- End Table with hoverable rows -->
-	              <div class="d-flex justify-content-center">
-					  <nav aria-label="Page navigation example">
-		                <ul class="pagination">
-		                  <li class="page-item">
-		                    <a class="page-link" href="#" aria-label="Previous">
-		                      <span aria-hidden="true">«</span>
-		                    </a>
-		                  </li>
-		                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-		                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-		                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-		                  <li class="page-item">
-		                    <a class="page-link" href="#" aria-label="Next">
-		                      <span aria-hidden="true">»</span>
-		                    </a>
-		                  </li>
-		                </ul>
-		              </nav>
-	              </div>
+	              <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+	  				<nav aria-label="Page navigation example">
+		   				<ul class="pagination">
+		   					<li class="page-item">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	     					</li>	
+	   						<c:if test="${pager.groupNo>1}">
+	      					<li class="page-item">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	      					</li>
+	     					</c:if>
+	     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+	     						<c:if test="${pager.pageNo != i}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/snedlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+							</c:forEach>
+									
+							<c:if test="${pager.groupNo<pager.totalGroupNo}">
+							<li class="page-item">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	   						</li>
+							</c:if>
+							<li class="page-item">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   						</li>	
+	   					 </ul>
+	 				  </nav>
+ 					</div>
 	            </div>
 	          </div>
 	        </div>

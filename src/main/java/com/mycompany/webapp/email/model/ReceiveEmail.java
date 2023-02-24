@@ -11,5 +11,6 @@ public class ReceiveEmail {
 	private Date readDate;
 	private int emailContentId;
 	private boolean isDeleted;
+	private Date sentDate;
 	private Date trashDate;
 }
