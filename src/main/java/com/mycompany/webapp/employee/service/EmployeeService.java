@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.Pager;
-import com.mycompany.webapp.employee.controller.AlreadyExistingIdException;
-import com.mycompany.webapp.employee.controller.NotExistingManagerException;
+import com.mycompany.webapp.employee.AlreadyExistingIdException;
+import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 

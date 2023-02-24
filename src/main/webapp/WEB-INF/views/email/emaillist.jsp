@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -122,89 +123,58 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr onClick="location.href='receive_email_detail.html'">
+                  <c:forEach var="emailList" items="${emailList}" varStatus="status">
+                  	<tr>
                   	<td><input type="checkbox"></td>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                 	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                  <tr>
-                  	<td><input class="form-check-input" type="checkbox"></td>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>2011-04-19</td>
-                  </tr>
+                    <td>${emailList.sentId}</td>
+                    <td onClick="location.href='${pageContext.request.contextPath}/email/write'">${emailList.title}</td>
+                    <td>${emailList.sentDate}</td>
+                    </tr>
+                  </c:forEach>
+                 
                 </tbody>
               </table>
               <!-- End Table with hoverable rows -->
-              <div class="d-flex justify-content-center">
-				  <nav aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">«</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">»</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
-              </div>
-            </div>
+			  <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+  				<nav aria-label="Page navigation example">
+	   				<ul class="pagination">
+	   					<li class="page-item">
+	       					<a class="page-link" href="list?pageNo=1" aria-label="Previous">
+	         						<span aria-hidden="true">처음</span>
+       						</a>
+     					</li>	
+   						<c:if test="${pager.groupNo>1}">
+      					<li class="page-item">
+        					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+          						<span aria-hidden="true">이전</span>
+        					</a>
+      					</li>
+     					</c:if>
+     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+     						<c:if test="${pager.pageNo != i}">
+							<li class="page-item"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+							</c:if>
+							<c:if test="${pager.pageNo == i}">
+							<li class="page-item active"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+								
+						<c:if test="${pager.groupNo<pager.totalGroupNo}">
+						<li class="page-item">
+            				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}" aria-label="Next">
+           						<span aria-hidden="true">다음</span>
+         					</a>
+   						</li>
+						</c:if>
+						<li class="page-item">
+       						<a class="page-link" href="list?pageNo=${pager.totalPageNo}" aria-label="Previous">
+    							<span aria-hidden="true">맨끝</span>
+   							</a>
+   						</li>	
+   					 </ul>
+ 				  </nav>
+ 				</div>
+             </div>
           </div>
         </div>
       </div>
