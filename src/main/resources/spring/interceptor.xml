@@ -6,7 +6,13 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/*"/>
+			<mvc:mapping path="/**"/>
+			<mvc:mapping path="/email/*"/>
+			<mvc:mapping path="/employee/*"/>
+			<mvc:mapping path="/approval/*"/>
+			<mvc:mapping path="/hr/*"/>
+			<mvc:mapping path="/vacation/*"/>
+			<mvc:mapping path="/attendance/*"/>
 			<mvc:exclude-mapping path="/employee/login"/>
 			<bean id="authorizationInterceptor" class="com.mycompany.webapp.interceptor.LoginInterceptor"></bean>
 		</mvc:interceptor>
