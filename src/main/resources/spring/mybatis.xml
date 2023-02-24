@@ -19,4 +19,5 @@
 	<mybatis-spring:scan base-package="com.mycompany.webapp.employee.repository"/>
 	<mybatis-spring:scan base-package="com.mycompany.webapp.attendance.repository"/>
 	<mybatis-spring:scan base-package="com.mycompany.webapp.email.repository"/>
+	<mybatis-spring:scan base-package="com.mycompany.webapp.approval.repository"/>
 </beans>
