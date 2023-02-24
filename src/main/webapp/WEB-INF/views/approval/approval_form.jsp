@@ -1,23 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
 <html>
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 
   	<!-- 텍스트 에디터 -->
-
-  <%-- 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor4/ckeditor.js"></script> --%>
-  	<script src="http://cdn.ckeditor.com/4.19.0/full/ckeditor.js"></script>
-
-  	<!-- <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script> -->
-  	<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/decoupled-document/ckeditor.js"></script>
-  	<!-- <script src="../documentckeditor/build/ckeditor.js"></script> -->
-  
-  	<style>
-    	.ck-editor { height: 800px; }
-    	.ck-content { font-size: 12px; }
-  	</style>
-
 </head>
 
 <body>
@@ -79,7 +67,7 @@
       		</li><!-- End 내 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" href="#">
+        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/detail">
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
@@ -109,7 +97,7 @@
           			<div class="card">
             			<div class="card-body m-4">
              				<!-- General Form Elements -->
-              				<form>
+              				<form method="post">
               					<div class="row mb-3">
                   					<div class="col-sm-12 d-flex justify-content-end">
                   						<button type="submit" class="btn btn-secondary" style="margin-right: 8px">임시저장</button>
@@ -141,12 +129,6 @@
                   					</div>
                 				</div>
                 
-                				<div class="row mb-3">
-                  				<label for="inputDate" class="col-sm-2 col-form-label"><b>작성 날짜</b></label>
-                  					<div class="col-sm-10">
-                    					<input type="date" class="form-control">
-                  					</div>
-                				</div>
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>참조</b></label>
                   				<div class="col-sm-10">
@@ -222,42 +204,23 @@
                 
                 				<div class="row mb-3">
                   					<div class="col-sm-12">
-					                	<!-- ckeditior toolbar -->
-					                  	<div id="toolbar-container"></div>
-					                  	<!-- End ckeditior toolbar -->
-                  
-                  						<!-- ckeditior content -->
-                  						<div  id="approval-content" name="approval-content" style="height:400px;">
-                  							<h3 style="text-align:center;"><strong>휴일 근무 신청서</strong></h3>
-											<table class="ck-table-resized"><colgroup><col style="width:12.27%;"><col style="width:27.93%;"><col style="width:16.13%;"><col style="width:43.67%;"></colgroup><tbody><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" colspan="4" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">귀속 부서</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true"><span class="ck-table-bogus-paragraph"><br><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">소속 부서</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" rowspan="2" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">귀속 PJT</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" rowspan="2"><span class="ck-table-bogus-paragraph"><br><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">성명</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">직위</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">유형</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" colspan="3"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" style="background-color:hsl(0, 0%, 90%);"><span class="ck-table-bogus-paragraph">기간</span><div class="ck-table-column-resizer"></div></td><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" colspan="3"><span class="ck-table-bogus-paragraph"><br data-cke-filler="true"></span><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" colspan="4" style="background-color:hsl(0, 0%, 90%);"><p style="text-align:center;">내용</p><div class="ck-table-column-resizer"></div></td></tr><tr><td class="ck-editor__editable ck-editor__nested-editable" role="textbox" contenteditable="true" colspan="4"><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><p><br data-cke-filler="true"></p><div class="ck-table-column-resizer"></div></td></tr></tbody></table>
-                  						</div>
-                  						<!-- End ckeditior content -->
-                  
-                  						<!-- ckeditior script-->
-                    					<script>
-                    						DecoupledEditor
-                    							.create( document.querySelector( '#approval-content' ) )
-                    							.then( editor => {
-                        							const toolbarContainer = document.querySelector( '#toolbar-container' );
-
-                        							toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-
-                        							window.editor = editor;
-                    						} )
-                    						.catch( err => {
-                        						console.error( err );
-                    						} );
-										</script>
-                  						<!-- End ckeditior script-->
-                  					</div>
-                				</div>
-
-              				</form><!-- End General Form Elements -->
-
-            			</div><!-- End card-body -->
-          			</div><!-- End card -->
-        		</div>
-      		</div>
+                  						<div class="card">
+								        	<div class="card-body">
+								            	<h5 class="card-title">TinyMCE Editor</h5>
+								              <!-- TinyMCE Editor -->
+								              	<textarea class="tinymce-editor">
+								                	<p>Hello World!</p>
+								                	<p>This is TinyMCE <strong>full</strong> editor</p>
+								              	</textarea><!-- End TinyMCE Editor -->
+								   			</div>
+								        </div>
+        							</div>
+        						</div>
+    						</form>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
     	</section><!-- End section -->
   	</main><!-- End #main -->
 
