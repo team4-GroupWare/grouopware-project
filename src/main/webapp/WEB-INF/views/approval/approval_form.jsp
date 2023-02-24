@@ -67,7 +67,7 @@
       		</li><!-- End 내 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" href="#">
+        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/detail">
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
@@ -216,7 +216,6 @@
 								        </div>
         							</div>
         						</div>
-      	
     						</form>
     					</div>
     				</div>
