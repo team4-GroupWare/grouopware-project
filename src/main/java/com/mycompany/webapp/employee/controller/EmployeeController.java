@@ -34,7 +34,6 @@ import com.mycompany.webapp.group.model.Team;
 import com.mycompany.webapp.group.service.IDepartmentService;
 import com.mycompany.webapp.group.service.IGradeService;
 import com.mycompany.webapp.group.service.ITeamService;
-import com.mycompany.webapp.interceptor.Authorization;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -108,7 +107,6 @@ public class EmployeeController {
 	 * @return teamList
 	 * @throws IOException
 	 */
-	@Authorization
 	@PostMapping(value="/teamlist")
 	@ResponseBody
 	public List<Team> teamListAjax(@Param("deptId") String deptId) throws IOException {
@@ -124,7 +122,6 @@ public class EmployeeController {
 	 * @param empId : 사원아이디
 	 * @return 사원 정보
 	 */
-	@Authorization
 	@GetMapping("/empinfo")
 	@ResponseBody
 	public Employee employeeInfo(@RequestParam("empId") String empId) {
@@ -140,7 +137,6 @@ public class EmployeeController {
 	 * @return result : 중복 검사
 	 * @throws IOException
 	 */
-	@Authorization
 	@PostMapping(value="/check")
 	@ResponseBody
 	public boolean checkId(@Param("empId") String empId) throws IOException {
@@ -154,7 +150,6 @@ public class EmployeeController {
 	 * @return 회원 등록 페이지
 	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
 	 */
-	@Authorization
 	@GetMapping("/register")
 	public String register(Model model) {
 		log.info("실행");
@@ -167,7 +162,6 @@ public class EmployeeController {
 		
 		return "employee/register";
 	}	
-	@Authorization
 	@PostMapping(value="/register")
 	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee, BindingResult errors) throws Exception{
 		log.info("실행");
@@ -224,7 +218,6 @@ public class EmployeeController {
 		
 		return "redirect:/";
 	}
-	@Authorization
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		log.info("실행");
