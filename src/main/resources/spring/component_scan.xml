@@ -3,12 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
  	
  	<!-- @RequestParam, @GetMapping, @PostMapping, @ModelAttribute 자동 인식 -->
 	<annotation-driven />
+	<task:annotation-driven />
 	
  	<!-- @Controller, @Component, @Service, @Repository 적용 클래스를 객체로 생성, @PostConstruct, @PreDestroy, @Resource, @Autowired, @Inject, @Value 자동 인식 -->
 	<context:component-scan base-package="com.mycompany" />

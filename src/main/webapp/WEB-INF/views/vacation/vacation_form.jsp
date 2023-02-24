@@ -21,11 +21,11 @@
 		.team {
 			list-style: none;
 		} 
-		input[name="employee"]{
+		/* input[name="employee"]{
 			display:none; margin:10px;
-		}
-		input[name=employee]:checked{
-			color :red;
+		} */
+		input[type=radio]:checked+label{
+             background-color: #004389;
 		}
 	</style>
 	
@@ -467,7 +467,7 @@
 																			var teamHtml = "";
 																			$("#empByteam").empty();
 																			for(var i in data){
-																				teamHtml += '<div>'+'<label  style="width:100%">'+'<input type="radio" name="employee" value="'
+																				teamHtml += '<div>'+'<label  style="width:100%">'+'<input class="emp1" type="radio" name="employee" value="'
 																							+data[i].empId+'">'+
 																				    '<span id="'+data[i].empId+'" style="width:100%">'+data[i].name+'</span>'
 																				   +'</label>'+'</div>';
@@ -480,6 +480,14 @@
 																	});
 																	
 																});
+																$("input:radio[name=employee]").click(function(){
+																	/* var style = $(this).attr("name");
+																	,"width:100%;background-color:lightgray" 
+																	console.log(style); */
+																	console.log("왜안나와?ㄴ")
+																	
+																});
+																
 															</script>
 														</div>
 														

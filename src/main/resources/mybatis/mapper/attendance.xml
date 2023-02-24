@@ -22,4 +22,23 @@
 		SET CLOCK_OUT = SYSDATE
 		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate}
 	</update>
+	
+	<select id="selectTotalEmpId" resultType="string">
+		select emp_id as empId
+		from employees
+	</select>
+	
+	 <select id="selectTodayEmpId" parameterType="string" resultType="string" >
+	 	select emp_id as empId
+		from attendance
+		where to_char(attendance_date,'YYYYMMdd') = #{today}
+	 </select>
+	 
+	 <insert id="insertEmpAbsent" parameterType="string">
+	 	INSERT INTO
+	 	ATTENDANCE
+	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
+	 	VALUES
+	 		()
+	 </insert>
 </mapper>
