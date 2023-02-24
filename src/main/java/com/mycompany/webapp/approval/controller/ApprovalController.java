@@ -23,7 +23,7 @@ public class ApprovalController {
 	private IApprovalService approvalService;
 	
 	/**
-	 * 전자결재 작성
+	 * 전자결재 작성 폼 불러오기
 	 * @author : LEEJIHO
 	 * @param model
 	 * @return
