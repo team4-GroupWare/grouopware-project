@@ -1,4 +1,4 @@
-package com.mycompany.webapp.employee.controller;
+package com.mycompany.webapp.employee;
 
 public class AlreadyExistingIdException extends RuntimeException {
 	/**
