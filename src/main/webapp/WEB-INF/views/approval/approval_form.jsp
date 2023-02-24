@@ -1,11 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 
-  	<!-- 텍스트 에디터 -->
+  	<script>
+  		function getForm(escape) {
+  			
+  			console.log(escape);
+  			$('#jiho').html(escape);
+  		}
+  	</script>
 </head>
 
 <body>
@@ -107,17 +114,10 @@
                 				<div class="row mb-3">
                   					<label class="col-sm-2 col-form-label"><b>결재 양식</b></label>
                   					<div class="col-sm-4">
-                    					<select class="form-select" aria-label="Default select example">
-                      						<option selected="">기안서</option>
-                      						<option value="1">지출 품위서</option>
-                      						<option value="2">사직서</option>
-                      						<option value="3">휴일 근무 신청서</option>
-                      						<option value="4">연장 근무 신청서</option>
-                      						<option value="5">경조사 신청서(결혼)</option>
-                      						<option value="6">경조사 신청서(사망)</option>
-                      						<option value="7">경조사 신청서(출산)</option>
-                      						<option value="8">외근/출장 신청서</option>
-                      						<option value="9">근무 상태 변경 신청서</option>
+                    					<select class="form-select" aria-label="Default select example" id="categoryId" onchange='getForm("${escape}")'>
+                    						<c:forEach var="category" items="${approval_category}">
+                    							<option value='${category.approvalForm}'>${category.approvalName}</option>
+                    						</c:forEach>
                     					</select>
                   					</div>
                 				</div>
@@ -125,7 +125,7 @@
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>제목</b></label>
                  					<div class="col-sm-10">
-                    					<input type="text" class="form-control">
+                    					<input id="title" type="text" class="form-control">
                   					</div>
                 				</div>
                 
@@ -201,16 +201,16 @@
 	                  					</div>
                 					</div>
                 				</div>
-                
+                				<div id="jiho">
+                				</div>
                 				<div class="row mb-3">
                   					<div class="col-sm-12">
                   						<div class="card">
 								        	<div class="card-body">
-								            	<h5 class="card-title">TinyMCE Editor</h5>
+								            	<h5 class="card-title">내용</h5>
 								              <!-- TinyMCE Editor -->
 								              	<textarea class="tinymce-editor">
-								                	<p>Hello World!</p>
-								                	<p>This is TinyMCE <strong>full</strong> editor</p>
+													
 								              	</textarea><!-- End TinyMCE Editor -->
 								   			</div>
 								        </div>

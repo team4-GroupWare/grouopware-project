@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.approval.repository.ApprovalRepository">
+
+	<select id="selectApprovalCategory" resultType="approval_category">
+		<![CDATA[
+			SELECT approval_category_id as "approvalCategoryId",
+					approval_name as "approvalName",
+					approval_form as "approvalForm"
+			FROM approval_category
+		]]>
+	</select>
+
+</mapper>
