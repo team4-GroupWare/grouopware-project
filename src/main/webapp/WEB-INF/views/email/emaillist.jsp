@@ -123,6 +123,7 @@
                   </tr>
                 </thead>
                 <tbody>
+               	  <c:if test="${not empty emailList}">
                   <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   	<tr>
                   	<td><input class="form-check-input" type="checkbox"></td>
@@ -131,10 +132,16 @@
                     <td>${emailList.sentDate}</td>
                     </tr>
                   </c:forEach>
-                 
+                  </c:if>
                 </tbody>
               </table>
               <!-- End Table with hoverable rows -->
+              <c:if test="${empty emailList}">
+                <div style="height:200px;text-align:center;margin-top:150px">
+              			메일이 존재하지 않습니다.
+              	</div>
+              	</c:if>
+              <c:if test="${not empty emailList}">
 			  <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
   				<nav aria-label="Page navigation example">
 	   				<ul class="pagination">
@@ -174,6 +181,7 @@
    					 </ul>
  				  </nav>
  				</div>
+ 				</c:if>
              </div>
           </div>
         </div>
