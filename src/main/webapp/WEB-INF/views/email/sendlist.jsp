@@ -119,23 +119,31 @@
 	                  </tr>
 	                </thead>
 	                <tbody>
-	                  <c:forEach var="emailList" items="${emailList}" varStatus="status">
+              		<c:if test="${not empty emailList}">
+	                <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   		<tr>
                   			<td><input class="form-check-input" type="checkbox"></td>
                     		<td>${emailList.receiveId}</td>
                     		<td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
                     		<td>${emailList.sentDate}</td>
-                    		<c:if test="${emailList.readDate == null} ">
+                    		<c:if test="${empty emailList.readDate}">
                     		<td>미수신</td>
                     		</c:if>
-                    		<c:if test="${emailList.readDate != null} ">
+                    		<c:if test="${not empty emailList.readDate}">
                     		<td>${emailList.readDate}</td>
                     		</c:if>
                     	</tr>
                   	  </c:forEach>
+                  	  </c:if>
 	                </tbody>
 	              </table>
+	              <c:if test="${empty emailList}">
+              	  <div style="height:200px;text-align:center;margin-top:150px">
+              			메일이 존재하지 않습니다.
+              	  </div>
+              	  </c:if>
 	              <!-- End Table with hoverable rows -->
+	              <c:if test="${not empty emailList}">
 	              <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
 	  				<nav aria-label="Page navigation example">
 		   				<ul class="pagination">
@@ -175,6 +183,7 @@
 	   					 </ul>
 	 				  </nav>
  					</div>
+ 					</c:if>
 	            </div>
 	          </div>
 	        </div>
