@@ -42,30 +42,54 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public void addEmpAtt(String today) {
 		log.info("실행");
-		//1.오늘날짜에 행이 없는 경우
-		//1-1 전체 사원의 아이디 조회
+		// 1.오늘날짜에 행이 없는 경우
+		
+		// 1-1 전체 사원의 아이디 조회
 		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
 		log.info(totalEmpId);
-		//1-2 오늘날짜에 attendance 행의 아이디 조회
+		
+		// 1-2 오늘날짜에 attendance 행의 아이디 조회
 		List<String> todayEmpId = attendanceRepository.selectTodayEmpId(today);
 		log.info(todayEmpId);
-		//1-3 오늘날짜에 없는 아이디 list
-		for(String todayEmp : todayEmpId) {
-			for(String totalEmp : totalEmpId) {
-				if(totalEmp.equals(todayEmp)) {
+		
+		// 1-3 오늘날짜에 없는 아이디 list
+		for (String todayEmp : todayEmpId) {
+			for (String totalEmp : totalEmpId) {
+				if (totalEmp.equals(todayEmp)) {
 					totalEmpId.remove(todayEmp);
 					break;
 				}
 			}
 		}
 		log.info(totalEmpId);
+
+		// 1-4 결근으로 insert
+		for (String empAbsent : totalEmpId) {
+			attendanceRepository.insertEmpAbsent(empAbsent, today);
+		}
+
+		// 2.오늘날짜에 출근은 있으나, 퇴근이 없는 경우
+		List<String> outEmp = attendanceRepository.selectNotOutEmp(today);
+		log.info(outEmp);
+		String clock_out = today + " 18:00:00";
 		
-		//1-4 결근으로 insert
-		attendanceRepository.insertEmpAbsent(today);
-		
-		//2.오늘날짜에 퇴근이 없는 경우
-		//2-1 오늘날짜에 attendance 행중에서 퇴근이 null이면 퇴근으로 update
-		
+		// 2-1 오늘날짜에 attendance 행중에서 퇴근이 null이면 퇴근으로 update
+		for (String empNotOut : outEmp) {
+			attendanceRepository.updateEmpOut(empNotOut, clock_out, today);
+		}
+
+	}
+
+	@Override
+	public void ThisWeek(String date) {
+		// 1-1 전체 사원의 아이디 조회
+		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
+		log.info(totalEmpId);
+		String clock_in = date+" 09:00:00";
+		String clock_out = date+" 18:00:00";
+		for(String empId : totalEmpId ) {
+			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
+		}
 	}
 
 }

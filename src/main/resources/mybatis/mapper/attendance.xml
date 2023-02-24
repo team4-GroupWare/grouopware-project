@@ -34,11 +34,32 @@
 		where to_char(attendance_date,'YYYYMMdd') = #{today}
 	 </select>
 	 
-	 <insert id="insertEmpAbsent" parameterType="string">
+	 <insert id="insertEmpAbsent" parameterType="map">
 	 	INSERT INTO
 	 	ATTENDANCE
 	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
 	 	VALUES
-	 		()
+	 		(seq_attendance.NEXTVAL,#{empAbsent},null,null,#{today},'결근')
+	 </insert>
+	 
+	 <select id="selectNotOutEmp" parameterType="string" resultType="string">
+	 	select emp_id
+		from attendance
+		where clock_in is not null and clock_out is null and to_char(attendance_date,'YYYYMMdd')=#{today}
+	 </select>
+	 
+	 <update id="updateEmpOut" parameterType="map">
+	 	UPDATE ATTENDANCE
+		SET CLOCK_OUT = #{clock_out}
+		WHERE EMP_ID = #{empNotOut} AND TO_CHAR(attendance_date, 'YYYYMMdd') = #{today}
+	 </update>
+	 
+	 <insert id="insertThisWeek" parameterType="string">
+	 	INSERT INTO
+	 	ATTENDANCE
+	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
+	 	VALUES
+	 		(seq_attendance.NEXTVAL,#{empId},#{clock_in},#{clock_out},#{date},'출근')
+	 
 	 </insert>
 </mapper>

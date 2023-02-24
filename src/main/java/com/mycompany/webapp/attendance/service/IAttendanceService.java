@@ -12,6 +12,8 @@ public interface IAttendanceService {
 
 	void addEmpAtt(String today);
 
+	void ThisWeek(String date);
+
 
 
 }

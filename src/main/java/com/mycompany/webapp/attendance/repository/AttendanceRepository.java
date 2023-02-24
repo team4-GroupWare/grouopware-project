@@ -18,6 +18,12 @@ public interface AttendanceRepository {
 
 	public List<String> selectTodayEmpId(String today);
 
-	public int insertEmpAbsent(String today);
+	public int insertEmpAbsent(@Param("empAbsent")String empAbsent, @Param("today")String today);
+
+	public List<String> selectNotOutEmp(String today);
+
+	public void updateEmpOut(@Param("empNotOut")String empNotOut, @Param("clock_out")String clock_out ,@Param("today")String today);
+
+	public void insertThisWeek(@Param("clock_in")String clock_in,@Param("clock_out")String clock_out,@Param("empId")String empId, @Param("date")String date);
 
 }
