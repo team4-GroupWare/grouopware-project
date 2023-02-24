@@ -10,6 +10,10 @@ public interface IAttendanceService {
 
 	int updateLeave(String attDate, String empId);
 
+	void addEmpAtt(String today);
+
+	void ThisWeek(String date);
+
 
 
 }
