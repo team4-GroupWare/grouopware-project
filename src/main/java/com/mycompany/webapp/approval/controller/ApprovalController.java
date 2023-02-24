@@ -22,4 +22,10 @@ public class ApprovalController {
 		log.info("실행");
 		return "approval/approval_form";
 	}
+	
+	@GetMapping("/detail")
+	public String detail() {
+		log.info("실행");
+		return "approval/approval_detail";
+	}
 }
