@@ -24,6 +24,9 @@
 		input[name="employee"]{
 			display:none; margin:10px;
 		}
+		input[name=employee]:checked{
+			color :red;
+		}
 	</style>
 	
 	<!-- modal -->
