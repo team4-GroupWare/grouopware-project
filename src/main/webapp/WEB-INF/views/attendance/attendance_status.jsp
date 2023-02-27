@@ -293,20 +293,28 @@
 						<div class="card-body">
 							
 							<script>
+								
 								document.addEventListener('DOMContentLoaded', function() {
 									
 							 		var calendarEl = document.getElementById('calendar');
 							
 							  		var calendar = new FullCalendar.Calendar(calendarEl, {
-									    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-									    eventSources: [
-										    {
-									          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-									          
-									          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
-									          
-									        }
-							   		 	]
+							  			initialView: 'dayGridMonth',
+									   
+								   		 events: [
+								   		    { 
+								   		      title: '정상출근', // 제목
+								   		      start: '2023-02-28', // 시작일자
+									   		  backgroundColor : '#49a3f1',
+								   		    },{ 
+								   		      title: '정상출근', // 제목
+								   		      start: '2023-02-27' // 시작일자
+									   		 },{ 
+								   		      title: '정상출근', // 제목
+								   		      start: '2023-03-27' // 시작일자
+									   		 }
+								   			 
+								   		  ]
 							 		 });
 							  		calendar.render();
 								});

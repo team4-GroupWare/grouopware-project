@@ -9,81 +9,63 @@
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	<script>
-	  		
 	  		$(document).ready(function() {
-	  			var d = new Date();
-		  		var n = d.getDay();
-		  		if(n==0 || n==6) {
-		  			let status = "휴일"
-		  			let clockIn = "-- : -- : --";
-	  				let clockOut = "-- : -- : --";
+	  			/* 페이지 로드되면 로그인한 사원의 출근정보 가져오기 */
+	  			$.ajax({
+	  				url : "${pageContext.request.contextPath}/attendanceinfo"
+	  				
+	  			}).done((data)=>{
+	  				let status; 
+	  				let clockIn;
+	  				let clockOut;
+	  				
+	  				console.log(data.status)
+	  				console.log(data.clockIn)
+	  				console.log(data.clockOut)
+	  				
+	  				if(data.status == null){
+	  					status = "미출근";
+	  				} else{
+	  					status = data.status;
+	  				}
+	  				
+	  				if(data.clockIn == null){
+	  					clockIn = "-- : -- : --";
+	  				} else{
+	  					clockIn = data.clockIn;
+	  				}
+	  				
+	  				if(data.clockOut == null){
+	  					clockOut = "-- : -- : --";
+	  				} else{
+	  					clockOut = data.clockOut;
+	  				}
+	  				 
 	  				$("#status").html(status);
 	  				$("#clockIn").html(clockIn);
 	  				$("#clockOut").html(clockOut);
 	  				
-	  				const target1 = document.getElementById('btn-attendance');
-					target1.disabled = true;
-					target1.setAttribute( 'style', 'opacity: 0.1' )
-		  		} else{
-		  			/* 페이지 로드되면 로그인한 사원의 출근정보 가져오기 */
-		  			$.ajax({
-		  				url : "${pageContext.request.contextPath}/attendanceinfo"
-		  				
-		  			}).done((data)=>{
-		  				let status; 
-		  				let clockIn;
-		  				let clockOut;
-		  				
-		  				console.log(data.status)
-		  				console.log(data.clockIn)
-		  				console.log(data.clockOut)
-		  				
-		  				if(data.status == null){
-		  					status = "미출근";
-		  				} else{
-		  					status = data.status;
-		  				}
-		  				
-		  				if(data.clockIn == null){
-		  					clockIn = "-- : -- : --";
-		  				} else{
-		  					clockIn = data.clockIn;
-		  				}
-		  				
-		  				if(data.clockOut == null){
-		  					clockOut = "-- : -- : --";
-		  				} else{
-		  					clockOut = data.clockOut;
-		  				}
-		  				 
-		  				$("#status").html(status);
-		  				$("#clockIn").html(clockIn);
-		  				$("#clockOut").html(clockOut);
-		  				
-		  				/* 출근 정보에 따른 버튼 활성화 유무 */
-		  				if(data.clockIn != null && data.clockOut == null){
-			  				/* 출근o, 퇴근x
-			  				퇴근버튼만 활성화 */
-			  				const target1 = document.getElementById('btn-attendance');
-							target1.disabled = true;
-							target1.setAttribute( 'style', 'opacity: 0.1' )
-							
-							const target2 = document.getElementById('btn-leave');
-							target2.disabled = false;
-							target2.removeAttribute( 'style' )
-		  				}	
-		  					else if(data.clockIn != null && data.clockOut != null){
-			  				/* 출근o, 퇴근o or status==휴가
-			  				둘다 비활성화 */
-			  				const target1 = document.getElementById('btn-attendance');
-							target1.disabled = true;
-							target1.setAttribute( 'style', 'opacity: 0.1' )
-		  				}
-		  				
-		  			});
-		  		}
-	  			
-	  			
+	  				/* 출근 정보에 따른 버튼 활성화 유무 */
+	  				if(data.clockIn != null && data.clockOut == null){
+		  				/* 출근o, 퇴근x
+		  				퇴근버튼만 활성화 */
+		  				const target1 = document.getElementById('btn-attendance');
+						target1.disabled = true;
+						target1.setAttribute( 'style', 'opacity: 0.1' )
+						
+						const target2 = document.getElementById('btn-leave');
+						target2.disabled = false;
+						target2.removeAttribute( 'style' )
+	  				}	
+	  					else if(data.clockIn != null && data.clockOut != null){
+		  				/* 출근o, 퇴근o or status==휴가
+		  				둘다 비활성화 */
+		  				const target1 = document.getElementById('btn-attendance');
+						target1.disabled = true;
+						target1.setAttribute( 'style', 'opacity: 0.1' )
+	  				}
+	  				
+	  			});
 	  			
 	  		});
 	  	</script>
@@ -213,32 +195,23 @@
 						          	        return time;
 						          	}
 									function btnAtt(){
-										var now = new Date();	
-										var hours = now.getHours();	
-										console.log("시간 : ", hours);
-										
-										if(hours < 6){
-											alert("아직 출근 시간이 아닙니다.(6시~)");
-										}
-										else{
-											$.ajax({
-												url:"${pageContext.request.contextPath}/attendance"
-												
-											}).done((data)=>{
-												console.log(data);
-												$("#status").html(data.status);
-												setClock1();
-												
-											});
-											const target1 = document.getElementById('btn-attendance');
-											target1.disabled = true;
-											target1.setAttribute( 'style', 'opacity: 0.1' )
+										console.log("btnAtt()실행")
+										$.ajax({
+											url:"${pageContext.request.contextPath}/attendance"
 											
-											const target2 = document.getElementById('btn-leave');
-											target2.disabled = false;
-											target2.removeAttribute( 'style' )
-										}
+										}).done((data)=>{
+											console.log(data);
+											$("#status").html(data.status);
+											setClock1();
+											
+										});
+										const target1 = document.getElementById('btn-attendance');
+										target1.disabled = true;
+										target1.setAttribute( 'style', 'opacity: 0.1' )
 										
+										const target2 = document.getElementById('btn-leave');
+										target2.disabled = false;
+										target2.removeAttribute( 'style' )
 									}
 									function btnLeave()  {
 										console.log("btnLeave()실행")
