@@ -5,10 +5,12 @@
 
 	<!-- Logo -->
 	<div class="d-flex align-items-center justify-content-between">
-		<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
-	<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
-		<span class="d-none d-lg-block">엑사아이엔티</span>
-	</a>
+		<a href="${pageContext.request.contextPath}/">
+			<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
+		</a>
+		<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
+			<span class="d-none d-lg-block">엑사아이엔티</span>
+		</a>
 	</div>
 	
 	<!-- Dropbar -->
@@ -27,14 +29,13 @@
 	<nav class="header-nav ms-auto">
 		<ul class="d-flex align-items-center">
 			<!-- 프로필 사진 -->
-			<li><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px"></li>
 			
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+					<img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px">
 					<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">${loginEmployee.name}</span>
 				</a>
-				<span class=" ps-2">${loginEmployee.deptName} / ${loginEmployee.teamName}</span>
 				
 				<!-- dropbar -->
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
