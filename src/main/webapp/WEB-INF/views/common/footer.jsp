@@ -19,7 +19,6 @@
 <script src="${pageContext.request.contextPath}/resources/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/vendor/quill/quill.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->

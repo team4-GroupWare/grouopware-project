@@ -21,7 +21,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed"  href="../email/email_list.html">
+        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/email/receivelist">
           <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
         </a>
       </li><!-- End Charts Nav -->
@@ -37,12 +37,12 @@
             </a>
           </li>
           <li>
-            <a href="../email/email_list.html" >
+            <a href="${pageContext.request.contextPath}/email/unreadlist" >
               <span>미수신 메일</span>
             </a>
           </li>
           <li>
-            <a href="../email/email_list.html">
+            <a href="${pageContext.request.contextPath}/email/readlist">
               <span>수신 메일</span>
             </a>
           </li>
@@ -50,21 +50,21 @@
       </li><!-- End Icons Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../email/email_list.html">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
           <i class="bi bi-star-fill"></i>
           <span>중요 메일함</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../email/email_list.html">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
           <i class="bi bi-envelope-exclamation"></i>
           <span>임시저장함</span>
         </a>
       </li><!-- End Contact Page Nav -->
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../email/email_list.html">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/trashlist">
           <i class="bi bi-trash3-fill"></i>
           <span>휴지통</span>
         </a>
@@ -76,12 +76,21 @@
 
   <main id="main" class="main ">
 	  <div class="pagetitle">
+	  	  <c:if test="${type eq 'receive'}">
 	      <h1>받은메일함</h1>
-	      <nav>
-	        <ol class="breadcrumb">
-	          <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/email/receivelist">받은메일함</a></li>
-	        </ol>
-	      </nav>
+	      </c:if>
+	      
+	      <c:if test="${type eq 'trash'}">
+	      <h1>휴지통</h1>
+	      </c:if>
+	      
+	      <c:if test="${type eq 'important'}">
+	      <h1>중요 메일함</h1>
+	      </c:if>
+	      
+	      <c:if test="${type eq 'temp'}">
+	      <h1>임시저장함</h1>
+	      </c:if>
 	    </div><!-- End Page Title -->
 
     <section class="section">
@@ -101,14 +110,20 @@
 	              </div>
 	            
 	              <div class=" my-auto" style="text-align:right">
+	              		<c:if test="${type eq 'trash'}">
 	              		<!-- 휴지통에서 조회한 경우 -->
 	              		<button type="submit" class="btn btn-secondary btn-sm ">복구</button>
+	              		</c:if>
+	              		<c:if test="${type ne 'trash'}">
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
 	                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+	                    </c:if>
+	                    <c:if test="${type eq 'trash'}">
 	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
 	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+	                    </c:if>
 	              </div>
               </div>
 
@@ -127,9 +142,34 @@
                   <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   	<tr>
                   	<td><input class="form-check-input" type="checkbox"></td>
+                  	<!-- 임시저장함이 아니고, 내가 보낸 사람일때 받은 사람 출력 -->
+                  	<c:if test="${loginEmployee.empId eq emailList.sentId and type ne 'temp'}">
+                    <td>${emailList.receiveId}</td>
+                    </c:if>
+                    <!-- 내가 받은 사람일 때 보낸 사람 출력 -->
+                    <c:if test="${loginEmployee.empId eq emailList.receiveId}">
                     <td>${emailList.sentId}</td>
+                    </c:if>
+                    <!-- 임시보관함일 때 작성자(보내는 사람) 출력-->
+                    <c:if test="${type eq 'temp'}">
+                    <td>${emailList.sentId}</td>
+                    </c:if>
+                    <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
                     <td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
+                    <c:if test="${type ne 'trash' and type ne 'temp'}">
                     <td>${emailList.sentDate}</td>
+                    </c:if>
+                    <!-- 임시보관함일 때는 임시저장 날짜를 출력 -->
+                    <c:if test="${type eq 'temp'}">
+                    <td>${emailList.tempDate}</td>
+                    </c:if>
+                    <!-- 쓰레기통일 때는 쓰레기통에 넣었던 날짜를 출력. s는 내가 보낸 메일에서 삭제한 것, r은 내가 받은 메일에서 삭제한 것 -->
+                    <c:if test="${not empty emailList.strashDate}">
+                    <td>${emailList.strashDate}</td>
+                    </c:if>
+                    <c:if test="${not empty emailList.rtrashDate}">
+                    <td>${emailList.rtrashDate}</td>
+                    </c:if>
                     </tr>
                   </c:forEach>
                   </c:if>

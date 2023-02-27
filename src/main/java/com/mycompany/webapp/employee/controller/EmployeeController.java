@@ -95,7 +95,7 @@ public class EmployeeController {
 		}
 		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
 		session.setAttribute("loginEmployee", dbEmployee);
-		System.out.println(dbEmployee);
+		
 		return "redirect:/";
 	}
 	

@@ -36,12 +36,12 @@
 		            </a>
 	              </li>
 		          <li>
-		            <a href="#" class="active">
+		            <a href="${pageContext.request.contextPath}/email/unreadlist" class="active">
 		              <span>미수신 메일</span>
 		            </a>
 		          </li>
 		          <li>
-		            <a href="#">
+		            <a href="${pageContext.request.contextPath}/email/readlist">
 		              <span>수신 메일</span>
 		            </a>
 		          </li>
@@ -49,21 +49,21 @@
 		      </li><!-- End Icons Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="../email/email_list.html">
+		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
 		          <i class="bi bi-star-fill"></i>
 		          <span>중요 메일함</span>
 		        </a>
 		      </li><!-- End Profile Page Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="../email/email_list.html">
+		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
 		          <i class="bi bi-envelope-exclamation"></i>
 		          <span>임시저장함</span>
 		        </a>
 		      </li><!-- End Contact Page Nav -->
 		      
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="../email/email_list.html">
+		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/trashlist">
 		          <i class="bi bi-trash3-fill"></i>
 		          <span>휴지통</span>
 		        </a>

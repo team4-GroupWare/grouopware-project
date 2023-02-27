@@ -5,8 +5,7 @@
 	<select id="selectApprovalCategory" resultType="approval_category">
 		<![CDATA[
 			SELECT approval_category_id as "approvalCategoryId",
-					approval_name as "approvalName",
-					approval_form as "approvalForm"
+					approval_name as "approvalName"
 			FROM approval_category
 		]]>
 	</select>

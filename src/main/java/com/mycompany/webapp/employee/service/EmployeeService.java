@@ -35,7 +35,6 @@ public class EmployeeService implements IEmployeeService {
 		//비밀번호 복호화
 		//PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		Employee dbEmployee = getEmployee(employee.getEmpId());
-		System.out.println(dbEmployee);
 		if(dbEmployee == null) {
 			return LoginResult.WRONG_ID;
 		} else if(!(employee.getPassword().equals(dbEmployee.getPassword()))) {
