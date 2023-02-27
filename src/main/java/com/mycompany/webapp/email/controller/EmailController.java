@@ -41,6 +41,8 @@ public class EmailController {
 		log.info("list 개수: "+emailList.size());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
+		String type = "receive";
+		model.addAttribute("type", type);
 		return "email/emaillist";
 	}
 	
@@ -54,5 +56,71 @@ public class EmailController {
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
 		return "email/sendlist";
+	}
+	
+	@GetMapping("/readlist")
+	public String getReadEmail(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getReadEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getReadEmailList(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		return "email/sendlist";
+	}
+	
+	@GetMapping("/unreadlist")
+	public String getUnReadEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getUnReadEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getUnReadEmailList(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		return "email/sendlist";
+	}
+	@GetMapping("/trashlist")
+	public String getTrashEmail(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getTrashEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getTrashEmailList(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		String type = "trash";
+		model.addAttribute("type", type);
+		return "email/emaillist";
+	}
+	
+	@GetMapping("/importantlist")
+	public String getImportantEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getImportantEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getImportantEmail(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		String type = "important";
+		model.addAttribute("type", type);
+		return "email/emaillist";
+	}
+	
+	@GetMapping("/templist")
+	public String getTempEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		int emailRow = emailService.getTempEmailRows(employee.getEmpId());
+		Pager pager = new Pager(10, 5, emailRow, pageNo);
+		List<EmailList> emailList = emailService.getTempEmail(pager, employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		model.addAttribute("pager", pager);
+		String type = "temp";
+		model.addAttribute("type", type);
+		return "email/emaillist";
+		
 	}
 }

@@ -2,6 +2,7 @@ package com.mycompany.webapp.email.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getReceiveEmailList(Pager pager, String receiveId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectReceiveEmail(pager, receiveId);
+		log.info(emailList);
 		return emailList;
 	}
 	
@@ -64,6 +66,131 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectSendEmail(pager, sendId);
 		return emailList; 
+	}
+	
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendId : 보낸 사람
+	 * @return int : 보낸 이메일 중 받는 이가 읽은 이메일 개수
+	 */
+	@Override
+	public int getReadEmailRows(String sendId) {
+		log.info("실행");
+		int emailRows = emailRepository.selectReadEmailCount(sendId);
+		return emailRows;
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager 
+	 * @param sendId : 보낸 사람
+	 * @return List<EmailList> : 보낸 이메일 중, 받는 이가 읽은 이메일 리스트
+	 */
+	@Override
+	public List<EmailList> getReadEmailList(Pager pager, String sendId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectReadEmail(pager, sendId);
+		return emailList;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendId : 보낸 사람
+	 * @return int : 보낸 이메일 중, 읽지 않은 이메일 개수
+	 */
+	@Override
+	public int getUnReadEmailRows(String sendId) {
+		log.info("실행");
+		int emailRows = emailRepository.selectUnReadEmailCount(sendId);
+		return emailRows;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager 
+	 * @param sendId : 보낸 사람
+	 * @return List<EmailList> : 보낸 이메일 중, 안 읽은 이메일 리스트
+	 */
+	@Override
+	public List<EmailList> getUnReadEmailList(Pager pager, String sendId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectUnReadEmail(pager, sendId);
+		return emailList;
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param empId : 로그인된 아이디
+	 * @return int : 쓰레기통에 있는 이메일 개수
+	 */
+	@Override
+	public int getTrashEmailRows(String empId) {
+		log.info("실행");
+		int emailRows = emailRepository.selectTrashEmailCount(empId);
+		return emailRows;
+	}
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager 
+	 * @param empId : 나의 아이디
+	 * @return List<EmailList> : 쓰레기통에 있는 메일 리스트
+	 */
+	@Override
+	public List<EmailList> getTrashEmailList(Pager pager, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectTrashEmail(pager, empId);
+		return emailList;
+	}
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager 
+	 * @param empId : 나의 아이디
+	 * @return int : 중요메일 개수
+	 */
+	@Override
+	public int getImportantEmailRows(String empId) {
+		log.info("실행");
+		int emailRows = emailRepository.selectImportantEmailCount(empId);
+		return emailRows;
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager 
+	 * @param empId : 나의 아이디
+	 * @return List<EmailList> : 중요메일 리스트
+	 */
+	@Override
+	public List<EmailList> getImportantEmail(Pager pager, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectImportantEmail(pager, empId);
+		return emailList;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param empId : 나의 아이디
+	 * @return int : 임시저장메일 개수
+	 */
+	@Override
+	public int getTempEmailRows(String empId) {
+		log.info("실행");
+		int emailRows = emailRepository.selectTemptEmailCount(empId);
+		return emailRows;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager
+	 * @param empId : 나의 아이디
+	 * @return List<EmailList> : 임시저장메일 리스트
+	 */
+	@Override
+	public List<EmailList> getTempEmail(Pager pager, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectTempEmail(pager, empId);
+		return emailList;
 	}
 
 }
