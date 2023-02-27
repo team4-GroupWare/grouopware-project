@@ -12,5 +12,9 @@ public class EmailList {
 	private String title;
 	private int contentId;
 	private Date sentDate;
+	private Date rtrashDate;
+	private Date strashDate;
+	private boolean important;
+	private Date tempDate;
 
 }
