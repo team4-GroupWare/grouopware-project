@@ -2,74 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="https://cdn.tiny.cloud/1/smqgcpcmka5xnxwldh4kb6l5hf8upaeo1svd0dgxd7oi52gy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-	
-	<script>
-		$(function(){
-			var form= $('#approval_form').val();
-			
-		    tinymce.init({
-		    	language: "ko_KR",
-		        // Select the element(s) to add TinyMCE to using any valid CSS selector
-		        selector: "#myTextarea",
-		        setup: function (editor) {
-		       		editor.on('init', function (e) {
-		            	editor.setContent(form);
-		            });
-		        },
-		        plugins: "preview powerpaste casechange searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample advtable table charmap pagebreak nonbreaking anchor advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed linkchecker emoticons export",
-		        height: '900px',
-		        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-		        autosave_restore_when_empty: true,
-		        content_style: `
-		            body {
-		                background: #fff;
-		            }
-		
-		            @media (min-width: 840px) {
-		                html {
-		                    background: #eceef4;
-		                    min-height: 100%;
-		                    padding: 0 .5rem
-		                }
-		
-		                body {
-		                    background-color: #fff;
-		                    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
-		                    box-sizing: border-box;
-		                    margin: 1rem auto 0;
-		                    max-width: 820px;
-		                    min-height: calc(100vh - 1rem);
-		                    padding:4rem 6rem 6rem 6rem
-		                }
-		            }
-		        `,
-		    });
-	
-		    $("#temp_save").on("click", function(){
-		        var content = tinymce.activeEditor.getContent();
-		        console.log(content);
-		    });
-		    
-		    $("#approval").on("click", function(){
-		        var content = tinymce.activeEditor.getContent();
-		        console.log(content);
-		    });
-		});
-	</script>
-	<style>
-		body {
-			margin: 4rem auto;
-		    padding: 0 2rem;
-		    background-color: #f9f9fb;
-		}
-		main {
-		    width: 100%;
-		}
-	</style>
-	
+
 </head>
 
 <body>
@@ -157,16 +93,15 @@
 	
     	<section class="section">
       		<div class="row">
-        		<div class="col-lg-9">
+        		<div class="col-lg-12">
           			<div class="card">
             			<div class="card-body m-4">
              				<!-- General Form Elements -->
               				<form method="post">
-              					<input type="hidden" id="approval_form" name="approval_form" value='${form}'>
               					<div class="row mb-3">
                   					<div class="col-sm-12 d-flex justify-content-end">
-                  						<button type="submit" id="temp_save" class="btn btn-secondary" style="margin-right: 8px">임시저장</button>
-                    					<button type="submit" id="approval" class="btn btn-primary">결재 제출</button>
+                  						<button type="submit" class="btn btn-secondary" style="margin-right: 8px">임시저장</button>
+                    					<button type="submit" class="btn btn-primary">결재 제출</button>
                   					</div>
                 				</div>
                 				<div class="row mb-3">
@@ -265,8 +200,9 @@
 								        	<div class="card-body">
 								            	<h5 class="card-title">내용</h5>
 								              	<!-- TinyMCE Editor -->
-								              	<textarea id="myTextarea">
-											    </textarea>
+								              	<textarea class="tinymce-editor">
+													
+								              	</textarea><!-- End TinyMCE Editor -->
 								   			</div>
 								        </div>
         							</div>
