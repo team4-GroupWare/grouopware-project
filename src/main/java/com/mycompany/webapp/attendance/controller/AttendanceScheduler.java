@@ -19,7 +19,8 @@ public class AttendanceScheduler {
 	//@Scheduled(cron = "0 00 18 * * 1-7") 18시에 추가
 	// 23시 59분에 결근으로 학생 추가
 	
-	//@Scheduled(cron = "0 32 15 * * 1-5")
+	//18시에 퇴근/결근 넣어주기
+	//@Scheduled(cron = "0 55 16 * * 1-5")
 	public void addAtt18() {
 		Date date = new Date();
 		
