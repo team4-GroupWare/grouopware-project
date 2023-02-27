@@ -4,16 +4,25 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
+
+import com.ibm.icu.util.ChineseCalendar;
 
 @Component
 public class Holiday {
 	public static void main(String[] args) {
 		Holiday holiday = new Holiday();
-		System.out.println(holiday.holidayArray("2023").toString());
+		List<String> list = holiday.holidayArray("2023");
+		List<String> answer = new ArrayList<>();
+		for(String a : list) {
+			answer.add(a);
+		}
+		System.out.println(answer.toString());
 	}
 	
 	static Set<String> holidaysSet = new HashSet<>();
@@ -62,7 +71,7 @@ public class Holiday {
     }
 
 
-    public Set<String> holidayArray(String yyyy){
+    public List<String> holidayArray(String yyyy){
         holidaysSet.clear();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
@@ -123,8 +132,8 @@ public class Holiday {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return holidaysSet;
+        List<String> holidaysList = new ArrayList<>(holidaysSet);
+        return holidaysList;
     }
 
     private String SolarDays(String yyyy, String date){

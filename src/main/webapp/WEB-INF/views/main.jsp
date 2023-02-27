@@ -94,7 +94,7 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="col" onclick="location.href='${pageContext.request.contextPath}/attendance/status'">
+						<div class="col" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-clock fs-1 " ></i>
 							</div>

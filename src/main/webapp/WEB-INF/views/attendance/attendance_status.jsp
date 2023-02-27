@@ -294,30 +294,33 @@
 							
 							<script>
 								
-								document.addEventListener('DOMContentLoaded', function() {
-									
-							 		var calendarEl = document.getElementById('calendar');
-							
-							  		var calendar = new FullCalendar.Calendar(calendarEl, {
-							  			initialView: 'dayGridMonth',
-									   
-								   		 events: [
-								   		    { 
-								   		      title: '정상출근', // 제목
-								   		      start: '2023-02-28', // 시작일자
-									   		  backgroundColor : '#49a3f1',
-								   		    },{ 
-								   		      title: '정상출근', // 제목
-								   		      start: '2023-02-27' // 시작일자
-									   		 },{ 
-								   		      title: '정상출근', // 제목
-								   		      start: '2023-03-27' // 시작일자
-									   		 }
-								   			 
-								   		  ]
-							 		 });
-							  		calendar.render();
+							$(document).ready(function(){
+								console.log("왜?")
+								var request = $.ajax({
+								  url: "${pageContext.request.contextPath}/attendance/status",
+								  method: "GET"
+								  
 								});
+								 
+								request.done(function( data ) {
+									console.log(data);
+										
+										var calendarEl = document.getElementById('calendar');
+										
+									    var calendar = new FullCalendar.Calendar(calendarEl, {
+									      initialView: 'dayGridMonth',
+									     
+									      events: 
+									    	  data
+									    });
+								
+									    calendar.render();								
+								});
+								 
+								request.fail(function( jqXHR, textStatus ) {
+								  alert( "Request failed: " + textStatus );
+								});
+					});
 							</script>
 						  	<div class="d-flex justify-content-center">
 						  		<div id='calendar' class="m-5" style="width:1200px" ></div>
