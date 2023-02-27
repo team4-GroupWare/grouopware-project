@@ -293,23 +293,34 @@
 						<div class="card-body">
 							
 							<script>
-								document.addEventListener('DOMContentLoaded', function() {
-									
-							 		var calendarEl = document.getElementById('calendar');
-							
-							  		var calendar = new FullCalendar.Calendar(calendarEl, {
-									    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-									    eventSources: [
-										    {
-									          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-									          
-									          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
-									          
-									        }
-							   		 	]
-							 		 });
-							  		calendar.render();
+								
+							$(document).ready(function(){
+								console.log("왜?")
+								var request = $.ajax({
+								  url: "${pageContext.request.contextPath}/attendance/status",
+								  method: "GET"
+								  
 								});
+								 
+								request.done(function( data ) {
+									console.log(data);
+										
+										var calendarEl = document.getElementById('calendar');
+										
+									    var calendar = new FullCalendar.Calendar(calendarEl, {
+									      initialView: 'dayGridMonth',
+									     
+									      events: 
+									    	  data
+									    });
+								
+									    calendar.render();								
+								});
+								 
+								request.fail(function( jqXHR, textStatus ) {
+								  alert( "Request failed: " + textStatus );
+								});
+					});
 							</script>
 						  	<div class="d-flex justify-content-center">
 						  		<div id='calendar' class="m-5" style="width:1200px" ></div>
