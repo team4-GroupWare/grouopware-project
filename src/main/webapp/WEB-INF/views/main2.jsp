@@ -137,7 +137,7 @@
 				          	    var min = modifyNumber(dateInfo.getMinutes());
 				          	    var sec = modifyNumber(dateInfo.getSeconds());
 				          	    var year = dateInfo.getFullYear();
-				          	    var month = dateInfo.getMonth()+1; //monthIndex를 반환해주기 때문에 1을 더해준다.
+				          	    var month = dateInfo.getMonth()+1; 
 				          	    var date = dateInfo.getDate();
 				          	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
 				          	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";

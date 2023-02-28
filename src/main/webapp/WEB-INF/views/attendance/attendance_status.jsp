@@ -11,6 +11,117 @@
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+			<script>
+		  	var today = new Date(); 					//오늘날짜
+	  		var day = today.getDay();					//요일
+	  	    var year = today.getFullYear();				//년
+	  	    var month = today.getMonth()+1; 			//월
+	  	    var date = today.getDate();					//일
+	  	    
+	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회
+	  		$(document).ready(function() {
+          	  	
+	  			//현재 시간, 날짜 
+	  			nowClock();
+        	    setInterval(nowClock,1000); 
+		  		
+		  		//휴일일 경우
+		  		if(day==0 || day==6) {
+		  			//출근 상태 표시
+		  			let status = "휴일"
+		  			let clockIn = "-- : -- : --";
+	  				let clockOut = "-- : -- : --";
+	  				$("#status").html(status);
+	  				$("#clockIn").html(clockIn);
+	  				$("#clockOut").html(clockOut);
+	  				
+	  				//버튼 비활성화
+	  				btnNotActive();
+		  		
+	  			//휴일이 아닐 경우	
+		  		} else{
+		  			$.ajax({
+		  				url : "${pageContext.request.contextPath}/attendanceinfo"
+		  				
+		  			}).done(function(data){
+		  				
+		  				let status; 
+		  				let clockIn;
+		  				let clockOut;
+		  				
+		  				if(data.status == null){
+		  					status = "미출근";
+		  				} else{
+		  					status = data.status;
+		  				}
+		  				
+		  				if(data.clockIn == null){
+		  					clockIn = "-- : -- : --";
+		  				} else{
+		  					clockIn = data.clockIn;
+		  				}
+		  				
+		  				if(data.clockOut == null){
+		  					clockOut = "-- : -- : --";
+		  				} else{
+		  					clockOut = data.clockOut;
+		  				}
+		  				 
+		  				$("#status").html(status);
+		  				$("#clockIn").html(clockIn);
+		  				$("#clockOut").html(clockOut);
+		  				
+		  				//퇴근버튼만 활성화
+		  				if(data.clockIn != null && data.clockOut == null){
+			  				onlyBtnleave();
+		  				}
+		  				//비활성화
+	  					else if(data.clockIn != null && data.clockOut != null){
+		  				btnNotActive();
+		  				}
+		  				
+		  			});
+		  		}
+	  		});
+	  		
+	  	    //01~09시는 앞에 0이 붙도록 해주는 함수
+			function modifyNumber(time){
+				if(parseInt(time)<10){
+				    return "0"+ time;
+				}
+				else  {
+					return time;	
+				}
+			}
+		  	
+	  		//현재 시간, 날짜 함수
+	  	    function nowClock(){
+	  	    	var now = new Date(); 
+	  			var hour = modifyNumber(now.getHours()); 	//시
+		  	    var min = modifyNumber(now.getMinutes()); 	//분
+		  	    var sec = modifyNumber(now.getSeconds()); 	//초
+	  			
+		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
+          	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
+	  		}
+	  	    
+	  		//퇴근버튼만 활성화 함수
+	  		function onlyBtnleave() {
+	  			var target1 = document.getElementById('btn-attendance');
+				target1.disabled = true;
+				target1.setAttribute( 'style', 'opacity: 0.1' )
+				
+				var target2 = document.getElementById('btn-leave');
+				target2.disabled = false;
+				target2.removeAttribute( 'style' )
+	  		}
+	  		//출근,퇴근 비활성화 함수
+	  		function btnNotActive(){
+	  			var target1 = document.getElementById('btn-attendance');
+				target1.disabled = true;
+				target1.setAttribute( 'style', 'opacity: 0.1' )
+	  		}
+	  	</script>
 	  	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
@@ -152,70 +263,59 @@
 						
 						<!-- 제목 -->
 						<div class="pagetitle">
-						   	<h1>월별 출석률</h1>
+						   	<h1>오늘 근무 현황</h1>
 						</div>
 						
 						<!-- 내용 -->
-						<div class="card">
-				            <div class="card-body">
-				              <h5 class="card-title">2023년 02월</h5>
-				
-				              <!-- Donut Chart -->
-				              <div id="donutChart" style="min-height: 270px;" class="echart"></div>
-							</div>
-				          </div>
-				              <script>
-				              	var att = ${attCountMonth};
-				              	var late = ${lateCountMonth};
-				              	var absent = ${absentCountMonth};
-				                document.addEventListener("DOMContentLoaded", () => {
-				                  echarts.init(document.querySelector("#donutChart")).setOption({
-				                    tooltip: {
-				                      trigger: 'item'
-				                    },
-				                    legend: {
-				                      top: '5%',
-				                      left: 'center'
-				                    },
-				                    series: [{
-				                      type: 'pie',
-				                      radius: ['40%', '70%'],
-				                      avoidLabelOverlap: false,
-				                      label: {
-				                        show: false,
-				                        position: 'center'
-				                      },
-				                      emphasis: {
-				                        label: {
-				                          show: true,
-				                          fontSize: '18',
-				                          fontWeight: 'bold'
-				                        }
-				                      },
-				                      labelLine: {
-				                        show: false
-				                      },
-				                      data: [{
-				                          value: att,
-				                          name: '출근'
-				                        },
-				                        {
-				                          value: late,
-				                          name: '지각'
-				                        },
-				                        {
-				                          value: absent,
-				                          name: '휴가'
-				                        },
-				                        {
-				                          value: 1,
-				                          name: '결근'
-				                        }
-				                      ]
-				                    }]
-				                  });
-				                });
-				              </script>
+							<div class="card info-card sales-card "  style="height:335px; ">
+			           		<div class="card-body mt-4">
+					            <div class="mb-3"> 
+					            	<!-- 오늘날짜 -->
+									<h5 id="date"></h5>
+					            </div>
+				                <div class="d-flex">
+				                	<!-- 현재시간 -->
+				                	<div><h2 id="time"></h2></div>
+				                	<!-- 출근 상태 -->
+				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
+				                </div>
+								
+								<!-- 출퇴근 버튼 -->
+								<div>
+									<div class="row">
+										<!-- 출근하기 버튼 -->
+										<div class="col border-end" style="text-align:center" >
+											<input 
+											id="btn-attendance"
+											type='image'
+											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
+											width="100"
+											onClick="location.href='${pageContext.request.contextPath}/attendance'"
+											/>
+										    <div>출근하기</div> 
+										    <div id="clockIn"></div>
+										</div><!-- End 출근하기 버튼 -->
+										
+										<!-- 퇴근하기 버튼 -->
+										<div class="col" style="text-align:center">
+											<input 
+											id="btn-leave"
+											disabled 
+											style="opacity: 0.1"
+											type='image'
+											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
+											width="100"
+											onClick="location.href='${pageContext.request.contextPath}/leave'" 
+											/>
+											<div>퇴근하기</div>
+											<div id="clockOut"></div>
+										</div><!-- End퇴근하기 버튼 -->
+									</div>
+								
+								</div><!-- End 출퇴근 버튼 -->
+			            	
+			            	</div>
+		        		</div><!-- End attendance Card -->
 				              <!-- End Donut Chart -->
 				
 				            
@@ -229,26 +329,52 @@
 						</div>
 						<!-- 내용 -->
 						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">${thisweek[0]} ~ ${thisweek[6]}</span></h5>
-								<div class="activity">
-									<c:forEach var="date" items="${thisweek}" varStatus="status">
-										<div class="activity-item d-flex">
-											<div class="activite-label">${date}</div>
-											<i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
-											<c:if test="${empty statusThisWeek[status.index]}">
-												<div class="activity-content">근무전</div>
-											</c:if>
-											<c:if test="${!empty statusThisWeek[status.index]}">
-												<div class="activity-content">${statusThisWeek[status.index]}</div>
-											</c:if>
-											
-										</div>
-									</c:forEach>
-								
-								</div>
-							</div>
-						</div>
+			            <div class="card-body">
+			            <h5 class="card-title">23.02.27 ~ 23.03.03</h5>
+			
+			              <!-- Stacked Bar Chart -->
+			              <canvas id="stakedBarChart" style="max-height: 250px;"></canvas>
+			              <script>
+			                document.addEventListener("DOMContentLoaded", () => {
+			                  new Chart(document.querySelector('#stakedBarChart'), {
+			                    type: 'bar',
+			                    data: {
+			                      labels: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+			                      datasets: [{
+			                          label: '출근',
+			                          data: [8, 8, 8, 4, 8],
+			                          backgroundColor: '#4DABF7',
+			                        },
+			                        {
+			                          label: '연장근무',
+			                          data: [2, 0, 2, 0, 0],
+			                          backgroundColor: '#ff8787',
+			                        },
+			                        {
+			                          label: '휴일근무',
+			                          data: [0, 0, 0, 0, 0, 0, 4],
+			                          backgroundColor: 'rgb(255, 205, 86)',
+			                        },
+			                      ]
+			                    },
+			                    options: {
+			                      responsive: true,
+			                      scales: {
+			                        x: {
+			                          stacked: true,
+			                        },
+			                        y: {
+			                          stacked: true
+			                        }
+			                      }
+			                    }
+			                  });
+			                });
+			              </script>
+			              <!-- End Stacked Bar Chart -->
+			
+			            </div>
+			          </div>
 					</div>
 				</div><!-- ====================================== End Second row ============================================ -->
 			   
@@ -282,7 +408,7 @@
 									      initialView: 'dayGridMonth',
 									     
 									      events: 
-									    	  data
+									    	  
 									    });
 								
 									    calendar.render();								

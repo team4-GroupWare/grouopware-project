@@ -484,7 +484,6 @@
 																	/* var style = $(this).attr("name");
 																	,"width:100%;background-color:lightgray" 
 																	console.log(style); */
-																	console.log("왜안나와?ㄴ")
 																	
 																});
 																
