@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class ApprovalService implements IApprovalService {
 	@Autowired
 	private ApprovalRepository approvalRepository;
@@ -22,5 +26,26 @@ public class ApprovalService implements IApprovalService {
 	public List<ApprovalCategory> getCategory() {
 		return approvalRepository.selectApprovalCategory();
 	}
+
+	@Override
+	public int writeApproval(Approval approval) {
+		log.info("실행");
+		return approvalRepository.insertApproval(approval);
+		
+	}
+
+	@Override
+	public List<Approval> getApprovalList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getApprovalRow(String empId, String status) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 	
 }
