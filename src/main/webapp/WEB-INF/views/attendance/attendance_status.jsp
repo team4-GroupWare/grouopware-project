@@ -358,6 +358,7 @@
 			                      ]
 			                    },
 			                    options: {
+			                     
 			                      responsive: true,
 			                      scales: {
 			                        x: {
@@ -408,7 +409,7 @@
 									      initialView: 'dayGridMonth',
 									     
 									      events: 
-									    	  
+									    	  data
 									    });
 								
 									    calendar.render();								
