@@ -75,20 +75,6 @@ public interface EmailRepository {
 	List<EmailList> selectTrashEmail(@Param("pager")Pager pager, @Param("empId")String empId);
 	/**
 	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return int : 중요메일 개수
-	 */
-	int selectImportantEmailCount(String empId);
-	/**
-	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return List<EmailList> : 중요메일 리스트
-	 */
-	List<EmailList> selectImportantEmail(@Param("pager")Pager pager, @Param("empId")String empId);
-	/**
-	 * @author LEEYESEUNG
 	 * @param empId : 나의 아이디
 	 * @return int : 임시저장메일 개수
 	 */
@@ -100,5 +86,12 @@ public interface EmailRepository {
 	 * @return List<EmailList> : 임시저장메일 리스트
 	 */
 	List<EmailList> selectTempEmail(@Param("pager")Pager pager, @Param("empId")String empId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param check : 중요메일인지 체크할 email 아이디
+	 * @param type : 받은 메일인지 보낸 메일인지 확인
+	 * @return int : 중요메일이라면 1반환 
+	 */
+	int selectImportantReceiveEmail(int emailId);
 
 }
