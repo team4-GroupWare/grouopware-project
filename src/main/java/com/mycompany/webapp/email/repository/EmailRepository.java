@@ -89,9 +89,14 @@ public interface EmailRepository {
 	/**
 	 * @author LEEYESEUNG
 	 * @param check : 중요메일인지 체크할 email 아이디
-	 * @param type : 받은 메일인지 보낸 메일인지 확인
 	 * @return int : 중요메일이라면 1반환 
 	 */
 	int selectImportantReceiveEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 휴지통으로 보낼 receive 메일 아이디 
+	 * @return int : update된 행수
+	 */
+	int updateEmailTrash(int emailId);
 
 }

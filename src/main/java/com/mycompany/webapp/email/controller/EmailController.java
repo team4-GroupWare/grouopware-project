@@ -193,6 +193,20 @@ public class EmailController {
 		log.info("type: "+type);
 		
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/trashemail")
+	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
+		log.info("실행");
+		String result = "fail";
+		int row = 0;
+		for(String emailIdStr : checkArr) {
+			int emailId = Integer.parseInt(emailIdStr);
+			row = emailService.throwAwayEmail(emailId, type);
+			result = "success";
+		}
 		
+		return result;
 	}
 }

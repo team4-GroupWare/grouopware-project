@@ -232,12 +232,24 @@
 	
 	</select>
 	
+	<!-- 중요메일 있는지 판단 -->
 	<select id="selectImportantReceiveEmail" parameterType="int" resultType="int">
+		<![CDATA[
 		SELECT COUNT(*)
-		FROM 
-	
-	
+		FROM RECEIVE_EMAIL r, EMAIL_CONTENT c
+		WHERE r.email_content_id = c.email_content_id 
+			  and c.important = 1 
+			  and r.receive_email_id = #{emailId}
+		]]>
 	</select>
+	
+	<update id="updateEmailTrash" parameterType="int">
+		<![CDATA[
+		update receive_email
+		set trash_date = sysdate
+		where receive_email_id = #{emailId}
+		]]>	
+	</update>
 
 
 

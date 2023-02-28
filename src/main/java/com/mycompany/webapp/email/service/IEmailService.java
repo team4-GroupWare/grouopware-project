@@ -91,4 +91,11 @@ public interface IEmailService {
 	 * @return int : 중요메일이라면 1반환 
 	 */
 	int checkImportant(int emailId, String type);
+	/**
+	 * 
+	 * @param emailId : 쓰레기통에 넣으려는 아이디
+	 * @param type : 해당 아이디가 받은 메일인지 보낸 메일인지
+	 * @return int : 삭제한 행의 수 반환
+	 */
+	int throwAwayEmail(int emailId, String type);
 }

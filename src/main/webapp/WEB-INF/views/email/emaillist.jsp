@@ -125,8 +125,12 @@
 									contentType : "application/x-www-form-urlencoded",
 									traditional: true
 								}).done((data)=> {
-									console.log("성공");
-									$("#importantDeleteModal").modal('show');	
+									console.log("성공: "+data);
+									if(data == 'important'){
+										$("#importantDeleteModal").modal('show');	
+									} else {
+										trashEmail(type);
+									}
 								});
 								
 								/*$.ajax({
@@ -140,6 +144,31 @@
 									$("#importantDeleteModal").modal('show');	
 								});*/
 									
+							}
+							
+							function trashEmail(type){
+								var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								var data = {"checkArr" : checkArr, "type" : type};
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/trashemail",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공: "+data);
+									
+									$("#trashModal").modal('show');	
+								});
+							}
+							
+							function reload(){
+								location.reload();
 							}
 						</script>
 	                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
@@ -276,9 +305,17 @@
 							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
 							</c:if>
 							<c:if test="${type eq 'temp'}">
-							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=${i}">${i}</a></li>
+							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
+							</c:if>
 							</c:if>
 							<c:if test="${pager.pageNo == i}">
+							<c:if test="${type eq 'receive'}">
+							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
+							</c:if>
+							<c:if test="${type eq 'trash'}">
+							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
+							</c:if>
+							<c:if test="${type eq 'temp'}">
 							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
 							</c:if>
 							</c:if>
@@ -343,7 +380,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">삭제</button>
+	        <button type="button" class="btn btn-primary" onclick="trashEmail('${type}')">삭제</button>
 	      </div>
 	    </div>
 	  </div>
@@ -361,7 +398,7 @@
 	        <p>10일 이후에는 자동으로 영구삭제되며, 복구할 수 없습니다.</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
 	      </div>
 	    </div>
 	  </div>
