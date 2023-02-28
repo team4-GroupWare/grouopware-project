@@ -166,9 +166,9 @@
 
 		<!-- Spring Security -->
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.8.1</version>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.8.2</version>
 		</dependency>
 
 		<!-- StringEscapeUtils -->
@@ -177,7 +177,19 @@
 			<artifactId>commons-text</artifactId>
 			<version>1.10.0</version>
 		</dependency>
-
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.8.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.8.2</version>
+		</dependency>
+		
 		<!-- 암호화 -->
 		<dependency>
 			<groupId>org.jasypt</groupId>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,21 +73,42 @@ public class ApprovalController {
 	
 	
 	@GetMapping("/list")
-	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(required = false) String status, Model model, HttpSession session) {
+	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
+		
 		int approvalRow = approvalService.getApprovalRow(empId, status);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
-		List<Approval> approvals = approvalService.getApprovalList();
+		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status);
+		
+		model.addAttribute("approvals", approvals);
+		model.addAttribute("pager", pager);
+		model.addAttribute("status", status);
 		
 		return "approval/approval_list";
 	}
 	
+	/**
+	 * 
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @param pageNo
+	 * @param status
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/detail")
-	public String detail() {
+	public String detail(@RequestParam int approvalId, @RequestParam int pageNo, @RequestParam() String status, Model model) {
 		log.info("실행");
+		
+		Approval approval = approvalService.getApprovalDetail(approvalId);
+		
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("status", status);
+		model.addAttribute("approval", approval);
+		
 		return "approval/approval_detail";
 	}
 	

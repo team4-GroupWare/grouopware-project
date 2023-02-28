@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
@@ -35,15 +36,21 @@ public class ApprovalService implements IApprovalService {
 	}
 
 	@Override
-	public List<Approval> getApprovalList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Approval> getApprovalList(Pager pager, String empId, String status) {
+		log.info("실행");
+		return approvalRepository.selectApprovalList(pager, empId, status);
 	}
 
 	@Override
 	public int getApprovalRow(String empId, String status) {
-		// TODO Auto-generated method stub
-		return 0;
+		log.info("실행");
+		return approvalRepository.selectApprovalCount(empId, status);
+	}
+
+	@Override
+	public Approval getApprovalDetail(int approvalId) {
+		log.info("실행");
+		return approvalRepository.selectApprovalDetail(approvalId);
 	}
 
 
