@@ -407,9 +407,21 @@
 										
 									    var calendar = new FullCalendar.Calendar(calendarEl, {
 									      initialView: 'dayGridMonth',
-									     
+									      googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
 									      events: 
 									    	  data
+									    	,eventSources: [
+									    		{
+										        	googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+										        	color: '#be5683' 
+										         	
+										        	}
+										    	],
+										    	eventClick: function(info){
+										    		   //클릭시 구글캘린더 url로 가는것을 막는다.
+										    		   info.jsEvent.stopPropagation();
+										    		   info.jsEvent.preventDefault();
+										    	}
 									    });
 								
 									    calendar.render();								

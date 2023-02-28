@@ -202,13 +202,14 @@ public class AttendanceController {
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYY");
 		String today = simpleDateFormat1.format(date);
-		
+		List<Map<String, String>> answer = new ArrayList<Map<String, String>>();
+		/*
 		// 올해 공휴일 list
 		Holiday holiday = new Holiday();
 		List<String> dates = holiday.holidayArray(today);
 		
 		//fullCalendar에 출력을 위해 List에 담아준다.
-		List<Map<String, String>> answer = new ArrayList<Map<String, String>>();
+		
 		for (String d : dates) {
 			HashMap<String, String> hash = new HashMap<String, String>();
 			hash.put("title", "공휴일");
@@ -216,7 +217,7 @@ public class AttendanceController {
 			hash.put("backgroundColor", "#DA5454");
 			hash.put("borderColor", "#DA5454");
 			answer.add(hash);
-		}
+		}*/
 		
 		// =========================<사원의 출근 정보>============================
 		// 로그인한 사원의 ID
