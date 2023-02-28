@@ -4,6 +4,7 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/emailCheck.js"></script>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -13,7 +14,7 @@
 	    <ul class="sidebar-nav" id="sidebar-nav">
 	
 	      <li class="nav-item">
-	        <a class="btn btn-primary" type="button" href="email_writeform.html" style="width:100%">
+	        <a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/email/write" style="width:100%">
 	          <i class="bi bi-pencil-square"></i> 
 	          <span>메일 작성</span>
 	        </a>
@@ -47,13 +48,6 @@
 	          </li>
 	        </ul>
 	      </li><!-- End Icons Nav -->
-	
-	      <li class="nav-item">
-	        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
-	          <i class="bi bi-star-fill"></i>
-	          <span>중요 메일함</span>
-	        </a>
-	      </li><!-- End Profile Page Nav -->
 	
 	      <li class="nav-item">
 	        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
@@ -111,7 +105,7 @@
 	              <table class="table table-hover">
 	                <thead>
 	                  <tr>
-	                  	<th scope="col" ><input class="form-check-input" type="checkbox"></input></th>
+	                  	<th scope="col" ><input name="selectall" onclick='selectAll(this)' class="form-check-input" type="checkbox"></input></th>
 	                    <th scope="col">이름</th>
 	                    <th scope="col">제목</th>
 	                    <th scope="col">날짜</th>
@@ -122,7 +116,7 @@
               		<c:if test="${not empty emailList}">
 	                <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   		<tr>
-                  			<td><input class="form-check-input" type="checkbox"></td>
+                  			<td><input name="selectone" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
                     		<td>${emailList.receiveId}</td>
                     		<td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
                     		<td>${emailList.sentDate}</td>
@@ -148,37 +142,101 @@
 	  				<nav aria-label="Page navigation example">
 		   				<ul class="pagination">
 		   					<li class="page-item">
+		   						<c:if test="${type eq 'send'}">
 		       					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=1" aria-label="Previous">
 		         						<span aria-hidden="true">처음</span>
 	       						</a>
+	       						</c:if>
+	       						<c:if test="${type eq 'read'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
+	       						<c:if test="${type eq 'unread'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
 	     					</li>	
 	   						<c:if test="${pager.groupNo>1}">
 	      					<li class="page-item">
+	      						<c:if test="${type eq 'send'}">
 	        					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	          						<span aria-hidden="true">이전</span>
 	        					</a>
+	        					</c:if>
+	        					<c:if test="${type eq 'read'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
+	        					<c:if test="${type eq 'unread'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
 	      					</li>
 	     					</c:if>
 	     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 	     						<c:if test="${pager.pageNo != i}">
+	     						<c:if test="${type eq 'send'}">
 								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${i}">${i}</a></li>
 								</c:if>
+								<c:if test="${type eq 'read'}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'unread'}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								</c:if>
 								<c:if test="${pager.pageNo == i}">
-								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/snedlist?pageNo=${i}">${i}</a></li>
+								<c:if test="${type eq 'send'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'read'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'unread'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${i}">${i}</a></li>
+								</c:if>
 								</c:if>
 							</c:forEach>
 									
 							<c:if test="${pager.groupNo<pager.totalGroupNo}">
 							<li class="page-item">
+								<c:if test="${type eq 'send'}">
 	            				<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 	           						<span aria-hidden="true">다음</span>
 	         					</a>
+	         					</c:if>
+	         					<c:if test="${type eq 'read'}">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	         					</c:if>
+	         					<c:if test="${type eq 'unread'}">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	         					</c:if>
 	   						</li>
 							</c:if>
 							<li class="page-item">
+								<c:if test="${type eq 'send'}">
 	       						<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
 	    							<span aria-hidden="true">맨끝</span>
 	   							</a>
+	   							</c:if>
+	   							<c:if test="${type eq 'read'}">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   							</c:if>
+	   							<c:if test="${type eq 'unread'}">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   							</c:if>
 	   						</li>	
 	   					 </ul>
 	 				  </nav>

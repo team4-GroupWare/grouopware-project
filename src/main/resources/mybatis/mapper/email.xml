@@ -4,10 +4,16 @@
 	<!-- 받는 email List -->
 	<select id="selectReceiveEmail" resultType="emailList" parameterType="map">
 		<![CDATA[
-			select distinct s.received_emp_id as receiveId,r.sent_emp_id as sentId, c.title, s.sent_date as sentDate, s.trash_date as strashDate, r.trash_date rtrashDate
+			select distinct 
+				   r.receive_email_id as receiveEmailId,
+				   s.received_emp_id as receiveId,
+				   r.sent_emp_id as sentId,
+				   c.title, s.sent_date as sentDate
 			from receive_email r, email_content c, send_email s
-			where s.RECEIVED_EMP_ID = #{receiveId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
-				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and s.trash_date is null and r.trash_date is null
+			where s.RECEIVED_EMP_ID = #{receiveId} 
+				  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				  and r.trash_date is null
 			order by s.sent_date desc
 			offset #{pager.startRowNo}-1 rows
 			fetch first 10 rows only
@@ -20,7 +26,10 @@
 		<![CDATA[
 			select count(s.send_email_id)
 			from email_content c, send_email s, receive_email r
-			where s.RECEIVED_EMP_ID = #{receiveId} and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID and r.trash_date is null
+			where s.RECEIVED_EMP_ID = #{receiveId} 
+				and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+				and r.trash_date is null
 		]]>
 	
 	</select>
@@ -30,7 +39,10 @@
 		<![CDATA[
 			SELECT COUNT(R.RECEIVE_EMAIL_ID)
 			FROM EMAIL_CONTENT c, RECEIVE_EMAIL r, send_email s
-			WHERE r.SENT_EMP_ID = #{sendId} and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID and s.trash_date is null
+			WHERE r.SENT_EMP_ID = #{sendId} 
+				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				  and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID 
+				  and s.trash_date is null
 		]]>
 	
 	</select>
@@ -38,10 +50,17 @@
 	<!-- 보낸 email List -->
 	<select id="selectSendEmail" parameterType="map" resultType="emailList">
 		<![CDATA[
-			select distinct r.sent_emp_id as sentId,s.received_emp_id as receiveId, c.title, s.sent_date as sentDate, r.read_date as readDate
+			select distinct 
+				   s.send_email_id as sendEmailId,
+				   r.sent_emp_id as sentId,
+				   s.received_emp_id as receiveId,
+				   c.title, s.sent_date as sentDate,
+				   r.read_date as readDate
         	from receive_email r, email_content c, send_email s
-        	where r.SENT_EMP_ID = #{sendId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
-              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and s.trash_date is null
+        	where r.SENT_EMP_ID = #{sendId} 
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and s.trash_date is null
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -54,7 +73,10 @@
 		<![CDATA[
 				SELECT COUNT(R.RECEIVE_EMAIL_ID)
 				FROM EMAIL_CONTENT c, RECEIVE_EMAIL r, send_email s
-				WHERE r.SENT_EMP_ID = #{sendId} and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.READ_DATE is not null
+				WHERE r.SENT_EMP_ID = #{sendId}
+					  and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID
+					  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+					  and r.READ_DATE is not null
 					  and s.trash_date is null
 			]]>
 	
@@ -63,10 +85,18 @@
 	<!-- 보낸 메일 중 읽은 email List -->
 	<select id="selectReadEmail" parameterType="map" resultType="emailList">
 		<![CDATA[
-			select distinct r.sent_emp_id as sentId,s.received_emp_id as receiveId, c.title, s.sent_date as sentDate, r.read_date as readDate
+			select distinct 
+				   s.send_email_id as sendEmailId,
+				   r.sent_emp_id as sentId,
+				   s.received_emp_id as receiveId,
+				   c.title, s.sent_date as sentDate,
+				   r.read_date as readDate
         	from receive_email r, email_content c, send_email s
-        	where r.SENT_EMP_ID = #{sendId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
-              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.READ_DATE is not null and s.trash_date is null
+        	where r.SENT_EMP_ID = #{sendId} 
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and r.READ_DATE is not null
+              	  and s.trash_date is null
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -74,20 +104,36 @@
 		]]>
 	</select>
 	
+	<!-- 보낸 이메일 중 안읽은 email Count -->
 	<select id="selectUnReadEmailCount" parameterType="String" resultType="int">
 		<![CDATA[
 				SELECT COUNT(R.RECEIVE_EMAIL_ID)
 				FROM EMAIL_CONTENT c, RECEIVE_EMAIL r, send_email s
-				WHERE r.SENT_EMP_ID = #{sendId} and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.READ_DATE is null and s.trash_date is null
+				WHERE r.SENT_EMP_ID = #{sendId}
+					  and c.EMAIL_CONTENT_ID = r.EMAIL_CONTENT_ID
+					  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+					  and r.READ_DATE is null
+					  and s.trash_date is null
 			]]>
 	</select>
 	
+	<!-- 보낸 이메일 중 안읽은 email List -->
 	<select id="selectUnReadEmail" parameterType="map" resultType="emailList">
 	<![CDATA[
-			select distinct r.sent_emp_id as sentId,s.received_emp_id as receiveId, c.title, s.sent_date as sentDate, r.read_date as readDate, s.trash_date as strashDate, r.trash_date rtrashDate
+			select distinct
+				   s.send_email_id as sendEmailid,
+				   r.sent_emp_id as sentId,
+				   s.received_emp_id as receiveId, 
+				   c.title, s.sent_date as sentDate, 
+				   r.read_date as readDate, 
+				   s.trash_date as strashDate, 
+				   r.trash_date rtrashDate
         	from receive_email r, email_content c, send_email s
-        	where r.SENT_EMP_ID = #{sendId} and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
-              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.READ_DATE is null and s.trash_date is null
+        	where r.SENT_EMP_ID = #{sendId}
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and r.READ_DATE is null
+              	  and s.trash_date is null
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -96,32 +142,62 @@
 	
 	</select>
 	
+	<!-- 나의 메일 중 쓰레기통에 있는 메일 count -->
 	<select id="selectTrashEmailCount" parameterType="String" resultType="int">
 	<![CDATA[
 			select count(*)
 			from (
-		        select r.SENT_EMP_ID as sentId, s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, r.trash_date rtrashDate
+		        select r.receive_email_id as receiveEmailId,
+		        	   r.SENT_EMP_ID as sentId,
+		        	   s.received_emp_id as receiveId,
+		        	   s.sent_date as sentDate,
+		        	   c.title, r.trash_date rtrashDate
 		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and r.trash_date is not null and  s.received_emp_id = #{empId}
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and r.trash_date is not null
+		        	  and  s.received_emp_id = #{empId}
 		        union 
-		        select  r.SENT_EMP_ID as sentId,s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, s.trash_date strashDate
+		        select  s.send_email_id as sendEmailId,
+		        		r.SENT_EMP_ID as sentId,
+		        		s.received_emp_id as receiveId,
+		        		s.sent_date as sentDate, c.title,
+		        		s.trash_date strashDate
 		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and s.trash_date is not null and  r.SENT_EMP_ID = #{empId}
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and s.trash_date is not null
+		        	  and  r.SENT_EMP_ID = #{empId}
         		)
 			]]>
 	</select>
 	
+	<!-- 나의 메일 중 쓰레기통에 있는 메일 list -->
 	<select id="selectTrashEmail" parameterType="map" resultType="emailList">
 			<![CDATA[
 			select * 
 			from (
-		        select r.SENT_EMP_ID as sentId, s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, r.trash_date rtrashDate
+		        select r.receive_email_id as receiveEmailId,
+		        	   r.SENT_EMP_ID as sentId,
+		        	   s.received_emp_id as receiveId,
+		        	   s.sent_date as sentDate,
+		        	   c.title, r.trash_date rtrashDate
 		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and r.trash_date is not null and  s.received_emp_id = #{empId}
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and r.trash_date is not null
+		        	  and s.received_emp_id = #{empId}
 		        union 
-		        select  r.SENT_EMP_ID as sentId,s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, s.trash_date strashDate
+		        select  s.send_email_id as sendEmailId,
+		        	    r.SENT_EMP_ID as sentId,
+		        		s.received_emp_id as receiveId,
+		        		s.sent_date as sentDate, c.title,
+		        		s.trash_date strashDate
 		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and s.trash_date is not null and  r.SENT_EMP_ID = #{empId}
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and s.trash_date is not null
+		        	  and  r.SENT_EMP_ID = #{empId}
         		)
 			order by sentDate desc
 			offset #{pager.startRowNo}-1 rows
@@ -129,42 +205,7 @@
 			]]>
 	</select>
 	
-	<select id="selectImportantEmailCount" parameterType="String" resultType="int">
-	 	<![CDATA[
-	 		select count(*)
-	 		from (
-		        select r.SENT_EMP_ID as sentId, s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, c.important 
-		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID and  s.received_emp_id = #{empId}
-		        union 
-		        select  r.SENT_EMP_ID as sentId,s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, c.important
-		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and  r.SENT_EMP_ID = #{empId}
-        		)
-        	 where important = 1
-	 	
-	 	]]>
-	</select>
-	
-	<select id="selectImportantEmail" parameterType="map" resultType="emailList">
-	<![CDATA[
-	 		select *
-	 		from (
-		        select r.SENT_EMP_ID as sentId, s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, c.important 
-		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID and  s.received_emp_id = #{empId}
-		        union 
-		        select  r.SENT_EMP_ID as sentId,s.received_emp_id as receiveId, s.sent_date as sentDate, c.title, c.important
-		        from email_content c, send_email s,receive_email r
-		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID  and  r.SENT_EMP_ID = #{empId}
-        		)
-        	where important = 1
-        	order by sentDate desc
-			offset #{pager.startRowNo}-1 rows
-			fetch first 10 rows only
-	 	]]>
-	</select>
-	
+	<!-- 나의 임시저장 메일 count -->
 	<select id="selectTemptEmailCount" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*)
@@ -174,15 +215,27 @@
 	
 	</select>
 	
+	<!-- 나의 임시 저장 메일 list -->
 	<select id="selectTempEmail" parameterType="map" resultType="emailList">
 		<![CDATA[
-		select t.writer as sentId, t.temp_date as tempDate, c.title
+		select t.temp_email_id as tempEmailId,
+			   t.writer as sentId,
+			   t.temp_date as tempDate,
+			   c.title
 		from temp_email t, email_content c
-		where t.email_content_id = c.email_content_id and writer = #{empId}
+		where t.email_content_id = c.email_content_id
+			  and writer = #{empId}
 		order by tempDate desc
 		offset #{pager.startRowNo}-1 rows
 		fetch first 10 rows only
 		]]>
+	
+	</select>
+	
+	<select id="selectImportantReceiveEmail" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+	
 	
 	</select>
 

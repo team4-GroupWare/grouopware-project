@@ -16,5 +16,9 @@ public class EmailList {
 	private Date strashDate;
 	private boolean important;
 	private Date tempDate;
+	private int sendEmailId;
+	private int receiveEmailId;
+	private int tempEmailId;
+	
 
 }

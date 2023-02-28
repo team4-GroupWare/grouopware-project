@@ -2,17 +2,22 @@ package com.mycompany.webapp.email.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
 
@@ -31,6 +36,13 @@ public class EmailController {
 	@Autowired
 	IEmailService emailService;
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return String : 받은 메일함 페이지
+	 */
 	@GetMapping("/receivelist")
 	public String getReceiveEmail(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -46,6 +58,13 @@ public class EmailController {
 		return "email/emaillist";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return String : 보낸 메일함 페이지
+	 */
 	@GetMapping("/sendlist")
 	public String getSendEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -55,9 +74,18 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getSendEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
+		String type = "send";
+		model.addAttribute("type", type);
 		return "email/sendlist";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return String : 수신 메일함 페이지
+	 */
 	@GetMapping("/readlist")
 	public String getReadEmail(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -67,9 +95,18 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getReadEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
+		String type = "read";
+		model.addAttribute("type", type);
 		return "email/sendlist";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model 
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return String : 미수신 메일함 페이지
+	 */
 	@GetMapping("/unreadlist")
 	public String getUnReadEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -79,8 +116,18 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getUnReadEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
+		String type = "unread";
+		model.addAttribute("type", type);
 		return "email/sendlist";
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return 휴지통 메일함 페이지
+	 */
 	@GetMapping("/trashlist")
 	public String getTrashEmail(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -95,20 +142,13 @@ public class EmailController {
 		return "email/emaillist";
 	}
 	
-	@GetMapping("/importantlist")
-	public String getImportantEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
-		log.info("실행");
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		int emailRow = emailService.getImportantEmailRows(employee.getEmpId());
-		Pager pager = new Pager(10, 5, emailRow, pageNo);
-		List<EmailList> emailList = emailService.getImportantEmail(pager, employee.getEmpId());
-		model.addAttribute("emailList", emailList);
-		model.addAttribute("pager", pager);
-		String type = "important";
-		model.addAttribute("type", type);
-		return "email/emaillist";
-	}
-	
+	/**
+	 * @author LEEYESEUNG
+	 * @param model
+	 * @param session : loginEmployee
+	 * @param pageNo
+	 * @return String : 임시보관함 페이지
+	 */
 	@GetMapping("/templist")
 	public String getTempEmail(Model model, HttpSession session, @RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");
@@ -121,6 +161,38 @@ public class EmailController {
 		String type = "temp";
 		model.addAttribute("type", type);
 		return "email/emaillist";
+		
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param session : loginEmployee
+	 * @return String : 이메일 작성 페이지
+	 */
+	@GetMapping("/write")
+	public String writeEmail(HttpSession session) {
+		log.info("실행");
+		return "email/write";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/importantcheck")
+	public String importantCheck(HttpSession session, @RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
+		log.info("실행");
+		String result= "";
+		for(String check : checkArr) {
+			log.info("check: "+ check);
+			int emailId = Integer.parseInt(check);
+			int row = emailService.checkImportant(emailId, type);
+			if(row == 1) {
+				result="important";
+				break;
+			}
+			result="basic";
+		}
+		log.info("type: "+type);
+		
+		return result;
 		
 	}
 }
