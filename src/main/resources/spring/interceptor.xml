@@ -12,7 +12,7 @@
 			<mvc:mapping path="/approval/*"/>
 			<mvc:mapping path="/hr/*"/>
 			<mvc:mapping path="/vacation/*"/>
-			<mvc:mapping path="/attendance/*"/>
+			<mvc:mapping path="/attendance/**"/>
 			<mvc:exclude-mapping path="/employee/login"/>
 			<bean id="authorizationInterceptor" class="com.mycompany.webapp.interceptor.LoginInterceptor"></bean>
 		</mvc:interceptor>

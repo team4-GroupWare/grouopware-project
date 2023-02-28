@@ -8,12 +8,24 @@
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  	
 	  	<script>
-	  		
+		  	var today = new Date(); 					//오늘날짜
+	  		var day = today.getDay();					//요일
+	  	    var year = today.getFullYear();				//년
+	  	    var month = today.getMonth()+1; 			//월
+	  	    var date = today.getDate();					//일
+	  	    
+	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회
 	  		$(document).ready(function() {
-	  			var d = new Date();
-		  		var n = d.getDay();
-		  		if(n==0 || n==6) {
+          	  	
+	  			//현재 시간, 날짜 
+	  			nowClock();
+        	    setInterval(nowClock,1000); 
+		  		
+		  		//휴일일 경우
+		  		if(day==0 || day==6) {
+		  			//출근 상태 표시
 		  			let status = "휴일"
 		  			let clockIn = "-- : -- : --";
 	  				let clockOut = "-- : -- : --";
@@ -21,22 +33,19 @@
 	  				$("#clockIn").html(clockIn);
 	  				$("#clockOut").html(clockOut);
 	  				
-	  				const target1 = document.getElementById('btn-attendance');
-					target1.disabled = true;
-					target1.setAttribute( 'style', 'opacity: 0.1' )
+	  				//버튼 비활성화
+	  				btnNotActive();
+		  		
+	  			//휴일이 아닐 경우	
 		  		} else{
-		  			/* 페이지 로드되면 로그인한 사원의 출근정보 가져오기 */
 		  			$.ajax({
 		  				url : "${pageContext.request.contextPath}/attendanceinfo"
 		  				
-		  			}).done((data)=>{
+		  			}).done(function(data){
+		  				
 		  				let status; 
 		  				let clockIn;
 		  				let clockOut;
-		  				
-		  				console.log(data.status)
-		  				console.log(data.clockIn)
-		  				console.log(data.clockOut)
 		  				
 		  				if(data.status == null){
 		  					status = "미출근";
@@ -60,33 +69,58 @@
 		  				$("#clockIn").html(clockIn);
 		  				$("#clockOut").html(clockOut);
 		  				
-		  				/* 출근 정보에 따른 버튼 활성화 유무 */
+		  				//퇴근버튼만 활성화
 		  				if(data.clockIn != null && data.clockOut == null){
-			  				/* 출근o, 퇴근x
-			  				퇴근버튼만 활성화 */
-			  				const target1 = document.getElementById('btn-attendance');
-							target1.disabled = true;
-							target1.setAttribute( 'style', 'opacity: 0.1' )
-							
-							const target2 = document.getElementById('btn-leave');
-							target2.disabled = false;
-							target2.removeAttribute( 'style' )
-		  				}	
-		  					else if(data.clockIn != null && data.clockOut != null){
-			  				/* 출근o, 퇴근o or status==휴가
-			  				둘다 비활성화 */
-			  				const target1 = document.getElementById('btn-attendance');
-							target1.disabled = true;
-							target1.setAttribute( 'style', 'opacity: 0.1' )
+			  				onlyBtnleave();
+		  				}
+		  				//비활성화
+	  					else if(data.clockIn != null && data.clockOut != null){
+		  				btnNotActive();
 		  				}
 		  				
 		  			});
 		  		}
-	  			
-	  			
-	  			
 	  		});
+	  		
+	  	    //01~09시는 앞에 0이 붙도록 해주는 함수
+			function modifyNumber(time){
+				if(parseInt(time)<10){
+				    return "0"+ time;
+				}
+				else  {
+					return time;	
+				}
+			}
+		  	
+	  		//현재 시간, 날짜 함수
+	  	    function nowClock(){
+	  	    	var now = new Date(); 
+	  			var hour = modifyNumber(now.getHours()); 	//시
+		  	    var min = modifyNumber(now.getMinutes()); 	//분
+		  	    var sec = modifyNumber(now.getSeconds()); 	//초
+	  			
+		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
+          	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
+	  		}
+	  	    
+	  		//퇴근버튼만 활성화 함수
+	  		function onlyBtnleave() {
+	  			var target1 = document.getElementById('btn-attendance');
+				target1.disabled = true;
+				target1.setAttribute( 'style', 'opacity: 0.1' )
+				
+				var target2 = document.getElementById('btn-leave');
+				target2.disabled = false;
+				target2.removeAttribute( 'style' )
+	  		}
+	  		//출근,퇴근 비활성화 함수
+	  		function btnNotActive(){
+	  			var target1 = document.getElementById('btn-attendance');
+				target1.disabled = true;
+				target1.setAttribute( 'style', 'opacity: 0.1' )
+	  		}
 	  	</script>
+	  	
 	  	<!-- menubar background -->
 		<div class="row" style="height:300px; background-color:#EEF2F4">
 			<div class="row"  style="margin-top:120px" >
@@ -147,31 +181,6 @@
 							<h1>근무확인</h1>
 						</div>
 			          	<!-- attendance Card -->
-			          	<!-- 오늘의 날짜 & 현재 시간을 가져옴 -->
-			          	<script>
-				          	function setClock(){
-				          	    var dateInfo = new Date(); 
-				          	    var hour = modifyNumber(dateInfo.getHours());
-				          	    var min = modifyNumber(dateInfo.getMinutes());
-				          	    var sec = modifyNumber(dateInfo.getSeconds());
-				          	    var year = dateInfo.getFullYear();
-				          	    var month = dateInfo.getMonth()+1; //monthIndex를 반환해주기 때문에 1을 더해준다.
-				          	    var date = dateInfo.getDate();
-				          	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
-				          	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
-				          	}
-				          	function modifyNumber(time){
-				          	    if(parseInt(time)<10){
-				          	        return "0"+ time;
-				          	    }
-				          	    else
-				          	        return time;
-				          	}
-				          	window.onload = function(){
-				          	    setClock();
-				          	    setInterval(setClock,1000); //1초마다 setClock 함수 실행
-				          	}
-			          	</script>
 			          	<div class="card info-card sales-card "  style="height:330px; ">
 			           		<div class="card-body mt-4">
 					            <div class="mb-3"> 
@@ -187,76 +196,6 @@
 								
 								<!-- 출퇴근 버튼 -->
 								<div>
-									<script>
-									function setClock2(){
-										console.log("setClock2() 실행");
-						          	    var dateInfo = new Date(); 
-						          	    var hour = modifyNumber1(dateInfo.getHours());
-						          	    var min = modifyNumber1(dateInfo.getMinutes());
-						          	    var sec = modifyNumber1(dateInfo.getSeconds());
-						          	    document.getElementById("clockOut").innerHTML = hour + ":" + min  + ":" + sec;
-						          	    console.log(hour);
-						          	}
-									function setClock1(){
-						          	    var dateInfo = new Date(); 
-						          	    var hour = modifyNumber1(dateInfo.getHours());
-						          	    var min = modifyNumber1(dateInfo.getMinutes());
-						          	    var sec = modifyNumber1(dateInfo.getSeconds());
-						          	    document.getElementById("clockIn").innerHTML = hour + ":" + min  + ":" + sec;
-						          	    console.log(hour);
-						          	}
-						          	function modifyNumber1(time){
-						          	    if(parseInt(time)<10){
-						          	        return "0"+ time;
-						          	    }
-						          	    else
-						          	        return time;
-						          	}
-									function btnAtt(){
-										var now = new Date();	
-										var hours = now.getHours();	
-										console.log("시간 : ", hours);
-										
-										if(hours < 6){
-											alert("아직 출근 시간이 아닙니다.(6시~)");
-										}
-										else{
-											$.ajax({
-												url:"${pageContext.request.contextPath}/attendance",
-												success : function(data){
-													console.log("status"+data);
-													$("#status").html(data);
-													setClock1();	
-												}	
-										
-												
-											});
-											const target1 = document.getElementById('btn-attendance');
-											target1.disabled = true;
-											target1.setAttribute( 'style', 'opacity: 0.1' )
-											
-											const target2 = document.getElementById('btn-leave');
-											target2.disabled = false;
-											target2.removeAttribute( 'style' )
-										}
-										
-									}
-									function btnLeave()  {
-										console.log("btnLeave()실행")
-										$.ajax({
-											url:"${pageContext.request.contextPath}/leave"
-											
-										}).done((data)=>{
-											console.log(data);
-											setClock2();
-											
-										});
-										const target1 = document.getElementById('btn-leave');
-										target1.disabled = true;
-										target1.setAttribute( 'style', 'opacity: 0.1' )
-									}
-									</script>
-									
 									<div class="row">
 										<!-- 출근하기 버튼 -->
 										<div class="col border-end" style="text-align:center" >
@@ -265,7 +204,7 @@
 											type='image'
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
 											width="100"
-											onclick="btnAtt()"
+											onClick="location.href='${pageContext.request.contextPath}/attendance'"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
@@ -280,7 +219,7 @@
 											type='image'
 											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
 											width="100"
-											onclick="btnLeave()" 
+											onClick="location.href='${pageContext.request.contextPath}/leave'" 
 											/>
 											<div>퇴근하기</div>
 											<div id="clockOut"></div>
