@@ -90,6 +90,15 @@ public class ApprovalController {
 		return "approval/approval_list";
 	}
 	
+	/**
+	 * 
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @param pageNo
+	 * @param status
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/detail")
 	public String detail(@RequestParam int approvalId, @RequestParam int pageNo, @RequestParam() String status, Model model) {
 		log.info("실행");
