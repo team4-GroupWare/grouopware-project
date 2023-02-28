@@ -1,10 +1,12 @@
 package com.mycompany.webapp.attendance.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,13 +18,40 @@ import com.ibm.icu.util.ChineseCalendar;
 @Component
 public class Holiday {
 	public static void main(String[] args) {
-		Holiday holiday = new Holiday();
-		List<String> list = holiday.holidayArray("2023");
-		List<String> answer = new ArrayList<>();
-		for(String a : list) {
-			answer.add(a);
+		Holiday h = new Holiday();
+		System.out.println(h.getCurMonday().toString());
+
+	}
+	
+	public List<String> getCurMonday(){
+		List<String> list = new ArrayList<String>();
+ 		SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
+
+ 		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+ 		list.add(formatter.format(c.getTime()));
+ 		
+ 		for(int i=1; i<7; i++) {
+ 			c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+ 			c.add(Calendar.DATE, i);
+ 			list.add(formatter.format(c.getTime()));
+ 			System.out.println(list.toString());
+ 		}
+ 		
+
+ 		return list;
+
+ 	}
+	
+	public boolean isHoliday(String yyyymmdd) {
+		boolean result=false;
+		String year= yyyymmdd.substring(0,4);
+		for(String date :holidayArray(year) ) {
+			if(date.equals(yyyymmdd)) {
+				result=true;
+			}
 		}
-		System.out.println(answer.toString());
+		return result;
 	}
 	
 	static Set<String> holidaysSet = new HashSet<>();

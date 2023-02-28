@@ -222,12 +222,13 @@
 										}
 										else{
 											$.ajax({
-												url:"${pageContext.request.contextPath}/attendance"
-												
-											}).done((data)=>{
-												console.log(data);
-												$("#status").html(data.status);
-												setClock1();
+												url:"${pageContext.request.contextPath}/attendance",
+												success : function(data){
+													console.log("status"+data);
+													$("#status").html(data);
+													setClock1();	
+												}	
+										
 												
 											});
 											const target1 = document.getElementById('btn-attendance');

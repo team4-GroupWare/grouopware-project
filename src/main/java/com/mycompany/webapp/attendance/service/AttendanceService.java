@@ -26,9 +26,9 @@ public class AttendanceService implements IAttendanceService {
 	}
 
 	@Override
-	public int insertAttendance(Attendance attendance) {
+	public int insertAttendance(String empId, String status) {
 		log.info("실행");
-		int result = attendanceRepository.insertAttendance(attendance);
+		int result = attendanceRepository.insertAttendance(empId,status);
 		return result;
 	}
 
@@ -90,6 +90,48 @@ public class AttendanceService implements IAttendanceService {
 		for(String empId : totalEmpId ) {
 			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
 		}
+	}
+
+	@Override
+	public List<Attendance> getTotalAtt(String empId) {
+		List<Attendance> attendance = attendanceRepository.selectTotalAtt(empId);
+		return attendance;
+	}
+
+	@Override
+	public String getThisWeekStatus(String i, String empId) {
+		String status = attendanceRepository.selectStatus(i,empId);
+		return status;
+	}
+
+	@Override
+	public int getattCountYear(int year, String empId) {
+		return attendanceRepository.selectAttCountYear(year,empId);
+	}
+
+	@Override
+	public int getlateCountYear(int year, String empId) {
+		return attendanceRepository.selectLateCountYear(year,empId);
+	}
+
+	@Override
+	public int getabsentCountYear(int year, String empId) {
+		return attendanceRepository.selectAbsentCountYear(year,empId);
+	}
+
+	@Override
+	public int getattCountMonth(int month, String empId) {
+		return attendanceRepository.selectAttCountMonth(month,empId);
+	}
+
+	@Override
+	public int getlateCountMonth(int month, String empId) {
+		return attendanceRepository.selectLateCountMonth(month,empId);
+	}
+
+	@Override
+	public int getabsentCountMonth(int month, String empId) {
+		return attendanceRepository.selectAbsentCountMonth(month,empId);
 	}
 
 }
