@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,7 +8,7 @@
 	
 	<script>
 		$(function(){
-			var form= $('#approval_form').val();
+			var form= $('#category_form').val();
 			
 		    tinymce.init({
 		    	language: "ko_KR",
@@ -49,15 +49,37 @@
 		    });
 	
 		    $("#temp_save").on("click", function(){
-		        var content = tinymce.activeEditor.getContent();
-		        console.log(content);
+				var content = tinymce.activeEditor.getContent();
+		        
+		        $("#content").val(content);
+		        $("#tempApproval").val("y");
+		        
+		        console.log("content:" + $("#content").val());
+		        console.log("tempApproval:" + $("#tempApproval").val());
+		        console.log("empId:" + $("#empId").val());
+		        console.log("title: " + $("#title").val());
+		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
+		        
+		        //$("#approval_form").submit();
 		    });
-		    
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
-		        console.log(content);
+		        
+		        $("#content").val(content);
+		        $("#tempApproval").val("n");
+		        
+		        console.log("content:" + $("#content").val());
+		        console.log("tempApproval:" + $("#tempApproval").val());
+		        console.log("empId:" + $("#empId").val());
+		        console.log("title: " + $("#title").val());
+		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
+		        
+		        document.querySelector("#approval_form").submit();
+		        
 		    });
+		    
 		});
+		
 	</script>
 	<style>
 		body {
@@ -79,7 +101,7 @@
     <aside id="sidebar" class="sidebar">
     	<ul class="sidebar-nav" id="sidebar-nav">
       		<li class="nav-item">
-        		<a class="btn btn-primary" type="button" href="index.html" style="width:100%">
+        		<a class="btn btn-primary" type="button" href="/approval/write" style="width:100%">
 	          		<i class="bi bi-pencil-square"></i> 
 	          		<span>결재 작성</span>
         		</a>
@@ -161,20 +183,23 @@
           			<div class="card">
             			<div class="card-body m-4">
              				<!-- General Form Elements -->
-              				<form method="post">
-              					<input type="hidden" id="approval_form" name="approval_form" value='${form}'>
-              					<div class="row mb-3">
-                  					<div class="col-sm-12 d-flex justify-content-end">
-                  						<button type="submit" id="temp_save" class="btn btn-secondary" style="margin-right: 8px">임시저장</button>
-                    					<button type="submit" id="approval" class="btn btn-primary">결재 제출</button>
-                  					</div>
-                				</div>
+             				<div class="row mb-3">
+               					<div class="col-sm-12 d-flex justify-content-end">
+               						<button id="temp_save" class="btn btn-secondary" style="margin-right: 8px">임시저장</button>
+                 					<button id="approval" class="btn btn-primary">결재 제출</button>
+               					</div>
+               				</div>
+               				<input type="hidden" id="category_form" name="category_form" value='${form}'>
+               				
+              				<form method="post" id="approval_form" action="${pageContext.request.contextPath}/approval/write">
+              					<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
+              					<input type="hidden" id="tempApproval" name="tempApproval" value="">
                 				<div class="row mb-3">
                   					<label class="col-sm-2 col-form-label"><b>결재 양식</b></label>
                   					<div class="col-sm-4">
-                    					<select class="form-select" aria-label="Default select example" id="categoryId" onchange='getForm("${escape}")'>
+                    					<select class="form-select" aria-label="Default select example" id="approvalCategoryId"  name="approvalCategoryId">
                     						<c:forEach var="category" items="${approval_category}">
-                    							<option value='${category.approvalForm}'>${category.approvalName}</option>
+                    							<option value='${category.approvalCategoryId}'>${category.approvalName}</option>
                     						</c:forEach>
                     					</select>
                   					</div>
@@ -183,7 +208,7 @@
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>제목</b></label>
                  					<div class="col-sm-10">
-                    					<input id="title" type="text" class="form-control">
+                    					<input id="title" name="title" type="text" class="form-control">
                   					</div>
                 				</div>
                 
@@ -241,32 +266,17 @@
 					            					</div>
 					        					</div>
 	                    					</div>
-	                    					<div class="col-sm-3">
-		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
-					            					<div class="row g-0">
-					              						<div class="col-md-12">
-					                						<div class="card-body">
-					                  							<div class="row">
-					                  								<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-			                    									<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-			                    	  							</div>
-					                  							<p>공공사업1 / 솔루션개발팀</p>
-					                						</div>
-					              						</div>
-					            					</div>
-					        					</div>
-	                    					</div>
 	                  					</div>
                 					</div>
                 				</div>
                 				<div class="row mb-3">
                   					<div class="col-sm-12">
+                  						TinyMCE Editor
+                  						<input type="hidden" id="content" name="content" value="">
+                  						<textarea id="myTextarea">
+										</textarea>
                   						<div class="card">
 								        	<div class="card-body">
-								            	<h5 class="card-title">내용</h5>
-								              	<!-- TinyMCE Editor -->
-								              	<textarea id="myTextarea">
-											    </textarea>
 								   			</div>
 								        </div>
         							</div>
