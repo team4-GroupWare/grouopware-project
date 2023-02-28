@@ -104,15 +104,15 @@
 								<div class="row mt-3">
 									<div class="col border-end" style="text-align:center">
 										<div>출근</div>
-										<div>10회</div>
+										<div>${attCountYear}회</div>
 									</div>
 									<div class="col border-end" style="text-align:center">
 										<div>지각</div>
-										<div>1회</div>
+										<div>${lateCountYear}회</div>
 									</div>
 									<div class="col" style="text-align:center">
 										<div>결근</div>
-										<div>1회</div>
+										<div>${absentCountYear}회</div>
 									</div>
 								</div>
 							</div>
@@ -152,71 +152,73 @@
 						
 						<!-- 제목 -->
 						<div class="pagetitle">
-						   	<h1>오늘 근무 현황</h1>
+						   	<h1>월별 출석률</h1>
 						</div>
 						
 						<!-- 내용 -->
-						<div class="card" >
-							<div class="card-body" style="height:350px">
-								<h5 class="card-title">2023.02.06</h5>
-								<div class="d-flex">
-									<div><h2>12:00:00 </h2></div>
-									<div class="mt-2 mx-2"><span class="badge bg-success">근무</span></div>
-								</div>
-							
-								<!-- 출퇴근 버튼 -->
-								<div>
-									<script>
-										function btnAtt()  {
-											  const target1 = document.getElementById('btn-attendance');
-											  target1.disabled = true;
-											  target1.setAttribute( 'style', 'opacity: 0.1' )
-											  
-											  const target2 = document.getElementById('btn-leave');
-											  target2.disabled = false;
-											  target2.removeAttribute( 'style' )
-										}
-										function btnLeave()  {
-											  const target1 = document.getElementById('btn-leave');
-											  target1.disabled = true;
-											  target1.setAttribute( 'style', 'opacity: 0.1' )
-										}
-									</script>
-								
-									<div class="row mb-4">
-										
-										<!-- 출근하기 버튼 -->
-										<div class="col border-end" style="text-align:center" >
-											<input 
-											id="btn-attendance"
-											type='image'
-											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
-											width="100"
-											onclick="btnAtt()"
-											/>
-										    <div>출근하기</div>   
-											<div>000000</div>
-										</div>
-									
-										<!-- 퇴근하기 버튼 -->
-										<div class="col" style="text-align:center">
-											<input 
-											id="btn-leave"
-											disabled 
-											style="opacity: 0.1"
-											type='image'
-											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
-											width="100"
-											onclick="btnLeave()" 
-											/>
-											<div>퇴근하기</div>
-											<div>000000</div>
-										</div>
-									
-									</div>
-								</div>
+						<div class="card">
+				            <div class="card-body">
+				              <h5 class="card-title">2023년 02월</h5>
+				
+				              <!-- Donut Chart -->
+				              <div id="donutChart" style="min-height: 270px;" class="echart"></div>
 							</div>
-						</div>
+				          </div>
+				              <script>
+				              	var att = ${attCountMonth};
+				              	var late = ${lateCountMonth};
+				              	var absent = ${absentCountMonth};
+				                document.addEventListener("DOMContentLoaded", () => {
+				                  echarts.init(document.querySelector("#donutChart")).setOption({
+				                    tooltip: {
+				                      trigger: 'item'
+				                    },
+				                    legend: {
+				                      top: '5%',
+				                      left: 'center'
+				                    },
+				                    series: [{
+				                      type: 'pie',
+				                      radius: ['40%', '70%'],
+				                      avoidLabelOverlap: false,
+				                      label: {
+				                        show: false,
+				                        position: 'center'
+				                      },
+				                      emphasis: {
+				                        label: {
+				                          show: true,
+				                          fontSize: '18',
+				                          fontWeight: 'bold'
+				                        }
+				                      },
+				                      labelLine: {
+				                        show: false
+				                      },
+				                      data: [{
+				                          value: att,
+				                          name: '출근'
+				                        },
+				                        {
+				                          value: late,
+				                          name: '지각'
+				                        },
+				                        {
+				                          value: absent,
+				                          name: '휴가'
+				                        },
+				                        {
+				                          value: 1,
+				                          name: '결근'
+				                        }
+				                      ]
+				                    }]
+				                  });
+				                });
+				              </script>
+				              <!-- End Donut Chart -->
+				
+				            
 					</div>
 				
 					<!-- 주중 근무 현황 -->
@@ -228,52 +230,22 @@
 						<!-- 내용 -->
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title">23.02.01~23.02.06</span></h5>
-								
+								<h5 class="card-title">${thisweek[0]} ~ ${thisweek[6]}</span></h5>
 								<div class="activity">
+									<c:forEach var="date" items="${thisweek}" varStatus="status">
+										<div class="activity-item d-flex">
+											<div class="activite-label">${date}</div>
+											<i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+											<c:if test="${empty statusThisWeek[status.index]}">
+												<div class="activity-content">근무전</div>
+											</c:if>
+											<c:if test="${!empty statusThisWeek[status.index]}">
+												<div class="activity-content">${statusThisWeek[status.index]}</div>
+											</c:if>
+											
+										</div>
+									</c:forEach>
 								
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.01</div>
-										<i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
-										<div class="activity-content">정상근무</div>
-									</div>
-								
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.02</div>
-										<i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
-										<div class="activity-content">지각</div>
-									</div>
-									
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.03</div>
-										<i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
-										<div class="activity-content">결근</div>
-									</div>
-									
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.04</div>
-										<i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
-										<div class="activity-content">휴가</div>
-									</div>
-									
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.05</div>
-										<i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
-										<div class="activity-content">정상근무</div>
-									</div>
-									
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.06</div>
-										<i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
-										<div class="activity-content">휴일</div>
-									</div>
-									
-									<div class="activity-item d-flex">
-										<div class="activite-label">22.02.07</div>
-										<i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
-										<div class="activity-content">휴일</div>
-									</div>
-									
 								</div>
 							</div>
 						</div>
@@ -293,23 +265,33 @@
 						<div class="card-body">
 							
 							<script>
-								document.addEventListener('DOMContentLoaded', function() {
-									
-							 		var calendarEl = document.getElementById('calendar');
-							
-							  		var calendar = new FullCalendar.Calendar(calendarEl, {
-									    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-									    eventSources: [
-										    {
-									          googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-									          
-									          color: '#be5683', //rgb,#ffffff 등의 형식으로 할 수 있어요.
-									          
-									        }
-							   		 	]
-							 		 });
-							  		calendar.render();
+								
+							$(document).ready(function(){
+								var request = $.ajax({
+								  url: "${pageContext.request.contextPath}/attendance/status",
+								  method: "GET"
+								  
 								});
+								 
+								request.done(function( data ) {
+									console.log(data);
+										
+										var calendarEl = document.getElementById('calendar');
+										
+									    var calendar = new FullCalendar.Calendar(calendarEl, {
+									      initialView: 'dayGridMonth',
+									     
+									      events: 
+									    	  data
+									    });
+								
+									    calendar.render();								
+								});
+								 
+								request.fail(function( jqXHR, textStatus ) {
+								  alert( "Request failed: " + textStatus );
+								});
+					});
 							</script>
 						  	<div class="d-flex justify-content-center">
 						  		<div id='calendar' class="m-5" style="width:1200px" ></div>

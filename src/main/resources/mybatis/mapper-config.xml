@@ -10,6 +10,7 @@
 		<typeAlias type="com.mycompany.webapp.Pager" alias="pager"/>
 		<typeAlias type="com.mycompany.webapp.group.model.Grade" alias="grade"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalCategory" alias="approval_category"/>
+		<typeAlias type="com.mycompany.webapp.approval.model.Approval" alias="approval"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailList" alias="emailList"/>
 	</typeAliases>
 </configuration>

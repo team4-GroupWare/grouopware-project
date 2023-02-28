@@ -15,13 +15,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("실행");
+		log.info("실행1");
 		HttpSession session = request.getSession();
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		if(employee == null) {
+			log.info("실행2");
 			response.sendRedirect(request.getContextPath()+"/employee/login");
 			return false;
 		} 
+		log.info("실행3");
 		return true;
 	}
 	

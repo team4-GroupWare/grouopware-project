@@ -9,10 +9,10 @@
 		and TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate} 	
 	</select>
 	
-	<insert id="insertAttendance" parameterType="attendance">
+	<insert id="insertAttendance" parameterType="map">
 		INSERT INTO
 		attendance
-			(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
+			(attendance_id, emp_id, clock_in, clock_out, attendance_date, status)
 		VALUES
 			(seq_attendance.NEXTVAL,#{empId}, sysdate, null ,sysdate, #{status})
 	</insert>
@@ -60,6 +60,54 @@
 	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
 	 	VALUES
 	 		(seq_attendance.NEXTVAL,#{empId},#{clock_in},#{clock_out},#{date},'출근')
-	 
 	 </insert>
+	 
+	 <select id="selectTotalAtt" parameterType="string" resultType="attendance">
+	 	select TO_char(clock_in, 'HH24:MI:SS') as clockIn ,TO_char(clock_out, 'HH24:MI:SS') as clockOut, attendance_date as attendanceDate, status
+		from attendance
+		where emp_id= #{empId} 
+	 </select>
+	 
+	 <select id="selectStatus" parameterType="map" resultType="string">
+	 	select status
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{i}
+	 </select>
+	 
+	 <select id="selectAttCountYear" parameterType="map" resultType="int">
+	 	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '출근'
+	 </select>
+	 
+	  <select id="selectLateCountYear" parameterType="map" resultType="int">
+	  	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '지각'
+	 </select>
+	 
+	  <select id="selectAbsentCountYear" parameterType="map" resultType="int">
+	  	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '결근'
+	 </select>
+	 
+	 <select id="selectAttCountMonth" parameterType="map" resultType="int">
+	 	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '출근'
+	 </select>
+	 
+	  <select id="selectLateCountMonth" parameterType="map" resultType="int">
+	  	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '지각'
+	 </select>
+	 
+	  <select id="selectAbsentCountMonth" parameterType="map" resultType="int">
+	  	select count (*)
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '결근'
+	 </select>
+	 
 </mapper>

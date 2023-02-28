@@ -19,7 +19,8 @@ public class AttendanceScheduler {
 	//@Scheduled(cron = "0 00 18 * * 1-7") 18시에 추가
 	// 23시 59분에 결근으로 학생 추가
 	
-	@Scheduled(cron = "0 32 15 * * 1-5")
+	//18시에 퇴근/결근 넣어주기
+	//@Scheduled(cron = "0 55 16 * * 1-5")
 	public void addAtt18() {
 		Date date = new Date();
 		
@@ -33,18 +34,18 @@ public class AttendanceScheduler {
 		attendanceService.addEmpAtt(today);
 	}
 	
-	@Scheduled(cron = "20 12 16 * * 1-5")
+	//@Scheduled(cron = "20 12 16 * * 1-5")
 	public void addThisWeek() {
-		/*Date date = new Date();*/
+		Date date = new Date();
 		
-		Calendar c1 = new GregorianCalendar();
-		c1.add(Calendar.DATE, -1); 
+		/*Calendar c1 = new GregorianCalendar();
+		c1.add(Calendar.DATE, -1); */
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 
-		String date = format.format(c1.getTime()); //c1.getTime()
+		String today = format.format(date); //c1.getTime()
 
-		attendanceService.ThisWeek(date);
+		attendanceService.ThisWeek(today);
 	}
 
 }
