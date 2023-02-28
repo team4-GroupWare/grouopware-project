@@ -26,12 +26,16 @@
 				a.emp_id as "empId",
 				name as "empName",
 				write_date as "writeDate", 
-				approval_category_id as "approvalCategoryId", 
+				a.approval_category_id as "approvalCategoryId", 
+                approval_name as "categoryName",
 				status, 
 				temp_approval as "tempApproval"
-		FROM approval a, employees e
-		WHERE temp_approval='n' and a.emp_id = #{empId} 
-			<if test="status != null">
+		FROM approval a, employees e, approval_category c
+		WHERE a.emp_id=e.emp_id 
+			and a.approval_category_id=c.approval_category_id
+			and temp_approval='n' 
+			and a.emp_id = #{empId} 
+			<if test="!status.equals('')">
 				AND status = #{status}
 			</if>
 		ORDER BY write_date desc
@@ -39,14 +43,32 @@
         FETCH FIRST 10 ROWS ONLY
 	</select>
 	
-	
 	<!-- 전자결재 상태별 갯수 -->
 	<select id="selectApprovalCount" parameterType="map" resultType="int">
 		SELECT count(*)
-		FROM approval a
+		FROM approval
 		WHERE temp_approval='n' and emp_id = #{empId}
-			<if test="status != null">
+			<if test="!status.equals('')">
 				AND status = #{status}
 			</if>
+	</select>
+	
+	<!-- 전자결재 상세보기 -->
+	<select id="selectApprovalDetail" parameterType="int" resultType="approval">
+		<![CDATA[
+			SELECT approval_id as "approvalId", 
+				title as "title",
+				content as "content",
+				a.emp_id as "empId",
+				name as "empName",
+				write_date as "writeDate", 
+				a.approval_category_id as "approvalCategoryId", 
+                approval_name as "categoryName",
+				status
+			FROM approval a, employees e, approval_category c
+			WHERE a.emp_id=e.emp_id 
+				and a.approval_category_id=c.approval_category_id 
+				and a.approval_id = #{approvalId}
+		]]>
 	</select>
 </mapper>

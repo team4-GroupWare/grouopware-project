@@ -5,65 +5,75 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<script>
+		
+		$(document).ready(function () {
+			$(".docuMenu").click(function () {
+				colsole.log("실행");
+				$(".docuMenu").addClass("active");
+		  	});
+		});
+	</script>
 </head>
 
 <body>
   	<%@ include file="/WEB-INF/views/common/header.jsp" %>
   
   	<!-- ======= Sidebar ======= -->
-    	<aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
     	<ul class="sidebar-nav" id="sidebar-nav">
       		<li class="nav-item">
-        		<a class="btn btn-primary" type="button" href="approval_form.html" style="width:100%">
+        		<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/approval/write" style="width:100%">
 	          		<i class="bi bi-pencil-square"></i> 
 	          		<span>결재 작성</span>
         		</a>
       		</li>
       		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="#"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='대기'"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='진행'"><span>진행</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='승인'"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='반려'"><span>반려</span></a>
           			</li>
         		</ul>
      		</li><!-- End 결재 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="#">
+        		<a class="nav-link" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="#" class="active"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?" class="active"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+          			</li> 
+          			<li>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>승인</span></a>
-          			</li>
-          			<li>
-            			<a href="#"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
+      		
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="#">
@@ -84,17 +94,18 @@
     		<h1>내 문서함</h1>
       			<nav>
 		        	<ol class="breadcrumb">
-		          		<li class="breadcrumb-item"><a href="index.html">전자결재</a></li>
-		          		<li class="breadcrumb-item"><a href="index.html">내 문서함</a></li>
-		          		<li class="breadcrumb-item">전체</li>
+		          		<li class="breadcrumb-item">전자결재</li>
+		          		<li class="breadcrumb-item">내 문서함</li>
+		          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
+		          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
 		        	</ol>
       			</nav>
     	</div><!-- End Page Title -->
 
 		<section class="section">
       		<div class="row">
-        		<div class="col-lg-12">
-          			<div class="card">
+        		<div class="col-lg-10">
+          			<div class="card" style="height:620px">
             			<div class="card-body">
               				<h5 class="card-title"></h5>
 
@@ -102,118 +113,79 @@
               				<table class="table table-hover">
                 				<thead>
                   					<tr>
-					                    <th scope="col">#</th>
-					                    <th scope="col">결재 양식</th>
-					                    <th scope="col">제목</th>
-					                    <th scope="col">기안자/부서</th>
-					                    <th scope="col">상태</th>
-					                    <th scope="col">기안일시</th>
+					                    <th scope="col" width="10%">#</th>
+					                    <th scope="col" width="15%">결재 양식</th>
+					                    <th scope="col" width="35%">제목</th>
+					                    <th scope="col" width="15%">기안자/부서</th>
+					                    <th scope="col" width="10%">상태</th>
+					                    <th scope="col" width="15%">기안일시</th>
                   					</tr>
                 				</thead>
                 				<tbody>
-                  					<tr onClick="location.href='approval_detail.html'">
-					                    <th scope="row">1</th>
-					                    <td>기안서</td>
-					                    <td>[공공사업1 Div] 하반기 기안서</td>
-					                    <td>이지호 / 공공사업1 Div</td>
-					                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-					                    <td>2023-02-16</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">2</th>
-					                    <td>기안서</td>
-					                    <td>대법원 유지보수 기안서</td>
-					                    <td>이예승 / 공공사업2 Div</td>
-					                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-					                    <td>2023-02-12</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">3</th>
-					                    <td>휴일 근무 신청서</td>
-					                    <td>휴일 근무 신청서</td>
-					                    <td>이지호 / 공공사업1 Div</td>
-					                    <td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-					                    <td>2023-02-05</td>
-                  					</tr>
-                  					<tr>
-				                    <th scope="row">4</th>
-				                    	<td>지출 품위서</td>
-					                    <td>[공공사업1 Div/솔루션개발팀] 지출품위서</td>
-					                    <td>이연희 / 공공사업1 Div</td>
-					                    <td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-					                    <td>2023-02-11</td>
-				                  	</tr>
-                  					<tr>
-					                    <th scope="row">5</th>
-					                    <td>연장 근무 신청서</td>
-					                    <td>연장 근무 신청서</td>
-					                    <td>이지호 / 공공사업1 Div</td>
-					                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
-					                    <td>2023-02-04</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">6</th>
-					                    <td>기안서</td>
-					                    <td>신입 멘토링 기안서</td>
-					                    <td>최은종 / 경영지원실</td>
-					                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-					                    <td>2023-02-14</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">7</th>
-					                    <td>사직서</td>
-					                    <td>사직서</td>
-					                    <td>작성자 / 부서</td>
-					                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-					                    <td>2023-02-01</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">8</th>
-					                    <td>기안서</td>
-					                    <td>기안서</td>
-					                    <td>작성자 / 부서</td>
-					                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
-					                    <td>2023-02-10</td>
-                 					</tr>
-                  					<tr>
-					                    <th scope="row">9</th>
-					                    <td>기안서</td>
-					                    <td>기안서</td>
-					                    <td>작성자/부서</td>
-					                    <td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
-					                    <td>2023-01-28</td>
-                  					</tr>
-                  					<tr>
-					                    <th scope="row">10</th>
-					                    <td>휴일 근무 신청서</td>
-					                    <td>휴일 근무 신청서</td>
-					                    <td>작성자 / 부서</td>
-					                    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-					                    <td>2023-02-09</td>
-                  					</tr>
+                					<c:forEach var="approval" items="${approvals}" varStatus="index">
+                						<tr onClick="location.href='${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}'">
+						                    <th scope="row">${index.count}</th>
+						                    <td>${approval.categoryName}</td>
+						                    <td>${approval.title}</td>
+						                    <td>${approval.empName}</td>
+						                    <c:if test="${approval.status eq '대기'}">
+						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
+						                    </c:if>
+											<c:if test="${approval.status eq '진행'}">
+						                    	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
+						                    </c:if>						                    
+						                    <c:if test="${approval.status eq '승인'}">
+						                    	<td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
+						                    </c:if>
+						                    <c:if test="${approval.status eq '반려'}">
+						                    	<td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
+						                    </c:if>
+						                    <td>${approval.writeDate}</td>
+                  						</tr>
+                					</c:forEach>
                 				</tbody>
               				</table>
-             				<!-- End Table with hoverable rows -->
-              				<div class="d-flex justify-content-center">
-				  				<nav aria-label="Page navigation example">
-	                				<ul class="pagination">
+             				<!-- End Table -->
+            			</div>
+            			<div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+			  				<nav aria-label="Page navigation example">
+                				<ul class="pagination">
+                					<li class="page-item">
+                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
+                      						<span aria-hidden="true">처음</span>
+                    					</a>
+                  					</li>	
+                					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="#" aria-label="Previous">
-	                      						<span aria-hidden="true">«</span>
+	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
-	                  					<li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  					<li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  					<li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  					<li class="page-item">
-		                    				<a class="page-link" href="#" aria-label="Next">
-		                      					<span aria-hidden="true">»</span>
+                  					</c:if>
+                  					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+                  						<c:if test="${pager.pageNo != i}">
+											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+										</c:if>
+										<c:if test="${pager.pageNo == i}">
+											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${pager.groupNo<pager.totalGroupNo}">
+										<li class="page-item">
+		                    				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
-	                				</ul>
-	              				</nav>
-              				</div>
-            			</div>
+									</c:if>
+									<li class="page-item">
+                    					<a class="page-link" href="list?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                      						<span aria-hidden="true">맨끝</span>
+                    					</a>
+                  					</li>	
+                				</ul>
+              				</nav>
+              			</div>
           			</div>
         		</div>
       		</div>
