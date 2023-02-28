@@ -97,6 +97,30 @@ public interface EmailRepository {
 	 * @param emailId : 휴지통으로 보낼 receive 메일 아이디 
 	 * @return int : update된 행수
 	 */
-	int updateEmailTrash(int emailId);
+	int updateReceiveEmailTrashDate(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 삭제하려는 tempEmailId
+	 * @return int : 삭제한 행수
+	 */
+	int deleteTempEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 영구삭제할 받은 메일
+	 * @return int : 업데이트한 행수
+	 */
+	int updateTrashReceiveEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 영구삭제할 보낸 메일
+	 * @return int : 업데이트한 행수
+	 */
+	int updateTrashSendEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 휴지통에 보낼 sendEmailId
+	 * @return int : 업데이트한 행수
+	 */
+	int updateSendEmailTrashDate(int emailId);
 
 }

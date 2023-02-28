@@ -95,7 +95,14 @@ public interface IEmailService {
 	 * 
 	 * @param emailId : 쓰레기통에 넣으려는 아이디
 	 * @param type : 해당 아이디가 받은 메일인지 보낸 메일인지
-	 * @return int : 삭제한 행의 수 반환
+	 * @return int : 업데이트한 행의 수 반환
 	 */
 	int throwAwayEmail(int emailId, String type);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 삭제하려는 이메일 아이디
+	 * @param type : 영구삭제하려는 목록의 타입(쓰레기통인지 임시보관함인지)
+	 * @return int : 삭제한 행의 수 반환
+	 */
+	int deleteEmail(int emailId, String type);
 }
