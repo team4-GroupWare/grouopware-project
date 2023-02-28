@@ -142,31 +142,6 @@ public class EmailService implements IEmailService {
 		List<EmailList> emailList = emailRepository.selectTrashEmail(pager, empId);
 		return emailList;
 	}
-	/**
-	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return int : 중요메일 개수
-	 */
-	@Override
-	public int getImportantEmailRows(String empId) {
-		log.info("실행");
-		int emailRows = emailRepository.selectImportantEmailCount(empId);
-		return emailRows;
-	}
-	
-	/**
-	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return List<EmailList> : 중요메일 리스트
-	 */
-	@Override
-	public List<EmailList> getImportantEmail(Pager pager, String empId) {
-		log.info("실행");
-		List<EmailList> emailList = emailRepository.selectImportantEmail(pager, empId);
-		return emailList;
-	}
 
 	/**
 	 * @author LEEYESEUNG
@@ -191,6 +166,58 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectTempEmail(pager, empId);
 		return emailList;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param check : 중요메일인지 체크할 email 아이디
+	 * @param type : 받은 메일인지 보낸 메일인지 확인
+	 * @return int : 중요메일이라면 1반환 
+	 */
+	@Override
+	public int checkImportant(int emailId, String type) {
+		log.info("실행");
+		int row = 0;
+		if(type.equals("receive")) {
+			row = emailRepository.selectImportantReceiveEmail(emailId);
+		} else if(type.equals("trash")) {
+			
+		} else if(type.equals("temp")) {
+			
+		}
+		
+		return row;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public int throwAwayEmail(int emailId, String type) {
+		log.info("실행");
+		int row = 0;
+		if(type.equals("receive")) {
+			row = emailRepository.updateReceiveEmailTrashDate(emailId);
+		} else if(type.equals("send")) {
+			row = emailRepository.updateSendEmailTrashDate(emailId);
+		}
+		return row;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public int deleteEmail(int emailId, String type) {
+		log.info("실행");
+		int row = 0;
+		if(type.equals("trash")) {
+			row = emailRepository.updateTrashReceiveEmail(emailId);
+			row = emailRepository.updateTrashSendEmail(emailId);
+		} else if(type.equals("temp")){
+			row = emailRepository.deleteTempEmail(emailId);
+		}
+		return row;
 	}
 
 }

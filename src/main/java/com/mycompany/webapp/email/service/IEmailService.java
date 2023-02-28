@@ -74,19 +74,6 @@ public interface IEmailService {
 	/**
 	 * @author LEEYESEUNG
 	 * @param empId : 나의 아이디
-	 * @return int : 중요메일 개수
-	 */
-	int getImportantEmailRows(String empId);
-	/**
-	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return List<EmailList> : 중요메일 리스트
-	 */
-	List<EmailList> getImportantEmail(Pager pager, String empId);
-	/**
-	 * @author LEEYESEUNG
-	 * @param empId : 나의 아이디
 	 * @return int : 임시저장메일 개수
 	 */
 	int getTempEmailRows(String empId);
@@ -97,4 +84,25 @@ public interface IEmailService {
 	 * @return List<EmailList> : 임시저장메일 리스트
 	 */
 	List<EmailList> getTempEmail(Pager pager, String empId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param check : 중요메일인지 체크할 email 아이디
+	 * @param type : 받은 메일인지 보낸 메일인지 확인
+	 * @return int : 중요메일이라면 1반환 
+	 */
+	int checkImportant(int emailId, String type);
+	/**
+	 * 
+	 * @param emailId : 쓰레기통에 넣으려는 아이디
+	 * @param type : 해당 아이디가 받은 메일인지 보낸 메일인지
+	 * @return int : 업데이트한 행의 수 반환
+	 */
+	int throwAwayEmail(int emailId, String type);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 삭제하려는 이메일 아이디
+	 * @param type : 영구삭제하려는 목록의 타입(쓰레기통인지 임시보관함인지)
+	 * @return int : 삭제한 행의 수 반환
+	 */
+	int deleteEmail(int emailId, String type);
 }
