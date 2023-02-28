@@ -6,10 +6,20 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script src="${pageContext.request.contextPath}/resources/ckeditor/build/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
-	<style>
-     .ck-editor__editable { height: 400px; }
-     .ck-content { font-size: 12px; }
-  </style>
+	<script>
+		$(function(){
+		    tinymce.init({
+		        // Select the element(s) to add TinyMCE to using any valid CSS selector
+		        selector: "#tinymce-editor",
+		      	menubar:false,
+		        height: '900px',
+		        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+		        autosave_restore_when_empty: true
+		      
+		    });
+		});
+		
+	</script>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -94,14 +104,14 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="receiver">
+                    <input type="text" class="form-control" name="receiveId" id="receiver">
                   </div>
                 </div>
                 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">제목</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title">
+                    <input type="text" class="form-control" name="title" id="title">
                   </div>
                 </div>
                 
@@ -109,7 +119,7 @@
                   <legend class="col-form-label col-sm-2 pt-0">중요 메일</legend>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="important">
+                      <input class="form-check-input" type="checkbox" name="important" id="important">
                       <label class="form-check-label" for="gridCheck1">
                       	중요
                       </label>
@@ -131,15 +141,10 @@
                 
                 <div class="row mb-3">
                   <div class="col-sm-12">
-                    <textarea rows="5" cols="50" id="email-text" name="email-text" style="height:400px;"></textarea>
-                    
-                    <script>
-	                    ClassicEditor
-	                    .create(document.querySelector('#email-text'))
-	                    .catch(error => {
-	                        console.error(error);
-	                    });
-					</script>
+                     <textarea id="tinymce-editor">
+                		<p>Hello World!</p>
+                		<p>This is TinyMCE <strong>full</strong> editor</p>
+              		</textarea><!-- End TinyMCE Editor -->
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -159,7 +164,7 @@
     
 
   </main><!-- End #main -->
-
+  <script src="${pageContext.request.contextPath}/resources/assets/vendor/tinymce/tinymce.min.js"></script>
   <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>

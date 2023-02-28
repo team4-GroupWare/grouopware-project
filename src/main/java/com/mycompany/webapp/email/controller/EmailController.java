@@ -74,8 +74,8 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getSendEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
-		String type = "send";
-		model.addAttribute("type", type);
+		String kind = "send";
+		model.addAttribute("kind", kind);
 		return "email/sendlist";
 	}
 	
@@ -166,18 +166,23 @@ public class EmailController {
 	
 	/**
 	 * @author LEEYESEUNG
-	 * @param session : loginEmployee
 	 * @return String : 이메일 작성 페이지
 	 */
 	@GetMapping("/write")
-	public String writeEmail(HttpSession session) {
+	public String writeEmail() {
 		log.info("실행");
 		return "email/write";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param checkArr : check된 emailId 배열
+	 * @param type : 어느 메일함에서 왔는지 구별을 위함
+	 * @return String : 중요메일 판단 결과
+	 */
 	@ResponseBody
 	@RequestMapping(value="/importantcheck")
-	public String importantCheck(HttpSession session, @RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
+	public String importantCheck(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
 		log.info("실행");
 		String result= "";
 		for(String check : checkArr) {
@@ -192,6 +197,12 @@ public class EmailController {
 		return result;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param checkArr : check된 emailId 배열
+	 * @param type : 어느 메일함에서 왔는지 구별을 위함
+	 * @return String : 메일 update 결과
+	 */
 	@ResponseBody
 	@RequestMapping(value="/trashemail")
 	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
@@ -206,6 +217,12 @@ public class EmailController {
 		return result;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param checkArr : check된 emailId 배열
+	 * @param type : 어느 메일함에서 왔는지 구별을 위함
+	 * @return String : 메일 delete 결과
+	 */
 	@ResponseBody
 	@PostMapping("/deleteemail")
 	public String deleteEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
@@ -215,6 +232,18 @@ public class EmailController {
 		for(String emailIdStr : checkArr) {
 			int emailId = Integer.parseInt(emailIdStr);
 			row = emailService.deleteEmail(emailId, type);
+			result = "success";
+		}
+		return result;
+	}
+	
+	public String restoreEmail(@RequestParam(value="checkArr") String[] checkArr) {
+		log.info("실행");
+		String result = "fail";
+		int row = 0;
+		for(String emailIdStr : checkArr) {
+			int emailId = Integer.parseInt(emailIdStr);
+			row = emailService.restoreEmail(emailId);
 			result = "success";
 		}
 		return result;

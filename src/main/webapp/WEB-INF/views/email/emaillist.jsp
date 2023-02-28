@@ -101,12 +101,33 @@
 	              <div class=" my-auto" style="text-align:right">
 	              		<c:if test="${type eq 'trash'}">
 	              		<!-- 휴지통에서 조회한 경우 -->
-	              		<button type="submit" class="btn btn-secondary btn-sm ">복구</button>
+	              		<button type="submit" class="btn btn-secondary btn-sm " onclick="restore()">복구</button>
 	              		</c:if>
 	              		<c:if test="${type ne 'trash'}">
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 	                    <button onclick="checkEmail('${type}')" class="btn btn-danger btn-sm">삭제</button>
 	                    <script>
+	                    	function restore(){
+	                    		var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								
+								var data = {"checkArr" : checkArr};
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/restore",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공: "+data);
+									reload();
+								});
+	                    	}
+	                    	
 							function checkEmail(type){
 								if(type != 'temp'){
 									var checkArr = [];
