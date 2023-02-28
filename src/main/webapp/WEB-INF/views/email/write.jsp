@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML>
 <html>
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<script src="${pageContext.request.contextPath}/resources/ckeditor/build/ckeditor.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
+	<style>
+     .ck-editor__editable { height: 400px; }
+     .ck-content { font-size: 12px; }
+  </style>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -13,7 +20,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="btn btn-primary" type="button" href="index.html" style="width:100%">
+        <a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/email/write" style="width:100%">
           <i class="bi bi-pencil-square"></i> 
           <span>메일 작성</span>
         </a>

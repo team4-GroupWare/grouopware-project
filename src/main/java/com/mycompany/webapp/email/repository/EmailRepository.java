@@ -75,20 +75,6 @@ public interface EmailRepository {
 	List<EmailList> selectTrashEmail(@Param("pager")Pager pager, @Param("empId")String empId);
 	/**
 	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return int : 중요메일 개수
-	 */
-	int selectImportantEmailCount(String empId);
-	/**
-	 * @author LEEYESEUNG
-	 * @param pager 
-	 * @param empId : 나의 아이디
-	 * @return List<EmailList> : 중요메일 리스트
-	 */
-	List<EmailList> selectImportantEmail(@Param("pager")Pager pager, @Param("empId")String empId);
-	/**
-	 * @author LEEYESEUNG
 	 * @param empId : 나의 아이디
 	 * @return int : 임시저장메일 개수
 	 */
@@ -100,5 +86,41 @@ public interface EmailRepository {
 	 * @return List<EmailList> : 임시저장메일 리스트
 	 */
 	List<EmailList> selectTempEmail(@Param("pager")Pager pager, @Param("empId")String empId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param check : 중요메일인지 체크할 email 아이디
+	 * @return int : 중요메일이라면 1반환 
+	 */
+	int selectImportantReceiveEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 휴지통으로 보낼 receive 메일 아이디 
+	 * @return int : update된 행수
+	 */
+	int updateReceiveEmailTrashDate(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 삭제하려는 tempEmailId
+	 * @return int : 삭제한 행수
+	 */
+	int deleteTempEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 영구삭제할 받은 메일
+	 * @return int : 업데이트한 행수
+	 */
+	int updateTrashReceiveEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 영구삭제할 보낸 메일
+	 * @return int : 업데이트한 행수
+	 */
+	int updateTrashSendEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 휴지통에 보낼 sendEmailId
+	 * @return int : 업데이트한 행수
+	 */
+	int updateSendEmailTrashDate(int emailId);
 
 }

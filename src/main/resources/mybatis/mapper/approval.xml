@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.approval.repository.ApprovalRepository">
 
+	<!-- 전자결재 카테고리 목록 -->
 	<select id="selectApprovalCategory" resultType="approval_category">
 		<![CDATA[
 			SELECT approval_category_id as "approvalCategoryId",
@@ -10,4 +11,42 @@
 		]]>
 	</select>
 
+	<!-- 전자결재 작성 -->
+	<insert id="insertApproval" parameterType="approval">
+		<![CDATA[
+			INSERT INTO approval (approval_id, title, write_date, content, emp_id, approval_category_id, status, temp_approval)
+			VALUES (seq_approval.nextval, #{title}, sysdate, #{content}, #{empId}, #{approvalCategoryId}, default, #{tempApproval})
+		]]>
+	</insert>
+	
+	<!-- 전자결재 목록 -->
+	<select id="selectApprovalList" parameterType="map" resultType="approval">
+		SELECT approval_id as "approvalId", 
+				title as "title",
+				a.emp_id as "empId",
+				name as "empName",
+				write_date as "writeDate", 
+				approval_category_id as "approvalCategoryId", 
+				status, 
+				temp_approval as "tempApproval"
+		FROM approval a, employees e
+		WHERE temp_approval='n' and a.emp_id = #{empId} 
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+		ORDER BY write_date desc
+        OFFSET #{pager.startRowNo}-1 ROWS
+        FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	
+	<!-- 전자결재 상태별 갯수 -->
+	<select id="selectApprovalCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM approval a
+		WHERE temp_approval='n' and emp_id = #{empId}
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+	</select>
 </mapper>
