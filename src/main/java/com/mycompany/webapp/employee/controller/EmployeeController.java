@@ -127,7 +127,6 @@ public class EmployeeController {
 	public Employee employeeInfo(@RequestParam("empId") String empId) {
 		log.info("실행");
 		Employee employee = employeeService.getEmp(empId);
-		log.info(employee);
 		return employee;
 	}
 	

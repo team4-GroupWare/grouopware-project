@@ -225,7 +225,12 @@
 											        	color: '#be5683' 
 											         	
 											        	}
-											    	]
+											    	],
+											    	eventClick: function(info){
+											    		   //클릭시 구글캘린더 url로 가는것을 막는다.
+											    		   info.jsEvent.stopPropagation();
+											    		   info.jsEvent.preventDefault();
+											    	}
 											  	});
 											  calendar.render();
 											});

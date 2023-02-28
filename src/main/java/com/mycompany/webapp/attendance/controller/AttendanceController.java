@@ -67,8 +67,7 @@ public class AttendanceController {
 	 */
 	
 	@GetMapping("/attendance")
-	@ResponseBody
-	public void attendance(HttpSession session, HttpServletResponse response) throws IOException {
+	public String attendance(HttpSession session, HttpServletResponse response) throws IOException {
 		
 		log.info("실행");
 		
@@ -85,7 +84,7 @@ public class AttendanceController {
 		String status = "";
 		if (time <= 8) {
 			status = "출근";
-		} else if (8 < time && time < 23) {
+		} else if (8 < time && time < 18) {
 			status = "지각";
 		}
 		log.info(status);
@@ -93,17 +92,8 @@ public class AttendanceController {
 		//4. 담긴 정보로 insert
 		int result = attendanceService.insertAttendance(empId, status);
 		
-		//5. 결과 json
-		JSONObject jsonobject = new JSONObject();
-		jsonobject.put("status",status);
-		String json = jsonobject.toString();
-
-		response.setContentType("application/json; charset=UTF-8");
-
-		PrintWriter pw = response.getWriter();
-		pw.println(json);
-		pw.flush();
-		pw.close();
+		//5. 결과 
+		return "redirect:/";
 	}
 	
 	/**
@@ -114,7 +104,7 @@ public class AttendanceController {
 	 * @throws IOException
 	 */
 	@GetMapping("/leave")
-	public void leave(HttpSession session, HttpServletResponse response) throws IOException {
+	public String leave(HttpSession session, HttpServletResponse response) throws IOException {
 		
 		log.info("실행");
 		
@@ -131,15 +121,7 @@ public class AttendanceController {
 		int result = attendanceService.updateLeave(attDate, empId);
 		
 		//4. 결과 json
-		JSONObject jsonobject = new JSONObject();
-		jsonobject.put("message", "성공");
-		String json = jsonobject.toString();
-		response.setContentType("application/json; charset=UTF-8");
-		PrintWriter pw = response.getWriter();
-		pw.println(json);
-		pw.flush();
-		pw.close();
-
+		return "redirect:/";
 	}
 	
 	/**
@@ -171,6 +153,21 @@ public class AttendanceController {
 		model.addAttribute("lateCountYear", lateCountYear);
 		model.addAttribute("absentCountYear", absentCountYear);
 		
+		// =========================<월별 출석률>=============================
+		//이번달 
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("MM");
+		int Month = Integer.parseInt(simpleDateFormat2.format(date));
+		
+		//이번달의 출석, 지각, 결석 count
+		int attCountMonth = attendanceService.getattCountMonth(Month, empId);
+		int lateCountMonth = attendanceService.getlateCountMonth(Month, empId);
+		int absentCountMonth = attendanceService.getabsentCountMonth(Month, empId);
+		
+		//이번달의 출석, 지각, 결석의 횟수를 model에 저장
+		model.addAttribute("attCountMonth", attCountMonth);
+		model.addAttribute("lateCountMonth", lateCountMonth);
+		model.addAttribute("absentCountMonth", absentCountMonth);
+		
 		// =========================<주중 근무 현황>============================
 		//이번주 날짜 list 
 		Holiday h = new Holiday();
@@ -188,21 +185,6 @@ public class AttendanceController {
 		model.addAttribute("thisweek", list);
 		model.addAttribute("statusThisWeek", statusThisWeek);
 		
-		// =========================<월별 출석률>============================
-		//이번달 
-		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("MM");
-		int Month = Integer.parseInt(simpleDateFormat2.format(date));
-		
-		//이번달의 출석, 지각, 결석 count
-		int attCountMonth = attendanceService.getattCountMonth(Month, empId);
-		int lateCountMonth = attendanceService.getlateCountMonth(Month, empId);
-		int absentCountMonth = attendanceService.getabsentCountMonth(Month, empId);
-		
-		//이번달의 출석, 지각, 결석의 횟수를 model에 저장
-		model.addAttribute("attCountMonth", attCountMonth);
-		model.addAttribute("lateCountMonth", lateCountMonth);
-		model.addAttribute("absentCountMonth", absentCountMonth);
-
 		return "attendance/attendance_status";
 	}
 
@@ -220,13 +202,14 @@ public class AttendanceController {
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYY");
 		String today = simpleDateFormat1.format(date);
-		
+		List<Map<String, String>> answer = new ArrayList<Map<String, String>>();
+		/*
 		// 올해 공휴일 list
 		Holiday holiday = new Holiday();
 		List<String> dates = holiday.holidayArray(today);
 		
 		//fullCalendar에 출력을 위해 List에 담아준다.
-		List<Map<String, String>> answer = new ArrayList<Map<String, String>>();
+		
 		for (String d : dates) {
 			HashMap<String, String> hash = new HashMap<String, String>();
 			hash.put("title", "공휴일");
@@ -234,7 +217,7 @@ public class AttendanceController {
 			hash.put("backgroundColor", "#DA5454");
 			hash.put("borderColor", "#DA5454");
 			answer.add(hash);
-		}
+		}*/
 		
 		// =========================<사원의 출근 정보>============================
 		// 로그인한 사원의 ID

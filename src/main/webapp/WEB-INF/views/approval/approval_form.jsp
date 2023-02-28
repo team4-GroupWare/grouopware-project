@@ -60,8 +60,9 @@
 		        console.log("title: " + $("#title").val());
 		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
 		        
-		        //$("#approval_form").submit();
+		        $("#approval_form").submit();
 		    });
+		    
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
 		        
@@ -271,14 +272,9 @@
                 				</div>
                 				<div class="row mb-3">
                   					<div class="col-sm-12">
-                  						TinyMCE Editor
                   						<input type="hidden" id="content" name="content" value="">
                   						<textarea id="myTextarea">
 										</textarea>
-                  						<div class="card">
-								        	<div class="card-body">
-								   			</div>
-								        </div>
         							</div>
         						</div>
     						</form>

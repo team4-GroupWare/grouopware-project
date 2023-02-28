@@ -19,4 +19,5 @@ public class Approval {
 	private String tempApproval;
 	
 	private String empName;
+	private String categoryName;
 }
