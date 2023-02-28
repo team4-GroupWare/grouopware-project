@@ -122,5 +122,17 @@ public interface EmailRepository {
 	 * @return int : 업데이트한 행수
 	 */
 	int updateSendEmailTrashDate(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 복구할 receiveEmailId
+	 * @return int : 업데이트한 행수
+	 */
+	int updateReceiveEmailRestore(int emailId);
+	/**
+	 *  @author LEEYESEUNG
+	 * @param emailId : 복구할 sendEmailId
+	 * @return int : 업데이트한 행수
+	 */
+	int updateSendEmailRestore(int emailId);
 
 }

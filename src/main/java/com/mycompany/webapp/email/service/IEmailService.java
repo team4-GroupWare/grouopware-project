@@ -105,4 +105,10 @@ public interface IEmailService {
 	 * @return int : 삭제한 행의 수 반환
 	 */
 	int deleteEmail(int emailId, String type);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 복구하려는 이메일 아이디
+	 * @return int : 업데이트한 행수 반환
+	 */
+	int restoreEmail(int emailId);
 }

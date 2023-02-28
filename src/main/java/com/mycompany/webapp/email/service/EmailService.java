@@ -220,4 +220,17 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 복구하려는 이메일 아이디
+	 * @return int : 업데이트한 행수 반환
+	 */
+	@Override
+	public int restoreEmail(int emailId) {
+		log.info("실행");
+		int row = emailRepository.updateReceiveEmailRestore(emailId);
+		row += emailRepository.updateSendEmailRestore(emailId);
+		return row;
+	}
+
 }

@@ -286,6 +286,24 @@
 			where send_email_id = #{emailId}
 		]]>
 	</update>
+	
+	<update id="updateReceiveEmailRestore" parameterType="int">
+		<![CDATA[
+			update receive_email
+			set trash_date = null
+			where receive_email_id = #{emailId}
+		]]>
+			
+	</update>
+	
+	<update id="updateSendEmailRestore" parameterType="int">
+		<![CDATA[
+			update send_email
+			set trash_date = null
+			where send_email_id = #{emailId}
+		]]>
+	
+	</update>
 
 
 
