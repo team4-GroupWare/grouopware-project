@@ -208,8 +208,6 @@
 								}
 							}
 						</script>
-	                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
-	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 	                    </c:if>
 	                    <c:if test="${type eq 'trash'}">
 	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
