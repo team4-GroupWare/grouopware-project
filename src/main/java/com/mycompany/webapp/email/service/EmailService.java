@@ -177,13 +177,47 @@ public class EmailService implements IEmailService {
 	@Override
 	public int checkImportant(int emailId, String type) {
 		log.info("실행");
+		int row = 0;
 		if(type.equals("receive")) {
-		int row = emailRepository.selectImportantReceiveEmail(emailId);
-		} else if(type.equals("")) {
+			row = emailRepository.selectImportantReceiveEmail(emailId);
+		} else if(type.equals("trash")) {
+			
+		} else if(type.equals("temp")) {
 			
 		}
 		
-		return 0;
+		return row;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public int throwAwayEmail(int emailId, String type) {
+		log.info("실행");
+		int row = 0;
+		if(type.equals("receive")) {
+			row = emailRepository.updateReceiveEmailTrashDate(emailId);
+		} else if(type.equals("send")) {
+			row = emailRepository.updateSendEmailTrashDate(emailId);
+		}
+		return row;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public int deleteEmail(int emailId, String type) {
+		log.info("실행");
+		int row = 0;
+		if(type.equals("trash")) {
+			row = emailRepository.updateTrashReceiveEmail(emailId);
+			row = emailRepository.updateTrashSendEmail(emailId);
+		} else if(type.equals("temp")){
+			row = emailRepository.deleteTempEmail(emailId);
+		}
+		return row;
 	}
 
 }

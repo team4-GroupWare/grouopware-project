@@ -105,29 +105,38 @@
 	              		</c:if>
 	              		<c:if test="${type ne 'trash'}">
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
-	                    <button onclick="deleteEmail('${type}')" class="btn btn-danger btn-sm">삭제</button>
+	                    <button onclick="checkEmail('${type}')" class="btn btn-danger btn-sm">삭제</button>
 	                    <script>
-							function deleteEmail(type){
-								var checkArr = [];
-								$('input[type=checkbox][name="selectone"]:checked').each(function() {
-									var checkValue = $(this).val();
-									console.log(checkValue);
-									checkArr.push(checkValue);
-								})
+							function checkEmail(type){
+								if(type != 'temp'){
+									var checkArr = [];
+									$('input[type=checkbox][name="selectone"]:checked').each(function() {
+										var checkValue = $(this).val();
+										console.log(checkValue);
+										checkArr.push(checkValue);
+									})
+									
+									console.log(checkArr);
+									
+									var data = {"checkArr" : checkArr, "type" : type};
+									$.ajax({
+										url : "${pageContext.request.contextPath}/email/importantcheck",
+										method : "post",
+										data : data,
+										contentType : "application/x-www-form-urlencoded",
+										traditional: true
+									}).done((data)=> {
+										console.log("성공: "+data);
+										if(data == 'important'){
+											$("#importantDeleteModal").modal('show');	
+										} else {
+											trashEmail(type);
+										}
+									});
+								} else {
+									deleteEmail(type);
+								}
 								
-								console.log(checkArr);
-								
-								var data = {"checkArr" : checkArr, "type" : type};
-								$.ajax({
-									url : "${pageContext.request.contextPath}/email/importantcheck",
-									method : "post",
-									data : data,
-									contentType : "application/x-www-form-urlencoded",
-									traditional: true
-								}).done((data)=> {
-									console.log("성공");
-									$("#importantDeleteModal").modal('show');	
-								});
 								
 								/*$.ajax({
 									url : "${pageContext.request.contextPath}/email/deletecheck",
@@ -141,13 +150,70 @@
 								});*/
 									
 							}
+							
+							function trashEmail(type){
+								var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								var data = {"checkArr" : checkArr, "type" : type};
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/trashemail",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공: "+data);
+									if(type == 'receive'){
+										$("#trashModal").modal('show');	
+									} 
+									
+								});
+							}
+							
+							function reload(type){
+								location.reload();
+							}
+							
+							function deleteEmail(type){
+								var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								
+								var data = {"checkArr" : checkArr, "type" : type};
+								
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/deleteemail",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									reload();
+								});
+								
+							}
+							
+							function trashOrDeleteEmail(type){
+								if(type == 'trash'){
+									deleteEmail(type);
+								} else {
+									trashEmail(type);
+								}
+							}
 						</script>
 	                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 	                    </c:if>
 	                    <c:if test="${type eq 'trash'}">
 	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
-	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteEmail('${type}')">영구삭제</button>
 	                    </c:if>
 	              </div>
               </div>
@@ -276,9 +342,17 @@
 							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
 							</c:if>
 							<c:if test="${type eq 'temp'}">
-							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=${i}">${i}</a></li>
+							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
+							</c:if>
 							</c:if>
 							<c:if test="${pager.pageNo == i}">
+							<c:if test="${type eq 'receive'}">
+							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
+							</c:if>
+							<c:if test="${type eq 'trash'}">
+							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
+							</c:if>
+							<c:if test="${type eq 'temp'}">
 							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
 							</c:if>
 							</c:if>
@@ -343,7 +417,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">삭제</button>
+	        <button type="button" class="btn btn-primary" onclick="trashOrDeleteEmail('${type}')">삭제</button>
 	      </div>
 	    </div>
 	  </div>
@@ -361,7 +435,7 @@
 	        <p>10일 이후에는 자동으로 영구삭제되며, 복구할 수 없습니다.</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
 	      </div>
 	    </div>
 	  </div>
@@ -380,7 +454,7 @@
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">삭제</button>
+	        <button type="button" class="btn btn-primary" onclick="checkEmail('${type}')">삭제</button>
 	      </div>
 	    </div>
 	  </div>

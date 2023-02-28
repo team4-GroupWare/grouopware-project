@@ -95,8 +95,8 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getReadEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
-		String type = "read";
-		model.addAttribute("type", type);
+		String kind = "read";
+		model.addAttribute("kind", kind);
 		return "email/sendlist";
 	}
 	
@@ -116,8 +116,8 @@ public class EmailController {
 		List<EmailList> emailList = emailService.getUnReadEmailList(pager, employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
-		String type = "unread";
-		model.addAttribute("type", type);
+		String kind = "unread";
+		model.addAttribute("kind", kind);
 		return "email/sendlist";
 	}
 	
@@ -181,7 +181,6 @@ public class EmailController {
 		log.info("실행");
 		String result= "";
 		for(String check : checkArr) {
-			log.info("check: "+ check);
 			int emailId = Integer.parseInt(check);
 			int row = emailService.checkImportant(emailId, type);
 			if(row == 1) {
@@ -190,9 +189,34 @@ public class EmailController {
 			}
 			result="basic";
 		}
-		log.info("type: "+type);
-		
 		return result;
-		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/trashemail")
+	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
+		log.info("실행");
+		String result = "fail";
+		int row = 0;
+		for(String emailIdStr : checkArr) {
+			int emailId = Integer.parseInt(emailIdStr);
+			row = emailService.throwAwayEmail(emailId, type);
+			result = "success";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deleteemail")
+	public String deleteEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
+		log.info("실행");
+		String result = "fail";
+		int row = 0;
+		for(String emailIdStr : checkArr) {
+			int emailId = Integer.parseInt(emailIdStr);
+			row = emailService.deleteEmail(emailId, type);
+			result = "success";
+		}
+		return result;
 	}
 }

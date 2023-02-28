@@ -95,9 +95,72 @@
 		            
 		              <div class=" my-auto" style="text-align:right">
 		              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
-		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+		                    <button type="submit" class="btn btn-danger btn-sm"  onclick="checkEmail()">삭제</button>
+		                    <script>
+							function checkEmail(){
+								var type = 'send';
+								var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								
+								console.log(checkArr);
+								
+								var data = {"checkArr" : checkArr, "type" : type};
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/importantcheck",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공: "+data);
+									if(data == 'important'){
+										$("#importantDeleteModal").modal('show');	
+									} else {
+										trashEmail(type);
+									}
+								});
+								
+								/*$.ajax({
+									url : "${pageContext.request.contextPath}/email/deletecheck",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType : "application/json; charset=UTF-8",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공");
+									$("#importantDeleteModal").modal('show');	
+								});*/
+									
+							}
+							
+							function trashEmail(type){
+								var checkArr = [];
+								$('input[type=checkbox][name="selectone"]:checked').each(function() {
+									var checkValue = $(this).val();
+									console.log(checkValue);
+									checkArr.push(checkValue);
+								})
+								var data = {"checkArr" : checkArr, "type" : type};
+								$.ajax({
+									url : "${pageContext.request.contextPath}/email/trashemail",
+									method : "post",
+									data : data,
+									contentType : "application/x-www-form-urlencoded",
+									traditional: true
+								}).done((data)=> {
+									console.log("성공: "+data);
+									$("#trashModal").modal('show');	
+								});
+							}
+							
+							function reload(){
+								location.reload();
+							}
+						 	</script>
 		              </div>
 	              </div>
 	
@@ -116,7 +179,7 @@
               		<c:if test="${not empty emailList}">
 	                <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   		<tr>
-                  			<td><input name="selectone" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
+                  			<td><input name="selectone" value="${emailList.sendEmailId}" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
                     		<td>${emailList.receiveId}</td>
                     		<td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
                     		<td>${emailList.sentDate}</td>
@@ -142,17 +205,17 @@
 	  				<nav aria-label="Page navigation example">
 		   				<ul class="pagination">
 		   					<li class="page-item">
-		   						<c:if test="${type eq 'send'}">
+		   						<c:if test="${kind eq 'send'}">
 		       					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=1" aria-label="Previous">
 		         						<span aria-hidden="true">처음</span>
 	       						</a>
 	       						</c:if>
-	       						<c:if test="${type eq 'read'}">
+	       						<c:if test="${kind eq 'read'}">
 		       					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=1" aria-label="Previous">
 		         						<span aria-hidden="true">처음</span>
 	       						</a>
 	       						</c:if>
-	       						<c:if test="${type eq 'unread'}">
+	       						<c:if test="${kind eq 'unread'}">
 		       					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=1" aria-label="Previous">
 		         						<span aria-hidden="true">처음</span>
 	       						</a>
@@ -160,17 +223,17 @@
 	     					</li>	
 	   						<c:if test="${pager.groupNo>1}">
 	      					<li class="page-item">
-	      						<c:if test="${type eq 'send'}">
+	      						<c:if test="${kind eq 'send'}">
 	        					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	          						<span aria-hidden="true">이전</span>
 	        					</a>
 	        					</c:if>
-	        					<c:if test="${type eq 'read'}">
+	        					<c:if test="${kind eq 'read'}">
 	        					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	          						<span aria-hidden="true">이전</span>
 	        					</a>
 	        					</c:if>
-	        					<c:if test="${type eq 'unread'}">
+	        					<c:if test="${kind eq 'unread'}">
 	        					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	          						<span aria-hidden="true">이전</span>
 	        					</a>
@@ -179,24 +242,24 @@
 	     					</c:if>
 	     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 	     						<c:if test="${pager.pageNo != i}">
-	     						<c:if test="${type eq 'send'}">
+	     						<c:if test="${kind eq 'send'}">
 								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${i}">${i}</a></li>
 								</c:if>
-								<c:if test="${type eq 'read'}">
+								<c:if test="${kind eq 'read'}">
 								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${i}">${i}</a></li>
 								</c:if>
-								<c:if test="${type eq 'unread'}">
+								<c:if test="${kind eq 'unread'}">
 								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${i}">${i}</a></li>
 								</c:if>
 								</c:if>
 								<c:if test="${pager.pageNo == i}">
-								<c:if test="${type eq 'send'}">
+								<c:if test="${kind eq 'send'}">
 								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${i}">${i}</a></li>
 								</c:if>
-								<c:if test="${type eq 'read'}">
+								<c:if test="${kind eq 'read'}">
 								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${i}">${i}</a></li>
 								</c:if>
-								<c:if test="${type eq 'unread'}">
+								<c:if test="${kind eq 'unread'}">
 								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${i}">${i}</a></li>
 								</c:if>
 								</c:if>
@@ -204,17 +267,17 @@
 									
 							<c:if test="${pager.groupNo<pager.totalGroupNo}">
 							<li class="page-item">
-								<c:if test="${type eq 'send'}">
+								<c:if test="${kind eq 'send'}">
 	            				<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 	           						<span aria-hidden="true">다음</span>
 	         					</a>
 	         					</c:if>
-	         					<c:if test="${type eq 'read'}">
+	         					<c:if test="${kind eq 'read'}">
 	            				<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 	           						<span aria-hidden="true">다음</span>
 	         					</a>
 	         					</c:if>
-	         					<c:if test="${type eq 'unread'}">
+	         					<c:if test="${kind eq 'unread'}">
 	            				<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 	           						<span aria-hidden="true">다음</span>
 	         					</a>
@@ -222,17 +285,17 @@
 	   						</li>
 							</c:if>
 							<li class="page-item">
-								<c:if test="${type eq 'send'}">
+								<c:if test="${kind eq 'send'}">
 	       						<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
 	    							<span aria-hidden="true">맨끝</span>
 	   							</a>
 	   							</c:if>
-	   							<c:if test="${type eq 'read'}">
+	   							<c:if test="${kind eq 'read'}">
 	       						<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
 	    							<span aria-hidden="true">맨끝</span>
 	   							</a>
 	   							</c:if>
-	   							<c:if test="${type eq 'unread'}">
+	   							<c:if test="${kind eq 'unread'}">
 	       						<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
 	    							<span aria-hidden="true">맨끝</span>
 	   							</a>
@@ -261,7 +324,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary">삭제</button>
+		        <button type="button" class="btn btn-primary" onclick="trashEmail('send')">삭제</button>
 		      </div>
 		    </div>
 		  </div>
@@ -279,32 +342,12 @@
 		        <p>10일 이후에는 자동으로 영구삭제되며, 복구할 수 없습니다.</p>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
 		
-		<!-- 메일 영구 삭제시 Modal -->
-		<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 영구삭제
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        <p style="margin-bottom:4px">휴지통의 메일을 지우면 지워진 메일들은 복구할 수 없습니다. </p>
-		        <p>메일을 삭제하시겠습니까?</p>
-		      </div>
-		      <div class="modal-footer">
-		      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary">삭제</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		    
-	
 	  </main><!-- End #main -->
 	
 	  <%@ include file="/WEB-INF/views/common/footer.jsp" %>

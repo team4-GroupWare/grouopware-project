@@ -156,7 +156,8 @@
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and r.trash_date is not null
-		        	  and  s.received_emp_id = #{empId}
+		        	  and s.received_emp_id = #{empId}
+		        	  and r.is_deleted = 0
 		        union 
 		        select  s.send_email_id as sendEmailId,
 		        		r.SENT_EMP_ID as sentId,
@@ -167,7 +168,8 @@
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and s.trash_date is not null
-		        	  and  r.SENT_EMP_ID = #{empId}
+		        	  and r.SENT_EMP_ID = #{empId}
+		        	  and s.is_deleted = 0
         		)
 			]]>
 	</select>
@@ -187,6 +189,7 @@
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and r.trash_date is not null
 		        	  and s.received_emp_id = #{empId}
+		        	   and r.is_deleted = 0
 		        union 
 		        select  s.send_email_id as sendEmailId,
 		        	    r.SENT_EMP_ID as sentId,
@@ -197,7 +200,8 @@
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and s.trash_date is not null
-		        	  and  r.SENT_EMP_ID = #{empId}
+		        	  and r.SENT_EMP_ID = #{empId}
+		        	  and s.is_deleted = 0
         		)
 			order by sentDate desc
 			offset #{pager.startRowNo}-1 rows
@@ -232,12 +236,56 @@
 	
 	</select>
 	
+	<!-- 중요메일 있는지 판단 -->
 	<select id="selectImportantReceiveEmail" parameterType="int" resultType="int">
+		<![CDATA[
 		SELECT COUNT(*)
-		FROM 
-	
-	
+		FROM RECEIVE_EMAIL r, EMAIL_CONTENT c
+		WHERE r.email_content_id = c.email_content_id 
+			  and c.important = 1 
+			  and r.receive_email_id = #{emailId}
+		]]>
 	</select>
+	
+	<delete id="deleteTempEmail" parameterType="int">
+		<![CDATA[
+			delete temp_email
+			where temp_email_id = #{emailId}
+		]]>
+	</delete>
+	
+	<update id="updateTrashReceiveEmail" parameterType="int">
+		<![CDATA[
+			update receive_email
+			set is_deleted = 1
+			where receive_email_id = #{emailId}		
+		]]>
+	</update>
+	
+	<update id="updateTrashSendEmail" parameterType="int">
+	<![CDATA[
+			update send_email
+			set is_deleted = 1
+			where send_email_id = #{emailId}		
+		]]>
+	
+	</update>
+	
+	<update id="updateReceiveEmailTrashDate" parameterType="int">
+		<![CDATA[
+			update receive_email
+			set trash_date = sysdate
+			where receive_email_id = #{emailId}
+		]]>
+	</update>
+	
+	<update id="updateSendEmailTrashDate" parameterType="int">
+		<![CDATA[
+			update send_email
+			set trash_date = sysdate
+			where send_email_id = #{emailId}
+		]]>
+	</update>
 
 
 
