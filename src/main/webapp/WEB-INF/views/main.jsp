@@ -5,6 +5,13 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<style>
+	@media screen and (max-width: 1200px) {
+	  .menubar {
+	    display: none;
+	  }
+	} 
+	</style>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -122,41 +129,41 @@
 	  	</script>
 	  	
 	  	<!-- menubar background -->
-		<div class="row" style="height:300px; background-color:#EEF2F4">
+		<div class="row menubar" style="height:300px; background-color:#EEF2F4;">
 			<div class="row"  style="margin-top:120px" >
 				<div  style="padding:0 230px"  >
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="col" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-clock fs-1 " ></i>
 							</div>
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
-						<div class="col" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-person-video fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class="bi bi-clipboard-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">전자결재</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-envelope-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">메일</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-bell fs-1 " ></i>
 							</div>
@@ -170,7 +177,7 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main" class="main bg-white" style="margin:0 200px">
+		<div id="main1" class="main bg-white" >
 			<section class="section dashboard">
 				<div class="row">
 					
@@ -198,7 +205,7 @@
 								<div>
 									<div class="row">
 										<!-- 출근하기 버튼 -->
-										<div class="col border-end" style="text-align:center" >
+										<div class="col-6 border-end" style="text-align:center" >
 											<input 
 											id="btn-attendance"
 											type='image'
@@ -211,7 +218,7 @@
 										</div><!-- End 출근하기 버튼 -->
 										
 										<!-- 퇴근하기 버튼 -->
-										<div class="col" style="text-align:center">
+										<div class="col-6 " style="text-align:center">
 											<input 
 											id="btn-leave"
 											disabled 
