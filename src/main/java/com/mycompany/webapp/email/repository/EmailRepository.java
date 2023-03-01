@@ -5,7 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.ReceiveEmail;
+import com.mycompany.webapp.email.model.SendEmail;
 
 public interface EmailRepository {
 	/**
@@ -91,7 +94,7 @@ public interface EmailRepository {
 	 * @param check : 중요메일인지 체크할 email 아이디
 	 * @return int : 중요메일이라면 1반환 
 	 */
-	int selectImportantReceiveEmail(int emailId);
+	int selectImportantEmail(int emailId);
 	/**
 	 * @author LEEYESEUNG
 	 * @param emailId : 휴지통으로 보낼 receive 메일 아이디 
@@ -129,10 +132,34 @@ public interface EmailRepository {
 	 */
 	int updateReceiveEmailRestore(int emailId);
 	/**
-	 *  @author LEEYESEUNG
+	 * @author LEEYESEUNG
 	 * @param emailId : 복구할 sendEmailId
 	 * @return int : 업데이트한 행수
 	 */
 	int updateSendEmailRestore(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailContent : email_content 테이블에 넣을 DTO
+	 * @return int : 반영된 행수
+	 */
+	int insertEmailContent(EmailContent emailContent);
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendEmail : send_email 테이블에 넣을 DTO
+	 * @return int : 반영된 행수
+	 */
+	int insertSendEmail(SendEmail sendEmail);
+	/**
+	 * @author LEEYESEUNG
+	 * @param receiveEmail : receive_email 테이블에 넣을 DTO
+	 * @returnint int : 반영된 행수
+	 */
+	int insertReceiveEmail(ReceiveEmail receiveEmail);
+	/**
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	int selectEmailContentId(int emailId);
 
 }
