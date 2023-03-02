@@ -5,6 +5,23 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/emailCheck.js"></script>
+	<style>
+	
+	table a:link {
+  	color : black;
+	}
+	table a:visited {
+	  color : black;
+	}
+	table a:hover {
+	  color : #97ACFC;
+	}
+	table a:active {
+	  color : #97ACFC;
+	}
+	
+	
+	</style>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -180,7 +197,7 @@
 	                <c:forEach var="emailList" items="${emailList}" varStatus="status">
                   		<tr>
                   			<td><input name="selectone" value="${emailList.sendEmailId}" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
-                    		<td>${emailList.receiveId}</td>
+                    		<td>${emailList.receiveName}</td>
                     		<td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
                     		<td>${emailList.sentDate}</td>
                     		<c:if test="${empty emailList.readDate}">

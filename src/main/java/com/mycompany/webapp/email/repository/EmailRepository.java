@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailContent;
+import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
@@ -156,10 +157,15 @@ public interface EmailRepository {
 	 */
 	int insertReceiveEmail(ReceiveEmail receiveEmail);
 	/**
-	 * 
+	 * @author LEEYESEUNG
 	 * @param emailId
 	 * @return
 	 */
 	int selectEmailContentId(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @return
+	 */
+	EmailDetail selectReceiveEmailDetail(int emailId);
 
 }

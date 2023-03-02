@@ -8,12 +8,14 @@
 				   r.receive_email_id as receiveEmailId,
 				   s.received_emp_id as receiveId,
 				   r.sent_emp_id as sentId,
+				   e.name as sentName,
 				   c.title, s.sent_date as sentDate
-			from receive_email r, email_content c, send_email s
+			from receive_email r, email_content c, send_email s, employees e
 			where s.RECEIVED_EMP_ID = #{receiveId} 
 				  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
 				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
 				  and r.trash_date is null
+				  and e.emp_id = r.sent_emp_id
 			order by s.sent_date desc
 			offset #{pager.startRowNo}-1 rows
 			fetch first 10 rows only
@@ -55,12 +57,14 @@
 				   r.sent_emp_id as sentId,
 				   s.received_emp_id as receiveId,
 				   c.title, s.sent_date as sentDate,
+				   e.name as receiveName,
 				   r.read_date as readDate
-        	from receive_email r, email_content c, send_email s
+        	from receive_email r, email_content c, send_email s,  employees e
         	where r.SENT_EMP_ID = #{sendId} 
         		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
               	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
               	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -90,13 +94,15 @@
 				   r.sent_emp_id as sentId,
 				   s.received_emp_id as receiveId,
 				   c.title, s.sent_date as sentDate,
-				   r.read_date as readDate
-        	from receive_email r, email_content c, send_email s
+				   r.read_date as readDate,
+				   e.name as receiveName
+        	from receive_email r, email_content c, send_email s, employees e
         	where r.SENT_EMP_ID = #{sendId} 
         		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
               	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
               	  and r.READ_DATE is not null
               	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -127,13 +133,15 @@
 				   c.title, s.sent_date as sentDate, 
 				   r.read_date as readDate, 
 				   s.trash_date as strashDate, 
-				   r.trash_date rtrashDate
-        	from receive_email r, email_content c, send_email s
+				   r.trash_date rtrashDate,
+				   e.name as receiveName
+        	from receive_email r, email_content c, send_email s, employees e
         	where r.SENT_EMP_ID = #{sendId}
         		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
               	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
               	  and r.READ_DATE is null
               	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
@@ -183,25 +191,29 @@
 		        	   r.SENT_EMP_ID as sentId,
 		        	   s.received_emp_id as receiveId,
 		        	   s.sent_date as sentDate,
-		        	   c.title, r.trash_date rtrashDate
-		        from email_content c, send_email s,receive_email r
+		        	   c.title, r.trash_date rtrashDate,
+		        	   e.name as name
+		        from email_content c, send_email s,receive_email r, employees e
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and r.trash_date is not null
 		        	  and s.received_emp_id = #{empId}
-		        	   and r.is_deleted = 0
+		        	  and r.is_deleted = 0
+		        	  and e.emp_id = r.sent_emp_id
 		        union 
 		        select  s.send_email_id as sendEmailId,
 		        	    r.SENT_EMP_ID as sentId,
 		        		s.received_emp_id as receiveId,
 		        		s.sent_date as sentDate, c.title,
-		        		s.trash_date strashDate
-		        from email_content c, send_email s,receive_email r
+		        		s.trash_date strashDate,
+		        		e.name as name
+		        from email_content c, send_email s,receive_email r, employees e
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
 		        	  and s.trash_date is not null
 		        	  and r.SENT_EMP_ID = #{empId}
 		        	  and s.is_deleted = 0
+		        	  and e.emp_id = s.received_emp_id
         		)
 			order by sentDate desc
 			offset #{pager.startRowNo}-1 rows
@@ -319,19 +331,40 @@
 			SELECT seq_email_content.CURRVAL 
 			FROM DUAL
          </selectKey>
+         <![CDATA[
          insert into email_content(EMAIL_CONTENT_ID, TITLE, CONTENT, IMPORTANT)
          values(seq_email_content.NEXTVAL, #{title}, #{content}, #{important})
+         ]]>
 	</insert>
 	
 	<insert id="insertSendEmail" parameterType="sendEmail">
+		<![CDATA[
 		insert into send_email(SEND_EMAIL_ID, RECEIVED_EMP_ID, SENT_DATE, EMAIL_CONTENT_ID, IS_DELETED)
 		values(seq_email.NEXTVAL, #{receiveEmpId}, sysdate, #{emailContentId}, 0)
+		]]>
 	</insert>
 	
 	<insert id="insertReceiveEmail" parameterType="receiveEmail">
+		<![CDATA[
 		insert into receive_email(RECEIVE_EMAIL_ID, SENT_EMP_ID, EMAIL_CONTENT_ID, IS_DELETED)
 		values(seq_email.NEXTVAL, #{sentEmpId}, #{emailContentId}, 0)
+		]]>
 	</insert>
+	
+	<select id="selectReceiveEmailDetail" parameterType="int" resultType="emailDetail">
+		<![CDATA[
+		select r.RECEIVE_EMAIL_ID as receiveEmailId, r.SENT_EMP_ID as sentEmpId, r.IS_DELETED as isDeleted, g.grade_name as sendGrade,
+			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName, r.trash_date as rtrashDate
+		from email_content c, receive_email r, send_email s, employees e, grade g
+		where c.email_content_id = r.email_content_id
+			  and s.email_content_id = c.email_content_id
+			  and r.receive_email_id = #{emailId}
+			  and r.SENT_EMP_ID = e.emp_id
+			  and e.grade_id = g.grade_id
+		
+		]]>
+	
+	</select>
 
 
 

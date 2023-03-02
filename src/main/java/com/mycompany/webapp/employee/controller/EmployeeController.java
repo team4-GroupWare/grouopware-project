@@ -225,4 +225,25 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/myPage")
+	public String myPage(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		model.addAttribute("employee", employee);
+		return "employee/user_profile";
+	}
+	
+	@GetMapping("/myUpdate")
+	public String update(HttpSession session) {
+		log.info("실행");
+		return "employee/user_profileupdate";
+		
+	}
+	
+	@GetMapping("/change")
+	public String change(HttpSession session) {
+		log.info("실행");
+		return "employee/change";
+	}
+	
 }

@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 public class EmailList {
 	private String sentId;
+	private String sentName;
 	private String receiveId;
+	private String receiveName;
+	private String name;
 	private Date readDate;
 	private String title;
 	private int contentId;

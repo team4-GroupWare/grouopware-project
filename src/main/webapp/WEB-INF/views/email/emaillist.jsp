@@ -6,6 +6,24 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/emailCheck.js"></script>
 	
+	<style>
+	
+	table a:link {
+  	color : black;
+	}
+	table a:visited {
+	  color : black;
+	}
+	table a:hover {
+	  color : #97ACFC;
+	}
+	table a:active {
+	  color : #97ACFC;
+	}
+	
+	
+	</style>
+	
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -267,19 +285,34 @@
                   	<td><input name="selectone" class="form-check-input" value="${emailList.tempEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
                   	</c:if>
                   	<!-- 임시저장함이 아니고, 내가 보낸 사람일때 받은 사람 출력 -->
-                  	<c:if test="${loginEmployee.empId eq emailList.sentId and type ne 'temp'}">
-                    <td>${emailList.receiveId}</td>
+                  	<c:if test="${loginEmployee.empId eq emailList.sentId and type ne 'temp' and type ne 'trash'}">
+                    <td>${emailList.receiveName}</td>
                     </c:if>
                     <!-- 내가 받은 사람일 때 보낸 사람 출력 -->
-                    <c:if test="${loginEmployee.empId eq emailList.receiveId}">
-                    <td>${emailList.sentId}</td>
+                    <c:if test="${loginEmployee.empId eq emailList.receiveId and type ne 'trash'}">
+                    <td>${emailList.sentName}</td>
+                    </c:if>
+                    <c:if test="${ type eq 'trash'}">
+                    <td>${emailList.name}</td>
                     </c:if>
                     <!-- 임시보관함일 때 작성자(보내는 사람) 출력-->
                     <c:if test="${type eq 'temp'}">
                     <td>${emailList.sentId}</td>
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
-                    <td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
+                    <c:if test="${type eq 'receive'}">
+                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'trash'and not empty emailList.strashDate}">
+                    <td><a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'trash' and not empty emailList.rtrashDate}">
+                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'temp'}">
+                    <td><a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                    
                     <c:if test="${type ne 'trash' and type ne 'temp'}">
                     <td>${emailList.sentDate}</td>
                     </c:if>
