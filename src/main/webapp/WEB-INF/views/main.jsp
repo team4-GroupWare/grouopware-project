@@ -18,21 +18,41 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
-		  	var today = new Date(); 					//오늘날짜
-	  		var day = today.getDay();					//요일
-	  	    var year = today.getFullYear();				//년
-	  	    var month = today.getMonth()+1; 			//월
-	  	    var date = today.getDate();					//일
-	  	    
+		  	var today = new Date(); 						//오늘날짜
+	  		var day = today.getDay();						//요일
+	  	    var year = today.getFullYear();					//년
+	  	    var month = modifyNumber(today.getMonth()+1);	//월
+	  	    var date = modifyNumber(today.getDate());		//일
+	  	  	var isHoli = false;								//공휴일 판별
+	  	   
 	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회
 	  		$(document).ready(function() {
-          	  	
 	  			//현재 시간, 날짜 
 	  			nowClock();
         	    setInterval(nowClock,1000); 
+	  			
+        	    //오늘이 공휴일인지 판단 후 -> 해당사원의 출근 가져옴
+        	    
+        	    //1. 오늘 날짜 - > String으로 변환
+        	    var yearToStr = year.toString();
+        	    var monthToStr = month.toString();
+        	    var dateToStr = date.toString();
+	  			var today = yearToStr+monthToStr+dateToStr;
+	  			
+	  			//2. 공휴일 판단
+	  			$.ajax({
+	  				url:"${pageContext.request.contextPath}/holiday",
+	  				data:{"today":today}
+	  			}).done(function(data){
+	  				isHoli = data;
+	  				todayAtt();
+	  			}); 
 		  		
-		  		//휴일일 경우
-		  		if(day==0 || day==6) {
+	  		});
+  			//해당사원의 오늘날짜 출근 정보 가져옴
+  			function todayAtt(){
+  			//휴일일 경우
+		  		if(day == 6 || day == 0 || isHoli) {
 		  			//출근 상태 표시
 		  			let status = "휴일"
 		  			let clockIn = "-- : -- : --";
@@ -88,7 +108,7 @@
 		  				
 		  			});
 		  		}
-	  		});
+  			}
 	  		
 	  	    //01~09시는 앞에 0이 붙도록 해주는 함수
 			function modifyNumber(time){
