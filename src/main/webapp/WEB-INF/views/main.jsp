@@ -22,7 +22,14 @@
 		.card-icon:hover > .bi {
 			color: #fff;
 		}
-	
+		/* .profilediv {
+			width: 40px;
+		}
+		.topprofile {
+		    width:100%;
+		    height:100%;
+		    object-fit:cover;
+		} */
 	</style>
 </head>
 	<body  style="overflow-x: hidden">

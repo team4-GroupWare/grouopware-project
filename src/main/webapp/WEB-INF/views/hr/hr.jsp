@@ -112,7 +112,7 @@
 	                				</thead>
 	                				<tbody>
 	                					<c:forEach var="employee" items="${employees}">
-		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')">
+		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')" style="cursor:pointer;">
 							                    <th scope="row"><img src="${pageContext.request.contextPath}/resources/assets/img/profile_img.png" alt="Profile" class="rounded-circle" width="40px">${employee.name}</th>
 							                    <td>${employee.phone}</td>
 							                    <td>${employee.empId}@mycompany.com</td>
