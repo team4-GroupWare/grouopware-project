@@ -211,7 +211,7 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main1" class="main bg-white" >
+		<div id="main1" class="main" >
 			<section class="section dashboard">
 				<div class="row">
 					
