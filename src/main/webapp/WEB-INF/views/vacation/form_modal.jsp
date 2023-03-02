@@ -24,9 +24,7 @@ input[type=radio]:checked+label{
     background-color: #333;
     color: #fff;
 }
-a:active > span { 
-	background-color: #333; 
-}
+
 
 </style>
 	
@@ -150,7 +148,7 @@ a:active > span {
 	}
 	
 	function changeColor() {
-		
+		.team
 	}
 	
 </script>
