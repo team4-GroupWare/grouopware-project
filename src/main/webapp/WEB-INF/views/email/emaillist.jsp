@@ -279,7 +279,19 @@
                     <td>${emailList.sentId}</td>
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
-                    <td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
+                    <c:if test="${type eq 'receive'}">
+                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'trash'and not empty emailList.strashDate}">
+                    <td><a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'trash' and not empty emailList.rtrashDate}">
+                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                     <c:if test="${type eq 'temp'}">
+                    <td><a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a></td>
+                    </c:if>
+                    
                     <c:if test="${type ne 'trash' and type ne 'temp'}">
                     <td>${emailList.sentDate}</td>
                     </c:if>

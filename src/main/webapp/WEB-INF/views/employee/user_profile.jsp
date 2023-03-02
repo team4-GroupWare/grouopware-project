@@ -1,30 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 </head>
-<body>
-  <%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<body>
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="btn btn-primary" type="button" href="../email/email_writeform.html" style="width:100%">
+        <a class="btn btn-primary" type="button" style="width:100%">
           <i class="bi bi-person-rolodex"></i> 
           <span>마이페이지</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed"  href="user_profile.html">
+        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/employee/myPage">
           <i class="bi bi-person-vcard-fill"></i><span>나의 정보</span><i></i>
         </a>
       </li><!-- End Charts Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed">
+        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/employee/change">
           <i class="bi bi-key-fill"></i>
           <span>비밀번호 변경</span>
         </a> 
@@ -51,11 +52,11 @@
           	<div class="row my-4">
 	           <div class="col-4 card-body profile-card pt-4 d-flex flex-column align-items-center">
 				  <div class="mb-1" style="width:250px;height:250px">
-					 <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
+					 <img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
 				  </div>
 	              <h2>아저씨</h2>
 	              <p style="color: grey;size:20px">사원</p>
-	             <a class="btn btn-primary" href="user_profileupdate.html">회원정보 수정</a>
+	             <a class="btn btn-primary" href="${pageContext.request.contextPath}/employee/myUpdate">회원정보 수정</a>
 	            </div>
 	            <div class="col-8 card-body pt-3">
 	              <div class="tab-content pt-2">
@@ -111,22 +112,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="../assets/vendor/echarts/echarts.min.js"></script>
-  <script src="../assets/vendor/quill/quill.min.js"></script>
-  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js"></script>
+  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 

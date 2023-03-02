@@ -319,19 +319,40 @@
 			SELECT seq_email_content.CURRVAL 
 			FROM DUAL
          </selectKey>
+         <![CDATA[
          insert into email_content(EMAIL_CONTENT_ID, TITLE, CONTENT, IMPORTANT)
          values(seq_email_content.NEXTVAL, #{title}, #{content}, #{important})
+         ]]>
 	</insert>
 	
 	<insert id="insertSendEmail" parameterType="sendEmail">
+		<![CDATA[
 		insert into send_email(SEND_EMAIL_ID, RECEIVED_EMP_ID, SENT_DATE, EMAIL_CONTENT_ID, IS_DELETED)
 		values(seq_email.NEXTVAL, #{receiveEmpId}, sysdate, #{emailContentId}, 0)
+		]]>
 	</insert>
 	
 	<insert id="insertReceiveEmail" parameterType="receiveEmail">
+		<![CDATA[
 		insert into receive_email(RECEIVE_EMAIL_ID, SENT_EMP_ID, EMAIL_CONTENT_ID, IS_DELETED)
 		values(seq_email.NEXTVAL, #{sentEmpId}, #{emailContentId}, 0)
+		]]>
 	</insert>
+	
+	<select id="selectReceiveEmailDetail" parameterType="int" resultType="emailDetail">
+		<![CDATA[
+		select r.RECEIVE_EMAIL_ID as receiveEmailId, r.SENT_EMP_ID as sentEmpId, r.IS_DELETED as isDeleted, g.grade_name as sendGrade,
+			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName
+		from email_content c, receive_email r, send_email s, employees e, grade g
+		where c.email_content_id = r.email_content_id
+			  and s.email_content_id = c.email_content_id
+			  and r.receive_email_id = #{emailId}
+			  and r.SENT_EMP_ID = e.emp_id
+			  and e.grade_id = g.grade_id
+		
+		]]>
+	
+	</select>
 
 
 
