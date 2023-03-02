@@ -6,7 +6,6 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
-<<<<<<< HEAD
 	@media screen and (max-width: 1200px) {
 	  .menubar {
 	    display: none;
@@ -26,25 +25,17 @@
 	  color : #97ACFC;
 	}
 	
-	
-=======
-		@media screen and (max-width: 1200px) {
-		  .menubar {
-		    display: none;
-		  }
-		}
-		.card-icon {
-			background-color: white;
-			cursor : pointer;
-		}
-		.card-icon:hover {
-			background-color: #004389;;
-			font-weight : bold;
-		}
-		.card-icon:hover > .bi {
-			color: #fff;
-		}
->>>>>>> branch 'master' of https://github.com/team4-GroupWare/grouopware-project.git
+	.card-icon {
+		background-color: white;
+		cursor : pointer;
+	}
+	.card-icon:hover {
+		background-color: #004389;;
+		font-weight : bold;
+	}
+	.card-icon:hover > .bi {
+		color: #fff;
+	}
 	
 	</style>
 </head>
@@ -335,7 +326,7 @@
 						</div>
 						<!-- mail card -->
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body pb-0">
 						        <!-- mail Tabs -->
 							    <ul class="nav nav-tabs nav-tabs-bordered" id="mailTab" role="tablist">
 								    <li class="nav-item" role="presentation">
@@ -465,7 +456,7 @@
 						</div>
 						<!-- notice card -->
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body pb-0">
 								<!-- notice Tabs -->
 								<ul class="nav nav-tabs nav-tabs-bordered" id="noticeTab" role="tablist">
 									<li class="nav-item" role="presentation">

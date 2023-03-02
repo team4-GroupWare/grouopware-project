@@ -50,15 +50,15 @@
       <div class="row">
           <div class="card col-9">
           	<div class="row my-4">
-	           <div class="col-4 card-body profile-card pt-4 d-flex flex-column align-items-center">
-				  <div class="mb-1" style="width:250px;height:250px">
+	           <div class="col-md-5 card-body profile-card pt-4 d-flex flex-column align-items-center" style="text-align:center">
+				  <div class="mb-1" style="width:100%">
 					 <img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
 				  </div>
-	              <h2>아저씨</h2>
-	              <p style="color: grey;size:20px">사원</p>
+	              <h2>${employee.name}</h2>
+	              <p style="color: grey;size:20px">${employee.gradeName}</p>
 	             <a class="btn btn-primary" href="${pageContext.request.contextPath}/employee/myUpdate">회원정보 수정</a>
 	            </div>
-	            <div class="col-8 card-body pt-3">
+	            <div class="col-md-7 card-body pt-3">
 	              <div class="tab-content pt-2">
 	
 	                <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -66,37 +66,37 @@
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label ">이름</div>
-	                    <div class="col-lg-9 col-md-8">아저씨</div>
+	                    <div class="col-lg-9 col-md-8">${employee.name}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">부서</div>
-	                    <div class="col-lg-9 col-md-8">공공사업 1Div</div>
+	                    <div class="col-lg-9 col-md-8">${employee.deptName}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">팀</div>
-	                    <div class="col-lg-9 col-md-8">프론트엔드팀</div>
+	                    <div class="col-lg-9 col-md-8">${employee.teamName}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">직급</div>
-	                    <div class="col-lg-9 col-md-8">사원</div>
+	                    <div class="col-lg-9 col-md-8">${employee.gradeName}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">Phone</div>
-	                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+	                    <div class="col-lg-9 col-md-8">${employee.phone}</div>
 	                  </div>
 	                  
 	                   <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">생년월일</div>
-	                    <div class="col-lg-9 col-md-8">2023-02-14</div>
+	                    <div class="col-lg-9 col-md-8">${employee.birth}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">Email</div>
-	                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+	                    <div class="col-lg-9 col-md-8">${employee.empId}@exaient.com</div>
 	                  </div>
 	
 	                </div>
