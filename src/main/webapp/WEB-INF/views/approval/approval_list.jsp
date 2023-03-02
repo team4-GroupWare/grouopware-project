@@ -123,10 +123,10 @@
                 				</thead>
                 				<tbody>
                 					<c:forEach var="approval" items="${approvals}" varStatus="index">
-                						<tr onClick="location.href='${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}'">
+                						<tr>
 						                    <th scope="row">${index.count}</th>
 						                    <td>${approval.categoryName}</td>
-						                    <td>${approval.title}</td>
+						                    <td style="cursor : pointer;" onClick="location.href='${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}'">${approval.title}</td>
 						                    <td>${approval.empName}</td>
 						                    <c:if test="${approval.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
