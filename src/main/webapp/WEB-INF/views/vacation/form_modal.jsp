@@ -93,7 +93,7 @@ input[type=radio]:checked+label{
 	//선택된 사원 insert
 	function btnInsert(){
 		let empId = $("input[type=radio]:checked").attr("value");
-		console.log(empId);
+		
 		let empName = $("label[id='"+empId+"']").text();
 		
 		let selectEl = document.querySelector("#selectEl");
@@ -110,7 +110,7 @@ input[type=radio]:checked+label{
 	    var length = document.getElementById('selectEl').length;
 	   	//이미 있는 사원인지 검사
 	    for (i = 0; i < length; i++) {
-			if(objOption.id == selectEl.options[i].id){
+			if(objOption.id == selectEl.options[i].id ){
 				type = 'true';
 				break;
 			}

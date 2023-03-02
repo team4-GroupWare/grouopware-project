@@ -6,7 +6,6 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
-<<<<<<< HEAD
 	@media screen and (max-width: 1200px) {
 	  .menubar {
 	    display: none;
@@ -25,26 +24,17 @@
 	a:active {
 	  color : #97ACFC;
 	}
-	
-	
-=======
-		@media screen and (max-width: 1200px) {
-		  .menubar {
-		    display: none;
-		  }
-		}
-		.card-icon {
-			background-color: white;
-			cursor : pointer;
-		}
-		.card-icon:hover {
-			background-color: #004389;;
-			font-weight : bold;
-		}
-		.card-icon:hover > .bi {
-			color: #fff;
-		}
->>>>>>> branch 'master' of https://github.com/team4-GroupWare/grouopware-project.git
+	.card-icon {
+		background-color: white;
+		cursor : pointer;
+	}
+	.card-icon:hover {
+		background-color: #004389;;
+		font-weight : bold;
+	}
+	.card-icon:hover > .bi {
+		color: #fff;
+	}
 	
 	</style>
 </head>
@@ -247,16 +237,19 @@
 			          	<!-- attendance Card -->
 			          	<div class="card info-card sales-card "  style="height:330px; ">
 			           		<div class="card-body mt-4">
-					            <div class="mb-3"> 
-					            	<!-- 오늘날짜 -->
-									<h5 id="date"></h5>
+			                	<!-- 현재시간 -->
+			                	<div class=""><h2 id="time"></h2></div>
+					            <div class="row">
+					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
+									<!-- 출근 상태 -->
+				                	<div class="col">
+				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
+				                			출근
+				                		</span>
+				                	</div>
 					            </div>
-				                <div class="d-flex">
-				                	<!-- 현재시간 -->
-				                	<div><h2 id="time"></h2></div>
-				                	<!-- 출근 상태 -->
-				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
-				                </div>
+					           
+				                
 								
 								<!-- 출퇴근 버튼 -->
 								<div>
@@ -485,31 +478,31 @@
 											<div class="post-item clearfix">
 												<img src="${pageContext.request.contextPath}/resources/assets/img/news-1.jpg" alt="">
 											    <h4><a href="#">공지사항</a></h4>
-											    <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
+											    <p>개인정보처리방침 개정안내</p>
 											</div>
 										
 											<div class="post-item clearfix">
 												<img src="${pageContext.request.contextPath}/resources/assets/img/news-2.jpg" alt="">
-											    <h4><a href="#">Quidem autem et impedit</a></h4>
-											    <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+											    <h4><a href="#">공지사항</a></h4>
+											    <p>개인정보처리방침 개정안내</p>
 											</div>
 										
 											<div class="post-item clearfix">
 											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-3.jpg" alt="">
-											    <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-											    <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
+											    <h4><a href="#">공지사항</a></h4>
+											    <p>개인정보처리방침 개정안내</p>
 											</div>
 										
 											<div class="post-item clearfix">
 											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-4.jpg" alt="">
-											    <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-											    <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
+											    <h4><a href="#">공지사항</a></h4>
+											    <p>개인정보처리방침 개정안내</p>
 											</div>
 											
 											<div class="post-item clearfix">
 											    <img src="${pageContext.request.contextPath}/resources/assets/img/news-5.jpg" alt="">
-											    <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-											    <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
+											    <h4><a href="#">공지사항</a></h4>
+											    <p>개인정보처리방침 개정안내</p>
 											</div>
 										
 										</div>
