@@ -1,7 +1,6 @@
 package com.mycompany.webapp.attendance.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +66,7 @@ public class AttendanceController {
 	 */
 	
 	@GetMapping("/attendance")
-	public String attendance(HttpSession session, HttpServletResponse response) throws IOException {
+	public String attendance(HttpSession session, HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
 		log.info("실행");
 		
@@ -89,11 +88,12 @@ public class AttendanceController {
 		}
 		log.info(status);
 		
-		//4. 담긴 정보로 insert
+		//4. 담긴 정보로 insert   
 		int result = attendanceService.insertAttendance(empId, status);
 		
 		//5. 결과 
-		return "redirect:/";
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class AttendanceController {
 	 * @throws IOException
 	 */
 	@GetMapping("/leave")
-	public String leave(HttpSession session, HttpServletResponse response) throws IOException {
+	public String leave(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		
 		log.info("실행");
 		
@@ -121,7 +121,8 @@ public class AttendanceController {
 		int result = attendanceService.updateLeave(attDate, empId);
 		
 		//4. 결과 json
-		return "redirect:/";
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
 	}
 	
 	/**

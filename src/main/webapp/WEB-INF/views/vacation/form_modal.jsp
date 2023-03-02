@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- option scroll 제거 -->
 <style>
@@ -15,12 +16,16 @@ select::-webkit-scrollbar {
 .team {
 	list-style: none;
 } 
-/* input[name="employee"]{
+input[name="employee"]{
 	display:none; margin:10px;
-} */
-input[type=radio]:checked+label{
-           background-color: #004389;
 }
+
+input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+
+
 </style>
 	
 <!-- modal -->
@@ -84,8 +89,9 @@ input[type=radio]:checked+label{
 	}
 	//선택된 사원 insert
 	function btnInsert(){
-		let empId = $("input:radio[name=employee]:checked").attr("value");
-		let empName = $("span[id='"+empId+"']").text();
+		let empId = $("input[type=radio]:checked").attr("value");
+		console.log(empId);
+		let empName = $("label[id='"+empId+"']").text();
 		
 		let selectEl = document.querySelector("#selectEl");
 	    var objOption = document.createElement("option");
@@ -141,6 +147,9 @@ input[type=radio]:checked+label{
 		selectEl.options[selectEl.options.length-1].selected = true;
 	}
 	
+	function changeColor() {
+	}
+	
 </script>
 
 <!-- 결재선 선택 modal -->
@@ -192,13 +201,13 @@ input[type=radio]:checked+label{
 				            		</a>
 					            	<ul id="nav-dept${status.count}" class="nav-content collapse m-0" data-bs-parent="#sidebar-nav">
 						              	<c:forEach var="team" items="${teams[status.index]}">
-						              	<li style="" class="team" id="${team.teamId}">
+						              	<li style="" class="team" id="${team.teamId}" onclick="changeColor()">
 						              		${team.teamName}
 						              	</li>
 						              	</c:forEach>
 					            	</ul>
 			          			</li>
-			         			</c:forEach>
+			         		</c:forEach>
 						</div>
 						<script>
 							$(".team").click(function(){
@@ -212,10 +221,9 @@ input[type=radio]:checked+label{
 										var teamHtml = "";
 										$("#empByteam").empty();
 										for(var i in data){
-											teamHtml += '<div>'+'<label  style="width:100%">'+'<input class="emp1" type="radio" name="employee" value="'
-														+data[i].empId+'">'+
-											    '<span id="'+data[i].empId+'" style="width:100%">'+data[i].name+'</span>'
-											   +'</label>'+'</div>';
+											teamHtml += '<div class="empList">'+'<input id="' + data[i].empId +'" class="emp1" type="radio" name="employee" value="'
+														+data[i].empId+'">'+'<label style="width:100%" id="'+ data[i].empId +'" for="' + data[i].empId + '">'
+											    +data[i].name+'</label>'+'</div>';
 										}
 										$("#empByteam").html(teamHtml);
 									},
