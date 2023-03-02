@@ -148,7 +148,6 @@ input[type=radio]:checked+label{
 	}
 	
 	function changeColor() {
-		.team
 	}
 	
 </script>
