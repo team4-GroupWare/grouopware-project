@@ -5,6 +5,14 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	<style>
+	@media screen and (max-width: 1200px) {
+	  .menubar {
+	    display: none;
+	  }
+	} 
+	
+	</style>
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -97,7 +105,7 @@
 	  	    	var now = new Date(); 
 	  			var hour = modifyNumber(now.getHours()); 	//시
 		  	    var min = modifyNumber(now.getMinutes()); 	//분
-		  	    var sec = modifyNumber(now.getSeconds()); 	//초
+		  	    var sec = modifyNumber(now.getSeconds()); //초
 	  			
 		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
           	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
@@ -122,41 +130,41 @@
 	  	</script>
 	  	
 	  	<!-- menubar background -->
-		<div class="row" style="height:300px; background-color:#EEF2F4">
+		<div class="row menubar" style="height:300px; background-color:#EEF2F4;">
 			<div class="row"  style="margin-top:120px" >
 				<div  style="padding:0 230px"  >
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="col" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-clock fs-1 " ></i>
 							</div>
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
-						<div class="col" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-person-video fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class="bi bi-clipboard-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">전자결재</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-envelope-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">메일</div>
 						</div>
 					
-						<div class="col" >
+						<div class="col-sm" >
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
 								<i class=" bi bi-bell fs-1 " ></i>
 							</div>
@@ -170,7 +178,7 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main" class="main bg-white" style="margin:0 200px">
+		<div id="main1" class="main bg-white" >
 			<section class="section dashboard">
 				<div class="row">
 					
@@ -198,7 +206,7 @@
 								<div>
 									<div class="row">
 										<!-- 출근하기 버튼 -->
-										<div class="col border-end" style="text-align:center" >
+										<div class="col-6 border-end" style="text-align:center" >
 											<input 
 											id="btn-attendance"
 											type='image'
@@ -211,7 +219,7 @@
 										</div><!-- End 출근하기 버튼 -->
 										
 										<!-- 퇴근하기 버튼 -->
-										<div class="col" style="text-align:center">
+										<div class="col-6 " style="text-align:center">
 											<input 
 											id="btn-leave"
 											disabled 
@@ -495,8 +503,30 @@
 				</div>
 			</section>
 		</div><!-- End #main -->
-	  	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	  	
+	  	<!-- ======= Footer ======= -->
+		<footer id="footer1" class="footer">
+		 	<div class="copyright">
+		   		<strong><span>엑사아이엔티 사내그룹웨어</span></strong>
+		 	</div>
+		 	<div class="credits">
+		   		4팀 이지호 이연희 이예승
+		 	</div>
+		</footer><!-- End Footer -->
+		
+		<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+		
+		<!-- Vendor JS Files -->
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/apexcharts/apexcharts.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/chart.js/chart.umd.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/echarts/echarts.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/quill/quill.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/simple-datatables/simple-datatables.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/assets/vendor/php-email-form/validate.js"></script>
+		
+		<!-- Template Main JS File -->
+		<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+			  	
 	  	<!-- 추가한 링크 -->
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/assets/js/schedule.js"></script>
