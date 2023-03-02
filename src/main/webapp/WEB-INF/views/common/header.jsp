@@ -22,7 +22,7 @@
      		<option value="${pageContext.request.contextPath}/hr/list">인사</option>
      		<option value="${pageContext.request.contextPath}/approval/list">전자결재</option>
      		<option value="${pageContext.request.contextPath}/email/receivelist">메일</option>
-     		<option value="5">공지사항</option>
+     		<option value="#">공지사항</option>
    		</select>
    	</div><!-- End Dropbar -->
 	

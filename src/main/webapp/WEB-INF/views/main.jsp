@@ -137,35 +137,35 @@
 					<!-- menubar -->
 					<div class="row">
 						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class=" bi bi-clock fs-1 " ></i>
 							</div>
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
 						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class=" bi bi-person-video fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/approval/list'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-clipboard-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">전자결재</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
+						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/email/receivelist'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class=" bi bi-envelope-check fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">메일</div>
 						</div>
 					
 						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class=" bi bi-bell fs-1 " ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
@@ -301,9 +301,9 @@
 												<tr>
 													<th scope="col">#</th>
 													<th scope="col">보낸사람</th>
-													<th scope="col">내용</th>
-													<th scope="col">Price</th>
-													<th scope="col">Status</th>
+													<th scope="col">제목</th>
+													<th scope="col">날짜</th>
+													<th scope="col">중요도</th>
 												 </tr>
 											</thead>
 										  
@@ -313,35 +313,35 @@
 													<td>Brandon Jacob</td>
 													<td><a href="#" class="text-primary">At praesentium minu</a></td>
 													<td>$64</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2147</a></th>
 													<td>Bridie Kessler</td>
 													<td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
 													<td>$47</td>
-													<td><span class="badge bg-warning">Pending</span></td>
+													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2049</a></th>
 													<td>Ashleigh Langosh</td>
 													<td><a href="#" class="text-primary">At recusandae consectetur</a></td>
 													<td>$147</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2644</a></th>
 													<td>Angus Grady</td>
 													<td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
 													<td>$67</td>
-													<td><span class="badge bg-danger">Rejected</span></td>
+													<td></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2644</a></th>
 													<td>Raheem Lehner</td>
 													<td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
 													<td>$165</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td></td>
 												</tr>
 											</tbody>
 										</table>
@@ -350,14 +350,13 @@
 									<!-- 보낸 메일함 -->
 									<div class="tab-pane fade" id="mail-send" role="tabpanel" aria-labelledby="send-tab">
 										<table class="table table-borderless datatable">
-											
 											<thead>
 												<tr>
 													<th scope="col">#</th>
-													<th scope="col">보낸 날짜</th>
-													<th scope="col">Product</th>
-													<th scope="col">Price</th>
-													<th scope="col">Status</th>
+													<th scope="col">받는 사람</th>
+													<th scope="col">제목</th>
+													<th scope="col">날짜</th>
+													<th scope="col">중요도</th>
 												 </tr>
 											</thead>
 										  
@@ -407,7 +406,7 @@
 					
 						<!-- notice Title -->
 						<div class="pagetitle">
-							<h1>메일함</h1>
+							<h1>알림 마당</h1>
 						</div>
 						<!-- notice card -->
 						<div class="card">
