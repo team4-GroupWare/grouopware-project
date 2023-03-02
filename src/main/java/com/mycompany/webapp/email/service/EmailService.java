@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.model.EmailContent;
+import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.ReceiveEmail;
+import com.mycompany.webapp.email.model.SendEmail;
 import com.mycompany.webapp.email.repository.EmailRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -175,22 +179,17 @@ public class EmailService implements IEmailService {
 	 * @return int : 중요메일이라면 1반환 
 	 */
 	@Override
-	public int checkImportant(int emailId, String type) {
+	public int checkImportant(int emailId) {
 		log.info("실행");
 		int row = 0;
-		if(type.equals("receive")) {
-			row = emailRepository.selectImportantReceiveEmail(emailId);
-		} else if(type.equals("trash")) {
-			
-		} else if(type.equals("temp")) {
-			
-		}
+		int emailContentId = emailRepository.selectEmailContentId(emailId);
+		row = emailRepository.selectImportantEmail(emailContentId);
 		
 		return row;
 	}
 	
 	/**
-	 * 
+	 * @author LEEYESEUNG
 	 */
 	@Override
 	public int throwAwayEmail(int emailId, String type) {
@@ -205,7 +204,7 @@ public class EmailService implements IEmailService {
 	}
 	
 	/**
-	 * 
+	 * @author LEEYESEUNG
 	 */
 	@Override
 	public int deleteEmail(int emailId, String type) {
@@ -230,6 +229,30 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		int row = emailRepository.updateReceiveEmailRestore(emailId);
 		row += emailRepository.updateSendEmailRestore(emailId);
+		return row;
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 */
+	@Override
+	public int writeEmail(EmailDetail emailDetail) {
+		log.info("실행");
+		EmailContent emailContent = new EmailContent();
+		ReceiveEmail receiveEmail = new ReceiveEmail();
+		SendEmail sendEmail = new SendEmail();
+		
+		emailContent.setContent(emailDetail.getContent());
+		emailContent.setImportant(emailDetail.isImportant());
+		emailContent.setTitle(emailDetail.getTitle());
+		int row = emailRepository.insertEmailContent(emailContent);
+		sendEmail.setReceiveEmpId(emailDetail.getReceiveId());
+		sendEmail.setEmailContentId(emailContent.getEmailContentId());
+		row += emailRepository.insertSendEmail(sendEmail);
+		receiveEmail.setSentEmpId(emailDetail.getSendId());
+		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
+		row += emailRepository.insertReceiveEmail(receiveEmail);
+		
 		return row;
 	}
 

@@ -237,13 +237,22 @@
 	</select>
 	
 	<!-- 중요메일 있는지 판단 -->
-	<select id="selectImportantReceiveEmail" parameterType="int" resultType="int">
+	<select id="selectImportantEmail" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT COUNT(*)
-		FROM RECEIVE_EMAIL r, EMAIL_CONTENT c
-		WHERE r.email_content_id = c.email_content_id 
-			  and c.important = 1 
-			  and r.receive_email_id = #{emailId}
+		FROM  EMAIL_CONTENT c
+		WHERE c.important = 1 
+			  and c.email_content_id = #{emailContentId}
+		]]>
+	</select>
+	
+	<select id="selectEmailContentId" parameterType="int" resultType="int">
+		<![CDATA[
+		select c.email_content_id
+		from email_content c, receive_email r, send_email s
+		where (r.receive_email_id = #{emailId} or s.send_email_id = #{emailId}) 
+			  and c.email_content_id = r.email_content_id
+			  and c.email_content_id = s.email_content_id
 		]]>
 	</select>
 	
@@ -304,6 +313,25 @@
 		]]>
 	
 	</update>
+	
+	<insert id="insertEmailContent" parameterType="emailContent">
+		<selectKey keyProperty="emailContentId" resultType="int" order="AFTER"> 
+			SELECT seq_email_content.CURRVAL 
+			FROM DUAL
+         </selectKey>
+         insert into email_content(EMAIL_CONTENT_ID, TITLE, CONTENT, IMPORTANT)
+         values(seq_email_content.NEXTVAL, #{title}, #{content}, #{important})
+	</insert>
+	
+	<insert id="insertSendEmail" parameterType="sendEmail">
+		insert into send_email(SEND_EMAIL_ID, RECEIVED_EMP_ID, SENT_DATE, EMAIL_CONTENT_ID, IS_DELETED)
+		values(seq_email.NEXTVAL, #{receiveEmpId}, sysdate, #{emailContentId}, 0)
+	</insert>
+	
+	<insert id="insertReceiveEmail" parameterType="receiveEmail">
+		insert into receive_email(RECEIVE_EMAIL_ID, SENT_EMP_ID, EMAIL_CONTENT_ID, IS_DELETED)
+		values(seq_email.NEXTVAL, #{sentEmpId}, #{emailContentId}, 0)
+	</insert>
 
 
 

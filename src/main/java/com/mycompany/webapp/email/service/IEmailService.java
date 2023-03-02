@@ -3,6 +3,7 @@ package com.mycompany.webapp.email.service;
 import java.util.List;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 
 public interface IEmailService {
@@ -90,7 +91,7 @@ public interface IEmailService {
 	 * @param type : 받은 메일인지 보낸 메일인지 확인
 	 * @return int : 중요메일이라면 1반환 
 	 */
-	int checkImportant(int emailId, String type);
+	int checkImportant(int emailId);
 	/**
 	 * 
 	 * @param emailId : 쓰레기통에 넣으려는 아이디
@@ -111,4 +112,10 @@ public interface IEmailService {
 	 * @return int : 업데이트한 행수 반환
 	 */
 	int restoreEmail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailDetail : 받아온 emailDetail 객체 
+	 * @return int : 반영된 행 수
+	 */
+	int writeEmail(EmailDetail emailDetail);
 }

@@ -106,6 +106,11 @@
 	              		<c:if test="${type ne 'trash'}">
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 	                    <button onclick="checkEmail('${type}')" class="btn btn-danger btn-sm">삭제</button>
+	                    </c:if>
+	                    <c:if test="${type eq 'trash'}">
+	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
+	                    <button type="submit" class="btn btn-danger btn-sm" onclick="checkEmail('${type}')">영구삭제</button>
+	                    </c:if>
 	                    <script>
 	                    	function restore(){
 	                    		var checkArr = [];
@@ -150,8 +155,10 @@
 										console.log("성공: "+data);
 										if(data == 'important'){
 											$("#importantDeleteModal").modal('show');	
-										} else {
+										} else if(type != 'trash'){
 											trashEmail(type);
+										} else if(type == 'trash'){
+											$("#deleteModal").modal('show');
 										}
 									});
 								} else {
@@ -223,17 +230,13 @@
 							
 							function trashOrDeleteEmail(type){
 								if(type == 'trash'){
-									deleteEmail(type);
+									$("#deleteModal").modal('show');
 								} else {
 									trashEmail(type);
 								}
 							}
 						</script>
-	                    </c:if>
-	                    <c:if test="${type eq 'trash'}">
-	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
-	                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteEmail('${type}')">영구삭제</button>
-	                    </c:if>
+	                    
 	              </div>
               </div>
 
@@ -276,7 +279,7 @@
                     <td>${emailList.sentId}</td>
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
-                    <td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
+                    <td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
                     <c:if test="${type ne 'trash' and type ne 'temp'}">
                     <td>${emailList.sentDate}</td>
                     </c:if>
@@ -473,7 +476,7 @@
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="checkEmail('${type}')">삭제</button>
+	        <button type="button" class="btn btn-primary" onclick="deleteEmail('${type}')">삭제</button>
 	      </div>
 	    </div>
 	  </div>

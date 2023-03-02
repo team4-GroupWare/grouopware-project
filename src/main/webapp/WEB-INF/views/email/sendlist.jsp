@@ -181,7 +181,7 @@
                   		<tr>
                   			<td><input name="selectone" value="${emailList.sendEmailId}" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
                     		<td>${emailList.receiveId}</td>
-                    		<td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
+                    		<td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
                     		<td>${emailList.sentDate}</td>
                     		<c:if test="${empty emailList.readDate}">
                     		<td>미수신</td>
