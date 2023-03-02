@@ -88,7 +88,7 @@ public class AttendanceController {
 		}
 		log.info(status);
 		
-		//4. 담긴 정보로 insert
+		//4. 담긴 정보로 insert   
 		int result = attendanceService.insertAttendance(empId, status);
 		
 		//5. 결과 
