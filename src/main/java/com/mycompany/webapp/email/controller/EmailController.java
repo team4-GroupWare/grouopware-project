@@ -19,6 +19,8 @@ import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ImportantCheck;
+import com.mycompany.webapp.email.model.ReceiveEmail;
+import com.mycompany.webapp.email.repository.EmailRepository;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
 
@@ -266,10 +268,24 @@ public class EmailController {
 	}
 	
 	
-	@GetMapping("/readDetail")
-	public String readEmailDetail() {
+	@GetMapping("/readReceiveEmail")
+	public String readReceiveEmail(@RequestParam int receiveEmailId, Model model) {
 		log.info("실행");
+		EmailDetail emailDetail = emailService.getReceiveEmail(receiveEmailId);
+		model.addAttribute("emailDetail", emailDetail);
 		return "email/receivedetail";
 		
+	}
+	
+	@GetMapping("/readSendEmail")
+	public String readSendEmail(@RequestParam int sendEmailId) {
+		log.info("실행");
+		return "email/senddetail";
+	}
+	
+	@GetMapping("/writeTempEmail")
+	public String writeTeampEmail(@RequestParam int tempEmailId) {
+		log.info("실행");
+		return "email/write";
 	}
 }

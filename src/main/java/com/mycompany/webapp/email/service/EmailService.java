@@ -242,18 +242,27 @@ public class EmailService implements IEmailService {
 		ReceiveEmail receiveEmail = new ReceiveEmail();
 		SendEmail sendEmail = new SendEmail();
 		
+		//이메일 컨텐트 테이블 insert
 		emailContent.setContent(emailDetail.getContent());
 		emailContent.setImportant(emailDetail.isImportant());
 		emailContent.setTitle(emailDetail.getTitle());
 		int row = emailRepository.insertEmailContent(emailContent);
+		//넣었던 emailContentId로 send_email 테이블 insert
 		sendEmail.setReceiveEmpId(emailDetail.getReceiveId());
 		sendEmail.setEmailContentId(emailContent.getEmailContentId());
 		row += emailRepository.insertSendEmail(sendEmail);
+		//넣었던 emailContentId로 receive_email 테이블 insert
 		receiveEmail.setSentEmpId(emailDetail.getSendId());
 		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
 		row += emailRepository.insertReceiveEmail(receiveEmail);
 		
 		return row;
+	}
+
+	@Override
+	public EmailDetail getReceiveEmail(int receiveEmailId) {
+		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
+		return emailDetail;
 	}
 
 }

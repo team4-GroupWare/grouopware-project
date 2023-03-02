@@ -15,5 +15,6 @@
 		<typeAlias type="com.mycompany.webapp.email.model.EmailContent" alias="emailContent"/>
 		<typeAlias type="com.mycompany.webapp.email.model.SendEmail" alias="sendEmail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.ReceiveEmail" alias="receiveEmail"/>
+		<typeAlias type="com.mycompany.webapp.email.model.EmailDetail" alias="emailDetail"/>
 	</typeAliases>
 </configuration>

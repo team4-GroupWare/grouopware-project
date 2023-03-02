@@ -81,9 +81,9 @@
 		          <div class="card">
 		            <div class="card-body">
 		              <div class="d-flex mb-4">
-		              	<i class="mt-4 bi bi-star" style="margin-right:8px;font-size:23px;color:#F0D14A"></i>
-		              	<i class="mt-4 bi bi-star-fill" style="margin-right:8px;font-size:23px;color:#F0D14A"></i>
-		              	<span class=" mt-4" style="font-size:24px;"><b>지호에게..지호야잘지내지나는어쩌구저쩌구우애</b></span>
+		              	<i class="bi bi-star" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
+		              	<i class="bi bi-star-fill" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
+		              	<span class=" mt-4" style="font-size:24px;"><b>${receiveEmail.title}</b></span>
 		              	<div style="text-align:center;margin-top:24px;margin-left:20px;">
 		              		<!-- 휴지통에서 조회한 경우 -->
 		              		<button type="submit" class="btn btn-secondary btn-sm">복구</button>
@@ -103,8 +103,8 @@
 		                <div class="row ">
 		                  <label for="inputText" class="col-sm-2 col-form-label">보낸 사람</label>
 		                  <div class="col-sm-10 my-auto d-flex">
-		                   		<p style="color:grey" class="my-auto">이예승 </p>
-		                   		<p style="color:grey;margin-left:2px" class="my-auto">사원 </p>
+		                   		<p style="color:grey" class="my-auto">${emailDetail.sendName} </p>
+		                   		<p style="color:grey;margin-left:2px" class="my-auto">${emailDetail.sendGrade} </p>
 		                   		<p  class="my-auto mx-1">| </p>
 		                   		<p style="color:grey" class="my-auto">ys1893@coderby.com</p>
 		                  </div>
