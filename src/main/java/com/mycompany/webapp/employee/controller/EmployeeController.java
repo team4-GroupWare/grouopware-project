@@ -188,6 +188,7 @@ public class EmployeeController {
 		
 		try {
 			//insert했을 때 오류가 나면 catch로 오류 제어
+			
 			int row = employeeService.register(employee);
 			
 			//아이디 중복 오류를 잡는다

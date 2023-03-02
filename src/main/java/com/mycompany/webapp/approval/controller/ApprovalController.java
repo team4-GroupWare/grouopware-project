@@ -1,5 +1,6 @@
 package com.mycompany.webapp.approval.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,10 @@ import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
 import com.mycompany.webapp.approval.service.IApprovalService;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.group.model.Department;
+import com.mycompany.webapp.group.model.Team;
+import com.mycompany.webapp.group.service.IDepartmentService;
+import com.mycompany.webapp.group.service.ITeamService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -26,7 +31,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/approval")
 public class ApprovalController {
-
+	@Autowired
+	private IDepartmentService departmentService;
+	
+	@Autowired
+	private ITeamService teamService;
+	
 	@Autowired
 	private IApprovalService approvalService;
 	
@@ -40,8 +50,19 @@ public class ApprovalController {
 	public String getApprovalForm(Model model) {
 		log.info("실행");
 		
+		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
-		//log.info(approval_category);
+		
+		List<List<Team>> teams = new ArrayList<>();
+		//부서 목록
+		List<Department> departments = departmentService.getDeptList();
+		
+		//부서 별 팀목록
+		for(Department dept : departments) {
+			teams.add(teamService.getTeamListById(dept.getDeptId()));
+		}
+		model.addAttribute("departments", departments);
+		model.addAttribute("teams", teams);
 		
 		model.addAttribute("approval_category", approval_category);
 		String form = "<table border=\"1\" style=\"border-collapse: collapse; width: 100%; height: 397.438px; border-width: 1.5px; border-color: rgb(0, 0, 0);\"><colgroup><col style=\"width: 16.7464%;\"><col style=\"width: 16.7464%;\"><col style=\"width: 16.7464%;\"><col style=\"width: 16.7464%;\"><col style=\"width: 16.7464%;\"><col style=\"width: 16.2679%;\"></colgroup><tbody><tr style=\"height: 70.7969px;\"><td colspan=\"6\" style=\"text-align: center; height: 70.7969px; border-width: 1.5px; border-color: rgb(0, 0, 0);\"><span style=\"font-size: 24pt;\" data-mce-style=\"font-size: 24pt;\"><strong>기안서</strong></span></td></tr><tr style=\"height: 22.3906px;\"><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0); text-align: center;\"><strong>기안부서</strong></td><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0);\"><br></td><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0); text-align: center;\"><strong>기안자</strong></td><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0);\"><br></td><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0); text-align: center;\"><strong>기안일</strong></td><td style=\"height: 22.3906px; border-width: 1.5px; border-color: rgb(0, 0, 0);\">23.</td></tr><tr style=\"height: 0px;\"><td style=\"height: 304.25px; border-width: 1.5px; border-color: rgb(0, 0, 0);\" colspan=\"6\" rowspan=\"4\"><table border=\"1\" style=\"border-collapse: collapse; width: 100.621%; height: 136px;\"><colgroup><col style=\"width: 17.532%;\"><col style=\"width: 32.3044%;\"><col style=\"width: 15.4217%;\"><col style=\"width: 34.7394%;\"></colgroup><tbody><tr><td style=\"text-align: center;\"><strong>문서&nbsp;번호</strong> </td><td><br></td><td style=\"text-align: center;\"><strong>기안부서</strong></td><td><br></td></tr><tr><td style=\"text-align: center;\"><strong>분류</strong></td><td><br></td><td style=\"text-align: center;\"><strong>협조부서</strong></td><td><br></td></tr><tr><td style=\"text-align: center;\"><strong>제목</strong></td><td colspan=\"3\"><br></td></tr><tr><td colspan=\"4\"><p>관련 사항을 아래와 같이 기안&nbsp;하오니&nbsp;검토 후 재가&nbsp;바랍니다.</p><p>-&nbsp;아&nbsp;래&nbsp;-</p><p>1.</p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p>3.&nbsp;적용시점&nbsp;:&nbsp;결재 후&nbsp;즉시&nbsp;.</p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p>4.&nbsp;첨부.</p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p><br data-mce-bogus=\"1\"></p><p style=\"text-align: center;\" data-mce-style=\"text-align: center;\">-&nbsp;이 상&nbsp;-</p></td></tr></tbody></table></td></tr><tr style=\"height: 0px;\"></tr><tr style=\"height: 0px;\"></tr><tr style=\"height: 304.25px;\"></tr></tbody></table>\r\n";
@@ -68,6 +89,8 @@ public class ApprovalController {
 	@GetMapping("/categoryform")
 	@ResponseBody
 	public String getCategoryForm(@RequestParam(defaultValue="1") int approvalCategoryId, Model model) {
+		log.info("실행");
+		approvalService.getApprovalForm(approvalCategoryId);
 		return null;
 	}
 	

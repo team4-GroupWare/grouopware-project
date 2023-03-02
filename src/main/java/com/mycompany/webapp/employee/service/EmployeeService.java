@@ -112,14 +112,19 @@ public class EmployeeService implements IEmployeeService {
 	}
 
 	public int register(Employee employee) throws Exception{
+		log.info("실행");
 		int checkId = employeeRepository.selectEmpId(employee.getEmpId());
 		if(checkId==1) {
 			throw new AlreadyExistingIdException("duplicate ID");
 		}
-		int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
-		if(checkManager==0) {
-			throw new NotExistingManagerException("No exist manager");
+	
+		if(!employee.getManagerId().isEmpty()) {
+			int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
+			if(checkManager==0) {
+				throw new NotExistingManagerException("No exist manager");
+			}
 		}
+		
 		return employeeRepository.insertEmployee(employee);
 	}
 	

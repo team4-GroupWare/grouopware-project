@@ -106,7 +106,7 @@
 			         			<p style="color:grey;font-size:14px">메일이 성공적으로 발송되었습니다!</p>
 			         		</div>
 			         		<div class="mx-auto" style="width:100px;">
-			                	<button class="btn btn-primary w-100" type="submit" style="display:inline-block">홈으로</button>
+			                	<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/email/receivelist" style="display:inline-block">홈으로</a>
 			            	</div>
 				    	</div>
 				  	</div>

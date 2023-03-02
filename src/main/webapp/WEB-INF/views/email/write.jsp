@@ -14,11 +14,15 @@
 		      	menubar:false,
 		        height: '900px',
 		        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-		        autosave_restore_when_empty: true
-		      
+		        autosave_restore_when_empty: true,
 		    });
 		});
 		
+		function getContent(){
+			var content = tinymce.get("tinymce-editor").getContent();
+			$("#content").attr('value', content);
+			$("#writeForm").submit();
+		}
 	</script>
 </head>
 	<body>
@@ -100,7 +104,7 @@
               <h2 class="card-title"><b>메일 작성</b></h2>
 
               <!-- General Form Elements -->
-              <form enctype="multipart/form-data">
+              <form id="writeForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/email/write">
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
@@ -145,12 +149,13 @@
                 		<p>Hello World!</p>
                 		<p>This is TinyMCE <strong>full</strong> editor</p>
               		</textarea><!-- End TinyMCE Editor -->
+              		<input id="content" type="hidden" name="content">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <div class="col-sm-12" style="text-align:center">
                     <button type="submit" class="btn btn-secondary">임시저장</button>
-                    <button type="submit" class="btn btn-primary">보내기</button>
+                    <button type="button" class="btn btn-primary" onclick="getContent()">보내기</button>
                   </div>
                 </div>
 

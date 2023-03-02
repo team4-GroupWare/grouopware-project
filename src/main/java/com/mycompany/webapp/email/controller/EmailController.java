@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.service.IEmailService;
@@ -169,9 +170,23 @@ public class EmailController {
 	 * @return String : 이메일 작성 페이지
 	 */
 	@GetMapping("/write")
-	public String writeEmail() {
+	public String getWriteForm() {
 		log.info("실행");
 		return "email/write";
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@PostMapping("/write")
+	public String writeEmail(HttpSession session, EmailDetail emailDetail) {
+		log.info("실행");
+		log.info("작성한 이메일: "+emailDetail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		emailDetail.setSendId(employee.getEmpId());
+		int row = emailService.writeEmail(emailDetail);
+		return "email/complete";
 	}
 	
 	/**
@@ -187,7 +202,7 @@ public class EmailController {
 		String result= "";
 		for(String check : checkArr) {
 			int emailId = Integer.parseInt(check);
-			int row = emailService.checkImportant(emailId, type);
+			int row = emailService.checkImportant(emailId);
 			if(row == 1) {
 				result="important";
 				break;
@@ -236,7 +251,8 @@ public class EmailController {
 		}
 		return result;
 	}
-	
+	@ResponseBody
+	@PostMapping("/restore")
 	public String restoreEmail(@RequestParam(value="checkArr") String[] checkArr) {
 		log.info("실행");
 		String result = "fail";
@@ -247,5 +263,13 @@ public class EmailController {
 			result = "success";
 		}
 		return result;
+	}
+	
+	
+	@GetMapping("/readDetail")
+	public String readEmailDetail() {
+		log.info("실행");
+		return "email/receivedetail";
+		
 	}
 }

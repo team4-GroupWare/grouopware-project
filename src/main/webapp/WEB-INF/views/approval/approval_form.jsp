@@ -237,7 +237,7 @@
               							</div>
               		
 	              						<div class="row">
-	              							<div class="col-sm-3">
+	              							<!-- <div class="col-sm-3">
 		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
 					            					<div class="row g-0">
 					              						<div class="col-md-12">
@@ -266,7 +266,7 @@
 					              						</div>
 					            					</div>
 					        					</div>
-	                    					</div>
+	                    					</div> -->
 	                  					</div>
                 					</div>
                 				</div>
@@ -277,6 +277,7 @@
 										</textarea>
         							</div>
         						</div>
+        						<%@ include file="/WEB-INF/views/vacation/form_modal.jsp" %>
     						</form>
     					</div>
     				</div>
