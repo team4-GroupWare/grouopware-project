@@ -58,6 +58,8 @@
 	  				isHoli = data;
 	  				todayAtt();
 	  			}); 
+	  			  	  	
+		  		
 		  		
 	  		});
   			//해당사원의 오늘날짜 출근 정보 가져옴
@@ -209,7 +211,7 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main1" class="main bg-white" >
+		<div id="main1" class="main" >
 			<section class="section dashboard">
 				<div class="row">
 					
@@ -332,9 +334,9 @@
 												<tr>
 													<th scope="col">#</th>
 													<th scope="col">보낸사람</th>
-													<th scope="col">제목</th>
-													<th scope="col">날짜</th>
-													<th scope="col">중요도</th>
+													<th scope="col">내용</th>
+													<th scope="col">Price</th>
+													<th scope="col">Status</th>
 												 </tr>
 											</thead>
 										  
@@ -344,35 +346,35 @@
 													<td>Brandon Jacob</td>
 													<td><a href="#" class="text-primary">At praesentium minu</a></td>
 													<td>$64</td>
-													<td></td>
+													<td><span class="badge bg-success">Approved</span></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2147</a></th>
 													<td>Bridie Kessler</td>
 													<td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
 													<td>$47</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
+													<td><span class="badge bg-warning">Pending</span></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2049</a></th>
 													<td>Ashleigh Langosh</td>
 													<td><a href="#" class="text-primary">At recusandae consectetur</a></td>
 													<td>$147</td>
-													<td></td>
+													<td><span class="badge bg-success">Approved</span></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2644</a></th>
 													<td>Angus Grady</td>
 													<td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
 													<td>$67</td>
-													<td></td>
+													<td><span class="badge bg-danger">Rejected</span></td>
 												</tr>
 												<tr>
 													<th scope="row"><a href="#">#2644</a></th>
 													<td>Raheem Lehner</td>
 													<td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
 													<td>$165</td>
-													<td></td>
+													<td><span class="badge bg-success">Approved</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -381,13 +383,14 @@
 									<!-- 보낸 메일함 -->
 									<div class="tab-pane fade" id="mail-send" role="tabpanel" aria-labelledby="send-tab">
 										<table class="table table-borderless datatable">
+											
 											<thead>
 												<tr>
 													<th scope="col">#</th>
-													<th scope="col">받는 사람</th>
-													<th scope="col">제목</th>
-													<th scope="col">날짜</th>
-													<th scope="col">중요도</th>
+													<th scope="col">보낸 날짜</th>
+													<th scope="col">Product</th>
+													<th scope="col">Price</th>
+													<th scope="col">Status</th>
 												 </tr>
 											</thead>
 										  
@@ -437,7 +440,7 @@
 					
 						<!-- notice Title -->
 						<div class="pagetitle">
-							<h1>알림 마당</h1>
+							<h1>메일함</h1>
 						</div>
 						<!-- notice card -->
 						<div class="card">
