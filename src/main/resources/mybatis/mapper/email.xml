@@ -354,7 +354,7 @@
 	<select id="selectReceiveEmailDetail" parameterType="int" resultType="emailDetail">
 		<![CDATA[
 		select r.RECEIVE_EMAIL_ID as receiveEmailId, r.SENT_EMP_ID as sentEmpId, r.IS_DELETED as isDeleted, g.grade_name as sendGrade,
-			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName
+			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName, r.trash_date as rtrashDate
 		from email_content c, receive_email r, send_email s, employees e, grade g
 		where c.email_content_id = r.email_content_id
 			  and s.email_content_id = c.email_content_id
