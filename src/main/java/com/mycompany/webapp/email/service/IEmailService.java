@@ -5,6 +5,7 @@ import java.util.List;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.ReceiveEmail;
 
 public interface IEmailService {
 	/**
@@ -118,4 +119,10 @@ public interface IEmailService {
 	 * @return int : 반영된 행 수
 	 */
 	int writeEmail(EmailDetail emailDetail);
+	/**
+	 *  @author LEEYESEUNG
+	 * @param receiveEmailId
+	 * @return ReceiveEmail : 받은 이메일 객체
+	 */
+	EmailDetail getReceiveEmail(int receiveEmailId);
 }

@@ -70,13 +70,6 @@
       </li><!-- End Icons Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
-          <i class="bi bi-star-fill"></i>
-          <span>중요 메일함</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
           <i class="bi bi-envelope-exclamation"></i>
           <span>임시저장함</span>
@@ -146,8 +139,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-12">
                      <textarea id="tinymce-editor">
-                		<p>Hello World!</p>
-                		<p>This is TinyMCE <strong>full</strong> editor</p>
+                		
               		</textarea><!-- End TinyMCE Editor -->
               		<input id="content" type="hidden" name="content">
                   </div>
