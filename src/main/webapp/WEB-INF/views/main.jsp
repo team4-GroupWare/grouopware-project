@@ -224,15 +224,19 @@
 			          	<!-- attendance Card -->
 			          	<div class="card info-card sales-card "  style="height:330px; ">
 			           		<div class="card-body mt-4">
-					            <div class="mb-3"> 
+					            <div class="mb-3">
+					            	<div class="d-flex"> 
 					            	<!-- 오늘날짜 -->
 									<h5 id="date"></h5>
+									
+									<!-- 출근 상태 -->
+				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
+				                	 </div>
 					            </div>
 				                <div class="d-flex">
 				                	<!-- 현재시간 -->
 				                	<div><h2 id="time"></h2></div>
-				                	<!-- 출근 상태 -->
-				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
+				                	
 				                </div>
 								
 								<!-- 출퇴근 버튼 -->
