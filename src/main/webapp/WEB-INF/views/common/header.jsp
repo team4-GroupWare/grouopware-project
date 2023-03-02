@@ -11,6 +11,7 @@
 		<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
 			<span class="d-none d-lg-block">엑사아이엔티</span>
 		</a>
+		<i class="bi bi-list toggle-sidebar-btn"></i>
 	</div>
 	
 	<!-- Dropbar -->

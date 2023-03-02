@@ -12,7 +12,7 @@ public interface IApprovalService {
 	public List<ApprovalCategory> getCategory();
 
 	//전자결재 카테고리 별 작성양식 불러오기
-	public void getApprovalForm(int approvalCategoryId);
+	public String getApprovalForm(int approvalCategoryId);
 		
 	//전자결재 작성
 	public int writeApproval(Approval approval);
