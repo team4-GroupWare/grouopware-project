@@ -21,7 +21,7 @@ public class ApprovalService implements IApprovalService {
 	/**
 	 * 전자결재 카테고리 목록
 	 * @author : LEEJIHO
-	 * @return
+	 * @return 전자결재 카테고리 목록
 	 */
 	@Override
 	public List<ApprovalCategory> getCategory() {
@@ -51,6 +51,12 @@ public class ApprovalService implements IApprovalService {
 	public Approval getApprovalDetail(int approvalId) {
 		log.info("실행");
 		return approvalRepository.selectApprovalDetail(approvalId);
+	}
+
+	@Override
+	public void getApprovalForm(int approvalCategoryId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
