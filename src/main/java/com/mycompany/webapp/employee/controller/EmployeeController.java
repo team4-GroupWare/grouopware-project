@@ -226,9 +226,10 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/myPage")
-	public String myPage(HttpSession session) {
+	public String myPage(HttpSession session, Model model) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		model.addAttribute("employee", employee);
 		return "employee/user_profile";
 	}
 	
