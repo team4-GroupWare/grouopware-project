@@ -14,7 +14,7 @@
 	
 	</style>
 </head>
-	<body>
+	<body  style="overflow-x: hidden">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
