@@ -279,7 +279,7 @@
                     <td>${emailList.sentId}</td>
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
-                    <td><a href="${pageContext.request.contextPath}/email/write">${emailList.title}</a></td>
+                    <td><a href="${pageContext.request.contextPath}/email/readDetail">${emailList.title}</a></td>
                     <c:if test="${type ne 'trash' and type ne 'temp'}">
                     <td>${emailList.sentDate}</td>
                     </c:if>

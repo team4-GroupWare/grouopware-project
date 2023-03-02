@@ -264,4 +264,12 @@ public class EmailController {
 		}
 		return result;
 	}
+	
+	
+	@GetMapping("/readDetail")
+	public String readEmailDetail() {
+		log.info("실행");
+		return "email/receivedetail";
+		
+	}
 }
