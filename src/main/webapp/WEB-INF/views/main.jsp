@@ -6,6 +6,7 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
+<<<<<<< HEAD
 	@media screen and (max-width: 1200px) {
 	  .menubar {
 	    display: none;
@@ -26,6 +27,24 @@
 	}
 	
 	
+=======
+		@media screen and (max-width: 1200px) {
+		  .menubar {
+		    display: none;
+		  }
+		}
+		.card-icon {
+			background-color: white;
+			cursor : pointer;
+		}
+		.card-icon:hover {
+			background-color: #004389;;
+			font-weight : bold;
+		}
+		.card-icon:hover > .bi {
+			color: #fff;
+		}
+>>>>>>> branch 'master' of https://github.com/team4-GroupWare/grouopware-project.git
 	
 	</style>
 </head>
@@ -62,6 +81,8 @@
 	  				isHoli = data;
 	  				todayAtt();
 	  			}); 
+	  			  	  	
+		  		
 		  		
 	  		});
   			//해당사원의 오늘날짜 출근 정보 가져옴
@@ -171,37 +192,37 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
-								<i class=" bi bi-clock fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-clock fs-1" ></i>
 							</div>
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
-								<i class=" bi bi-person-video fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-person-video fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/approval/list'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
-								<i class="bi bi-clipboard-check fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/approval/list'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-clipboard-check fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">전자결재</div>
 						</div>
 					
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/email/receivelist'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
-								<i class=" bi bi-envelope-check fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/email/receivelist'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-envelope-check fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">메일</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
-								<i class=" bi bi-bell fs-1 " ></i>
+						<div class="menu col-sm" >
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-bell fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
 						</div>	
@@ -213,7 +234,7 @@
 		<!-- End menubar background -->
 	  
 		<!-- main content -->
-		<div id="main1" class="main bg-white" >
+		<div id="main1" class="main" >
 			<section class="section dashboard">
 				<div class="row">
 					
@@ -338,9 +359,9 @@
 													<th scope="col">제목</th>
 													<th scope="col">날짜</th>
 													<th scope="col">중요</th>
+
 												 </tr>
 											</thead>
-										  
 											<tbody>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
@@ -384,6 +405,7 @@
 									<!-- 보낸 메일함 -->
 									<div class="tab-pane fade" id="mail-send" role="tabpanel" aria-labelledby="send-tab">
 										<table class="table table-borderless datatable">
+											
 											<thead>
 												<tr>
 													<th scope="col">받는 사람</th>
@@ -439,7 +461,7 @@
 					
 						<!-- notice Title -->
 						<div class="pagetitle">
-							<h1>알림 마당</h1>
+							<h1>메일함</h1>
 						</div>
 						<!-- notice card -->
 						<div class="card">
