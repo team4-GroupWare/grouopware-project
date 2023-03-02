@@ -75,6 +75,7 @@ function calendarInit() {
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
             currentMonthDate[todayDate -1].classList.add('today');
+            currentMonthDate[todayDate +1].classList.add('attendance');
         }
     }
 

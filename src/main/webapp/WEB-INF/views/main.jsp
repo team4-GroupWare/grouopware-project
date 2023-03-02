@@ -6,11 +6,22 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
-	@media screen and (max-width: 1200px) {
-	  .menubar {
-	    display: none;
-	  }
-	} 
+		@media screen and (max-width: 1200px) {
+		  .menubar {
+		    display: none;
+		  }
+		}
+		.card-icon {
+			background-color: white;
+			cursor : pointer;
+		}
+		.card-icon:hover {
+			background-color: #004389;;
+			font-weight : bold;
+		}
+		.card-icon:hover > .bi {
+			color: #fff;
+		}
 	
 	</style>
 </head>
@@ -158,37 +169,37 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
-								<i class=" bi bi-clock fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-clock fs-1" ></i>
 							</div>
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
-						<div class="col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
-								<i class=" bi bi-person-video fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-person-video fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">인사</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
-								<i class="bi bi-clipboard-check fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/approval/list'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-clipboard-check fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">전자결재</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
-								<i class=" bi bi-envelope-check fs-1 " ></i>
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/email/receivelist'">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-envelope-check fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">메일</div>
 						</div>
 					
-						<div class="col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-light mx-auto" style="width:100px; height:100px">
-								<i class=" bi bi-bell fs-1 " ></i>
+						<div class="menu col-sm" >
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+								<i class="bi bi-bell fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
 						</div>	
