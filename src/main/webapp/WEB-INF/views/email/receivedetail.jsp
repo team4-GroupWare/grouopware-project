@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -49,13 +50,6 @@
 		      </li><!-- End Icons Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
-		          <i class="bi bi-star-fill"></i>
-		          <span>중요 메일함</span>
-		        </a>
-		      </li><!-- End Profile Page Nav -->
-		
-		      <li class="nav-item">
 		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
 		          <i class="bi bi-envelope-exclamation"></i>
 		          <span>임시저장함</span>
@@ -77,24 +71,33 @@
 			<section class="section">
 		      <div class="row">
 		        <div class="col-lg-12">
-		
 		          <div class="card">
 		            <div class="card-body">
 		              <div class="d-flex mb-4">
+		              	<c:if test="${not emailDetail.important}">
 		              	<i class="bi bi-star" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
+		              	</c:if>
+		              	<c:if test="${emailDetail.important}">
 		              	<i class="bi bi-star-fill" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
-		              	<span class=" mt-4" style="font-size:24px;"><b>${receiveEmail.title}</b></span>
+		              	</c:if>
+		              	<span class=" mt-4" style="font-size:24px;"><b>${emailDetail.title}</b></span>
 		              	<div style="text-align:center;margin-top:24px;margin-left:20px;">
 		              		<!-- 휴지통에서 조회한 경우 -->
+		              		<c:if test="${emailDetail.rtrashDate ne null or emailDetail.strashDate ne null}">
 		              		<button type="submit" class="btn btn-secondary btn-sm">복구</button>
+		              		</c:if>
 		                    <button type="submit" class="btn btn-secondary btn-sm">답장</button>
 		                    <button type="submit" class="btn btn-primary btn-sm">전달</button>
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -> 삭제를 눌렀을 때 휴지통으로 들어갔다는 모달창 띄움 -->
+		                    <c:if test="${emailDetail.rtrashDate eq null and emailDetail.strashDate eq null}">
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+		                    </c:if>
 		                    <!-- 휴지통에서는 영구삭제가 가능함 -->
+		                    <c:if test="${emailDetail.rtrashDate ne null or emailDetail.strashDate ne null}">
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+		                  	</c:if>
 		                  </div>
 		              	
 		              </div>
@@ -106,7 +109,7 @@
 		                   		<p style="color:grey" class="my-auto">${emailDetail.sendName} </p>
 		                   		<p style="color:grey;margin-left:2px" class="my-auto">${emailDetail.sendGrade} </p>
 		                   		<p  class="my-auto mx-1">| </p>
-		                   		<p style="color:grey" class="my-auto">ys1893@coderby.com</p>
+		                   		<p style="color:grey" class="my-auto">${emailDetail.sendId}@exaient.com</p>
 		                  </div>
 		                </div>
 		                
@@ -132,13 +135,9 @@
 		                
 		                <div class="row mb-3 px-4">
 		                  <div class="col-sm-12 mail-content px-3" style="height:320px">
-		                    	 여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다. ====> 이 글은 예를 보이기 위한 것이므로 읽을 필요가 없다.
-		
-		여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.
+		                    	${emailDetail.content}
 		                  </div>
 		                </div>
-		
-		
 		            </div>
 		          </div>
 		        </div>

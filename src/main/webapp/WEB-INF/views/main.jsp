@@ -24,6 +24,7 @@
 	a:active {
 	  color : #97ACFC;
 	}
+
 	.card-icon {
 		background-color: white;
 		cursor : pointer;
@@ -328,7 +329,7 @@
 						</div>
 						<!-- mail card -->
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body pb-0">
 						        <!-- mail Tabs -->
 							    <ul class="nav nav-tabs nav-tabs-bordered" id="mailTab" role="tablist">
 								    <li class="nav-item" role="presentation">
@@ -458,7 +459,7 @@
 						</div>
 						<!-- notice card -->
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body pb-0">
 								<!-- notice Tabs -->
 								<ul class="nav nav-tabs nav-tabs-bordered" id="noticeTab" role="tablist">
 									<li class="nav-item" role="presentation">
