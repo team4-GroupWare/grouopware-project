@@ -54,9 +54,9 @@ public class ApprovalService implements IApprovalService {
 	}
 
 	@Override
-	public void getApprovalForm(int approvalCategoryId) {
-		// TODO Auto-generated method stub
-		
+	public String getApprovalForm(int approvalCategoryId) {
+		log.info("실행");
+		return approvalRepository.selectApprovalForm(approvalCategoryId);
 	}
 
 
