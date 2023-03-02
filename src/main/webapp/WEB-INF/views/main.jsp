@@ -10,7 +10,22 @@
 	  .menubar {
 	    display: none;
 	  }
-	} 
+	}
+	
+	a:link {
+  	color : black;
+	}
+	a:visited {
+	  color : black;
+	}
+	a:hover {
+	  color : #97ACFC;
+	}
+	a:active {
+	  color : #97ACFC;
+	}
+	
+	
 	
 	</style>
 </head>
@@ -319,49 +334,48 @@
 											
 											<thead>
 												<tr>
-													<th scope="col">#</th>
 													<th scope="col">보낸사람</th>
 													<th scope="col">제목</th>
 													<th scope="col">날짜</th>
-													<th scope="col">중요도</th>
+													<th scope="col">중요</th>
 												 </tr>
 											</thead>
 										  
 											<tbody>
 												<tr>
-													<th scope="row"><a href="#">#2457</a></th>
-													<td>Brandon Jacob</td>
-													<td><a href="#" class="text-primary">At praesentium minu</a></td>
-													<td>$64</td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													이지호</td>
+													<td><a href="#" class="mail-title">견적서 문의 관련 사항</a></td>
+													<td>2023.02.27</td>
 													<td></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2147</a></th>
-													<td>Bridie Kessler</td>
-													<td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-													<td>$47</td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													이연희</td>
+													<td><a href="#" class="mail-title">그룹 메일 문의 사항</a></td>
+													<td>2023.02.27</td>
 													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2049</a></th>
-													<td>Ashleigh Langosh</td>
-													<td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-													<td>$147</td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													김철수</td>
+													<td><a href="#" class="mail-title">2월 비용 정산 안내</a></td>
+													<td>2023.02.28</td>
+													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
+												</tr>
+												<tr>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													이지호</td>
+													<td><a href="#" class="mail-title">2/28 ㅇㅇㅇ 프로젝트 회의록</a></td>
+													<td>2023.02.28</td>
 													<td></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2644</a></th>
-													<td>Angus Grady</td>
-													<td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-													<td>$67</td>
-													<td></td>
-												</tr>
-												<tr>
-													<th scope="row"><a href="#">#2644</a></th>
-													<td>Raheem Lehner</td>
-													<td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-													<td>$165</td>
-													<td></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													김과장</td>
+													<td><a href="#" class="mail-title">[오티아이] 계약서류 전달</a></td>
+													<td>2023.03.02</td>
+													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -372,49 +386,48 @@
 										<table class="table table-borderless datatable">
 											<thead>
 												<tr>
-													<th scope="col">#</th>
 													<th scope="col">받는 사람</th>
 													<th scope="col">제목</th>
 													<th scope="col">날짜</th>
-													<th scope="col">중요도</th>
+													<th scope="col">중요</th>
 												 </tr>
 											</thead>
 										  
 											<tbody>
 												<tr>
-													<th scope="row"><a href="#">#2457</a></th>
-													<td>Brandon Jacob</td>
-													<td><a href="#" class="text-primary">At praesentium minu</a></td>
-													<td>$64</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													박차장</td>
+													<td><a href="#" class="mail-title">3월 홍보전략 회의 사전 안내</a></td>
+													<td>2023.02.28</td>
+													<td></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2147</a></th>
-													<td>Bridie Kessler</td>
-													<td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-													<td>$47</td>
-													<td><span class="badge bg-warning">Pending</span></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													김사원</td>
+													<td><a href="#" class="mail-title">사내 ㅇㅇ 준비사항 점검</a></td>
+													<td>2023.02.28</td>
+													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2049</a></th>
-													<td>Ashleigh Langosh</td>
-													<td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-													<td>$147</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													이지호</td>
+													<td><a href="#" class="mail-title">2월 24일 회의록 점검</a></td>
+													<td>2023.03.02</td>
+													<td></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2644</a></th>
-													<td>Angus Grady</td>
-													<td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-													<td>$67</td>
-													<td><span class="badge bg-danger">Rejected</span></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													김대리</td>
+													<td><a href="#" class="mail-title">ㅇㅇㅇ견적 관련 안내</a></td>
+													<td>2023.03.02</td>
+													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
-													<th scope="row"><a href="#">#2644</a></th>
-													<td>Raheem Lehner</td>
-													<td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-													<td>$165</td>
-													<td><span class="badge bg-success">Approved</span></td>
+													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
+													이연희</td>
+													<td><a href="#" class="mail-title">그룹웨어 문의사항</a></td>
+													<td>2023.03.02</td>
+													<td></td>
 												</tr>
 											</tbody>
 										</table>
