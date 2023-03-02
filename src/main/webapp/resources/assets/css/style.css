@@ -76,7 +76,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #4154f1;
+  background: #004389;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -649,7 +649,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left:300px;
@@ -658,14 +657,12 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main1 {
     margin:30px 200px 0 200px;
     
   }
 }
 @media (max-width: 1199px) {
-
   #main1{
     margin:70px 30px 0 30px;
     
@@ -1470,3 +1467,4 @@ table. type02. table-content{
 .errors{
 	color:red;
 }
+

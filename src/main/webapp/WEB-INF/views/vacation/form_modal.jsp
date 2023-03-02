@@ -21,11 +21,14 @@ input[name="employee"]{
 }
 
 input[type=radio]:checked+label{
-    background-color: #333;
-    color: #fff;
+    background-color: #CECECE;
 }
-
-
+.updonw {
+	text-align: center;
+}
+.updonw {
+	display :inline-block;
+}
 </style>
 	
 <!-- modal -->
@@ -148,6 +151,7 @@ input[type=radio]:checked+label{
 	}
 	
 	function changeColor() {
+		
 	}
 	
 </script>
@@ -158,7 +162,7 @@ input[type=radio]:checked+label{
 		<div class="modal-content" style="min-height:500px">
 			
 			<!-- Header -->
-			<div class="modal-header">
+			<div class="modal-header" style="background-color:#004389; color:#ffffff;">
 				<h5 class="modal-title">결재선 설정</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
@@ -167,24 +171,36 @@ input[type=radio]:checked+label{
 			<div class="modal-body">
 				
 				<!-- search -->
-				<div class="row mb-3">
+				<!-- <div class="row mb-3">
 					<div class="col-3" >
-						<div class="input-group rounded">
-							<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-							<span class="input-group-text border-0" id="search-addon">
-						    	<button><i class="bi bi-search"></i></button>
-						  	</span>
-						</div>
+						<form name="emp-search">
+							<div class="input-group me-auto p-2" style="width:200px">
+			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
+			               		<button class="input-group-text" id="basic-addon1" onclick="searchEmp()">
+				              		<i class="bi bi-search"></i>
+				             	</button>
+			              	</div>
+						</form>
 					</div>
-				</div>
+				</div> -->
 				
 				<!-- 순서 변경 버튼 -->
 				<div class="row d-flex justify-content-end">
-					<div class=col-1>
-						<button type="button" class="btn btn-light" OnClick="moveCategory('U')">↑</button>
+					<div class="col-9" >
+						<form name="emp-search">
+							<div class="input-group me-auto p-2" style="width:200px">
+			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
+			               		<button class="input-group-text" id="basic-addon1" onclick="searchEmp()">
+				              		<i class="bi bi-search"></i>
+				             	</button>
+			              	</div>
+						</form>
 					</div>
-					<div class=col-1>
-						<button  type="button" class="btn btn-light" OnClick="moveCategory('D')">↓</button>
+					<div class="col-3">
+						<div class="d-flex justify-content-end mt-2" style="vertical-align:bottom">
+							<button type="button" class="btn btn-light updown" OnClick="moveCategory('U')"><i class="bi bi-caret-up-fill"></i></button>
+							<button  type="button" class="btn btn-light updown" OnClick="moveCategory('D')"><i class="bi bi-caret-down-fill"></i></button>
+						</div>
 					</div>
 				</div>
 				
@@ -253,13 +269,13 @@ input[type=radio]:checked+label{
 					<div class="col-1 ">
 						<div>
 							<button type="button" class="btn btn-light" onclick="btnInsert()">
-							>
+								<i class="bi bi-caret-right-fill"></i>
 							</button >
 						</div>
 						
 						<div>
 							<button type="button" class="btn btn-light" onclick="btnDelete()">
-								<
+								<i class="bi bi-caret-left-fill"></i>
 							</button>
 						</div>
 					</div>

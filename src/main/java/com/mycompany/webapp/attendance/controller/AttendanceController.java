@@ -232,15 +232,17 @@ public class AttendanceController {
 		//1번째 줄에 출근 시간과 status
 		for (Attendance a : attendance) {
 			HashMap<String, String> hash = new HashMap<String, String>();
-			hash.put("title", a.getClockIn() + " " + a.getStatus());
+			hash.put("title",a.getClockIn());
 			hash.put("start", format.format(a.getAttendanceDate()));
 
 			if (a.getStatus().equals("출근")) {
 				hash.put("backgroundColor", "#49a3f1");
 				hash.put("borderColor", "#49a3f1");
+				hash.put("Color", "#444444");
 			} else if (a.getStatus().equals("지각")) {
 				hash.put("backgroundColor", "#ffc107");
 				hash.put("borderColor", "#ffc107");
+				hash.put("Color", "#444444");
 			} else if (a.getStatus().equals("결근")) {
 				hash.put("backgroundColor", "#808080");
 				hash.put("borderColor", "#808080");
@@ -254,7 +256,7 @@ public class AttendanceController {
 		//2번째 줄에 퇴근시간
 		for (Attendance a : attendance) {
 			HashMap<String, String> hash = new HashMap<String, String>();
-			hash.put("title", a.getClockOut());
+			hash.put("title",a.getClockOut());
 			hash.put("start", format.format(a.getAttendanceDate()));
 			if (a.getStatus().equals("출근")) {
 				hash.put("backgroundColor", "#49a3f1");
@@ -274,5 +276,13 @@ public class AttendanceController {
 		
 		//공휴일과 사원 출근 정보를 모두 담은 list를 리턴
 		return answer;
+	}
+	@GetMapping("/holiday")
+	@ResponseBody
+	public boolean holidays(String today) {
+		log.info("실행");
+		Holiday holiday = new Holiday();
+		boolean isholi = holiday.isHoliday(today);
+		return isholi;
 	}
 }

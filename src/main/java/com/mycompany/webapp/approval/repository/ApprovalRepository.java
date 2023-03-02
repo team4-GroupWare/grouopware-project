@@ -22,5 +22,7 @@ public interface ApprovalRepository {
 	public List<Approval> selectApprovalList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
 	//전자결재 상세보기
 	public Approval selectApprovalDetail(int approvalId);
+	//전자결재 카테고리 양식
+	public String selectApprovalForm(int approvalCategoryId);
 	
 }

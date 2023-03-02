@@ -11,6 +11,14 @@
 		]]>
 	</select>
 
+	<select id="selectApprovalForm" parameterType="int" resultType="string">
+		<![CDATA[
+			SELECT approval_form as "approvalForm"
+			FROM approval_category
+			WHERE approval_category_id = #{approvalCategoryId}
+		]]>
+	</select>
+
 	<!-- 전자결재 작성 -->
 	<insert id="insertApproval" parameterType="approval">
 		<![CDATA[
