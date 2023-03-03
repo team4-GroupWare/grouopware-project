@@ -1403,12 +1403,12 @@ h6 {
     height: 290px;
 }
 
-.sec_cal .cal_wrap .day:nth-child(7n -1) {
-    color: #3c6ffa;
+.sec_cal .cal_wrap .day:nth-child(7n -6) {
+    color: #ed2a61;
 }
 
 .sec_cal .cal_wrap .day:nth-child(7n) {
-    color: #ed2a61;
+    color: #3c6ffa;
 }
 
 .sec_cal .cal_wrap .day.disable {

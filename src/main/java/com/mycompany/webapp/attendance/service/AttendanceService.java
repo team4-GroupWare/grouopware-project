@@ -134,4 +134,9 @@ public class AttendanceService implements IAttendanceService {
 		return attendanceRepository.selectAbsentCountMonth(month,empId);
 	}
 
+	@Override
+	public List<String> getAttStatus(String empId, int month) {
+		return attendanceRepository.selectAttStatusCal(empId,month);
+	}
+
 }

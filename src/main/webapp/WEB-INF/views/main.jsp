@@ -302,13 +302,13 @@
 									  
 										<div class="cal_wrap">
 											<div class="days">
+												<div class="day">SUN</div>
 												<div class="day">MON</div>
 												<div class="day">TUE</div>
 												<div class="day">WED</div>
 												<div class="day">THU</div>
 												<div class="day">FRI</div>
 												<div class="day">SAT</div>
-												<div class="day">SUN</div>
 											</div>
 											<div class="dates"></div>
 										</div>

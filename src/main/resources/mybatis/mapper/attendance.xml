@@ -110,4 +110,10 @@
 	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '결근'
 	 </select>
 	 
+	 <select id="selectAttStatusCal" parameterType="map" resultType="string">
+	  	select status
+	 	from attendance
+	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month}
+	 </select>
+	 
 </mapper>
