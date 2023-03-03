@@ -84,7 +84,27 @@ function calendarInit() {
         if (today.getMonth() == currentMonth) {
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
+            
+            currentMonthDate[todayDate -3].classList.add('holiday');
+            currentMonthDate[todayDate -2].classList.add('attendance');
             currentMonthDate[todayDate -1].classList.add('today');
+            currentMonthDate[todayDate +2].classList.add('attendance');
+            currentMonthDate[todayDate +3].classList.add('attendance');
+            currentMonthDate[todayDate +4].classList.add('late');
+            currentMonthDate[todayDate +5].classList.add('attendance');
+            currentMonthDate[todayDate +6].classList.add('attendance');
+            
+            currentMonthDate[todayDate +9].classList.add('attendance');
+            currentMonthDate[todayDate +10].classList.add('attendance');
+            currentMonthDate[todayDate +11].classList.add('late');
+            currentMonthDate[todayDate +12].classList.add('attendance');
+            currentMonthDate[todayDate +13].classList.add('attendance');
+            
+            currentMonthDate[todayDate +16].classList.add('vacation');
+            currentMonthDate[todayDate +17].classList.add('vacation');
+           
+           
+           
         }
     }
 
