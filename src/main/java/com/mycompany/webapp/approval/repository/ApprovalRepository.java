@@ -20,6 +20,10 @@ public interface ApprovalRepository {
 	public int selectApprovalCount(@Param("empId") String empId, @Param("status") String status);
 	//전자결재 목록
 	public List<Approval> selectApprovalList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
+	//전자결재 임시저장 갯수
+	public int selectTempApprovalCount(String empId);
+	//전자결재 임시저장 목록
+	public List<Approval> selectApprovalTempList(@Param("pager")Pager pager, @Param("empId") String empId);
 	//전자결재 상세보기
 	public Approval selectApprovalDetail(int approvalId);
 	//전자결재 카테고리 양식

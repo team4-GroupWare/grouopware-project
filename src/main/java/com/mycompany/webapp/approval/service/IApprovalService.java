@@ -26,4 +26,10 @@ public interface IApprovalService {
 	//전자결재 상세보기
 	public Approval getApprovalDetail(int approvalId);
 
+	//전자결재 임시저장 목록
+	public List<Approval> getApprovalTempList(Pager pager, String empId);
+
+	//전자결재 임시저장 갯수
+	public int getTempApprovalRow(String empId);
+
 }

@@ -33,7 +33,7 @@
 <body>
   	<%@ include file="/WEB-INF/views/common/header.jsp" %>
   
-  	<!-- ======= Sidebar ======= -->
+  		<!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
     	<ul class="sidebar-nav" id="sidebar-nav">
       		<li class="nav-item">
@@ -66,12 +66,12 @@
      		</li><!-- End 결재 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
+        		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
-        		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?" class="active"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
           			</li>
           			<li>
             			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
@@ -96,7 +96,7 @@
       		</li><!-- End 열람함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
+        		<a class="nav-link active" href="${pageContext.request.contextPath}/approval/templist">
           			<i class="bi bi-file-earmark"></i><span>임시저장함</span>
         		</a>
       		</li><!-- End 임시저장함 -->
@@ -105,15 +105,7 @@
 
   	<main id="main" class="main">
     	<div class="pagetitle">
-    		<h1>내 문서함</h1>
-      			<nav>
-		        	<ol class="breadcrumb">
-		          		<li class="breadcrumb-item">전자결재</li>
-		          		<li class="breadcrumb-item">내 문서함</li>
-		          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
-		          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
-		        	</ol>
-      			</nav>
+    		<h1>임시저장함</h1>
     	</div><!-- End Page Title -->
 
 		<section class="section">
@@ -165,35 +157,35 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="tmplist?pageNo=1" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="templist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="templist?pageNo=${i}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="templist?pageNo=${i}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="templist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="templist?pageNo=${pager.totalPageNo}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	

@@ -76,7 +76,7 @@
 		        console.log("title: " + $("#title").val());
 		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
 		        
-		        document.querySelector("#approval_form").submit();
+		        $("#approval_form").submit();
 		        
 		    });
 		    
@@ -253,6 +253,8 @@
               							</div>
               		
 	              						<div class="row">
+	              							<div id="approvalLine">
+	              							</div>
 	              							<!-- <div class="col-sm-3">
 		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
 					            					<div class="row g-0">
