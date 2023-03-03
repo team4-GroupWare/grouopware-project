@@ -1383,7 +1383,11 @@ h6 {
 
 .current.today {
 	background-color: #EBEDEF;
+	/* border: 4px #EBEDEF; */
 }
+.current.today.attendance{
+	background:linear-gradient(#EBEDEF 80%,#3C97E1 20%);
+}	
 .current.attendance {
 	/* background-color: ##3C97E1; */
 	background:linear-gradient(#fff 80%,#3C97E1 20%);
