@@ -161,5 +161,14 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.selectEmpListByTeamId(teamid);
 	}
 
+	/**
+	 * @author : LEEYESEUNG
+	 */
+	@Override
+	public int updatePhone(String empId, String phone) {
+		log.info("실행");
+		return employeeRepository.updatePhone(empId,phone);
+	}
+
 	
 }

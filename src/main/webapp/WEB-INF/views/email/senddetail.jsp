@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -49,13 +50,6 @@
 		      </li><!-- End Icons Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/importantlist">
-		          <i class="bi bi-star-fill"></i>
-		          <span>중요 메일함</span>
-		        </a>
-		      </li><!-- End Profile Page Nav -->
-		
-		      <li class="nav-item">
 		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
 		          <i class="bi bi-envelope-exclamation"></i>
 		          <span>임시저장함</span>
@@ -82,21 +76,31 @@
 		            <div class="card-body">
 		              <div class="d-flex mb-4">
 		              	<!-- 중요메일 표시 아이콘 -->
-		              	<i class="mt-4 bi bi-star" style="margin-right:8px;font-size:23px;color:#F0D14A"></i>
-		              	<i class="mt-4 bi bi-star-fill" style="margin-right:8px;font-size:23px;color:#F0D14A"></i>
-		              	<span class=" mt-4" style="font-size:24px;"><b>지호에게..지호야잘지내지나는어쩌구저쩌구우애</b></span>
+		              	<c:if test="${not emailDetail.important}">
+		              	<i class="bi bi-star" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
+		              	</c:if>
+		              	<c:if test="${emailDetail.important}">
+		              	<i class="bi bi-star-fill" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
+		              	</c:if>
+		              	<span class="mt-4" style="font-size:24px;"><b>${emailDetail.title}</b></span>
 		              	<div style="text-align:center;margin-top:24px;margin-left:20px;">
+		              		<c:if test="${emailDetail.strashDate ne null or emailDetail.strashDate ne null}">
 		              		<!-- 휴지통에서 조회한 경우 -->
 		              		<button type="submit" class="btn btn-secondary btn-sm">복구</button>
+		              		</c:if>
+		              		<c:if test="${emailDetail.readDate == null}">
 		              		<!-- 수신자가 미수신 상태일 경우 -->
 		                    <button type="submit" class="btn btn-secondary btn-sm">발신취소</button>
+		                    </c:if>
 		                    <button type="submit" class="btn btn-primary btn-sm">전달</button>
+		                    <c:if test="${emailDetail.important}">
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
+		                    </c:if>
+		                    <c:if test="${not emailDetail.important}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
-		                    <!-- 휴지통에서는 영구삭제가 가능함 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+		                    </c:if>
 		                  </div>
 		              	
 		              </div>
@@ -106,10 +110,10 @@
 			                <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">받는 사람</label>
 			                  <div class="col-md-8 my-auto d-flex">
-			                   		<p style="color:grey" class="my-auto">이예승 </p>
-			                   		<p style="color:grey;margin-left:2px" class="my-auto">사원 </p>
+			                   		<p style="color:grey" class="my-auto">${emailDetail.receiveName} </p>
+			                   		<p style="color:grey;margin-left:2px" class="my-auto">${emailDetail.receiveGrade} </p>
 			                   		<p  class="my-auto mx-1">| </p>
-			                   		<p style="color:grey" class="my-auto">ys1893@coderby.com</p>
+			                   		<p style="color:grey" class="my-auto">${emailDetail.receiveId}@exaient.com</p>
 			                  </div>
 			                </div>
 		                </div>
@@ -118,13 +122,18 @@
 			                <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">보낸 날짜</label>
 			                  <div class="col-sm-8 my-auto">
-			                    <p class="my-auto" style="color:grey;font-size:15px">2023.02.13 10:32:53</p>
+			                    <p class="my-auto" style="color:grey;font-size:15px">${emailDetail.sentDate}</p>
 			                  </div>
 			                 </div>
 			                <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">읽은 날짜</label>
 			                  <div class="col-sm-8 my-auto">
-			                    <p class="my-auto" style="color:grey;font-size:15px">2023.02.16 09:46:23</p>
+			                  	<c:if test="${emailDetail.readDate != null}">
+			                    <p class="my-auto" style="color:grey;font-size:15px">${emailDetail.readDate}</p>
+			                  	</c:if>
+			                  	<c:if test="${emailDetail.readDate == null}">
+			                    <p class="my-auto" style="color:grey;font-size:15px">안읽음</p>
+			                  	</c:if>
 			                  </div>
 			                </div>
 			               </div>
@@ -143,9 +152,7 @@
 		                
 		                <div class="row mb-3 px-4">
 		                  <div class="col-sm-12 mail-content px-3" style="height:320px">
-		                    	 여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다. ====> 이 글은 예를 보이기 위한 것이므로 읽을 필요가 없다.
-		
-		여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.여기는 DIV 스타일에 overflow: auto; 속성을 주었다. 내용의 양이 DIV 영역보다 많으면 스클롤바가 표시되고 적으면 표시되지 않는다.
+		             			${emailDetail.content}
 		                  </div>
 		                </div>
 		

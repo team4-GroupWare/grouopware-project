@@ -3,6 +3,7 @@ package com.mycompany.webapp.employee.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -234,10 +236,20 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/myUpdate")
-	public String update(HttpSession session) {
+	public String update() {
 		log.info("실행");
 		return "employee/user_profileupdate";
 		
+	}
+	
+	@PostMapping("/update")
+	public String updatePhone(Employee employee, HttpSession session) {
+		log.info("실행");
+		String phone = employee.getPhone();
+		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
+		employeeService.updatePhone(originEmployee.getEmpId(), phone);
+		originEmployee.setPhone(phone);
+		return "redirect:/employee/myPage";
 	}
 	
 	@GetMapping("/change")

@@ -50,7 +50,7 @@
       <div class="row">
           <div class="card col-9">
           	<div class="row my-4">
-	           <div class="col-lg-4 col-xs-12 card-body profile-card pt-4 d-flex flex-column align-items-center">
+	           <div class="col-md-5 card-body profile-card pt-4 d-flex flex-column align-items-center">
 				  <div class="mb-1" style="width:250px;height:250px">
 					 <img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
 					 <div  style="text-align:center;vertical-align:middle">
@@ -58,7 +58,7 @@
                           <button onclick="onClickUpload()" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
                           <script>
 					        function onClickUpload() {
-					            let myInput = document.getElementById("my-input");
+					            let myInput = $("#my-input");
 					            myInput.click();
 					        }
 					    </script>
@@ -66,11 +66,11 @@
                       </div>
 				  </div>
 				  <div style="text-align:center;margin-top:60px">
-	              	<h2>아저씨</h2>
-             	  	<p style="color: grey;size:20px">사원</p>
+	              	<h2>${loginEmployee.name}</h2>
+             	  	<p style="color: grey;size:20px">${loginEmployee.gradeName}</p>
 	              </div>
 	            </div>
-	            <div class="col-lg-8 col-xs-12 card-body pt-3">
+	            <div class="col-md-7 card-body pt-3">
 	              <div class="tab-content pt-2">
 	
 	                <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -78,47 +78,53 @@
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label ">이름</div>
-	                    <div class="col-lg-9 col-md-8">아저씨</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.name}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">부서</div>
-	                    <div class="col-lg-9 col-md-8">공공사업 1Div</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.deptName}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">팀</div>
-	                    <div class="col-lg-9 col-md-8">프론트엔드팀</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.teamName}</div>
 	                  </div>
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">직급</div>
-	                    <div class="col-lg-9 col-md-8">사원</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.gradeName}</div>
 	                  </div>
 	                  
-	                  <form>
+	                  <form id="updatePhone" method="post" action="${pageContext.request.contextPath}/employee/update">
 		                  <div class="row">
 		                    <div class="col-lg-3 col-md-4 label">Phone</div>
-		                    <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071" style="width:250px">
+		                    <input name="phone" type="text" class="form-control" id="phone" value="${loginEmployee.phone}" style="width:250px">
 		                  </div>
 		                  
                      </form>
 		                  
 	                   <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">생년월일</div>
-	                    <div class="col-lg-9 col-md-8">2023-02-14</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.birth}</div>
 	                  </div>
 	                
 	
 	                  <div class="row">
 	                    <div class="col-lg-3 col-md-4 label">Email</div>
-	                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+	                    <div class="col-lg-9 col-md-8">${loginEmployee.empId}@exaient.com</div>
 	                  </div>
 	                </div>
 	              </div><!-- End Bordered Tabs -->
 	            </div>
 	            <div style="width:300px;text-align:center" class="mx-auto">
-	            	<a class="btn btn-primary" href="${pageContext.request.contextPath}/employee/myPage">수정 완료</a>
+	            	<button class="btn btn-primary" onclick="submitForm()">수정 완료</button>
+	            	<script>
+	            		function submitForm() {
+	            			$("#updatePhone").submit();
+	            		}
+	            	
+	            	</script>
 	            </div>
             </div>
           </div>
