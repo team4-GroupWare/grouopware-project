@@ -23,6 +23,31 @@
 			$("#content").attr('value', content);
 			$("#writeForm").submit();
 		}
+		
+		function tempSave() {
+			var content = tinymce.get("tinymce-editor").getContent();
+			$("#content").attr('value', content);
+			var receiveId = $("#receiver").val();
+			var title = $("#title").val();
+			var important = $("#important").val();
+			
+			var data = {receiveId : receiveId, 
+						title : title, 
+						important : important, 
+						content : content
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/email/tempsave",
+				method : "post",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8",
+				traditional: true
+			}).done((data)=> {
+				console.log("성공: "+data);
+				//$("#trashModal").modal('show');	
+			});
+		}
 	</script>
 	
 </head>
@@ -147,11 +172,11 @@
                 </div>
                 <div class="row mb-3">
                   <div class="col-sm-12" style="text-align:center">
-                    <button type="submit" class="btn btn-secondary">임시저장</button>
+                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
                     <button type="button" class="btn btn-primary" onclick="getContent()">보내기</button>
                   </div>
                 </div>
-
+                
               </form><!-- End General Form Elements -->
 
             </div>
