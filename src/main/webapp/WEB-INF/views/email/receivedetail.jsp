@@ -89,8 +89,11 @@
 		                    <button type="submit" class="btn btn-secondary btn-sm">답장</button>
 		                    <button type="submit" class="btn btn-primary btn-sm">전달</button>
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -> 삭제를 눌렀을 때 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <c:if test="${emailDetail.rtrashDate eq null and emailDetail.strashDate eq null}">
+		                    
+		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.strashDate == null and emailDetail.important}">
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
+		                    </c:if>
+		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.strashDate == null and not emailDetail.important}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 		                    </c:if>
@@ -116,7 +119,7 @@
 		                <div class="row mb-3">
 		                  <label for="inputText" class="col-sm-2 col-form-label">보낸 날짜</label>
 		                  <div class="col-sm-10 my-auto">
-		                    <p class="my-auto" style="color:grey;font-size:15px">2023.02.13</p>
+		                    <p class="my-auto" style="color:grey;font-size:15px">${emailDetail.sentDate}</p>
 		                  </div>
 		                </div>
 		               

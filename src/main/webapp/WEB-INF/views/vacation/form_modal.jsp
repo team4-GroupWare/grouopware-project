@@ -33,24 +33,6 @@ input[type=radio]:checked+label{
 	
 <!-- modal -->
 <script>
-	function ListSubmit(form) {
-		var gnum = form.category_list.options.length;
-		var value_arr = "";
-
-		for (i = 0; i < gnum; i++) {
-			if (i == 0) {
-				value_arr = form.category_list.options[i].value;
-			} else {
-				value_arr = value_arr + ","
-						+ form.category_list.options[i].value;
-			}
-		}
-
-		form.category_code.value = value_arr;
-		form.submit();
-
-	}
-	
 	function moveCategory(type) {
 		//select 박스 안
 		let selectEl = document.querySelector("#selectEl");
@@ -92,12 +74,17 @@ input[type=radio]:checked+label{
 	}
 	//선택된 사원 insert
 	function btnInsert(){
-		let empId = $("input[type=radio]:checked").attr("value");
-		
+		var type = 'false';
+		let empId = $("input[name=employee]:checked").attr("value");
 		let empName = $("label[id='"+empId+"']").text();
 		
+		console.log("empId: " + empId);
 		let selectEl = document.querySelector("#selectEl");
 	    var objOption = document.createElement("option");
+	    
+	    if(typeof empId == "undefined"){
+			type = 'true';
+		}
 	    
 	    //사원 이름
 	    objOption.text = empName;
@@ -106,7 +93,6 @@ input[type=radio]:checked+label{
 	    //사원 ID
 	    objOption.id = empId;
 	    
-	    var type = 'false';
 	    var length = document.getElementById('selectEl').length;
 	   	//이미 있는 사원인지 검사
 	    for (i = 0; i < length; i++) {
@@ -150,8 +136,17 @@ input[type=radio]:checked+label{
 		selectEl.options[selectEl.options.length-1].selected = true;
 	}
 	
-	function changeColor() {
-		
+	function ListSubmit() {
+		var length = document.getElementById('selectEl').length;
+		//var length = $("#selectEl").length;
+		console.log("length: " + length);
+		var arr1 = [];
+
+		for (i = 0; i < length; i++) {
+			arr1[i] = selectEl.options[i].id;
+			console.log(arr1);
+		}
+		console.log(arr1);
 	}
 	
 </script>
@@ -282,7 +277,7 @@ input[type=radio]:checked+label{
 					
 					<!-- 선택된 사원 -->
 					<div class="col-3 border">
-						<select  id = "selectEl" name="category_list" size="10" style="width: 120px;">
+						<select  id="selectEl" name="category_list" size="10" style="width: 120px;">
 							
 						</select> <input type="hidden" name="category_code" value=""><br>
 					</div>
@@ -293,7 +288,7 @@ input[type=radio]:checked+label{
 			<!-- Footer -->
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				<button  class="btn btn-primary" form="seq"  onclick="ListSubmit(this.form)">확인</button>
+				<button type="button" class="btn btn-primary" onclick="ListSubmit()">확인</button>
 			</div>
 		</div>
 	</div>

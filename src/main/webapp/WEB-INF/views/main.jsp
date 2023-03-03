@@ -6,37 +6,34 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
-	@media screen and (max-width: 1200px) {
-	  .menubar {
-	    display: none;
-	  }
-	}
-	
-	a:link {
-  	color : black;
-	}
-	a:visited {
-	  color : black;
-	}
-	a:hover {
-	  color : #97ACFC;
-	}
-	a:active {
-	  color : #97ACFC;
-	}
-
-	.card-icon {
-		background-color: white;
-		cursor : pointer;
-	}
-	.card-icon:hover {
-		background-color: #004389;;
-		font-weight : bold;
-	}
-	.card-icon:hover > .bi {
-		color: #fff;
-	}
-	
+		@media screen and (max-width: 1200px) {
+		  .menubar {
+		    display: none;
+		  }
+		}
+		a:link {
+	  		color : black;
+		}
+		a:visited {
+			color : black;
+		}
+		a:hover {
+		  	color : #97ACFC;
+		}
+		a:active {
+		  	color : #97ACFC;
+		}
+		.card-icon {
+			background-color: white;
+			cursor : pointer;
+		}
+		.card-icon:hover {
+			background-color: #004389;;
+			font-weight : bold;
+		}
+		.card-icon:hover > .bi {
+			color: #fff;
+		}
 	</style>
 </head>
 	<body  style="overflow-x: hidden">

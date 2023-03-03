@@ -34,7 +34,7 @@
 				            	<ul id="nav-dept${status.count}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					              	<c:forEach var="team" items="${teams[status.index]}">
 					              	<li>
-					              		<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
+					              		<a href="#"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
 					              	</li>
 					              	</c:forEach>
 				            	</ul>
@@ -112,7 +112,7 @@
 	                				</thead>
 	                				<tbody>
 	                					<c:forEach var="employee" items="${employees}">
-		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')">
+		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')" style="cursor:pointer;">
 							                    <th scope="row"><img src="${pageContext.request.contextPath}/resources/assets/img/profile_img.png" alt="Profile" class="rounded-circle" width="40px">${employee.name}</th>
 							                    <td>${employee.phone}</td>
 							                    <td>${employee.empId}@mycompany.com</td>

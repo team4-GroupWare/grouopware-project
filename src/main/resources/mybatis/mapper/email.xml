@@ -187,11 +187,13 @@
 			<![CDATA[
 			select * 
 			from (
-		        select r.receive_email_id as receiveEmailId,
+		        select s.send_email_id as sendEmailId,
+                       r.receive_email_id as receiveEmailId,
 		        	   r.SENT_EMP_ID as sentId,
 		        	   s.received_emp_id as receiveId,
 		        	   s.sent_date as sentDate,
 		        	   c.title, r.trash_date rtrashDate,
+                       s.trash_date strashDate,
 		        	   e.name as name
 		        from email_content c, send_email s,receive_email r, employees e
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
@@ -202,9 +204,11 @@
 		        	  and e.emp_id = r.sent_emp_id
 		        union 
 		        select  s.send_email_id as sendEmailId,
+                        r.receive_email_id as receiveEmailId,
 		        	    r.SENT_EMP_ID as sentId,
 		        		s.received_emp_id as receiveId,
 		        		s.sent_date as sentDate, c.title,
+                        r.trash_date rtrashDate,
 		        		s.trash_date strashDate,
 		        		e.name as name
 		        from email_content c, send_email s,receive_email r, employees e
@@ -353,8 +357,9 @@
 	
 	<select id="selectReceiveEmailDetail" parameterType="int" resultType="emailDetail">
 		<![CDATA[
-		select r.RECEIVE_EMAIL_ID as receiveEmailId, r.SENT_EMP_ID as sentEmpId, r.IS_DELETED as isDeleted, g.grade_name as sendGrade,
-			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName, r.trash_date as rtrashDate
+		select r.RECEIVE_EMAIL_ID as receiveEmailId, r.SENT_EMP_ID as sendId, r.IS_DELETED as isDeleted, g.grade_name as sendGrade,
+			   r.TRASH_DATE as trash_date, c.CONTENT, c.TITLE, c.IMPORTANT, s.SENT_DATE as sentDate, e.name as sendName
+			   , r.trash_date as rtrashDate, r.read_date as readDate
 		from email_content c, receive_email r, send_email s, employees e, grade g
 		where c.email_content_id = r.email_content_id
 			  and s.email_content_id = c.email_content_id
@@ -364,6 +369,32 @@
 		
 		]]>
 	
+	</select>
+	
+	<update id="updateReadDate" parameterType="int">
+		<![CDATA[
+		update receive_email
+		set read_date = sysdate
+		where receive_email_id = #{receiveEmailId}
+		
+		]]>
+	
+	</update>
+	
+	<select id="selectSendEmailDetail" parameterType="int" resultType="emailDetail">
+		<![CDATA[
+		select s.send_EMAIL_ID as sendEmailId, s.RECEIVED_EMP_ID as receiveId, 
+			   s.IS_DELETED as isDeleted, g.grade_name as receiveGrade,
+			   s.TRASH_DATE as strash_date, c.CONTENT, c.TITLE, c.IMPORTANT,
+			   s.SENT_DATE as sentDate, e.name as receiveName,
+			   r.read_date as readDate
+		from email_content c, receive_email r, send_email s, employees e, grade g
+		where c.email_content_id = r.email_content_id
+			  and s.email_content_id = c.email_content_id
+			  and s.send_email_id = #{emailId}
+			  and s.RECEIVED_EMP_ID = e.emp_id
+			  and e.grade_id = g.grade_id
+		]]>
 	</select>
 
 

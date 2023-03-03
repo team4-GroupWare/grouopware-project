@@ -167,5 +167,17 @@ public interface EmailRepository {
 	 * @return
 	 */
 	EmailDetail selectReceiveEmailDetail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param receiveEmailId
+	 * @return
+	 */
+	int updateReadDate(int receiveEmailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendEmailId
+	 * @return
+	 */
+	EmailDetail selectSendEmailDetail(int emailId);
 
 }

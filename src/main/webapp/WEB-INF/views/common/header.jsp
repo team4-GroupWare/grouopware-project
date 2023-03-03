@@ -34,8 +34,9 @@
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px">
+					<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class="topprofile rounded-circle" style="width:40px;">
 					<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">${loginEmployee.name}</span>
+				
 				</a>
 				
 				<!-- dropbar -->
