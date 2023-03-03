@@ -20,6 +20,7 @@ import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.model.ReceiveEmail;
+import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.repository.EmailRepository;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
@@ -220,6 +221,7 @@ public class EmailController {
 	 * @param type : 어느 메일함에서 왔는지 구별을 위함
 	 * @return String : 메일 update 결과
 	 */
+	
 	@ResponseBody
 	@RequestMapping(value="/trashemail")
 	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
@@ -290,5 +292,16 @@ public class EmailController {
 	public String writeTeampEmail(@RequestParam int tempEmailId) {
 		log.info("실행");
 		return "email/write";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
+	public String tempSave(@RequestBody TempEmail tempEmail) {
+		log.info("실행");
+		log.info(tempEmail);
+		//int row = emailService.tempSaveEmail(tempEmail);
+		String result = "성공";
+		return result;
+		
 	}
 }

@@ -261,7 +261,7 @@
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>
-                  <tr>
+                  <tr style="border-bottom:2px solid #004389;">
                   	<th scope="col" ><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
                     <th scope="col">이름</th>
                     <th scope="col">제목</th>
@@ -301,18 +301,28 @@
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
                     <c:if test="${type eq 'receive'}">
-                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">
+                    	${emailList.title}
+                    	</a>
+                    </td>
                     </c:if>
                     <!-- if조건을 바꿔야할 듯 -->
-                     <c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
-                    <td><a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a></td>
+                    <c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
+                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+                    	<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
+                    </td>
                     </c:if>
                     <!-- if조건을 바꿔야할 듯 -->
-                     <c:if test="${type eq 'trash' and emailList.receiveId eq loginEmployee.empId}">
-                    <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
+                    <c:if test="${type eq 'trash' and emailList.receiveId eq loginEmployee.empId}">
+                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a>
+                    </td>
                     </c:if>
                      <c:if test="${type eq 'temp'}">
-                    <td><a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a></td>
+                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+                    	<a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a>
+                    </td>
                     </c:if>
                     
                     <c:if test="${type ne 'trash' and type ne 'temp'}">
@@ -341,7 +351,7 @@
               	</div>
               	</c:if>
               <c:if test="${not empty emailList}">
-			  <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+			  <div class="d-flex justify-content-center" style="vertical-align:bottom">
   				<nav aria-label="Page navigation example">
 	   				<ul class="pagination">
 	   					<li class="page-item">

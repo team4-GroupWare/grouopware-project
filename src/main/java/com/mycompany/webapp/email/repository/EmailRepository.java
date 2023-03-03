@@ -10,6 +10,7 @@ import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
+import com.mycompany.webapp.email.model.TempEmail;
 
 public interface EmailRepository {
 	/**
@@ -179,5 +180,11 @@ public interface EmailRepository {
 	 * @return
 	 */
 	EmailDetail selectSendEmailDetail(int emailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmail
+	 * @return
+	 */
+	int insertTempEmail(TempEmail tempEmail);
 
 }
