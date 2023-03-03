@@ -34,7 +34,7 @@
 				            	<ul id="nav-dept${status.count}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					              	<c:forEach var="team" items="${teams[status.index]}">
 					              	<li>
-					              		<a href="icons-bootstrap.html"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
+					              		<a href="#"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
 					              	</li>
 					              	</c:forEach>
 				            	</ul>

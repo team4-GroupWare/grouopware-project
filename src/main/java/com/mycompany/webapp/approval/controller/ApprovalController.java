@@ -129,6 +129,22 @@ public class ApprovalController {
 		return "approval/approval_list";
 	}
 	
+	@GetMapping("/templist")
+	public String getApprovalTempList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
+		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		String empId = loginEmp.getEmpId();
+		
+		int approvalRow = approvalService.getTempApprovalRow(empId);
+		Pager pager = new Pager(10, 5, approvalRow, pageNo);
+		
+		List<Approval> approvals = approvalService.getApprovalTempList(pager, empId);
+		
+		model.addAttribute("approvals", approvals);
+		model.addAttribute("pager", pager);
+		
+		return "approval/approval_templist";
+	}
 	/**
 	 * 전자결재 상세보기
 	 * @author : LEEJIHO

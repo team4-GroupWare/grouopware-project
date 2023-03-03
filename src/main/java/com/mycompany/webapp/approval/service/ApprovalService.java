@@ -59,6 +59,18 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectApprovalForm(approvalCategoryId);
 	}
 
+	@Override
+	public List<Approval> getApprovalTempList(Pager pager, String empId) {
+		log.info("실행");
+		return approvalRepository.selectApprovalTempList(pager, empId);
+	}
+
+	@Override
+	public int getTempApprovalRow(String empId) {
+		log.info("실행");
+		return approvalRepository.selectTempApprovalCount(empId);
+	}
+
 
 	
 }
