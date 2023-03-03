@@ -198,7 +198,10 @@
                   		<tr>
                   			<td><input name="selectone" value="${emailList.sendEmailId}" onclick='checkSelectAll()' class="form-check-input" type="checkbox"></td>
                     		<td>${emailList.receiveName}</td>
-                    		<td><a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a></td>
+                    		<td>
+                    			<c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+                    			<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
+                    		</td>
                     		<td>${emailList.sentDate}</td>
                     		<c:if test="${empty emailList.readDate}">
                     		<td>미수신</td>
@@ -218,7 +221,7 @@
               	  </c:if>
 	              <!-- End Table with hoverable rows -->
 	              <c:if test="${not empty emailList}">
-	              <div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+	              <div class="d-flex justify-content-center" style="vertical-align:bottom">
 	  				<nav aria-label="Page navigation example">
 		   				<ul class="pagination">
 		   					<li class="page-item">

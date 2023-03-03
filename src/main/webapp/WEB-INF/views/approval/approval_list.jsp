@@ -13,20 +13,22 @@
 		  	});
 		});
 	</script>
-	
 	<style>
+		thead tr {
+			border-bottom:2px solid #004389;
+		}
 		table a:link {
-	    	color : black;
-	   	}
-	   	table a:visited {
-	     	color : black;
-	   	}
-	   	table a:hover {
-	     	color : #97ACFC;
-	   	}
-	   	table a:active {
-	     	color : #97ACFC;
-	   	}
+			color : black;
+		}
+		table a:visited {
+		 	color : black;
+		}
+		table a:hover {
+		 	color : #97ACFC;
+		}
+		table a:active {
+		 	color : #97ACFC;
+		}
 	</style>
 </head>
 
@@ -128,12 +130,40 @@
                 				<thead>
                   					<tr>
 					                    <!-- <th scope="col" width="10%">#</th> -->
-					                    <th scope="col" width="15%">결재 양식</th>
+					                    <th scope="col" width="15%">
+						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+	            								<span class="d-none d-md-block dropdown-toggle ps-2">결재 양식</span>
+	          								</a>
+	          								<ul class="dropdown-menu ">
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center" href="#">
+	                								<span>기안서</span>
+	              								</a>
+	            							</li>
+	            							<li>
+	              								<hr class="dropdown-divider">
+	            							</li>
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center" href="#">
+	                								<span>지출품의서</span>
+	              								</a>
+	            							</li>
+	            							<li>
+	              								<hr class="dropdown-divider">
+	            							</li>
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center" href="#">
+	                								<span>사직서</span>
+	              								</a>
+								            </li>
+								    	</ul>
+          								</th>
 					                    <th scope="col" width="35%">제목</th>
 					                    <th scope="col" width="15%">기안자/부서</th>
 					                    <th scope="col" width="10%">상태</th>
 					                    <th scope="col" width="15%">기안일시</th>
                   					</tr>
+
                 				</thead>
                 				<tbody>
                 					<c:forEach var="approval" items="${approvals}" varStatus="index">
@@ -161,7 +191,7 @@
               				</table>
              				<!-- End Table -->
             			</div>
-            			<div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+            			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">

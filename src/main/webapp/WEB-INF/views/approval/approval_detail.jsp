@@ -57,7 +57,7 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
   	<!-- ======= Sidebar ======= -->
-  	<aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
     	<ul class="sidebar-nav" id="sidebar-nav">
       		<li class="nav-item">
         		<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/approval/write" style="width:100%">
@@ -66,59 +66,60 @@
         		</a>
       		</li>
       		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="#"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='대기'"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='진행'"><span>진행</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='승인'"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status='반려'"><span>반려</span></a>
           			</li>
         		</ul>
      		</li><!-- End 결재 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="myapproval-nav" data-bs-toggle="collapse" href="#">
+        		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
-        		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="#"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+          			</li> 
+          			<li>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="#"><span>승인</span></a>
-          			</li>
-          			<li>
-            			<a href="#"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
+      		
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/detail">
+        		<a class="nav-link collapsed" href="#">
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link collapsed" href="#">
+        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
           			<i class="bi bi-file-earmark"></i><span>임시저장함</span>
         		</a>
       		</li><!-- End 임시저장함 -->
@@ -128,13 +129,7 @@
 	<!-- 내용 -->
   	<main id="main" class="main">
 	    <div class="pagetitle">
-	    	<h1>결재 작성</h1>
-	      	<nav>
-		    	<ol class="breadcrumb">
-		          	<li class="breadcrumb-item"><a href="#">전자결재</a></li>
-		          	<li class="breadcrumb-item">내 문서함</li>
-		        </ol>
-	      	</nav>
+	    	<h1>전자결재 내용</h1>
 	    </div>
 	
     	<section class="section">
@@ -155,21 +150,21 @@
                 				<table id="vertical-1" class="table table-bordered" style="width:100%">
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">결재 양식</th>
-						                <td style="width: 40%">기안서</td>
+						                <td style="width: 40%">${approval.categoryName}</td>
 						                <th style="background-color:#E9EFFF; width:10%">기안 날짜</th>
-						                <td style="width: 40%">2023-02-16</td>
+						                <td style="width: 40%">${approval.writeDate}</td>
 						            </tr>
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">기안자</th>
-						                <td style="width: 40%">이지호</td>
+						                <td style="width: 40%">${approval.empName}</td>
 						                <th style="background-color:#E9EFFE; width:10%">소속</th>
 						                <td style="width: 40%">공공사업1 Div / 솔루션개발팀</td>
 						            </tr>
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">참조</th>
-						                <td style="width: 40%">최은종</td>
+						                <td style="width: 40%"></td>
 						                <th style="background-color:#E9EFFE; width:10%">열람</th>
-						                <td style="width: 40%">이지호 > 이연희 > 김지영</td>
+						                <td style="width: 40%"></td>
 						        	</tr>
 						        </table>
                 				
