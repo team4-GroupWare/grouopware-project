@@ -260,8 +260,17 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public EmailDetail getReceiveEmail(int receiveEmailId) {
+	public EmailDetail readReceiveEmail(int receiveEmailId) {
 		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
+		if(emailDetail.getReadDate()==null) {
+			int row = emailRepository.updateReadDate(receiveEmailId);
+		}
+		return emailDetail;
+	}
+
+	@Override
+	public EmailDetail readSendEmail(int sendEmailId) {
+		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
 		return emailDetail;
 	}
 

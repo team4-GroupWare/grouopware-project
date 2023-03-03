@@ -23,4 +23,9 @@ public interface IEmployeeService {
 	public List<Employee> getEmpList();
 	public List<Employee> getSearchEmpList(Pager pager, Employee employee);
 	public List<Employee> getEmpList(int teamid);
+	/**
+	 * @author : LEEYESEUNG
+	 * @param phone
+	 */
+	public int updatePhone(String empId, String phone);
 }

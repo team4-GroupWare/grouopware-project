@@ -171,4 +171,12 @@
     	]]>
 	</select>
 	
+	<update id="updatePhone" parameterType="String">
+		<![CDATA[
+		update employees
+		set phone = #{phone}
+		where emp_id = #{empId}
+		]]>
+	</update>
+	
 </mapper>

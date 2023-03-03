@@ -1378,15 +1378,19 @@ h6 {
     color: #999;
     font-size: 12px;
     text-align: center;
-    border-radius:5px
+    /* border-radius:5px */
 }
 
 .current.today {
-	border:2px solid #1E317D;
+	background-color: #EBEDEF;
 }
-
 .current.attendance {
-	background-color: #DAEAF7;
+	/* background-color: ##3C97E1; */
+	background:linear-gradient(#fff 80%,#3C97E1 20%);
+}
+.current.late {
+	/* background-color: ##FFDF6C; */
+	background:linear-gradient(#fff 80%,#FFDF6C 20%);
 }
 
 .sec_cal .cal_wrap .dates {

@@ -269,16 +269,17 @@
 						<!-- 내용 -->
 							<div class="card info-card sales-card "  style="height:335px; ">
 			           		<div class="card-body mt-4">
-					            <div class="mb-3"> 
-					            	<!-- 오늘날짜 -->
-									<h5 id="date"></h5>
+					            <!-- 현재시간 -->
+			                	<div class=""><h2 id="time"></h2></div>
+					            <div class="row">
+					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
+									<!-- 출근 상태 -->
+				                	<!-- <div class="col">
+				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
+				                			출근
+				                		</span>
+				                	</div> -->
 					            </div>
-				                <div class="d-flex">
-				                	<!-- 현재시간 -->
-				                	<div><h2 id="time"></h2></div>
-				                	<!-- 출근 상태 -->
-				                	<div class="mt-2 mx-2"><span id="status" class="badge bg-danger"></span></div>
-				                </div>
 								
 								<!-- 출퇴근 버튼 -->
 								<div>
