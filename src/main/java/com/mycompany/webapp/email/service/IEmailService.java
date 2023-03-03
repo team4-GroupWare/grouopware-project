@@ -120,9 +120,15 @@ public interface IEmailService {
 	 */
 	int writeEmail(EmailDetail emailDetail);
 	/**
-	 *  @author LEEYESEUNG
+	 * @author LEEYESEUNG
 	 * @param receiveEmailId
 	 * @return ReceiveEmail : 받은 이메일 객체
 	 */
-	EmailDetail getReceiveEmail(int receiveEmailId);
+	EmailDetail readReceiveEmail(int receiveEmailId);
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendEmailId
+	 * @return
+	 */
+	EmailDetail readSendEmail(int sendEmailId);
 }

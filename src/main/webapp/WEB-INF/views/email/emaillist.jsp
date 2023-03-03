@@ -275,10 +275,10 @@
                   	<c:if test="${type eq 'receive'}">
                   	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
                   	</c:if>
-                  	<c:if test="${type eq 'trash' and not empty emailList.strashDate}">
+                  	<c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
                   	<td><input name="selectone" class="form-check-input" value="${emailList.sendEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
                   	</c:if>
-                  	<c:if test="${type eq 'trash' and not empty emailList.rtrashDate}">
+                  	<c:if test="${type eq 'trash'and emailList.receiveId eq loginEmployee.empId}">
                   	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
                   	</c:if>
                   	<c:if test="${type eq 'temp'}">
@@ -297,16 +297,18 @@
                     </c:if>
                     <!-- 임시보관함일 때 작성자(보내는 사람) 출력-->
                     <c:if test="${type eq 'temp'}">
-                    <td>${emailList.sentId}</td>
+                    <td>${loginEmployee.name}</td>
                     </c:if>
                     <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
                     <c:if test="${type eq 'receive'}">
                     <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
                     </c:if>
-                     <c:if test="${type eq 'trash'and not empty emailList.strashDate}">
+                    <!-- if조건을 바꿔야할 듯 -->
+                     <c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
                     <td><a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a></td>
                     </c:if>
-                     <c:if test="${type eq 'trash' and not empty emailList.rtrashDate}">
+                    <!-- if조건을 바꿔야할 듯 -->
+                     <c:if test="${type eq 'trash' and emailList.receiveId eq loginEmployee.empId}">
                     <td><a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a></td>
                     </c:if>
                      <c:if test="${type eq 'temp'}">
@@ -321,10 +323,10 @@
                     <td>${emailList.tempDate}</td>
                     </c:if>
                     <!-- 쓰레기통일 때는 쓰레기통에 넣었던 날짜를 출력. s는 내가 보낸 메일에서 삭제한 것, r은 내가 받은 메일에서 삭제한 것 -->
-                    <c:if test="${not empty emailList.strashDate}">
+                    <c:if test="${not empty emailList.strashDate and loginEmployee.empId eq emailList.sentId}">
                     <td>${emailList.strashDate}</td>
                     </c:if>
-                    <c:if test="${not empty emailList.rtrashDate}">
+                    <c:if test="${not empty emailList.rtrashDate and loginEmployee.empId eq emailList.receiveId}">
                     <td>${emailList.rtrashDate}</td>
                     </c:if>
                     </tr>

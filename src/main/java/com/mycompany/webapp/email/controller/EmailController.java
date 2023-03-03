@@ -271,15 +271,18 @@ public class EmailController {
 	@GetMapping("/readReceiveEmail")
 	public String readReceiveEmail(@RequestParam int receiveEmailId, Model model) {
 		log.info("실행");
-		EmailDetail emailDetail = emailService.getReceiveEmail(receiveEmailId);
+		EmailDetail emailDetail = emailService.readReceiveEmail(receiveEmailId);
 		model.addAttribute("emailDetail", emailDetail);
 		return "email/receivedetail";
 		
 	}
 	
 	@GetMapping("/readSendEmail")
-	public String readSendEmail(@RequestParam int sendEmailId) {
+	public String readSendEmail(@RequestParam int sendEmailId, Model model) {
 		log.info("실행");
+		EmailDetail emailDetail = emailService.readSendEmail(sendEmailId);
+		log.info("emailDetail: "+emailDetail);
+		model.addAttribute("emailDetail", emailDetail);
 		return "email/senddetail";
 	}
 	

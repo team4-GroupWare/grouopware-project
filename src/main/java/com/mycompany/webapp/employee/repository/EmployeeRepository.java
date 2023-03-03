@@ -20,4 +20,10 @@ public interface EmployeeRepository {
 	public int insertEmployee(Employee employee);
 	public int selectManagerNo(int empNo);
 	public List<Employee> selectEmpListByTeamId(int teamid);
+	/**
+	 * @author LEEYESEUNG
+	 * @param phone
+	 * @return
+	 */
+	public int updatePhone(@Param("empId")String empId, @Param("phone") String phone);
 }
