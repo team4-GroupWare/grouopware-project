@@ -15,18 +15,21 @@
 	</script>
 	
 	<style>
+		thead tr {
+			border-bottom:2px solid #004389;
+		}
 		table a:link {
-	    	color : black;
-	   	}
-	   	table a:visited {
-	     	color : black;
-	   	}
-	   	table a:hover {
-	     	color : #97ACFC;
-	   	}
-	   	table a:active {
-	     	color : #97ACFC;
-	   	}
+			color : black;
+		}
+		table a:visited {
+		 	color : black;
+		}
+		table a:hover {
+		 	color : #97ACFC;
+		}
+		table a:active {
+		 	color : #97ACFC;
+		}
 	</style>
 </head>
 
