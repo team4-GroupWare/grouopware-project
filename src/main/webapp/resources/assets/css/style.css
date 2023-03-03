@@ -1396,6 +1396,14 @@ h6 {
 	/* background-color: ##FFDF6C; */
 	background:linear-gradient(#fff 80%,#FFDF6C 20%);
 }
+.current.holiday {
+	/* background-color: ##FFDF6C; */
+	background:linear-gradient(#fff 80%,#FF8787 20%);
+}
+.current.vacation {
+	/* background-color: ##FFDF6C; */
+	background:linear-gradient(#fff 80%,#57C66A 20%);
+}
 
 .sec_cal .cal_wrap .dates {
     display: flex;
