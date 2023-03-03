@@ -79,7 +79,6 @@ function calendarInit() {
             currentMonthDate[todayDate +4].classList.add('attendance');
             currentMonthDate[todayDate +5].classList.add('late');
             currentMonthDate[todayDate +6].classList.add('attendance');
-            currentMonthDate[todayDate +7].classList.add('attendance');
         }
     }
 
