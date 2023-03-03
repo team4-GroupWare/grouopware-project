@@ -12,6 +12,7 @@ import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
+import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.repository.EmailRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -241,7 +242,7 @@ public class EmailService implements IEmailService {
 		EmailContent emailContent = new EmailContent();
 		ReceiveEmail receiveEmail = new ReceiveEmail();
 		SendEmail sendEmail = new SendEmail();
-		
+	
 		//이메일 컨텐트 테이블 insert
 		emailContent.setContent(emailDetail.getContent());
 		emailContent.setImportant(emailDetail.isImportant());
@@ -261,6 +262,7 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public EmailDetail readReceiveEmail(int receiveEmailId) {
+		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
 		if(emailDetail.getReadDate()==null) {
 			int row = emailRepository.updateReadDate(receiveEmailId);
@@ -270,8 +272,17 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public EmailDetail readSendEmail(int sendEmailId) {
+		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
 		return emailDetail;
+	}
+
+	@Override
+	public int tempSaveEmail(TempEmail tempEmail) {
+		log.info("실행");
+		
+		int row = emailRepository.insertTempEmail(tempEmail);
+		return row;
 	}
 
 }

@@ -86,20 +86,20 @@
 		              	<div style="text-align:center;margin-top:24px;margin-left:20px;">
 		              		<c:if test="${emailDetail.strashDate ne null or emailDetail.strashDate ne null}">
 		              		<!-- 휴지통에서 조회한 경우 -->
-		              		<button type="submit" class="btn btn-secondary btn-sm">복구</button>
+		              		<button type="button" class="btn btn-secondary btn-sm">복구</button>
 		              		</c:if>
 		              		<c:if test="${emailDetail.readDate == null}">
 		              		<!-- 수신자가 미수신 상태일 경우 -->
-		                    <button type="submit" class="btn btn-secondary btn-sm">발신취소</button>
+		                    <button type="button" class="btn btn-secondary btn-sm">발신취소</button>
 		                    </c:if>
-		                    <button type="submit" class="btn btn-primary btn-sm">전달</button>
+		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
 		                    <c:if test="${emailDetail.important}">
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
+		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
 		                    </c:if>
 		                    <c:if test="${not emailDetail.important}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 		                    </c:if>
 		                  </div>
 		              	
