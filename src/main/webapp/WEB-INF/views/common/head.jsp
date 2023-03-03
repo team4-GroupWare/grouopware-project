@@ -28,3 +28,5 @@
 
 <!-- JQuery 자바 스크립트 -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.6.3.min.js"></script>
+
+<script> sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}"); </script>

@@ -32,6 +32,8 @@ public interface IAttendanceService {
 
 	int getabsentCountMonth(int month, String empId);
 
+	List<String> getAttStatus(String empId, int month);
+
 
 
 }

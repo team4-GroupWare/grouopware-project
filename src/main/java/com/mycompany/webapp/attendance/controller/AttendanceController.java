@@ -198,6 +198,7 @@ public class AttendanceController {
 	@GetMapping("/attendance/status")
 	@ResponseBody
 	public List<Map<String, String>> attendanceStatus(HttpSession session) {
+		log.info("실행");
 		// =========================<공휴일>============================
 		// 올해 년도
 		Date date = new Date();
@@ -284,5 +285,17 @@ public class AttendanceController {
 		Holiday holiday = new Holiday();
 		boolean isholi = holiday.isHoliday(today);
 		return isholi;
+	}
+	
+	@GetMapping("/statuslist")
+	@ResponseBody
+	public List<String> statusList(int month,HttpSession session) {
+		log.info("실행");
+		// 로그인한 사원의 ID
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		List<String> list = attendanceService.getAttStatus(empId,month);
+		log.info(list);
+		return list;
 	}
 }

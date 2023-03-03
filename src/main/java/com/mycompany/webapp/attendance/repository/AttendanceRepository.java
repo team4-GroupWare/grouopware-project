@@ -42,4 +42,6 @@ public interface AttendanceRepository {
 
 	public int selectAbsentCountMonth(@Param("month")int month, @Param("empId")String empId);
 
+	public List<String> selectAttStatusCal(@Param("empId")String empId,@Param("month")int month);
+
 }

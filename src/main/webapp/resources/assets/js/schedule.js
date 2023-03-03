@@ -19,20 +19,29 @@ function calendarInit() {
   
     var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     // 달력에서 표기하는 날짜 객체
-  
     
+    var month = (date.getMonth()+1);
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
     var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
 
     // kst 기준 현재시간
-    // console.log(thisMonth);
+    //console.log(thisMonth);
+    var path = sessionStorage.getItem("contextpath");
+    console.log(path);
+    $.ajax({
+    	url: path+"/statuslist",
+    	data:{"month":month}
+    }).done(function(data){
+    	 // 캘린더 렌더링
+        renderCalender(thisMonth,data);
+    });
 
-    // 캘린더 렌더링
-    renderCalender(thisMonth);
+   
 
-    function renderCalender(thisMonth) {
-
+    function renderCalender(thisMonth,months) {
+    	var months = months;
+    	console.log(months);5	
         // 렌더링을 위한 데이터 정리
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();
@@ -45,10 +54,11 @@ function calendarInit() {
 
         // 이번 달의 마지막날 날짜와 요일 구하기
         var endDay = new Date(currentYear, currentMonth + 1, 0);
-        var nextDate = endDay.getDate();
-        var nextDay = endDay.getDay();
-
-        // console.log(prevDate, prevDay, nextDate, nextDay);
+       
+        var nextDate = endDay.getDate(); 	//nextDate31
+       
+        var nextDay = endDay.getDay();		//nextDay5
+       
 
         // 현재 월 표기
         $('.year-month').text(currentYear + '.' + (currentMonth + 1));
@@ -58,7 +68,7 @@ function calendarInit() {
         calendar.innerHTML = '';
         
         // 지난달
-        for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
+        for (var i = prevDate - prevDay; i <= prevDate; i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
         }
         // 이번달
@@ -66,7 +76,7 @@ function calendarInit() {
             calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
         }
         // 다음달
-        for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
+        for (var i = 1; i <= (7 - nextDay-1 == 7 ? 0 : 7 - nextDay-1); i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
         }
 
@@ -75,16 +85,13 @@ function calendarInit() {
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
             currentMonthDate[todayDate -1].classList.add('today');
-            currentMonthDate[todayDate +3].classList.add('attendance');
-            currentMonthDate[todayDate +4].classList.add('attendance');
-            currentMonthDate[todayDate +5].classList.add('late');
-            currentMonthDate[todayDate +6].classList.add('attendance');
         }
     }
 
     // 이전달로 이동
     $('.go-prev').on('click', function() {
         thisMonth = new Date(currentYear, currentMonth - 1, 1);
+        console.log(thisMonth);
         renderCalender(thisMonth);
     });
 
