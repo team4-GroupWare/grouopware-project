@@ -93,7 +93,7 @@
 		                    <button type="button" class="btn btn-secondary btn-sm">발신취소</button>
 		                    </c:if>
 		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
-		                    <c:if test="${emailDetail.important}">
+		                    <c:if test="${emailDetail.strashDate eq null}">
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
 		                    </c:if>
@@ -101,6 +101,46 @@
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 		                    </c:if>
+		                     <c:if test="${emailDetail.strashDate ne null}">
+		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.sendEmailId}','delete')">영구삭제</button>
+		                  	</c:if>
+		                  	<script>
+		                  	function checkEmail(emailId, type){
+									var data = {"emailId" : emailId};
+									$.ajax({
+										url : "${pageContext.request.contextPath}/email/importantdetailcheck",
+										method : "post",
+										data : data,
+									}).done((data)=> {
+										console.log("성공: "+data);
+										if(data == 'important'){
+											$("#importantDeleteModal").modal('show');	
+										} else{
+											if(type == 'delete'){
+												$("#deleteModal").modal('show');
+											} else if(type == 'trash'){
+												trashEmail();
+											}
+										} 
+									});
+								}
+		                  	
+		                  	function trashEmail(emailId){
+		                  		var data = {"emailId" : emailId, "type" : 'send'};
+		                  		$.ajax({
+									url : "${pageContext.request.contextPath}/email/trashemaildetail",
+									method : "post",
+									data : data,
+								}).done((data)=> {
+									console.log("성공: "+data);
+									if(type == 'send'){
+										$("#trashModal").modal('show');	
+									} 
+									
+								});
+		                  		
+		                  	}
+		                  </script>
 		                  </div>
 		              	
 		              </div>
@@ -176,7 +216,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			        <button type="button" class="btn btn-primary">삭제</button>
+			        <button type="button" class="btn btn-primary" onclick="deleteOrTrash()">삭제</button>
 			      </div>
 			    </div>
 			  </div>
@@ -213,7 +253,7 @@
 			      </div>
 			      <div class="modal-footer">
 			      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			        <button type="button" class="btn btn-primary">삭제</button>
+			        <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/email/deleteDetail?emailId=${emailDetail.sendEmailId}">삭제</a>
 			      </div>
 			    </div>
 			  </div>

@@ -274,13 +274,13 @@ public class EmailService implements IEmailService {
 	public EmailDetail readSendEmail(int sendEmailId) {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
+		log.info(emailDetail);
 		return emailDetail;
 	}
 
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
 		log.info("실행");
-		
 		int row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}

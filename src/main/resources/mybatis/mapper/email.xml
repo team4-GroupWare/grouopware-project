@@ -391,7 +391,7 @@
 		<![CDATA[
 		select s.send_EMAIL_ID as sendEmailId, s.RECEIVED_EMP_ID as receiveId, 
 			   s.IS_DELETED as isDeleted, g.grade_name as receiveGrade,
-			   s.TRASH_DATE as strash_date, c.CONTENT, c.TITLE, c.IMPORTANT,
+			   s.TRASH_DATE as strashDate, c.CONTENT, c.TITLE, c.IMPORTANT,
 			   s.SENT_DATE as sentDate, e.name as receiveName,
 			   r.read_date as readDate
 		from email_content c, receive_email r, send_email s, employees e, grade g

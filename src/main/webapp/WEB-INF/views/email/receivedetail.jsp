@@ -83,23 +83,25 @@
 		              	<span class=" mt-4" style="font-size:24px;"><b>${emailDetail.title}</b></span>
 		              	<div style="text-align:center;margin-top:24px;margin-left:20px;">
 		              		<!-- 휴지통에서 조회한 경우 -->
-		              		<c:if test="${emailDetail.rtrashDate ne null or emailDetail.strashDate ne null}">
-		              		<button type="submit" class="btn btn-secondary btn-sm">복구</button>
+		              		<c:if test="${emailDetail.strashDate ne null}">
+		              		<a type="button" class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/email/restoreEmail?emailId=${emailDetail.sendEmailId}">복구</a>
 		              		</c:if>
-		                    <button type="submit" class="btn btn-secondary btn-sm">답장</button>
-		                    <button type="submit" class="btn btn-primary btn-sm">전달</button>
+		              		<c:if test="${emailDetail.rtrashDate ne null}">
+		              		<a type="button" class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/email/restoreEmail?emailId=${emailDetail.receiveEmailId}">복구</a>
+		              		</c:if>
+		                    <button type="button" class="btn btn-secondary btn-sm">답장</button>
+		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
 		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -> 삭제를 눌렀을 때 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    
-		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.strashDate == null and emailDetail.important}">
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
+		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.important}">
+		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
 		                    </c:if>
-		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.strashDate == null and not emailDetail.important}">
+		                    <c:if test="${emailDetail.rtrashDate == null and not emailDetail.important}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
 		                    </c:if>
 		                    <!-- 휴지통에서는 영구삭제가 가능함 -->
-		                    <c:if test="${emailDetail.rtrashDate ne null or emailDetail.strashDate ne null}">
-		                    <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+		                    <c:if test="${emailDetail.rtrashDate ne null}">
+		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
 		                  	</c:if>
 		                  </div>
 		              	

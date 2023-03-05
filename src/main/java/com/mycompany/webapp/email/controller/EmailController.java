@@ -255,6 +255,7 @@ public class EmailController {
 		}
 		return result;
 	}
+	
 	@ResponseBody
 	@PostMapping("/restore")
 	public String restoreEmail(@RequestParam(value="checkArr") String[] checkArr) {
@@ -302,6 +303,43 @@ public class EmailController {
 		//int row = emailService.tempSaveEmail(tempEmail);
 		String result = "성공";
 		return result;
-		
+	}
+	
+	@GetMapping("/restoreEmail")
+	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
+		log.info("실행");
+		int row = emailService.restoreEmail(emailId);
+		return getTrashEmail(model, session, 1);
+	}
+	
+	@ResponseBody
+	@PostMapping("/importantdetailcheck")
+	public String importantCheckDetail(@RequestParam("emailId") int emailId) {
+		log.info("실행");
+		String result= "";
+		int row = emailService.checkImportant(emailId);
+		if(row == 1) {
+			result="important";
+		} else {
+			result="basic";
+		}
+		return result;
+	}
+	
+	@GetMapping("/deleteDetail")
+	public String deleteDetail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
+		log.info("실행");
+		String type = "trash";
+		int row = emailService.deleteEmail(emailId, type);
+		return getTrashEmail(model, session, 1);
+	}
+	
+	@ResponseBody
+	@PostMapping("/trashemaildetail")
+	public String trashEmail(@RequestParam("emailId") int emailId, @RequestParam("type") String type, Model model, HttpSession session) {
+		log.info("실행");
+		String result="";
+		int row = emailService.throwAwayEmail(emailId, type);
+		return result;
 	}
 }
