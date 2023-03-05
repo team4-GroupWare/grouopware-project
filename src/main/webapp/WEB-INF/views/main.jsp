@@ -344,12 +344,11 @@
 									<div class="tab-pane fade show active" id="mail-receive" role="tabpanel" aria-labelledby="receive-tab">
 										<table class="table table-borderless datatable">
 											
-											<thead>
+											<thead style="border-bottom:2px solid #EBEEF4;">
 												<tr>
 													<th scope="col">보낸사람</th>
 													<th scope="col">제목</th>
 													<th scope="col">날짜</th>
-													<th scope="col">중요</th>
 
 												 </tr>
 											</thead>
@@ -359,35 +358,30 @@
 													이지호</td>
 													<td><a href="#" class="mail-title">견적서 문의 관련 사항</a></td>
 													<td>2023.02.27</td>
-													<td></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													이연희</td>
 													<td><a href="#" class="mail-title">그룹 메일 문의 사항</a></td>
 													<td>2023.02.27</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													김철수</td>
 													<td><a href="#" class="mail-title">2월 비용 정산 안내</a></td>
 													<td>2023.02.28</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													이지호</td>
 													<td><a href="#" class="mail-title">2/28 ㅇㅇㅇ 프로젝트 회의록</a></td>
 													<td>2023.02.28</td>
-													<td></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													김과장</td>
 													<td><a href="#" class="mail-title">[오티아이] 계약서류 전달</a></td>
 													<td>2023.03.02</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -398,11 +392,10 @@
 										<table class="table table-borderless datatable">
 											
 											<thead>
-												<tr>
+												<tr style="border-bottom:2px solid #EBEEF4;">
 													<th scope="col">받는 사람</th>
 													<th scope="col">제목</th>
 													<th scope="col">날짜</th>
-													<th scope="col">중요</th>
 												 </tr>
 											</thead>
 										  
@@ -419,28 +412,24 @@
 													김사원</td>
 													<td><a href="#" class="mail-title">사내 ㅇㅇ 준비사항 점검</a></td>
 													<td>2023.02.28</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													이지호</td>
 													<td><a href="#" class="mail-title">2월 24일 회의록 점검</a></td>
 													<td>2023.03.02</td>
-													<td></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													김대리</td>
 													<td><a href="#" class="mail-title">ㅇㅇㅇ견적 관련 안내</a></td>
 													<td>2023.03.02</td>
-													<td><span class="badge bg-warning"><i class="bi bi-star-fill"></i></span></td>
 												</tr>
 												<tr>
 													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
 													이연희</td>
 													<td><a href="#" class="mail-title">그룹웨어 문의사항</a></td>
 													<td>2023.03.02</td>
-													<td></td>
 												</tr>
 											</tbody>
 										</table>
@@ -452,7 +441,7 @@
 					
 						<!-- notice Title -->
 						<div class="pagetitle">
-							<h1>메일함</h1>
+							<h1>알림마당</h1>
 						</div>
 						<!-- notice card -->
 						<div class="card" style="height:485px">
@@ -473,32 +462,32 @@
 									<!-- 공지사항 -->
 									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
 										<div class="news">
-											<div class="post-item clearfix">
-												<img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
+											<div class="post-item ">
 											    <h4><a href="#">[공지] 출결(전자출결,휴가,지하철 연착 등)관련 안내</a></h4>
 											    <p>출결(전자출결,휴가,지하철 연착 등)관련 안내</p>
 											</div>
 										
 											<div class="post-item clearfix">
-												<img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[공지] 그룹웨어 사진 변경 안내</a></h4>
 											    <p>그룹웨어 사진 변경 안내드립니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[공지]사내 건강검진 안내</a></h4>
 											    <p>2023년도 건강검진 안내드립니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[공지] 개인정보처리방침 개정안내</a></h4>
 											    <p>개인정보처리방침 개정안내</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
+											    <h4><a href="#">[공지] 계량기 공사 관련 안내</a></h4>
+											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
+											</div>
+											
+											<div class="post-item clearfix">
 											    <h4><a href="#">[공지] 계량기 공사 관련 안내</a></h4>
 											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
 											</div>
@@ -510,31 +499,31 @@
 									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
 										<div class="news">
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[안내]경조사 게시판 이용방법 안내</a></h4>
 											    <p>동문들의 경조사를 공유하고 알리는 게시판...</p>
 											</div>
 											
 											<div class="post-item clearfix">
-												<img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[안내]공공사업1div 이지호 차장 결혼 안내</a></h4>
 											    <p>2023년 3월 4일 삼성 00에 이지호 차장의 결혼....</p>
 											</div>
 										
 											<div class="post-item clearfix">
-												<img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[안내] 야유회 관련</a></h4>
 											    <p>부서별 야유회 관련 안내입니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
 											    <h4><a href="#">[안내]대표이사 취임식</a></h4>
 											    <p>취임식 참석 안내입니다.</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <img src="${pageContext.request.contextPath}/resources/assets/img/logo.png" style="height:60px">
+											    <h4><a href="#">[안내]000부장 부친상 안내</a></h4>
+											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
+											</div>
+											
+											<div class="post-item clearfix">
 											    <h4><a href="#">[안내]000부장 부친상 안내</a></h4>
 											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
 											</div>

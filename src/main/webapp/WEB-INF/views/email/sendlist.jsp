@@ -184,7 +184,7 @@
 	              <!-- Table with hoverable rows -->
 	              <table class="table table-hover">
 	                <thead>
-	                  <tr>
+	                  <tr style="border-bottom:2px solid #004389;">
 	                  	<th scope="col" ><input name="selectall" onclick='selectAll(this)' class="form-check-input" type="checkbox"></input></th>
 	                    <th scope="col">이름</th>
 	                    <th scope="col">제목</th>
