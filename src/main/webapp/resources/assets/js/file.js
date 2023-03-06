@@ -24,9 +24,9 @@ function addFile(obj){
 
                 // 목록 추가
                 let htmlData = '';
-                htmlData += '<div id="file' + fileNo + '" class="filebox">';
-                htmlData += '   <p class="email-file name">' + file.name + '</p>';
-                htmlData += '	<p class="email-file size">' + file.size/1000 + 'KB</p>'; 	
+                htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
+                htmlData += '   <p class="email-file name" style="margin-top:0">' + file.name + '</p>';
+                htmlData += '	<p class="email-file size"style="margin-top:0">' + file.size/1000 + 'KB</p>'; 	
                 htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
                 htmlData += '</div>';
                 $(".file-list").append(htmlData);
