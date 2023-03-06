@@ -70,6 +70,7 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getSendEmailList(Pager pager, String sendId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectSendEmail(pager, sendId);
+		log.info(emailList);
 		return emailList; 
 	}
 	
@@ -274,14 +275,22 @@ public class EmailService implements IEmailService {
 	public EmailDetail readSendEmail(int sendEmailId) {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
+		log.info(emailDetail);
 		return emailDetail;
 	}
 
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
 		log.info("실행");
-		
 		int row = emailRepository.insertTempEmail(tempEmail);
+		return row;
+	}
+
+	@Override
+	public int cancelEmail(int emailId) {
+		log.info("실행");
+		int row = emailRepository.deleteSendEmail(emailId);
+		row = emailRepository.deleteReceiveEmail(emailId);
 		return row;
 	}
 

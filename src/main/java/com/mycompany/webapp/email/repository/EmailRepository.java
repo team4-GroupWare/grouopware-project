@@ -186,5 +186,17 @@ public interface EmailRepository {
 	 * @return
 	 */
 	int insertTempEmail(TempEmail tempEmail);
+	/**
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	int deleteSendEmail(int emailId);
+	/**
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	int deleteReceiveEmail(int emailId);
 
 }
