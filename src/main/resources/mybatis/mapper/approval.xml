@@ -107,4 +107,19 @@
 				and a.approval_id = #{approvalId}
 		]]>
 	</select>
+	
+	<!-- 전자결재 결재선 -->
+	<select id="selectApprovalLine" parameterType="String" resultType="approval_line">
+		<![CDATA[
+			SELECT e.emp_id as "empId", 
+				name as "empName",
+                team_name as "teamName",
+                dept_name as "deptName",
+                grade_name as "gradeName"
+      		FROM EMPLOYEES e, departments d, teams t, grade g
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
+            	and g.grade_id= e.grade_id
+                and e.emp_id=#{empId}
+		]]>
+	</select>
 </mapper>

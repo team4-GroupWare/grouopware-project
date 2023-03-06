@@ -111,20 +111,20 @@ public class ApprovalController {
 	
 	@PostMapping(value="/employee")
 	@ResponseBody
-	public List<Employee> getEmployeeInfo(@RequestParam(value="line[]") String[] approvalLine, Model model) {
+	public List<ApprovalLine> getEmployeeInfo(@RequestParam(value="line[]") String[] line, Model model) {
 		log.info("실행=====");
 		
-		List<Employee> employees = new ArrayList<>();
+		List<ApprovalLine> approvalLines = new ArrayList<>();
 		
-		for(int i = 0; i < approvalLine.length; i++) {
-			log.info("approvalLine: " + approvalLine);
-			Employee emp = employeeService.getEmp(approvalLine[i]);
-			emp.setSeq(i+1);
-			log.info("emp: " + emp);
-			employees.add(emp);
+		for(int i = 0; i < line.length; i++) {
+			log.info("approvalLine: " + line);
+			ApprovalLine approvalLine = approvalService.getApprovalLine(line[i]);
+			approvalLine.setSeq(i+1);
+			log.info("emp: " + approvalLine);
+			approvalLines.add(approvalLine);
 		}
 		
-		return employees;
+		return approvalLines;
 	}
 	
 	/**
@@ -154,6 +154,14 @@ public class ApprovalController {
 		return "approval/approval_list";
 	}
 	
+	/**
+	 * 임시저장 목록
+	 * @author : LEEJIHO
+	 * @param pageNo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/templist")
 	public String getApprovalTempList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");
