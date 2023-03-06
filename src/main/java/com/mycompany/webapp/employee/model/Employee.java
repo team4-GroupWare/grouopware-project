@@ -30,6 +30,4 @@ public class Employee {
 	
 	private String type;
 	private String keyword;
-	
-	private int seq;
 }

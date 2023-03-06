@@ -5,6 +5,7 @@ import java.util.List;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
+import com.mycompany.webapp.approval.model.ApprovalLine;
 
 public interface IApprovalService {
 	
@@ -31,5 +32,8 @@ public interface IApprovalService {
 
 	//전자결재 임시저장 갯수
 	public int getTempApprovalRow(String empId);
+
+	//전자결재 결재선
+	public ApprovalLine getApprovalLine(String empId);
 
 }

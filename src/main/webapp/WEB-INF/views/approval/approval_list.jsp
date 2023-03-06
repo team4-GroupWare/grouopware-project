@@ -69,7 +69,7 @@
 
       		<li class="nav-item">
         		<a class="nav-link" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
+          			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           			<li>
@@ -96,6 +96,12 @@
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
+      		
+      		<li class="nav-item">
+        		<a class="nav-link collapsed" href="#">
+          			<i class="bi bi-tags"></i><span>참조 문서함</span>
+        		</a>
+      		</li><!-- End 참조 문서함 -->
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
@@ -108,14 +114,14 @@
   	<main id="main" class="main">
     	<div class="pagetitle">
     		<h1>내 문서함</h1>
-      			<nav>
-		        	<ol class="breadcrumb">
-		          		<li class="breadcrumb-item">전자결재</li>
-		          		<li class="breadcrumb-item">내 문서함</li>
-		          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
-		          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
-		        	</ol>
-      			</nav>
+     		<nav>
+	        	<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">전자결재</li>
+	          		<li class="breadcrumb-item">내 문서함</li>
+	          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
+	          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
+	        	</ol>
+     		</nav>
     	</div><!-- End Page Title -->
 
 		<section class="section">

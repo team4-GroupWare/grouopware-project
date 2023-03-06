@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
+import com.mycompany.webapp.approval.model.ApprovalLine;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -71,6 +72,9 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectTempApprovalCount(empId);
 	}
 
+	@Override
+	public ApprovalLine getApprovalLine(String empId) {
+		return approvalRepository.selectApprovalLine(empId);
+	}
 
-	
 }
