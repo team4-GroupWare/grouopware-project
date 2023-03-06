@@ -91,7 +91,6 @@
 				method: "get",
 				data: {"approvalCategoryId": value}
 			}).done(function(data) {
-				console.log(data);
 				tinymce.activeEditor.setContent(data);
 			});
 			
@@ -168,7 +167,6 @@
         		</ul>
       		</li><!-- End 내 문서함 -->
       		
-
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="#">
           			<i class="bi bi-eye"></i><span>열람함</span>
@@ -253,7 +251,9 @@
               							</div>
               		
 	              						<div class="row">
-	              							<div id="approvalLine">
+	              							<input type="hidden" id="approvalLine">
+	              							<div id="approval_line" style="border:1px solid black">
+	              							
 	              							</div>
 	              							<!-- <div class="col-sm-3">
 		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
