@@ -47,28 +47,11 @@
 				</li>
 			
 				<!--휴가 결제 문서 -->
-				<li class="nav-item"  >
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 결제 문서</span><i class="bi bi-chevron-down ms-auto"></i>
+				    	<span>휴가 결제 문서</span>
 					</a>
-					<ul id="document1-nav" class="nav-content collapse " data-bs-parent="#documen1t-nav">
-						<li>
-	            			<a href='${pageContext.request.contextPath}/vacation/document'><span>전체</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>대기</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>진행</span></a>
-	          			</li> 
-	          			<li>
-	            			<a href="#"><span>승인</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>반려</span></a>
-	          			</li>
-					</ul>
 				</li>
 			</ul>
 		</aside>
@@ -92,42 +75,6 @@
 					<!-- 오늘 근무 현황 -->
 					<div class="col-lg-5">
 						<div class="row">
-							<!-- ====================================== First Card ================================= --> 
-							<div class="col-lg-6 col-md-12" >
-								<div class="pagetitle">
-							   		<h1>월 근무 현황</h1>
-								</div>
-								<div class="card" style="height:300px">
-									<div class="card-body mt-4">
-										<!-- Doughnut Chart -->
-										<canvas id="doughnutChart" style="max-height: 400px;"></canvas>
-										<script>
-										document.addEventListener("DOMContentLoaded", () => {
-										  new Chart(document.querySelector('#doughnutChart'), {
-										    type: 'doughnut',
-										    data: {
-										      labels: [
-										        'Red',
-										        'Blue',
-										        'Yellow'
-										      ],
-										      datasets: [{
-										        label: 'My First Dataset',
-										        data: [300, 50, 100],
-										        backgroundColor: [
-										          'rgb(255, 99, 132)',
-										          'rgb(54, 162, 235)',
-										          'rgb(255, 205, 86)'
-										        ],
-										        hoverOffset: 4
-										      }]
-										    }
-										  });
-										});
-										</script>
-									</div>	
-								</div>
-							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="row">
 									<div class="pagetitle">
@@ -138,11 +85,11 @@
 					           			<div class="card-body mt-4">
 							          		<div class="row">
 							          			<div class="col border-end">
-							          			<div>연장 근무  신청 내역</div>
+							          			<div>연장 근무  신청 </div>
 							          			<div>없음</div>
 								          		</div>
 								          		<div class="col">
-								          		  <button class="btn btn-primary"> 연장근무 신청하기</button>
+								          		  <button class="btn btn-primary">연장근무 신청</button>
 								          		</div>
 							          		</div>
 					            		</div>
@@ -154,21 +101,64 @@
 					           			<div class="card-body mt-4">
 							          		<div class="row">
 							          			<div class="col border-end">
-							          			<div>휴일 근무  신청 내역</div>
+							          			<div>휴일 근무  신청 </div>
 							          			<div>없음</div>
 								          		</div>
 								          		<div class="col">
-								          		  <button class="btn btn-success"> 휴일근무 신청하기</button>
+								          		  <button class="btn btn-success"> 휴일근무 신청</button>
 								          		</div>
 							          		</div>
 						            	</div>
 					        		</div>
 								</div>
 							</div>
+							<!-- ====================================== First Card ================================= --> 
+							<div class="col-lg-6 col-md-12" >
+								<div class="pagetitle">
+							   		<h1>월 근무 통계</h1>
+								</div>
+								<div class="card" style="height:300px">
+									<div class="card-body mt-4">
+										<!-- Doughnut Chart -->
+										<canvas id="doughnutChart" style="max-height: 400px;"></canvas>
+										<script>
+										document.addEventListener("DOMContentLoaded", () => {
+										  new Chart(document.querySelector('#doughnutChart'), {
+										    type: 'doughnut',
+										    data: {
+										      labels: [
+										        '출석',
+										        '결석',
+										        '지각',
+										        '휴가',
+										        '연장',
+										        '휴일'
+										      ],
+										      datasets: [{
+										        label: 'My First Dataset',
+										        data: [17, 0, 1, 4 , 1, 1],
+										        backgroundColor: [
+										          'rgb(54, 162, 235)',
+										          'rgb(255, 99, 132)',
+										          'rgb(255, 205, 86)',
+										          'rgb(95, 185, 110)',
+										          'rgb(255, 169, 77)',
+										          'rgb(131, 101, 216)'
+										          
+										        ],
+										        hoverOffset: 4
+										      }]
+										    }
+										  });
+										});
+										</script>
+									</div>	
+								</div>
+							</div>
 						</div>
 						<!-- ====================================== 4th Card ============================================== --> 
 						<div class="pagetitle">
-						   	<h1>주중 근무 현황</h1>
+						   	<h1>주 근무 현황</h1>
 						</div>
 						<div class="card">
 							<div class="card-body">

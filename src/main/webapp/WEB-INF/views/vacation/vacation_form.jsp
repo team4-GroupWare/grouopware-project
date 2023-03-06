@@ -7,11 +7,11 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 </head>
 	<body>
+		<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-<!-- =========================sideber=============================== -->
+	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
-			 
 				<!--휴가 작성 -->
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
 					<a class="btn btn-primary" type="button" href="#" style="width:100%">
@@ -19,7 +19,6 @@
 					    <span>휴가 작성</span>
 				  	</a>
 				</li>
-			
 				<!--근무 현황 -->
 				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 					<a class="nav-link collapsed" href="#">
@@ -45,31 +44,12 @@
 				</li>
 			
 				<!--휴가 결제 문서 -->
-				<li class="nav-item"  >
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 결제 문서</span><i class="bi bi-chevron-down ms-auto"></i>
+				    	<span>휴가 결제 문서</span>
 					</a>
-					<ul id="document1-nav" class="nav-content collapse " data-bs-parent="#documen1t-nav">
-						<li>
-	            			<a href='${pageContext.request.contextPath}/vacation/document'><span>전체</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>대기</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>진행</span></a>
-	          			</li> 
-	          			<li>
-	            			<a href="#"><span>승인</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>반려</span></a>
-	          			</li>
-					</ul>
 				</li>
-				
-			
 			</ul>
 		</aside>
 		<!-- ======================================End Sidebar ============================================ -->
@@ -90,7 +70,16 @@
 			<section class="section">
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="card">
+						<table id="vertical-1" 
+							style="width:50%; box-shadow: 0px 0 30px rgb(1 41 112 / 10%);border: none;  border-radius: 5px;">
+				            <tr style="height: 50px; vertical-align:middle; ">
+				                <th class="ps-2" style="background-color:#004389; width:10%; color:white">잔여 휴가 일수</th>
+				                <td class="ps-2" style="width: 15%;background-color:white">18일</td>
+				                <th class="ps-2" style="background-color:#004389; width:10%;color:white">대체 연차</th>
+				                <td class="ps-2" style="width: 15%;background-color:white">출산(90일)</td>
+				            </tr>
+						</table>
+						<div class="card mt-3">
 							<div class="card-body m-4">
 								
 								<!-- Form -->
@@ -161,19 +150,28 @@
 										</div>
 									</div>
 									
-									<!-- 시작 날짜 -->
+									<script >
+										function input(){
+										    const dday = document.querySelector("#input_date").value;
+										    console.log(dday);
+										}
+									</script>
+									<!-- 날짜 선택 -->
 									<div class="row mb-3">
-										<label for="inputDate" class="col-sm-2 col-form-label"><b>시작날짜</b></label>
-										<div class="col-sm-10">
-											<input id="startDate" type="date" class="form-control">
-										</div>
-									</div>
-									
-									<!-- 끝날짜 -->
-									<div class="row mb-3">
-										<label for="inputDate" class="col-sm-2 col-form-label"><b>끝날짜</b></label>
-										<div class="col-sm-10">
-											<input type="date" class="form-control">
+										<label for="inputDate" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
+										<div class="insert col-sm-10">
+											<input id="input_date" type="date">
+											<input id="input_submit" type="button" onclick="input()" value="확인">
+											<div class="date-list">
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+												<div>2023-03-02</div>
+											</div>
 										</div>
 									</div>
 									
@@ -208,55 +206,7 @@
 												</div>
 											</div>
 											
-											<!-- 결재선 선택란-->
-											<div class="row">
-												<div class="col-sm-3">
-													<div class="card mb-3" style="background-color:#FCF6C2;">
-													    <div class="row g-0">
-															<div class="col-md-12">
-																<div class="card-body">
-																	<div class="row">
-																  		<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-																  		<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-																  	</div>
-																  <p>공공사업1 / 솔루션개발팀</p>
-																</div>
-															</div>
-													    </div>
-													</div>
-												</div>
-												<div class="col-sm-3">
-													<div class="card mb-3" style="background-color:#FCF6C2;">
-														<div class="row g-0">
-															<div class="col-md-12">
-																<div class="card-body">
-																	<div class="row">
-																		<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-																		<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-																	</div>
-																	<p>공공사업1 / 솔루션개발팀</p>  
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											        
-												<div class="col-sm-3">
-													<div class="card mb-3" style="background-color:#FCF6C2;">
-														<div class="row g-0">
-															<div class="col-md-12">
-																<div class="card-body">
-																	<div class="row">
-																		<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-																		<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-																	</div>
-																	<p>공공사업1 / 솔루션개발팀</p> 
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
+										
 										</div>
 									</div>
 									<%@ include file="/WEB-INF/views/vacation/form_modal.jsp" %>
@@ -267,7 +217,6 @@
 				</div>
 			</section>
 		</main><!-- ======================================Main==================================================== -->
-	  	
 	  	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</body>
 </html>

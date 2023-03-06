@@ -701,13 +701,13 @@ h6 {
   }
 }
 
-@media (max-width: 1299px) {
+@media (max-width: 1199px) {
   .toggle-sidebar .sidebar {
     left: 0;
   }
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1200px) {
 
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
@@ -1479,15 +1479,13 @@ table. type02. table-content{
 .filebox p {
 	font-size: 14px;
     display: inline-block;
-    padding: 0px;
-    margin: 0px;
-    
 }
 .filebox {
+	height: 70px;
     overflow: auto;
     border: 1px solid #F6F6F6;
     border-radius: 4px;
-    padding: 0px
+    padding: 10px;
 }
 
 .insert {
@@ -1496,19 +1494,26 @@ table. type02. table-content{
     box-sizing: border-box;
 }
 .insert .file-list {
-    height: 90px;
+    height: 70px;
     overflow: auto;
     border: 1px solid #CED4DA;
     border-radius: 4px;
+    padding: 10px;
+}
+.insert .date-list {
+    height: 70px;
+    overflow: auto;
+    border: 1px solid #CED4DA;
+    border-radius: 4px;
+    padding: 10px;
 }
 .insert .file-list .filebox p {
+    font-size: 10px;
     display: inline-block;
 }
 .insert .file-list .filebox .delete i{
     color: #ff5353;
     margin-left: 5px;
-    padding: 0px;
-    margin: 0px;
 }
 
 .mail-content {
