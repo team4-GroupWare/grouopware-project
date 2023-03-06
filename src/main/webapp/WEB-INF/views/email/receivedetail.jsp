@@ -91,19 +91,59 @@
 		              		</c:if>
 		                    <button type="button" class="btn btn-secondary btn-sm">답장</button>
 		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
-		                    <!-- 중요메일일 때 modal로 삭제 여부 확인 -> 삭제를 눌렀을 때 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <c:if test="${emailDetail.rtrashDate == null and emailDetail.important}">
-		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#importantDeleteModal">삭제</button>
-		                    </c:if>
-		                    <c:if test="${emailDetail.rtrashDate == null and not emailDetail.important}">
+		                    <c:if test="${emailDetail.rtrashDate eq null}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
-		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#trashModal">삭제</button>
+		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.receiveEmailId}','trash')">삭제</button>
 		                    </c:if>
 		                    <!-- 휴지통에서는 영구삭제가 가능함 -->
 		                    <c:if test="${emailDetail.rtrashDate ne null}">
-		                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">영구삭제</button>
+		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.receiveEmailId}','delete')">영구삭제</button>
 		                  	</c:if>
 		                  </div>
+		                  <script>
+		                  	function checkEmail(emailId, type){
+									var data = {"emailId" : emailId};
+									$.ajax({
+										url : "${pageContext.request.contextPath}/email/importantdetailcheck",
+										method : "post",
+										data : data,
+									}).done((data)=> {
+										console.log("성공: "+data);
+										if(data == 'important'){
+											if(type == 'delete'){
+												$("#importantTrashModal").modal('show');	
+											} else {
+												$("#importantDeleteModal").modal('show');	
+											}
+										} else{
+											if(type == 'delete'){
+												$("#deleteModal").modal('show');
+											} else if(type == 'trash'){
+												trashEmail(emailId);
+											}
+										} 
+									});
+								}
+		                  	
+		                  	function trashEmail(emailId){
+		                  		var type = 'receive'
+		                  		var data = {"emailId" : emailId, "type" : type};
+		                  		$.ajax({
+									url : "${pageContext.request.contextPath}/email/trashemaildetail",
+									method : "post",
+									data : data,
+								}).done((data)=> {
+									console.log("성공");
+										$("#trashModal").modal('show');
+								});
+		                  		
+		                  	}
+		                  	
+		                  	
+		                  	function reload() {
+		                  		location.reload();
+		                  	}
+		                  </script>
 		              	
 		              </div>
 		
@@ -162,7 +202,26 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			        <button type="button" class="btn btn-primary">삭제</button>
+			        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- 중요메일 삭제시 Modal -->
+			<div class="modal fade" id="importantTrashModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 중요메일
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <p style="margin-bottom:4px">중요메일입니다.</p>
+			        <p> 삭제하시겠습니까? </p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			        <button type="button" class="btn btn-primary" onclick="trashEmail(${emailDetail.receiveEmailId})">삭제</button>
 			      </div>
 			    </div>
 			  </div>
@@ -180,7 +239,7 @@
 			        <p>10일 이후에는 자동으로 영구삭제되며, 복구할 수 없습니다.</p>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+			        <button type="button" class="btn btn-secondary" onclick="reload()">확인</button>
 			      </div>
 			    </div>
 			  </div>
@@ -199,7 +258,7 @@
 			      </div>
 			      <div class="modal-footer">
 			      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			        <button type="button" class="btn btn-primary">삭제</button>
+			        <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/email/deleteDetail?emailId=${emailDetail.sendEmailId}">삭제</a>
 			      </div>
 			    </div>
 			  </div>

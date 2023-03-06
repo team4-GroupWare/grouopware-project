@@ -342,4 +342,11 @@ public class EmailController {
 		int row = emailService.throwAwayEmail(emailId, type);
 		return result;
 	}
+	
+	@GetMapping("/cancelEmail")
+	public String cancelEmail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
+		log.info("실행");
+		int row = emailService.cancelEmail(emailId);
+		return getSendEmail(model, session, 1);
+	}
 }

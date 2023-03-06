@@ -402,6 +402,20 @@
 			  and e.grade_id = g.grade_id
 		]]>
 	</select>
+	
+	<delete id="deleteSendEmail" parameterType="int">
+		<![CDATA[
+			delete send_email
+			where send_email_id = #{emailId}
+		]]>
+	</delete>
+	
+	<delete id="deleteReceiveEmail" parameterType="int">
+	 	<![CDATA[
+	 		delete receive_email
+	 		where receive_email_id = #{emailId}
+	 	]]>
+	</delete>
 
 
 

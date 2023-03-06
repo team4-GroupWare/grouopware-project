@@ -50,6 +50,17 @@
 		}
 	</script>
 	
+	<style>
+	.file {
+	padding : 0px;
+	margin : 0px;
+	
+	
+	}
+	
+	
+	</style>
+	
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>

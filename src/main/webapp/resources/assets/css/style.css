@@ -1499,15 +1499,15 @@ table. type02. table-content{
     overflow: auto;
     border: 1px solid #CED4DA;
     border-radius: 4px;
-    padding: 10px;
 }
 .insert .file-list .filebox p {
-    font-size: 10px;
     display: inline-block;
 }
 .insert .file-list .filebox .delete i{
     color: #ff5353;
     margin-left: 5px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .mail-content {
