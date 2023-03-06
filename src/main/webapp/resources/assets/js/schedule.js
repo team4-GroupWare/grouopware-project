@@ -74,6 +74,7 @@ function calendarInit() {
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
+           
         }
         // 다음달
         for (var i = 1; i <= (7 - nextDay-1 == 7 ? 0 : 7 - nextDay-1); i++) {

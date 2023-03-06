@@ -701,13 +701,13 @@ h6 {
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1299px) {
   .toggle-sidebar .sidebar {
     left: 0;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
 
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
