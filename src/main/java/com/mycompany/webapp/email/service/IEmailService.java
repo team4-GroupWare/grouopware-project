@@ -138,4 +138,10 @@ public interface IEmailService {
 	 * @return
 	 */
 	int tempSaveEmail(TempEmail tempEmail);
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @return
+	 */
+	int cancelEmail(int emailId);
 }

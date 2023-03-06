@@ -1,17 +1,20 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
 
 <head>
-	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<!-- 달력  -->
-	<link href="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main.css" rel="stylesheet">
-	<script src="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main1.js"></script>
+<%@ include file="/WEB-INF/views/common/head.jsp"%>
+<!-- 달력  -->
+<link
+	href="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main1.js"></script>
 </head>
-	<body>
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-			<script>
+<body>
+	<%@ include file="/WEB-INF/views/common/header.jsp"%>
+	<script>
 		  	var today = new Date(); 					//오늘날짜
 	  		var day = today.getDay();					//요일
 	  	    var year = today.getFullYear();				//년
@@ -122,220 +125,163 @@
 				target1.setAttribute( 'style', 'opacity: 0.1' )
 	  		}
 	  	</script>
-	  	<!-- =========================sideber=============================== -->
-		<aside id="sidebar" class="sidebar">
-			<ul class="sidebar-nav" id="sidebar-nav">
-			 
-				<!--휴가 작성 -->
-				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
-					<a class="btn btn-primary" type="button" href="#" style="width:100%">
-					    <i class="bi bi-pencil-square"></i> 
-					    <span>휴가 작성</span>
-				  	</a>
-				</li>
-			
-				<!--근무 현황 -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="#">
-				    	<i class="bi bi-eye"></i>
-				    	<span>근무 현황</span>
-				  	</a>
-				</li>
-			
-				<!--휴가 문서 -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="#">
-				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 문서</span>
-					</a>
-				</li>
-			
-				<!--부서 근무 현황 -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
-				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span><i class="bi bi-chevron-down ms-auto"></i>
-				  	</a>
-					<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-						<li>
-					    	<a href="#">
-					      		<span>공공사업1</span>
-					    	</a>
-					  	</li>
-					  	<li>
-					    	<a href="#">
-					      		<span>공공사업2</span>
-					    	</a>
-					  	</li>
-					  	<li>
-					    	<a href="#">
-					      		<span>전략사업</span>
-					    	</a>
-					  	</li>
-					  	<li>
-				    		<a href="#">
-					      		<span>경영관리</span>
-					    	</a>
-					  	</li>
-					</ul>
-				</li>
-			
-			</ul>
-		</aside>
-		<!-- ======================================End Sidebar ============================================ -->
-	  	<!-- ====================================== Main ============================================ -->
-		<main id="main" class="main">
-		
-		<!-- pagetitle -->
-		<div class="pagetitle">
-			<h1>근무 현황</h1>
-			<nav>
-				<ol class="breadcrumb">
-			    	<li class="breadcrumb-item"><a href="#">근태관리</a></li>
-			    	<li class="breadcrumb-item">근무 현황</li>
-			  	</ol>
-			</nav>
-		</div>
-		
-			<section class="section dashboard">
-				
-				<!-- ====================================== First row ============================================ -->
+	<!-- =========================sideber=============================== -->
+	<aside id="sidebar" class="sidebar">
+		<ul class="sidebar-nav" id="sidebar-nav">
+
+			<!--휴가 작성 -->
+			<li class="nav-item"
+				onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
+				<a class="btn btn-primary" type="button" href="#"
+				style="width: 100%"> <i class="bi bi-pencil-square"></i> <span>휴가
+						작성</span>
+			</a>
+			</li>
+
+			<!--근무 현황 -->
+			<li class="nav-item"
+				onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+				<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
+					<span>근무 현황</span>
+			</a>
+			</li>
+
+			<!--부서 근무 현황 -->
+			<li class="nav-item"
+				onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+				<a class="nav-link collapsed" data-bs-target="#approval-nav"
+				data-bs-toggle="collapse" href="#"> <i
+					class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
+			</a>
+			</li>
+
+			<!--내 휴가 문서 -->
+			<li class="nav-item"
+				onclick="location.href='${pageContext.request.contextPath}/vacation/my'">
+				<a class="nav-link collapsed" data-bs-target="#document2-nav"
+				data-bs-toggle="collapse" href="#"> <i class="bi bi-eye"></i> <span>내
+						휴가</span>
+			</a>
+
+			</li>
+
+			<!--휴가 결제 문서 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-eye"></i> <span>휴가 결제 문서</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="document1-nav" class="nav-content collapse "
+					data-bs-parent="#documen1t-nav">
+					<li><a
+						href='${pageContext.request.contextPath}/vacation/document'><span>전체</span></a>
+					</li>
+					<li><a href="#"><span>대기</span></a></li>
+					<li><a href="#"><span>진행</span></a></li>
+					<li><a href="#"><span>승인</span></a></li>
+					<li><a href="#"><span>반려</span></a></li>
+				</ul></li>
+
+
+		</ul>
+	</aside>
+	<!-- ======================================End Sidebar ============================================ -->
+	<!-- ====================================== Main ============================================ -->
+	<main id="main" class="main"> <!-- pagetitle -->
+	<div class="pagetitle">
+		<h1>근무 현황</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">근태관리</a></li>
+				<li class="breadcrumb-item">근무 현황</li>
+			</ol>
+		</nav>
+	</div>
+
+	<section class="section dashboard">
+
+
+		<!-- ====================================== Second row ============================================ -->
+		<div class="row">
+			<!-- 오늘 근무 현황 -->
+			<div class="col-lg-5">
 				<div class="row">
-					
-					<!-- 올해 근무 현황 -->
+
 					<div class="col-lg-6">
-						
 						<!-- 제목 -->
 						<div class="pagetitle">
-						 	<h1>올해근무현황</h1>
+							<h1>오늘 근무 현황</h1>
 						</div>
-						
-						<!-- 내용 -->   
-						<div class="card">
-							<div class="card-body">
-								<div class="row mt-3">
-									<div class="col border-end" style="text-align:center">
-										<div>출근</div>
-										<div>${attCountYear}회</div>
-									</div>
-									<div class="col border-end" style="text-align:center">
-										<div>지각</div>
-										<div>${lateCountYear}회</div>
-									</div>
-									<div class="col" style="text-align:center">
-										<div>결근</div>
-										<div>${absentCountYear}회</div>
-									</div>
-								</div>
+						<!-- 내용 -->
+						<div class="card info-card sales-card " style="height: 300px;">
+							<div class="card-body mt-4" style="text-align: center">
+
+								<i class="bi bi-calendar-check" style="font-size: 120px;"></i>
+								<div>출근</div>
+								<!-- End 출퇴근 버튼 -->
+
 							</div>
 						</div>
+						<!-- End attendance Card -->
+						<!-- End Donut Chart -->
 					</div>
-				
-					 <!--휴가 현황 -->
 					<div class="col-lg-6">
-						
-						<!-- 제목 -->
-						<div class="pagetitle">
-							<h1>휴가현황</h1>
-						</div>
-						
-						<!-- 내용 -->
-						<div class="card">
-							<div class="card-body">
-								<div class="row mt-3">
-									<div class="col border-end" style="text-align:center">
-										<div>잔여 휴가</div>
-										<div>10일</div>
-									</div>
-									<div class="col" style="text-align:center">
-										<div>총 휴가</div>
-										<div>20일</div>
-									</div>
-								</div>
+						<div class="row">
+							<div class="pagetitle">
+								<h1>오늘 근무 계획</h1>
 							</div>
-						</div>
-					</div>
-				</div><!-- ====================================== End First row ============================================ -->
-			
-				<!-- ====================================== Second row ============================================ --> 
-				<div class="row">
-					<!-- 오늘 근무 현황 -->
-					<div class="col-lg-6">
-						
-						<!-- 제목 -->
-						<div class="pagetitle">
-						   	<h1>오늘 근무 현황</h1>
-						</div>
-						
-						<!-- 내용 -->
-							<div class="card info-card sales-card "  style="height:335px; ">
-			           		<div class="card-body mt-4">
-					            <!-- 현재시간 -->
-			                	<div class=""><h2 id="time"></h2></div>
-					            <div class="row">
-					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
-									<!-- 출근 상태 -->
-				                	<!-- <div class="col">
-				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
-				                			출근
-				                		</span>
-				                	</div> -->
-					            </div>
-								
-								<!-- 출퇴근 버튼 -->
-								<div>
+							<!-- 내용 -->
+							<div class="card info-card sales-card mb-0"
+								style="height: 140px;">
+								<div class="card-body mt-4">
 									<div class="row">
-										<!-- 출근하기 버튼 -->
-										<div class="col border-end" style="text-align:center" >
-											<input 
-											id="btn-attendance"
-											type='image'
-											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
-											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance'"
-											/>
-										    <div>출근하기</div> 
-										    <div id="clockIn"></div>
-										</div><!-- End 출근하기 버튼 -->
-										
-										<!-- 퇴근하기 버튼 -->
-										<div class="col" style="text-align:center">
-											<input 
-											id="btn-leave"
-											disabled 
-											style="opacity: 0.1"
-											type='image'
-											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
-											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/leave'" 
-											/>
-											<div>퇴근하기</div>
-											<div id="clockOut"></div>
-										</div><!-- End퇴근하기 버튼 -->
+										<div class="col border-end">
+											<div>연장 근무 신청 내역</div>
+											<div>없음</div>
+										</div>
+										<div class="col">
+											<button class="btn btn-primary">연장근무 신청하기</button>
+										</div>
 									</div>
-								
-								</div><!-- End 출퇴근 버튼 -->
-			            	
-			            	</div>
-		        		</div><!-- End attendance Card -->
-				              <!-- End Donut Chart -->
-				
-				            
-					</div>
-				
-					<!-- 주중 근무 현황 -->
-					<div class="col-lg-6">
-						<!-- 재목 -->
-						<div class="pagetitle">
-						   	<h1>주중 근무 현황</h1>
+								</div>
+							</div>
+							<!-- End attendance Card -->
+							<!-- End Donut Chart -->
 						</div>
-						<!-- 내용 -->
-						<div class="card">
-			            <div class="card-body">
-			            <h5 class="card-title">23.02.27 ~ 23.03.03</h5>
-			
-			              <!-- Stacked Bar Chart -->
-			              <canvas id="stakedBarChart" style="max-height: 250px;"></canvas>
-			              <script>
+						<div class="row">
+							<!-- 내용 -->
+							<div class="card info-card sales-card mt-3"
+								style="height: 140px;">
+								<div class="card-body mt-4">
+									<div class="row">
+										<div class="col border-end">
+											<div>휴일 근무 신청 내역</div>
+											<div>없음</div>
+										</div>
+										<div class="col">
+											<button class="btn btn-success">휴일근무 신청하기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End attendance Card -->
+							<!-- End Donut Chart -->
+						</div>
+						<!-- 제목 -->
+					</div>
+				</div>
+				<!-- 재목 -->
+				<div class="pagetitle">
+					<h1>주중 근무 현황</h1>
+				</div>
+				<!-- 내용 -->
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">23.02.27 ~ 23.03.03</h5>
+
+						<!-- Stacked Bar Chart -->
+						<canvas id="stakedBarChart" style="max-height: 250px;"></canvas>
+						<script>
 			                document.addEventListener("DOMContentLoaded", () => {
 			                  new Chart(document.querySelector('#stakedBarChart'), {
 			                    type: 'bar',
@@ -373,26 +319,25 @@
 			                  });
 			                });
 			              </script>
-			              <!-- End Stacked Bar Chart -->
-			
-			            </div>
-			          </div>
+						<!-- End Stacked Bar Chart -->
+
 					</div>
-				</div><!-- ====================================== End Second row ============================================ -->
-			   
-				<!-- ====================================== Third row ============================================ -->
-				<div class="row">
-					
-					<!-- 제목 -->
-					<div class="pagetitle">
-						<h1>월별 근무 현황</h1>
-					</div>
-					
-					<!-- 내용 -->
-					<div class="card">
-						<div class="card-body">
-							
-							<script>
+				</div>
+
+			</div>
+
+			<!-- 주중 근무 현황 -->
+			<div class="col-lg-7">
+				<!-- 제목 -->
+				<div class="pagetitle">
+					<h1>월별 근무 현황</h1>
+				</div>
+
+				<!-- 내용 -->
+				<div class="card" style="height: 700px;">
+					<div class="card-body m-0 p-0">
+
+						<script>
 								
 							$(document).ready(function(){
 								var request = $.ajax({
@@ -407,7 +352,7 @@
 										var calendarEl = document.getElementById('calendar');
 										
 									    var calendar = new FullCalendar.Calendar(calendarEl, {
-									      initialView: 'dayGridMonth',
+									    	initialView: 'dayGridMonth',
 									      googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
 									      events: 
 									    	  data
@@ -433,18 +378,26 @@
 								});
 					});
 							</script>
-						  	<div class="d-flex justify-content-center">
-						  		<div id='calendar' class="m-5" style="width:1200px" ></div>
-						  	</div>
-							
+						<div class="d-flex justify-content-center">
+							<div id='calendar' class="mt-5" style="width: 700px"></div>
 						</div>
+
 					</div>
 				</div>
-				<!-- ====================================== End Third row ============================================ -->
-			</section>
-		</main>
-	  	<!-- =======End Main ======= -->
-	  	
-	  	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	</body>
+
+			</div>
+		</div>
+		<!-- ====================================== End Second row ============================================ -->
+
+		<!-- ====================================== Third row ============================================ -->
+
+
+
+		<!-- ====================================== End Third row ============================================ -->
+	</section>
+	</main>
+	<!-- =======End Main ======= -->
+
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</body>
 </html>

@@ -298,4 +298,11 @@ public class AttendanceController {
 		log.info(list);
 		return list;
 	}
+	
+	@GetMapping("/attendance/dept")
+	public String deptList() {
+		log.info("실행");
+		
+		return "attendance/dept_attendance_status";
+	}
 }

@@ -24,10 +24,10 @@ function addFile(obj){
 
                 // 목록 추가
                 let htmlData = '';
-                htmlData += '<div id="file' + fileNo + '" class="filebox">';
-                htmlData += '   <p class="name">' + file.name + '</p>';
-                htmlData += '	<p class="size">' + file.size/1000 + 'KB</p>'; 	
-                htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
+                htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
+                htmlData += '   <p class="email-file name" style="margin-top:0">' + file.name + '</p>';
+                htmlData += '	<p class="email-file size"style="margin-top:0">' + file.size/1000 + 'KB</p>'; 	
+                htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
                 htmlData += '</div>';
                 $(".file-list").append(htmlData);
                 fileNo++;
@@ -42,7 +42,6 @@ function addFile(obj){
 
 /* 첨부파일 검증 */
 function validation(obj){
-    const fileTypes = ['application/pdf', 'image/gif', 'image/jpeg', 'image/png', 'image/bmp', 'image/tif', 'application/haansofthwp', 'application/x-hwp'];
     if (obj.name.length > 100) {
         alert("파일명이 100자 이상인 파일은 제외되었습니다.");
         return false;
@@ -51,9 +50,6 @@ function validation(obj){
         return false;
     } else if (obj.name.lastIndexOf('.') == -1) {
         alert("확장자가 없는 파일은 제외되었습니다.");
-        return false;
-    } else if (!fileTypes.includes(obj.type)) {
-        alert("첨부가 불가능한 파일은 제외되었습니다.");
         return false;
     } else {
         return true;

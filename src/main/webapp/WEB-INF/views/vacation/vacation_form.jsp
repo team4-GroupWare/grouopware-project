@@ -8,12 +8,12 @@
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  	<!-- =========================sideber=============================== -->
+<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
 			 
 				<!--휴가 작성 -->
-				<li class="nav-item">
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
 					<a class="btn btn-primary" type="button" href="#" style="width:100%">
 					    <i class="bi bi-pencil-square"></i> 
 					    <span>휴가 작성</span>
@@ -21,49 +21,54 @@
 				</li>
 			
 				<!--근무 현황 -->
-				<li class="nav-item">
+				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 					<a class="nav-link collapsed" href="#">
 				    	<i class="bi bi-eye"></i>
 				    	<span>근무 현황</span>
 				  	</a>
 				</li>
 			
-				<!--휴가 문서 -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="#">
-				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 문서</span>
-					</a>
+				<!--부서 근무 현황 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
+				  	</a>
 				</li>
 			
-				<!--부서 근무 현황 -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
-				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span><i class="bi bi-chevron-down ms-auto"></i>
-				  	</a>
-					<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+				<!--내 휴가 문서 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
+					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>내 휴가</span>
+					</a>
+					
+				</li>
+			
+				<!--휴가 결제 문서 -->
+				<li class="nav-item"  >
+					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>휴가 결제 문서</span><i class="bi bi-chevron-down ms-auto"></i>
+					</a>
+					<ul id="document1-nav" class="nav-content collapse " data-bs-parent="#documen1t-nav">
 						<li>
-					    	<a href="#">
-					      		<span>공공사업1</span>
-					    	</a>
-					  	</li>
-					  	<li>
-					    	<a href="#">
-					      		<span>공공사업2</span>
-					    	</a>
-					  	</li>
-					  	<li>
-					    	<a href="#">
-					      		<span>전략사업</span>
-					    	</a>
-					  	</li>
-					  	<li>
-				    		<a href="#">
-					      		<span>경영관리</span>
-					    	</a>
-					  	</li>
+	            			<a href='${pageContext.request.contextPath}/vacation/document'><span>전체</span></a>
+	          			</li>
+	          			<li>
+	            			<a href="#"><span>대기</span></a>
+	          			</li>
+	          			<li>
+	            			<a href="#"><span>진행</span></a>
+	          			</li> 
+	          			<li>
+	            			<a href="#"><span>승인</span></a>
+	          			</li>
+	          			<li>
+	            			<a href="#"><span>반려</span></a>
+	          			</li>
 					</ul>
 				</li>
+				
 			
 			</ul>
 		</aside>
@@ -160,7 +165,7 @@
 									<div class="row mb-3">
 										<label for="inputDate" class="col-sm-2 col-form-label"><b>시작날짜</b></label>
 										<div class="col-sm-10">
-											<input type="date" class="form-control">
+											<input id="startDate" type="date" class="form-control">
 										</div>
 									</div>
 									
