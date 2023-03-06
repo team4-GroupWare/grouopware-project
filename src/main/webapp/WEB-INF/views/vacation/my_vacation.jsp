@@ -8,7 +8,7 @@
 </head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  <!-- =========================sideber=============================== -->
+	  	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
 			 
@@ -95,71 +95,96 @@
 							<div class="card-body mt-3">
 							 	
 									
-									<!--============================= documents-tab============================================-->
-									<div id="documents" role="tabpanel" aria-labelledby="documents-tab">
-										
+									
+								
+									<!--============================= my-tab============================================-->
+									<div  id="myvacation">
+									 	
+									 	<!-- 휴가 현황 -->
+									 	<div>
+											<Strong>휴가 현황</Strong>
+											<div class="row ">
+												<div class="col-2 border-end">총 휴가 : 18일</div>
+												<div class="col-2 border-end">사용 휴가: 1일</div>
+												<div class="col-3">잔여 휴가: 17일(잔여 연차)</div>
+											</div>
+										</div>
+									  
+									  	<!--대체휴가 현황 -->
+										<div class="mt-5">
+											<Strong>대체휴가 현황</Strong>
+											<div class="row ">
+												<div class="col-2 border-end">지급 : 7일</div>
+												<div class="col-3">휴가 종류:경조사(결혼)</div>
+											</div>
+											
+											<div class="row ">
+												<div class="col-2 border-end">지급 : 90일</div>
+												<div class="col-3">휴가 종류:경조사(출산)</div>
+											</div>
+										</div>
+									
 										<!-- 필터링바 -->
-										<div class="dropdown d-flex justify-content-end">
+										<div class="dropdown d-flex justify-content-between mt-5 mb-2">
+											<Strong >휴가 신청 목록</Strong>
 											<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-										    	모든문서
-										  	</button>
+											  모든문서
+											</button>
 											<ul class="dropdown-menu">
 												<li><a class="dropdown-item" href="#">모든문서</a></li>
-										    	<li><a class="dropdown-item" href="#">대기</a></li>
-										    	<li><a class="dropdown-item" href="#">진행</a></li>
-										    	<li><a class="dropdown-item" href="#">승인</a></li>
-										    	<li><a class="dropdown-item" href="#">반려</a></li>
-										  	</ul>
-										</div>		
-										
-										<!-- Table -->
+												<li><a class="dropdown-item" href="#">대기</a></li>
+												<li><a class="dropdown-item" href="#">처리중</a></li>
+												<li><a class="dropdown-item" href="#">처리완료</a></li>
+											</ul>
+										</div>	
+									    
+									  	<!-- Table -->
 										<table class="table table-hover">
 											<thead>
 												<tr bgcolor="#EFF4FC">
-												    <th scope="col">문서번호</th>
-												    <th scope="col">제목</th>
-												    <th scope="col">기안자</th>
-												    <th scope="col">기안일</th>
-												    <th scope="col">상태</th>
-											  	</tr>
+													<th scope="col">문서번호</th>
+													<th scope="col">제목</th>
+													<th scope="col">기안자</th>
+													<th scope="col">기안일</th>
+													<th scope="col">상태</th>
+												</tr>
 											</thead>
 											<tbody>
-											  	<tr>
-												    <th scope="row">1</th>
-												    <td>휴가 신청</td>
+												<tr>
+											    	<th scope="row">1</th>
+											    	<td>휴가 신청</td>
 												    <td>김이사</td>
 												    <td>2023-02-10</td>
 												    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 											  	</tr>
-											  	<tr>
-											    	<th scope="row">2</th>
+											    <tr>
+												    <th scope="row">2</th>
 												    <td>휴가 신청</td>
 												    <td>김이사</td>
 												    <td>2023-02-10</td>
 											     	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
 											  	</tr>
-												<tr>
-													<th scope="row">3</th>
-												  	<td>휴가 신청</td>
-												   	<td>김이사</td>
-												   	<td>2023-02-10</td>
-												   	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-												</tr>
-												<tr>
-													<th scope="row">4</th>
-													<td>휴가 신청</td>
-													<td>김이사</td>
-													<td>2023-02-10</td>
-													<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-												</tr>
-												<tr>
-													<th scope="row">5</th>
-													<td>휴가 신청</td>
-													<td>김이사</td>
-													<td>2023-02-10</td>
-													<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-												</tr>
-											
+											    <tr>
+												    <th scope="row">3</th>
+												    <td>휴가 신청</td>
+												    <td>김이사</td>
+												    <td>2023-02-10</td>
+												    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
+											  	</tr>
+											    <tr>
+												    <th scope="row">4</th>
+												    <td>휴가 신청</td>
+												    <td>김이사</td>
+												    <td>2023-02-10</td>
+											      	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
+											  	</tr>
+											    <tr>
+												    <th scope="row">5</th>
+												    <td>휴가 신청</td>
+												    <td>김이사</td>
+												    <td>2023-02-10</td>
+												    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
+											 	</tr>
 											</tbody>
 										</table>
 										
@@ -184,9 +209,8 @@
 											</nav>
 										</div>
 									
-									</div><!--=============================End documents-tab============================================-->
-								
-									
+									</div>
+									<!--=============================End my-tab============================================-->
 								</div>
 							</div>
 						</div><!-- End Card -->
