@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
+import com.mycompany.webapp.approval.model.ApprovalLine;
 import com.mycompany.webapp.approval.service.IApprovalService;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.service.EmployeeService;
+import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Team;
 import com.mycompany.webapp.group.service.IDepartmentService;
@@ -39,6 +43,9 @@ public class ApprovalController {
 	
 	@Autowired
 	private IApprovalService approvalService;
+	
+	@Autowired
+	private IEmployeeService employeeService;
 	
 	/**
 	 * 전자결재 작성 폼 불러오기
@@ -100,6 +107,24 @@ public class ApprovalController {
 	public String getCategoryForm(@RequestParam(defaultValue="1") int approvalCategoryId, Model model) {
 		log.info("실행");
 		return approvalService.getApprovalForm(approvalCategoryId);
+	}
+	
+	@PostMapping(value="/employee")
+	@ResponseBody
+	public List<Employee> getEmployeeInfo(@RequestParam(value="line[]") String[] approvalLine, Model model) {
+		log.info("실행=====");
+		
+		List<Employee> employees = new ArrayList<>();
+		
+		for(int i = 0; i < approvalLine.length; i++) {
+			log.info("approvalLine: " + approvalLine);
+			Employee emp = employeeService.getEmp(approvalLine[i]);
+			emp.setSeq(i+1);
+			log.info("emp: " + emp);
+			employees.add(emp);
+		}
+		
+		return employees;
 	}
 	
 	/**
