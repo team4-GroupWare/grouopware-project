@@ -136,17 +136,54 @@ input[type=radio]:checked+label{
 		selectEl.options[selectEl.options.length-1].selected = true;
 	}
 	
-	function ListSubmit() {
+	function listSubmit() {
+		
 		var length = document.getElementById('selectEl').length;
 		//var length = $("#selectEl").length;
 		console.log("length: " + length);
-		var arr1 = [];
+		var approvalLine = new Array();
 
 		for (i = 0; i < length; i++) {
-			arr1[i] = selectEl.options[i].id;
-			console.log(arr1);
+			approvalLine[i] = selectEl.options[i].id;
 		}
-		console.log(arr1);
+		console.log(approvalLine);
+		/* var testList = new Array() ;
+		for(var i = 1; i <= length; i++){
+			// 객체 생성
+			var dataArr = new Object() ;
+			
+			data.seq = i;
+			data.empId = approvalLine[i-1];
+			
+			// 리스트에 생성된 객체 삽입
+			testList.push(data) ;
+		}
+		console.log("testList: " + testList);
+		var lineArr = {
+			"testList" : JSON.stringify(testList)
+		};
+		console.log("lineArr: " + lineArr); */
+		$.ajax({
+			type: "post",
+		    url: "/webapp/approval/employee",
+		    data: {
+		    	line : approvalLine
+		    },
+		    success: function (data) {
+		    	console.log("성공");
+		    	console.log(data);
+		    	var lineHtml = "";
+		    	for(var i in data){
+					lineHtml += '<div style="border:1px solid #CECECE">' + 
+							'<span style="font-size:18px; font-weight:bold;">' + data[i].name + '</span> ' +
+							data[i].gradeName + '<br>' +
+							data[i].deptName + " / " + data[i].teamName +
+							'</div>';
+				}
+				$("#approval_line").html(lineHtml);
+				$("#verticalycentered").modal("hide"); 
+			}
+		});
 	}
 	
 </script>
@@ -212,7 +249,7 @@ input[type=radio]:checked+label{
 				            		</a>
 					            	<ul id="nav-dept${status.count}" class="nav-content collapse m-0" data-bs-parent="#sidebar-nav">
 						              	<c:forEach var="team" items="${teams[status.index]}">
-						              	<li style="" class="team" id="${team.teamId}" onclick="changeColor()">
+						              	<li style="" class="team" id="${team.teamId}">
 						              		${team.teamName}
 						              	</li>
 						              	</c:forEach>
@@ -276,11 +313,8 @@ input[type=radio]:checked+label{
 					</div>
 					
 					<!-- 선택된 사원 -->
-					<div class="col-3 border">
-						<select  id="selectEl" name="category_list" size="10" style="width: 120px;">
-							
-						</select> <input type="hidden" name="category_code" value=""><br>
-					</div>
+					<select class="col-3" id="selectEl" name="category_list" size="10" style="border-color:#CECECE"></select> 
+					<input type="hidden" name="category_code" value=""><br>
 				
 				</div><!-- End Content -->
 			</div><!-- End Body -->
@@ -288,7 +322,7 @@ input[type=radio]:checked+label{
 			<!-- Footer -->
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				<button type="button" class="btn btn-primary" onclick="ListSubmit()">확인</button>
+				<button type="button" class="btn btn-primary" onclick="listSubmit()">확인</button>
 			</div>
 		</div>
 	</div>
