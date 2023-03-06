@@ -174,11 +174,15 @@ input[type=radio]:checked+label{
 		    	console.log(data);
 		    	var lineHtml = "";
 		    	for(var i in data){
-					lineHtml += '<div style="border:1px solid #CECECE">' + 
-							'<span style="font-size:18px; font-weight:bold;">' + data[i].name + '</span> ' +
+					lineHtml += '<div style="background-color:#EDEEF0; width:200px; padding:15px">' + 
+							'<span style="font-size:18px; font-weight:bold;">' + data[i].empName + '</span> ' +
 							data[i].gradeName + '<br>' +
-							data[i].deptName + " / " + data[i].teamName +
-							'</div>';
+							data[i].deptName + " / " + data[i].teamName + '</div>';
+							console.log("i: " + i);
+							console.log("data.length: " + data.length);
+					if(i != data.length-1) {
+						lineHtml += '<div style="width:200px; text-align: center;"><i class="bi bi-caret-down-fill" style="font-size:25px;"></i></div>';
+					}
 				}
 				$("#approval_line").html(lineHtml);
 				$("#verticalycentered").modal("hide"); 
