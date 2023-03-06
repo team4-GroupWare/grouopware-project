@@ -259,26 +259,22 @@
 				<!-- ====================================== Second row ============================================ --> 
 				<div class="row">
 					<!-- 오늘 근무 현황 -->
-					<div class="col-lg-6">
+					<div class="col-lg-5">
+						<div class="row">
 						
-						<!-- 제목 -->
+							<div class="col-lg-6">
+									<!-- 제목 -->
 						<div class="pagetitle">
 						   	<h1>오늘 근무 현황</h1>
 						</div>
-						
 						<!-- 내용 -->
-							<div class="card info-card sales-card "  style="height:335px; ">
+							<div class="card info-card sales-card "  style="height:300px; ">
 			           		<div class="card-body mt-4">
 					            <!-- 현재시간 -->
 			                	<div class=""><h2 id="time"></h2></div>
 					            <div class="row">
 					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
-									<!-- 출근 상태 -->
-				                	<!-- <div class="col">
-				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
-				                			출근
-				                		</span>
-				                	</div> -->
+									
 					            </div>
 								
 								<!-- 출퇴근 버튼 -->
@@ -293,8 +289,10 @@
 											width="100"
 											onClick="location.href='${pageContext.request.contextPath}/attendance'"
 											/>
-										    <div>출근하기</div> 
+										    <div>출근</div> 
 										    <div id="clockIn"></div>
+										    
+										    
 										</div><!-- End 출근하기 버튼 -->
 										
 										<!-- 퇴근하기 버튼 -->
@@ -308,7 +306,7 @@
 											width="100"
 											onClick="location.href='${pageContext.request.contextPath}/leave'" 
 											/>
-											<div>퇴근하기</div>
+											<div>퇴근</div>
 											<div id="clockOut"></div>
 										</div><!-- End퇴근하기 버튼 -->
 									</div>
@@ -318,6 +316,63 @@
 			            	</div>
 		        		</div><!-- End attendance Card -->
 				              <!-- End Donut Chart -->
+							</div>
+							
+							
+							
+							<div class="col-lg-6">
+							<div class="row">
+								<div class="pagetitle">
+						   	<h1>오늘 근무 계획</h1>
+						</div>
+						
+						<!-- 내용 -->
+							<div class="card info-card sales-card " style="height:135px;" >
+			           		<div class="card-body mt-4">
+					          		<div class="row">
+					          			<div class="col border-end">
+					          			<div>연장 근무 신청 내역</div>
+					          			<div>없음</div>
+						          		</div>
+						          		<div class="col">
+						          		  <button class="btn btn-primary"> 연장근무신청하기</button>
+						          		</div>
+					          		</div>
+					          		
+									
+								
+			            	</div>
+		        		</div><!-- End attendance Card -->
+				              <!-- End Donut Chart -->
+							</div>
+							<div class="row">
+							 	
+						
+						<!-- 내용 -->
+							<div class="card info-card sales-card " style="height:135px;">
+			           		<div class="card-body mt-4">
+					          		<div class="row">
+					          			<div class="col border-end">
+					          			<div>휴일 근무 신청 내역</div>
+					          			<div>없음</div>
+						          		</div>
+						          		<div class="col">
+						          		  <button class="btn btn-success"> 휴일근무신청하기</button>
+						          		</div>
+					          		</div>
+									
+								
+			            	</div>
+		        		</div><!-- End attendance Card -->
+				              <!-- End Donut Chart -->
+							</div>
+									<!-- 제목 -->
+						
+							</div>
+						
+						</div>
+						
+						
 						<!-- 재목 -->
 						<div class="pagetitle">
 						   	<h1>주중 근무 현황</h1>
@@ -375,14 +430,14 @@
 					</div>
 				
 					<!-- 주중 근무 현황 -->
-					<div class="col-lg-6">
+					<div class="col-lg-7">
 						<!-- 제목 -->
 					<div class="pagetitle">
 						<h1>월별 근무 현황</h1>
 					</div>
 					
 					<!-- 내용 -->
-					<div class="card">
+					<div class="card" style="height:700px;">
 						<div class="card-body">
 							
 							<script>
