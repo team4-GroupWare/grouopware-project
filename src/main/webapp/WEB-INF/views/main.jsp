@@ -34,6 +34,24 @@
 		.card-icon:hover > .bi {
 			color: #fff;
 		}
+		.marker2 ul li {
+		    float: left;
+		    padding: 8px 0 4px 4px;
+		    min-width: 44px;
+		    margin-left: 1px;
+		}
+		.marker2 ul li.attendanceMark {
+		    color: #3C97E1;
+		}
+		.marker2 ul li.holidayMark {
+		    color: #FF8787;
+		}
+		.marker2 ul li.lateMark {
+		    color: #FFDF6C; 
+		}
+		.marker2 ul li.vacationMark {
+		    color: #57C66A; 
+		}
 	</style>
 </head>
 	<body  style="overflow-x: hidden">
@@ -311,6 +329,18 @@
 												<div class="day">SAT</div>
 											</div>
 											<div class="dates"></div>
+											<div class="tool_bar tool_absolute wrap_tb_box">
+										        <div class="critical">
+										            <section class="marker2">
+										                <ul>
+										                    <li class="attendanceMark"><span></span>출근</li>
+										                    <li class="lateMark"><span></span>지각</li>
+										                    <li class="holidayMark"><span></span>휴일</li>
+										                    <li class="vacationMark"><span></span>휴가</li>
+										                </ul>
+										            </section>
+										        </div>
+										    </div>
 										</div>
 									</div>
 								</div>
