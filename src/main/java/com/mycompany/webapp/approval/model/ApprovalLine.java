@@ -11,4 +11,9 @@ public class ApprovalLine {
 	private int seq;
 	private boolean isApproved;
 	private String comment;
+	
+	private String empName;
+	private String teamName;
+	private String deptName;
+	private String gradeName;
 }

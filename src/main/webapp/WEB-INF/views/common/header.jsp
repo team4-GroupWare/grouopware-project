@@ -4,14 +4,14 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
 	<!-- Logo -->
-	<div class="d-flex align-items-center justify-content-between">
+	<div class="d-flex align-items-center justify-content-between" style="margin-right:5px;">
 		<a href="${pageContext.request.contextPath}/">
 			<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="100px" height="100px">
 		</a>
 		<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
 			<span class="d-none d-lg-block">엑사아이엔티</span>
 		</a>
-		<i class="bi bi-list toggle-sidebar-btn"></i>
+		<i class="d-lg-none bi bi-list toggle-sidebar-btn"></i>
 	</div>
 	
 	<!-- Dropbar -->
@@ -33,11 +33,18 @@
 			
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">
-				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class="topprofile rounded-circle" style="width:40px;">
-					<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">${loginEmployee.name}</span>
-				
-				</a>
+				<%-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+					
+					<span class="d-none d-md-block pe-1" style="font-size: 18px;">${loginEmployee.name}</span>
+					<span class="d-none d-md-block dropdown-toggle pe-1" >${loginEmployee.gradeName}</span>
+					<span class="d-none d-md-block">${loginEmployee.deptName} / ${loginEmployee.teamName}</span>
+					<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class="topprofile rounded-circle pe-0" style="width:40px;"/>
+				</a> --%>
+				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+		        	<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class=" rounded-circle">
+		            <span class="d-none d-md-block p-1" style="font-size: 18px;">${loginEmployee.name}</span>
+		            <span class="d-none d-md-block dropdown-toggle " >${loginEmployee.gradeName}</span>
+		        </a>
 				
 				<!-- dropbar -->
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
