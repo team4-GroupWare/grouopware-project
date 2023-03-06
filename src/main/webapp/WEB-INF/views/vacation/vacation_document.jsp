@@ -1,107 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<html>
 
-	<head>
-		<meta charset="utf-8">
-		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		
-		<title>엑사아이엔티 그룹웨어</title>
-		<meta content="" name="description">
-		<meta content="" name="keywords">
-		
-		<!-- Favicons -->
-		<link href="assets/img/exaint_logo.png" rel="icon">
-		
-		<!-- Google Fonts -->
-		<link href="https://fonts.gstatic.com" rel="preconnect">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-		
-		<!-- Vendor CSS Files -->
-		<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-		<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-		<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-		<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-		<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-		<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-		
-		<!-- Template Main CSS File -->
-		<link href="assets/css/style.css" rel="stylesheet">
-		
-		<!-- 달력  -->
-		<link href="fullcalendar-5.6.0/lib/main.css" rel="stylesheet">
-		<script src="fullcalendar-5.6.0/lib/main1.js"></script>
-	
-	</head>
-
-	<body>	
-		<!-- =========================Header=============================== -->
-		<header id="header" class="header fixed-top d-flex align-items-center">
-		
-			<!-- Logo -->
-			<div class="d-flex align-items-center justify-content-between">
-				<img src="assets/img/exaint_logo.png" width="100px" height="100px">
-			<a href="index2.html" class="logo d-flex align-items-center">
-				<span class="d-none d-lg-block">엑사아이엔티</span>
-			</a>
-			</div>
-			
-			<!-- Dropbar -->
-			<div class="menudropbar d-flex align-items-center justify-content-between">
-	      		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
-	        		<option value="index2.html" selected>오피스 홈</option>
-	        		<option value="attendance-status.html">근태관리</option>
-	        		<option value="hr.html">인사</option>
-	        		<option value="approval_list.html">전자결재</option>
-	        		<option value="email/email_list.html">메일</option>
-	        		<option value="5">공지사항</option>
-	      		</select>
-	    	</div><!-- End Dropbar -->
-			
-			<!-- Icons Navigation -->
-			<nav class="header-nav ms-auto">
-				<ul class="d-flex align-items-center">
-					<!-- 프로필 사진 -->
-					<li><img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" width="40px"></li>
-					
-					<!-- Profile Nav -->
-					<li class="nav-item dropdown pe-4">
-						<a class="nav-link nav-profile d-flex align-items-center pe-0" href="vacation_document.html" data-bs-toggle="dropdown">
-							<span class="d-none d-md-block dropdown-toggle ps-2" style="font-size: 18px;">이지호</span>
-						</a>
-						<span class=" ps-2">공공사업1 Div / 솔루션 개발팀</span>
-						
-						<!-- dropbar -->
-						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-							<li class="dropdown-header">
-								<h6>이지호</h6>
-								<span>공공사업1 Div / 솔루션 개발팀</span>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li>
-								<a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-							    	<i class="bi bi-person"></i>
-							    	<span>My Profile</span>
-							  	</a>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-							    	<i class="bi bi-box-arrow-right"></i>
-							    	<span>Sign Out</span>
-							  	</a>
-							</li>
-						</ul><!-- End dropbar -->
-					</li><!-- End Profile Nav -->
-				</ul>
-			</nav><!-- End Icons Navigation -->
-		</header><!-- =========================End Header=============================== -->
-	
-		<!-- =========================sideber=============================== -->
+<head>
+	<%@ include file="/WEB-INF/views/common/head.jsp" %>
+</head>
+	<body>
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
 			 
@@ -161,8 +68,7 @@
 			</ul>
 		</aside>
 		<!-- ======================================End Sidebar ============================================ -->
-	
-		<!-- ====================================== Main ============================================ -->	
+	  	<!-- ======================================Main==================================================== -->
 		<main id="main" class="main">
 			
 			<!-- 페이지 제목 -->
@@ -406,32 +312,8 @@
 					</div>
 				</div>
 			</section>
-		</main>
-		<!--=============================Main============================================-->
-		
-		<!-- ======= Footer ======= -->
-		<footer id="footer" class="footer">
-			<div class="copyright">
-				&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-			</div>
-			<div class="credits">
-				Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-			</div>
-		</footer><!-- End Footer -->
-		
-		<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-		
-		<!-- Vendor JS Files -->
-		<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script src="assets/vendor/chart.js/chart.umd.js"></script>
-		<script src="assets/vendor/echarts/echarts.min.js"></script>
-		<script src="assets/vendor/quill/quill.min.js"></script>
-		<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-		<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-		<script src="assets/vendor/php-email-form/validate.js"></script>
-		
-		<!-- Template Main JS File -->
-		<script src="assets/js/main.js"></script>
+		</main><!-- ======================================Main==================================================== -->
+	  	
+	  	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</body>
 </html>

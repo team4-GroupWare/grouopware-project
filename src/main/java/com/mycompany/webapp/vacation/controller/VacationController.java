@@ -56,4 +56,11 @@ public class VacationController {
 		
 		return emplist;
 	}
+	
+	@GetMapping("/vacation/document")
+	public String getVacationList(Model model) {
+		log.info("실행");
+		
+		return "vacation/vacation_document";
+	}
 }
