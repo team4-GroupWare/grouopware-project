@@ -162,17 +162,10 @@
 										<div class="insert col-sm-10">
 											<input id="input_date" type="date">
 											<input id="input_submit" type="button" onclick="input()" value="확인">
-											<div class="date-list">
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
-												<div>2023-03-02</div>
+											
+											<div class="date-list mb-3">
+												
 											</div>
-										</div>
 									</div>
 									
 									<!-- 사유 -->
