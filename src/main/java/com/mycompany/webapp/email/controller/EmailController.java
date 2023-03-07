@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
@@ -183,12 +185,17 @@ public class EmailController {
 	 * @return
 	 */
 	@PostMapping("/write")
-	public String writeEmail(HttpSession session, EmailDetail emailDetail) {
+	public String writeEmail(HttpSession session, EmailDetail emailDetail, @RequestPart("files") MultipartFile[] files) {
 		log.info("실행");
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		int row = emailService.writeEmail(emailDetail);
+		int row = 0;
+		if(files != null) {
+			row = emailService.writeEmail(emailDetail, files);
+		} else {
+			row = emailService.writeEmail(emailDetail);
+		}
 		return "email/complete";
 	}
 	

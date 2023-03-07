@@ -1,24 +1,35 @@
 package com.mycompany.webapp.email.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.MultipartFileResolver;
 import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailDetail;
+import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
 import com.mycompany.webapp.email.model.TempEmail;
+import com.mycompany.webapp.email.repository.EmailFileRepository;
 import com.mycompany.webapp.email.repository.EmailRepository;
 
 import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 public class EmailService implements IEmailService {
+	
+	@Autowired
+	EmailFileRepository emailFileRepository;
+	
+	@Autowired
+	MultipartFileResolver multipartFileResolver;
 	
 	@Autowired
 	EmailRepository emailRepository;
@@ -291,6 +302,44 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		int row = emailRepository.deleteSendEmail(emailId);
 		row = emailRepository.deleteReceiveEmail(emailId);
+		return row;
+	}
+
+	@Override
+	public int writeEmail(EmailDetail emailDetail, MultipartFile[] files) {
+		log.info("실행");
+		EmailContent emailContent = new EmailContent();
+		ReceiveEmail receiveEmail = new ReceiveEmail();
+		SendEmail sendEmail = new SendEmail();
+	
+		//이메일 컨텐트 테이블 insert
+		emailContent.setContent(emailDetail.getContent());
+		emailContent.setImportant(emailDetail.isImportant());
+		emailContent.setTitle(emailDetail.getTitle());
+		int row = emailRepository.insertEmailContent(emailContent);
+		//넣었던 emailContentId로 send_email 테이블 insert
+		sendEmail.setReceiveEmpId(emailDetail.getReceiveId());
+		sendEmail.setEmailContentId(emailContent.getEmailContentId());
+		row += emailRepository.insertSendEmail(sendEmail);
+		//넣었던 emailContentId로 receive_email 테이블 insert
+		receiveEmail.setSentEmpId(emailDetail.getSendId());
+		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
+		row += emailRepository.insertReceiveEmail(receiveEmail);
+		
+		List<EmailFile> fileList =  null;
+		try {
+			fileList = multipartFileResolver.getEmailFileList(files, emailContent.getEmailContentId());
+			
+			if(fileList.size() != 0) {
+				for(int i=0; i<fileList.size();i++) {
+					if(fileList.get(i).getEmailFileName() != null && !fileList.get(i).getEmailFileName().equals("")) {
+						row += emailFileRepository.insertFileData(fileList.get(i));
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return row;
 	}
 

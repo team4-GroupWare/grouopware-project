@@ -76,26 +76,9 @@
       </li><!-- End Charts Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-envelope"></i><span>보낸 메일함</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed " href="${pageContext.request.contextPath}/email/sendlist">
+          <i class="bi bi-envelope"></i><span>보낸 메일함</span>
         </a>
-        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
- 	 	  <li>
-            <a href="${pageContext.request.contextPath}/email/sendlist">
-              <span>전체</span>
-            </a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/email/unreadlist" class="active">
-              <span>미수신 메일</span>
-            </a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/email/readlist">
-              <span>수신 메일</span>
-            </a>
-          </li>
-        </ul>
       </li><!-- End Icons Nav -->
 
       <li class="nav-item">
@@ -121,7 +104,7 @@
       <div class="row">
         <div class="col-lg-12">
 
-          <div class="card">
+          <div class="card"> 
             <div class="card-body">
               <h2 class="card-title"><b>메일 작성</b></h2>
 
@@ -159,8 +142,8 @@
         
                   <label class="btn btn-primary btn-sm mb-2" for="input-file">
   						파일선택
-				</label>
-		        	<input id="input-file" type="file"  onchange="addFile(this);" style="display:none" multiple />
+				  </label>
+		        	<input id="input-file" type="file" name="files" onchange="addFile(this);" style="display:none" multiple />
 			        <div class="file-list"></div>
 				</div>
                 </div>

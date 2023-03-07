@@ -3,7 +3,10 @@ package com.mycompany.webapp.email.model;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class EmailDetail {

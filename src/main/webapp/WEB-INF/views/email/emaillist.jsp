@@ -47,26 +47,9 @@
       </li><!-- End Charts Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse" >
-          <i class="bi bi-envelope"></i><span>보낸 메일함</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed " href="${pageContext.request.contextPath}/email/sendlist">
+          <i class="bi bi-envelope"></i><span>보낸 메일함</span>
         </a>
-        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="${pageContext.request.contextPath}/email/sendlist">
-              <span>전체</span>
-            </a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/email/unreadlist" >
-              <span>미수신 메일</span>
-            </a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/email/readlist">
-              <span>수신 메일</span>
-            </a>
-          </li>
-        </ul>
       </li><!-- End Icons Nav -->
 
       <li class="nav-item">
@@ -107,16 +90,8 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <div class="card-title d-flex" >
-	               <div class="input-group me-auto p-2" style="width:350px">
-		             <span class="input-group-text" id="basic-addon1">
-		              	<i class="bi bi-search"></i>
-		             </span>
-	               	<input type="text" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
-	               	<button type="submit" class="btn btn-secondary btn-sm ">검색</button>
-	              </div>
-	            
-	              <div class=" my-auto" style="text-align:right">
+              <div class="card-title d-flex" style="padding-top:10px;margin-bottom:0px;padding-bottom:0px">
+              		 <div class=" my-auto" style="text-align:left">
 	              		<c:if test="${type eq 'trash'}">
 	              		<!-- 휴지통에서 조회한 경우 -->
 	              		<button type="submit" class="btn btn-secondary btn-sm " onclick="restore()">복구</button>
@@ -256,6 +231,15 @@
 						</script>
 	                    
 	              </div>
+	               <div class="input-group p-2" style="width:350px;margin-left:auto">
+		             <span class="input-group-text" id="basic-addon1">
+		              	<i class="bi bi-search"></i>
+		             </span>
+	               	<input type="text" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
+	               	<button type="submit" class="btn btn-secondary btn-sm ">검색</button>
+	              </div>
+	            
+	             
               </div>
 
               <!-- Table with hoverable rows -->

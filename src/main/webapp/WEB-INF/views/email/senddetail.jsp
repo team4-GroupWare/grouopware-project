@@ -27,26 +27,9 @@
 		      </li><!-- End Charts Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-		          <i class="bi bi-envelope"></i><span>보낸 메일함</span><i class="bi bi-chevron-down ms-auto"></i>
+		        <a class="nav-link collapsed " href="${pageContext.request.contextPath}/email/sendlist">
+		          <i class="bi bi-envelope"></i><span>보낸 메일함</span>
 		        </a>
-		        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-		          <li>
-		            <a href="${pageContext.request.contextPath}/email/sendlist">
-		              <span>전체</span>
-		            </a>
-	              </li>
-		          <li>
-		            <a href="${pageContext.request.contextPath}/email/unreadlist" class="active">
-		              <span>미수신 메일</span>
-		            </a>
-		          </li>
-		          <li>
-		            <a href="${pageContext.request.contextPath}/email/readlist">
-		              <span>수신 메일</span>
-		            </a>
-		          </li>
-		        </ul>
 		      </li><!-- End Icons Nav -->
 		
 		      <li class="nav-item">
