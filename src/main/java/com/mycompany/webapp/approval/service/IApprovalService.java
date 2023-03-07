@@ -33,7 +33,15 @@ public interface IApprovalService {
 	//전자결재 임시저장 갯수
 	public int getTempApprovalRow(String empId);
 
-	//전자결재 결재선
+	//전자결재 결재선 선택 시 사원정보
 	public ApprovalLine getApprovalLine(String empId);
+
+	/**
+	 * 전자결재 결재선 목록
+	 * @author : LEEJIHO
+	 * @param approvalId : 해당 문서 아이디
+	 * @return List<ApprovalLine> : 결재선 목록
+	 */
+	public List<ApprovalLine> getApprovalLineList(int approvalId);
 
 }

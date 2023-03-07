@@ -33,5 +33,11 @@ public interface ApprovalRepository {
 	public ApprovalLine selectApprovalLine(String empId);
 	//전자결재 결재선 저장
 	public int insertApprovalLine(ApprovalLine approvalLine);
+	/**
+	 * 전자결재 결재선 목록
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 */
+	public List<ApprovalLine> selectApprovalLineList(int approvalId);
 	
 }

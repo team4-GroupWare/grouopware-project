@@ -20,6 +20,21 @@
 		]]>
 	</select>
 
+	<!-- 전자결재 결재선 선택 시 사원정보-->
+	<select id="selectApprovalLine" parameterType="String" resultType="approval_line">
+		<![CDATA[
+			SELECT e.emp_id as "empId", 
+				name as "empName",
+                team_name as "teamName",
+                dept_name as "deptName",
+                grade_name as "gradeName"
+      		FROM EMPLOYEES e, departments d, teams t, grade g
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
+            	and g.grade_id= e.grade_id
+                and e.emp_id=#{empId}
+		]]>
+	</select>
+	
 	<!-- 전자결재 작성 -->
 	<insert id="insertApproval" parameterType="approval">
 		<![CDATA[
@@ -28,7 +43,7 @@
 		]]>
 	</insert>
 	
-	<!-- 전자결재 작성 -->
+	<!-- 전자결재 작성 결재선 저장 -->
 	<insert id="insertApprovalLine" parameterType="approval_line">
 		<selectKey keyProperty="approvalId" resultType="int" order="BEFORE">
 			SELECT seq_approval.CURRVAL FROM dual
@@ -107,29 +122,41 @@
 				content as "content",
 				a.emp_id as "empId",
 				name as "empName",
+                grade_name as "gradeName",
+                team_name as "teamName",
+                dept_name as "deptName",
 				write_date as "writeDate", 
 				a.approval_category_id as "approvalCategoryId", 
                 approval_name as "categoryName",
 				status
-			FROM approval a, employees e, approval_category c
+			FROM approval a, employees e, approval_category c, grade g, teams t, departments d
 			WHERE a.emp_id=e.emp_id 
 				and a.approval_category_id=c.approval_category_id 
+                and e.grade_id = g.grade_id and e.dept_id = d.dept_id
+                and e.team_id = t.team_id
 				and a.approval_id = #{approvalId}
 		]]>
 	</select>
 	
-	<!-- 전자결재 결재선 -->
-	<select id="selectApprovalLine" parameterType="String" resultType="approval_line">
+	<!-- 전자결재 결재선 목록 -->
+	<select id="selectApprovalLineList" parameterType="int" resultType="approval_line">
 		<![CDATA[
-			SELECT e.emp_id as "empId", 
-				name as "empName",
-                team_name as "teamName",
-                dept_name as "deptName",
-                grade_name as "gradeName"
-      		FROM EMPLOYEES e, departments d, teams t, grade g
-            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
-            	and g.grade_id= e.grade_id
-                and e.emp_id=#{empId}
+			SELECT l.approval_id as "approvalId", 
+			    approval_line_id as "approvalLineId", 
+			    l.emp_id as "empId", 
+			    seq, 
+			    is_approved as "isApproved", 
+			    approval_date as "approvalDate", 
+			    name as "empName",
+			    approval_comment as "approvalComment",
+			    grade_name as "gradeName",
+			    dept_name as "deptName",
+			    team_name as "teamName"
+			FROM approval_line l, approval a, employees e, grade g, departments d, teams t
+			WHERE l.approval_id = a.approval_id and l.emp_id = e.emp_id 
+			    and e.grade_id = g.grade_id and e.dept_id = d.dept_id
+			    and e.team_id = t.team_id
+			    and a.approval_id = #{approvalId}
 		]]>
 	</select>
 </mapper>

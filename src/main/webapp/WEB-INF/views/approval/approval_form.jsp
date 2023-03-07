@@ -5,7 +5,7 @@
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script src="https://cdn.tiny.cloud/1/smqgcpcmka5xnxwldh4kb6l5hf8upaeo1svd0dgxd7oi52gy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-	
+	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 	<script>
 		$(function(){
 			var form= $('#category_form').val();
@@ -221,7 +221,7 @@
                				</div>
                				<input type="hidden" id="category_form" name="category_form" value='${form}'>
                				
-              				<form method="post" id="approval_form" action="${pageContext.request.contextPath}/approval/write">
+              				<form method="post" id="approval_form" action="${pageContext.request.contextPath}/approval/write" enctype="multipart/form-data">
               					<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
               					<input type="hidden" id="tempApproval" name="tempApproval" value="">
                 				<div class="row mb-3">
@@ -272,6 +272,13 @@
 	                  					</div>
                 					</div>
                 				</div>
+                				<div>
+                					<label class="btn btn-primary btn-sm mb-2" for="input-file">
+  										파일선택
+				  					</label>
+		        					<input id="input-file" type="file" name="files" onchange="addFile(this);" style="display:none" multiple />
+			        				<div class="file-list"></div>
+			        			</div>
                 				<div class="row mb-3">
                   					<div class="col-sm-12">
                   						<input type="hidden" id="content" name="content" value="">

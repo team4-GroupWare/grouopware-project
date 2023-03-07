@@ -20,11 +20,7 @@ public class ApprovalService implements IApprovalService {
 	@Autowired
 	private ApprovalRepository approvalRepository;
 	
-	/**
-	 * 전자결재 카테고리 목록
-	 * @author : LEEJIHO
-	 * @return 전자결재 카테고리 목록
-	 */
+
 	@Override
 	public List<ApprovalCategory> getCategory() {
 		return approvalRepository.selectApprovalCategory();
@@ -39,8 +35,7 @@ public class ApprovalService implements IApprovalService {
 			approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
 		}
 		
-		return 0;
-		
+		return 2;
 	}
 
 	@Override
@@ -81,7 +76,15 @@ public class ApprovalService implements IApprovalService {
 
 	@Override
 	public ApprovalLine getApprovalLine(String empId) {
+		log.info("실행");
 		return approvalRepository.selectApprovalLine(empId);
+	}
+
+	//전자결재 결재선 목록
+	@Override
+	public List<ApprovalLine> getApprovalLineList(int approvalId) {
+		log.info("실행");
+		return approvalRepository.selectApprovalLineList(approvalId);
 	}
 
 }

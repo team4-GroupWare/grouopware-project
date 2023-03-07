@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -50,10 +51,10 @@
 		
 	</script>
 	<style>
-	  .line th, td {
-	  	text-align : center;
-	  	vertical-align : middle;
-	  }
+		.line th, td {
+			text-align : center;
+		  	vertical-align : middle;
+		}
 	</style>
  
 </head>
@@ -167,9 +168,9 @@
 						            </tr>
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">기안자</th>
-						                <td style="width: 40%">${approval.empName}</td>
+						                <td style="width: 40%"><b>${approval.empName}</b> ${approval.gradeName} </td>
 						                <th style="background-color:#E9EFFE; width:10%">소속</th>
-						                <td style="width: 40%">공공사업1 Div / 솔루션개발팀</td>
+						                <td style="width: 40%">${approval.deptName} / ${approval.teamName}</td>
 						            </tr>
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">참조</th>
@@ -180,23 +181,48 @@
 						        </table>
 						        
 						        <div class="row">
-						        	<div class="col-lg-2" style="margin-left: auto;">
-							        	<table class="line table table-bordered" style="height: 120px; border:black;">
-								            <tr>
-								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">신청</th>
-								                <td style="height: 25%; padding:0px; margin:0px;">대표이사</td>
-								            </tr>
-								            <tr>
-								                <td style="height: 50%;">${approval.empName}</td>
-								            </tr>
-								            <tr>
-								                <td style="height: 25%; padding:0px; margin:0px;">${approval.writeDate}</td>
-								        	</tr>
-								        </table>
-							        </div>
-							        <div class="col-lg-5">
+							        <div class="col-lg-5" style="margin-left: auto;">
 								        <table class="line table table-bordered" style="height: 120px; border:black;">
-								            <tr>
+								        	<thead>
+								        	</thead>
+								        	<tbody>
+								        	
+											<c:forEach var="i" begin="1" end="3">
+												<tr>
+												<c:if test="${i == 1}">
+													<th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">승인</th>
+												</c:if>
+											    <c:forEach var="approvalLine" items="${approvalLines}" varStatus="status">
+							        				<c:if test="${i == 1}">
+							        					<td style="height: 25%; padding:0px; margin:0px;">${approvalLine.gradeName}</td>
+							        				</c:if>
+							        				<c:if test="${i == 2}">
+							        					<td style="height: 50%;">${approvalLine.empName}</td>
+							        				</c:if>
+							        				<c:if test="${i == 3}">
+							        					<td style="height: 25%; padding:0px; margin:0px;">
+							        					<c:if test="${approvalLine.isApproved =='y'}">승인</c:if>
+							        					<c:if test="${approvalLine.isApproved =='n'}">반려</c:if>
+							        					${approvalLine.approvalDate}
+							        					</td>
+							        				</c:if>
+							        			</c:forEach>
+							        			</tr>
+											</c:forEach>
+								        	
+							        		<%-- <c:forEach var="approvalLine" items="${approvalLines}" varStatus="status">
+							        			<tr>
+							        				<td>${approvalLine.gradeName}</td>
+							        				<td>${approvalLine.empName}</td>
+							        				<td>
+							        					<c:if test="${approvalLine.isApproved =='y'}">승인</c:if>
+							        					<c:if test="${approvalLine.isApproved =='n'}">반려</c:if>
+							        					${approvalLine.approvalDate}
+							        				</td>
+							        			</tr>
+							        		</c:forEach> --%>
+								        	</tbody>
+								            <%-- <tr>
 								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">승인</th>
 								                <td style="height: 25%; padding:0px; margin:0px;">대리</td>
 								                <td style="height: 25%; padding:0px; margin:0px;">차장</td>
@@ -211,7 +237,7 @@
 								            	<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
 								                <td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
 								        		<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
-								        	</tr>
+								        	</tr> --%>
 								        </table>
 							        </div>
 						        </div>

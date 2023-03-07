@@ -87,14 +87,11 @@ public class ApprovalController {
 	 */
 	@PostMapping("/write")
 	public String writeApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("=======실행=============");
-		log.info(approval.getApprovalLine());
+		log.info("실행");
 		
 		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
 			approval.getApprovalLine().get(i).setSeq(i+1);
 		}
-		log.info("=======approval=====================");
-		log.info(approval);
 		approvalService.writeApproval(approval);
 		
 		return "redirect:/approval/write";
@@ -199,13 +196,18 @@ public class ApprovalController {
 	 */
 	@GetMapping("/detail")
 	public String detail(@RequestParam int approvalId, @RequestParam int pageNo, @RequestParam() String status, Model model) {
-		log.info("실행");
+		log.info("==============실행=========================");
 		
 		Approval approval = approvalService.getApprovalDetail(approvalId);
+		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approval.getApprovalId());
+		
+		log.info("approval : " + approval);
+		log.info("approval line: " + approvalLines);
 		
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
 		model.addAttribute("approval", approval);
+		model.addAttribute("approvalLines", approvalLines);
 		
 		return "approval/approval_detail";
 	}
