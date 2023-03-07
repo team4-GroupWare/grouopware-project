@@ -1477,15 +1477,12 @@ table. type02. table-content{
   color: #012970;
 }
 .filebox p {
-	font-size: 14px;
     display: inline-block;
 }
 .filebox {
-	height: 70px;
     overflow: auto;
     border: 1px solid #F6F6F6;
     border-radius: 4px;
-    padding: 10px;
 }
 
 .insert {
@@ -1494,21 +1491,20 @@ table. type02. table-content{
     box-sizing: border-box;
 }
 .insert .file-list {
-    height: 70px;
+    height: 100px;
     overflow: auto;
     border: 1px solid #CED4DA;
     border-radius: 4px;
     padding: 10px;
 }
 .insert .date-list {
-    height: 70px;
+    height: 100px;
     overflow: auto;
     border: 1px solid #CED4DA;
     border-radius: 4px;
     padding: 10px;
 }
 .insert .file-list .filebox p {
-    font-size: 10px;
     display: inline-block;
 }
 .insert .file-list .filebox .delete i{
