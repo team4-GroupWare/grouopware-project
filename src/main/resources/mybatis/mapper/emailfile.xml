@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.email.repository.EmailFileRepository">
 	<insert id="insertFileData" parameterType="emailFile">
 		<![CDATA[
-			insert into email_files
+			insert into email_file
 				(
 				EMAIL_FILE_ID,
 				EMAIL_CONTENT_ID,

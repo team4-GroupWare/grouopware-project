@@ -34,7 +34,7 @@ function addFile(obj){
         }
     
     // 초기화
-    document.querySelector("input[type=file]").value = "";
+    //document.querySelector("input[type=file]").value = "";
 }
 
 /* 첨부파일 검증 */
@@ -60,31 +60,34 @@ function deleteFile(num) {
 }
 
 /* 폼 전송 */
-function submitForm() {
+function submitEmailForm() {
     // 폼데이터 담기
-    var form = document.querySelector("form");
+    var form = document.querySelector("#writeForm");
     var formData = new FormData(form);
     for (var i = 0; i < filesArr.length; i++) {
         // 삭제되지 않은 파일만 폼데이터에 담기
         if (!filesArr[i].is_delete) {
-            formData.append("attach_file", filesArr[i]);
+            formData.append("attachFiles", filesArr[i]);
         }
     }
+    
+    var path = sessionStorage.getItem("contextpath");
 
     $.ajax({
         method: 'POST',
-        url: '/register',
+        url: path+'/email/write',
         dataType: 'json',
         data: formData,
-        async: true,
-        timeout: 30000,
-        cache: false,
-        headers: {'cache-control': 'no-cache', 'pragma': 'no-cache'},
-        success: function () {
-            alert("파일업로드 성공");
+        contentType: false,			
+	    processData: false,
+		cache: false,
+        success: function (data) {
+        	let url = path + '/email/complete';
+        	location.replace(url);
         },
         error: function (xhr, desc, err) {
-            alert('에러가 발생 하였습니다.');
+            console.log('에러');
+            console.log('error:' + err);
             return;
         }
     })

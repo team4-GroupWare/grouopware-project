@@ -198,5 +198,27 @@ public interface EmailRepository {
 	 * @return
 	 */
 	int deleteReceiveEmail(int emailId);
+	/**
+	 * 
+	 * @param emailId
+	 */
+	int selectReceiveEmailIdBySendEmail(int emailId);
+	/**
+	 * 
+	 * @param emailContentId
+	 * @return
+	 */
+	int selectSendEmailByContentId(int emailContentId);
+	/**
+	 * 
+	 * @param emailContentId
+	 * @return
+	 */
+	int selectReceiveEmailByContentId(int emailContentId);
+	/**
+	 * 
+	 * @param emailContentId
+	 */
+	void deleteEmailContent(int emailContentId);
 
 }
