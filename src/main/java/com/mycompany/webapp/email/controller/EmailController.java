@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -184,18 +185,29 @@ public class EmailController {
 	 * 
 	 * @return
 	 */
-	@PostMapping("/write")
-	public String writeEmail(HttpSession session, EmailDetail emailDetail, @RequestPart("files") MultipartFile[] files) {
+	
+	@ResponseBody
+	@PostMapping(value="/write", produces="application/json")
+	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
 		log.info("실행");
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
 		int row = 0;
-		if(files != null) {
-			row = emailService.writeEmail(emailDetail, files);
+		if(emailDetail.getAttachFiles() != null) {
+			row = emailService.writeEmail(emailDetail, emailDetail.getAttachFiles());
 		} else {
 			row = emailService.writeEmail(emailDetail);
 		}
+		String result = "success";
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("uri", result);
+		return jsonObject;
+	}
+	
+	@GetMapping("/complete")
+	public String emailComplete() {
+		log.info("실행");
 		return "email/complete";
 	}
 	

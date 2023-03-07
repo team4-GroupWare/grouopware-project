@@ -410,11 +410,50 @@
 		]]>
 	</delete>
 	
+	<select id="selectReceiveEmailIdBySendEmail" parameterType="int" resultType="int">
+		<![CDATA[
+			select receive_email_id
+			from receive_email r, send_email s, email_content c
+			where s.send_email_id = #{emailId} 
+				  and s.email_content_id = c.email_content_id 
+				  and c.email_content_id = r.email_content_id
+		]]>
+	
+	
+	</select>
+	
 	<delete id="deleteReceiveEmail" parameterType="int">
 	 	<![CDATA[
 	 		delete receive_email
 	 		where receive_email_id = #{emailId}
 	 	]]>
+	</delete>
+	
+	<select id="selectSendEmailByContentId" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(s.send_email_id)
+			from  send_email s, email_content c
+			where c.email_content_id = #{emailContentId} and
+				  c.email_content_id = s.send_email_id
+		]]>
+	</select>
+	
+	<select id="selectReceiveEmailByContentId" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(r.receive_email_id)
+			from receive_email r, email_content c
+			where c.email_content_id = #{emailContentId} and
+				  c.email_content_id = r.receive_email_id
+		
+		]]>
+	
+	</select>
+	
+	<delete id="deleteEmailContent" parameterType="int">
+		<![CDATA[
+			delete email_content
+			where email_content_id = #{emailContentId}
+		]]>
 	</delete>
 
 
