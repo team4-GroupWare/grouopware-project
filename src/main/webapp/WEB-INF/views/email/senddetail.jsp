@@ -94,9 +94,9 @@
 										console.log("성공: "+data);
 										if(data == 'important'){
 											if(type == 'delete'){
-												$("#importantTrashModal").modal('show');	
-											} else {
 												$("#importantDeleteModal").modal('show');	
+											} else {
+												$("#importantTrashModal").modal('show');	
 											}	
 										} else{
 											if(type == 'delete'){

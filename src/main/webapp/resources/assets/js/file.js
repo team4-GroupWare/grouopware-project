@@ -9,9 +9,6 @@ function addFile(obj){
     var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
 
     // 첨부파일 개수 확인
-    if (curFileCnt > remainFileCnt) {
-        alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
-    } else {
         for (const file of obj.files) {
             // 첨부파일 검증
             if (validation(file)) {
@@ -25,8 +22,8 @@ function addFile(obj){
                 // 목록 추가
                 let htmlData = '';
                 htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
-                htmlData += '   <p class="email-file name" style="margin-top:0">' + file.name + '</p>';
-                htmlData += '	<p class="email-file size"style="margin-top:0">' + file.size/1000 + 'KB</p>'; 	
+                htmlData += '   <p class="email-file name" style="margin-bottom:0">' + file.name + '</p>';
+                htmlData += '	<p class="email-file size"style="margin-bottom:0">' + file.size/1000 + 'KB</p>'; 	
                 htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
                 htmlData += '</div>';
                 $(".file-list").append(htmlData);
@@ -35,7 +32,7 @@ function addFile(obj){
                 continue;
             }
         }
-    }
+    
     // 초기화
     document.querySelector("input[type=file]").value = "";
 }
