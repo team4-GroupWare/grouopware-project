@@ -147,22 +147,7 @@ input[type=radio]:checked+label{
 			approvalLine[i] = selectEl.options[i].id;
 		}
 		console.log(approvalLine);
-		/* var testList = new Array() ;
-		for(var i = 1; i <= length; i++){
-			// 객체 생성
-			var dataArr = new Object() ;
-			
-			data.seq = i;
-			data.empId = approvalLine[i-1];
-			
-			// 리스트에 생성된 객체 삽입
-			testList.push(data) ;
-		}
-		console.log("testList: " + testList);
-		var lineArr = {
-			"testList" : JSON.stringify(testList)
-		};
-		console.log("lineArr: " + lineArr); */
+		
 		$.ajax({
 			type: "post",
 		    url: "/webapp/approval/employee",
@@ -174,11 +159,16 @@ input[type=radio]:checked+label{
 		    	console.log(data);
 		    	var lineHtml = "";
 		    	for(var i in data){
-					lineHtml += '<div style="border:1px solid #CECECE">' + 
-							'<span style="font-size:18px; font-weight:bold;">' + data[i].name + '</span> ' +
+					lineHtml += '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
+							'<input type="hidden" name="approvalLine[' + i + '].empId" value="' + data[i].empId + '">' +
+							'<span style="font-size:18px; font-weight:bold;">' + data[i].empName + '</span> ' +
 							data[i].gradeName + '<br>' +
-							data[i].deptName + " / " + data[i].teamName +
-							'</div>';
+							data[i].deptName + " / " + data[i].teamName + '</div>';
+							console.log("i: " + i);
+							console.log("data.length: " + data.length);
+					if(i != data.length-1) {
+						lineHtml += '<div style="text-align: center; margin: auto 10px;"><i class="bi bi-caret-right-fill" style="font-size:25px;"></i></div>';
+					}
 				}
 				$("#approval_line").html(lineHtml);
 				$("#verticalycentered").modal("hide"); 

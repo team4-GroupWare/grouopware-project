@@ -122,10 +122,9 @@
 				target1.setAttribute( 'style', 'opacity: 0.1' )
 	  		}
 	  	</script>
-	<!-- =========================sideber=============================== -->
+		<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
-			 
 				<!--휴가 작성 -->
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
 					<a class="btn btn-primary" type="button" href="#" style="width:100%">
@@ -133,7 +132,6 @@
 					    <span>휴가 작성</span>
 				  	</a>
 				</li>
-			
 				<!--근무 현황 -->
 				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 					<a class="nav-link collapsed" href="#">
@@ -159,31 +157,12 @@
 				</li>
 			
 				<!--휴가 결제 문서 -->
-				<li class="nav-item"  >
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 결제 문서</span><i class="bi bi-chevron-down ms-auto"></i>
+				    	<span>휴가 결제 문서</span>
 					</a>
-					<ul id="document1-nav" class="nav-content collapse " data-bs-parent="#documen1t-nav">
-						<li>
-	            			<a href='${pageContext.request.contextPath}/vacation/document'><span>전체</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>대기</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>진행</span></a>
-	          			</li> 
-	          			<li>
-	            			<a href="#"><span>승인</span></a>
-	          			</li>
-	          			<li>
-	            			<a href="#"><span>반려</span></a>
-	          			</li>
-					</ul>
 				</li>
-				
-			
 			</ul>
 		</aside>
 		<!-- ======================================End Sidebar ============================================ -->

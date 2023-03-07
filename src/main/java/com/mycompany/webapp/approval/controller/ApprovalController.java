@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,9 +44,6 @@ public class ApprovalController {
 	
 	@Autowired
 	private IApprovalService approvalService;
-	
-	@Autowired
-	private IEmployeeService employeeService;
 	
 	/**
 	 * 전자결재 작성 폼 불러오기
@@ -88,8 +86,15 @@ public class ApprovalController {
 	 * @return
 	 */
 	@PostMapping("/write")
-	public String writeApproval(Approval approval, Model model) {
-		log.info("실행");
+	public String writeApproval(@ModelAttribute Approval approval, Model model) {
+		log.info("=======실행=============");
+		log.info(approval.getApprovalLine());
+		
+		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+			approval.getApprovalLine().get(i).setSeq(i+1);
+		}
+		log.info("=======approval=====================");
+		log.info(approval);
 		approvalService.writeApproval(approval);
 		
 		return "redirect:/approval/write";
@@ -109,22 +114,27 @@ public class ApprovalController {
 		return approvalService.getApprovalForm(approvalCategoryId);
 	}
 	
+	/**
+	 * 선택한 결재선 사원 정보
+	 * @author : LEEJIHO
+	 * @param line
+	 * @param model
+	 * @return
+	 */
 	@PostMapping(value="/employee")
 	@ResponseBody
-	public List<Employee> getEmployeeInfo(@RequestParam(value="line[]") String[] approvalLine, Model model) {
-		log.info("실행=====");
+	public List<ApprovalLine> getEmployeeInfo(@RequestParam(value="line[]") String[] line, Model model) {
+		log.info("실행");
 		
-		List<Employee> employees = new ArrayList<>();
+		List<ApprovalLine> approvalLines = new ArrayList<>();
 		
-		for(int i = 0; i < approvalLine.length; i++) {
-			log.info("approvalLine: " + approvalLine);
-			Employee emp = employeeService.getEmp(approvalLine[i]);
-			emp.setSeq(i+1);
-			log.info("emp: " + emp);
-			employees.add(emp);
+		for(int i = 0; i < line.length; i++) {
+			ApprovalLine approvalLine = approvalService.getApprovalLine(line[i]);
+			approvalLine.setSeq(i+1);
+			approvalLines.add(approvalLine);
 		}
 		
-		return employees;
+		return approvalLines;
 	}
 	
 	/**
@@ -136,7 +146,7 @@ public class ApprovalController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/list")
+	@GetMapping("/mylist")
 	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
@@ -154,6 +164,14 @@ public class ApprovalController {
 		return "approval/approval_list";
 	}
 	
+	/**
+	 * 임시저장 목록
+	 * @author : LEEJIHO
+	 * @param pageNo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/templist")
 	public String getApprovalTempList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");

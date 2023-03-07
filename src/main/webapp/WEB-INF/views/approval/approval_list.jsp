@@ -69,23 +69,23 @@
 
       		<li class="nav-item">
         		<a class="nav-link" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
+          			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?" class="active"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?" class="active"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
@@ -96,6 +96,12 @@
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
+      		
+      		<li class="nav-item">
+        		<a class="nav-link collapsed" href="#">
+          			<i class="bi bi-tags"></i><span>참조 문서함</span>
+        		</a>
+      		</li><!-- End 참조 문서함 -->
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
@@ -108,19 +114,19 @@
   	<main id="main" class="main">
     	<div class="pagetitle">
     		<h1>내 문서함</h1>
-      			<nav>
-		        	<ol class="breadcrumb">
-		          		<li class="breadcrumb-item">전자결재</li>
-		          		<li class="breadcrumb-item">내 문서함</li>
-		          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
-		          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
-		        	</ol>
-      			</nav>
+     		<nav>
+	        	<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">전자결재</li>
+	          		<li class="breadcrumb-item">내 문서함</li>
+	          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
+	          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
+	        	</ol>
+     		</nav>
     	</div><!-- End Page Title -->
 
 		<section class="section">
       		<div class="row">
-        		<div class="col-lg-10">
+        		<div class="col-lg-12">
           			<div class="card" style="height:620px">
             			<div class="card-body">
               				<h5 class="card-title"></h5>
@@ -195,35 +201,35 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="mylist?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="mylist?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="mylist?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="mylist?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="mylist?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="mylist?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	

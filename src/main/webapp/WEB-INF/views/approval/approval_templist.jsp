@@ -70,23 +70,23 @@
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
+          			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
@@ -97,6 +97,12 @@
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
+      		
+      		<li class="nav-item">
+        		<a class="nav-link collapsed" href="#">
+          			<i class="bi bi-tags-fill"></i><span>참조 문서함</span>
+        		</a>
+      		</li><!-- End 참조 문서함 -->
 
       		<li class="nav-item">
         		<a class="nav-link active" href="${pageContext.request.contextPath}/approval/templist">

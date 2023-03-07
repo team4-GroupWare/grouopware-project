@@ -65,6 +65,7 @@ public class EmployeeService implements IEmployeeService {
 	/**
 	 * 전체 사원 목록 메소드
 	 * @author : LEEJIHO
+	 * @param pager : Pager 객체
 	 * @return List<Employee>
 	 */
 	@Override

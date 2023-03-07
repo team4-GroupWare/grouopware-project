@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
+import com.mycompany.webapp.approval.model.ApprovalLine;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -28,10 +30,16 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectApprovalCategory();
 	}
 
-	@Override
+	@Transactional
 	public int writeApproval(Approval approval) {
-		log.info("실행");
-		return approvalRepository.insertApproval(approval);
+		log.info("전자결재 작성 실행");
+		approvalRepository.insertApproval(approval);
+		
+		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+			approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
+		}
+		
+		return 0;
 		
 	}
 
@@ -71,6 +79,9 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectTempApprovalCount(empId);
 	}
 
+	@Override
+	public ApprovalLine getApprovalLine(String empId) {
+		return approvalRepository.selectApprovalLine(empId);
+	}
 
-	
 }

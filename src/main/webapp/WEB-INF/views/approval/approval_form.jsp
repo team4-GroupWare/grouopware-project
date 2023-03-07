@@ -49,6 +49,7 @@
 		        `,
 		    });
 	
+		    //임시저장
 		    $("#temp_save").on("click", function(){
 				var content = tinymce.activeEditor.getContent();
 		        
@@ -64,6 +65,7 @@
 		        $("#approval_form").submit();
 		    });
 		    
+		    //전자결재 제출
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
 		        
@@ -75,6 +77,13 @@
 		        console.log("empId:" + $("#empId").val());
 		        console.log("title: " + $("#title").val());
 		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
+		        
+		        /* for (i = 0; i < length; i++) {
+					var testMap = new Map();
+					
+					testMap.set("empId", selectEl.options[i].id);
+					approvalLine[i] = selectEl.options[i].id;
+				} */
 		        
 		        $("#approval_form").submit();
 		        
@@ -146,23 +155,23 @@
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-clipboard2-check-fill"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
+          			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
@@ -172,6 +181,12 @@
           			<i class="bi bi-eye"></i><span>열람함</span>
         		</a>
       		</li><!-- End 열람함 -->
+      		
+      		<li class="nav-item">
+        		<a class="nav-link collapsed" href="#">
+          			<i class="bi bi-tags"></i><span>참조 문서함</span>
+        		</a>
+      		</li><!-- End 참조 문서함 -->
 
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
@@ -251,40 +266,9 @@
               							</div>
               		
 	              						<div class="row">
-	              							<input type="hidden" id="approvalLine">
-	              							<div id="approval_line" style="border:1px solid black">
+	              							<div id="approval_line" class="d-flex">
 	              							
 	              							</div>
-	              							<!-- <div class="col-sm-3">
-		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
-					            					<div class="row g-0">
-					              						<div class="col-md-12">
-					                						<div class="card-body">
-					                  							<div class="row">
-					                  								<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-			                    									<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-			                    	  							</div>
-					                  							<p>공공사업1 / 솔루션개발팀</p>
-					                						</div>
-					              						</div>
-					            					</div>
-					        					</div>
-	                    					</div>
-	                    					<div class="col-sm-3">
-		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
-					            					<div class="row g-0">
-					              						<div class="col-md-12">
-					                						<div class="card-body">
-					                  							<div class="row">
-					                  								<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-			                    									<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-			                    	  							</div>
-					                  							<p>공공사업1 / 솔루션개발팀</p>
-					                						</div>
-					              						</div>
-					            					</div>
-					        					</div>
-	                    					</div> -->
 	                  					</div>
                 					</div>
                 				</div>
