@@ -61,13 +61,13 @@ public class VacationController {
 	public String getVacationList(Model model) {
 		log.info("실행");
 		
-		return "vacation/vacation_document";
+		return "vacation/vacation_docu";
 	}
 	
 	@GetMapping("/vacation/my")
 	public String getMyVacation(Model model) {
 		log.info("실행");
 		
-		return "vacation/my_vacation";
+		return "vacation/myvacation";
 	}
 }
