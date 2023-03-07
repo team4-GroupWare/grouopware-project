@@ -74,19 +74,19 @@
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->

@@ -8,7 +8,6 @@
 	<script>
 		$(function(){
 			var content= $('#approval_content').val();
-			
 		    tinymce.init({
 		    	language: "ko_KR",
 		        // Select the element(s) to add TinyMCE to using any valid CSS selector
@@ -50,6 +49,12 @@
 		});
 		
 	</script>
+	<style>
+	  .line th, td {
+	  	text-align : center;
+	  	vertical-align : middle;
+	  }
+	</style>
  
 </head>
 
@@ -94,19 +99,19 @@
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
@@ -153,7 +158,7 @@
 			                  		</div>
 			                	</div>
                 
-                				<table id="vertical-1" class="table table-bordered" style="width:100%">
+                				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">
 						            <tr>
 						                <th style="background-color:#E9EFFE; width:10%">결재 양식</th>
 						                <td style="width: 40%">${approval.categoryName}</td>
@@ -173,6 +178,43 @@
 						                <td style="width: 40%"></td>
 						        	</tr>
 						        </table>
+						        
+						        <div class="row">
+						        	<div class="col-lg-2" style="margin-left: auto;">
+							        	<table class="line table table-bordered" style="height: 120px; border:black;">
+								            <tr>
+								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">신청</th>
+								                <td style="height: 25%; padding:0px; margin:0px;">대표이사</td>
+								            </tr>
+								            <tr>
+								                <td style="height: 50%;">${approval.empName}</td>
+								            </tr>
+								            <tr>
+								                <td style="height: 25%; padding:0px; margin:0px;">${approval.writeDate}</td>
+								        	</tr>
+								        </table>
+							        </div>
+							        <div class="col-lg-5">
+								        <table class="line table table-bordered" style="height: 120px; border:black;">
+								            <tr>
+								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">승인</th>
+								                <td style="height: 25%; padding:0px; margin:0px;">대리</td>
+								                <td style="height: 25%; padding:0px; margin:0px;">차장</td>
+								                <td style="height: 25%; padding:0px; margin:0px;">부장</td>
+								            </tr>
+								            <tr>
+								                <td style="height: 50%;">${approval.empName}</td>
+								                <td style="height: 50%;">이지호</td>
+								                <td style="height: 50%;">이연희</td>
+								            </tr>
+								            <tr>
+								            	<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
+								                <td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
+								        		<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
+								        	</tr>
+								        </table>
+							        </div>
+						        </div>
                 				
 				                <div class="row mb-3">
 				                	<div class="col-sm-12">

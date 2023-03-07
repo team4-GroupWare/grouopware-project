@@ -29,7 +29,9 @@ public interface ApprovalRepository {
 	public Approval selectApprovalDetail(int approvalId);
 	//전자결재 카테고리 양식
 	public String selectApprovalForm(int approvalCategoryId);
-	//전자결재 결재선
+	//전자결재 결재선 사원정보
 	public ApprovalLine selectApprovalLine(String empId);
+	//전자결재 결재선 저장
+	public int insertApprovalLine(ApprovalLine approvalLine);
 	
 }

@@ -11,7 +11,7 @@
 		<a href="${pageContext.request.contextPath}/" class="logo d-flex align-items-center">
 			<span class="d-none d-lg-block">엑사아이엔티</span>
 		</a>
-		<i class="d-lg-none bi bi-list toggle-sidebar-btn"></i>
+		<i class="d-xl-none bi bi-list toggle-sidebar-btn"></i>
 	</div>
 	
 	<!-- Dropbar -->
@@ -20,7 +20,7 @@
      		<option value="${pageContext.request.contextPath}/">오피스 홈</option>
      		<option value="${pageContext.request.contextPath}/attendance/status/info">근태관리</option>
      		<option value="${pageContext.request.contextPath}/hr/list">인사</option>
-     		<option value="${pageContext.request.contextPath}/approval/list">전자결재</option>
+     		<option value="${pageContext.request.contextPath}/approval/mylist">전자결재</option>
      		<option value="${pageContext.request.contextPath}/email/receivelist">메일</option>
      		<option value="#">공지사항</option>
    		</select>
