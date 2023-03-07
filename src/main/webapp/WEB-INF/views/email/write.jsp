@@ -22,7 +22,8 @@
 		function getContent(){
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
-			$("#writeForm").submit();
+			//$("#writeForm").submit();
+			submitEmailForm();
 		}
 		
 		function tempSave() {

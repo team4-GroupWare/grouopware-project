@@ -300,8 +300,15 @@ public class EmailService implements IEmailService {
 	@Override
 	public int cancelEmail(int emailId) {
 		log.info("실행");
+		int receiveEmailId  = emailRepository.selectReceiveEmailIdBySendEmail(emailId);
+		int emailContentId = emailRepository.selectEmailContentId(emailId);
 		int row = emailRepository.deleteSendEmail(emailId);
-		row = emailRepository.deleteReceiveEmail(emailId);
+		row = emailRepository.deleteReceiveEmail(receiveEmailId);
+		int count = emailRepository.selectSendEmailByContentId(emailContentId);
+		count = emailRepository.selectReceiveEmailByContentId(emailContentId);
+		if(count != 2) {
+			emailRepository.deleteEmailContent(emailContentId);
+		}
 		return row;
 	}
 
