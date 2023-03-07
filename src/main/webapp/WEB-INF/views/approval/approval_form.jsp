@@ -49,6 +49,7 @@
 		        `,
 		    });
 	
+		    //임시저장
 		    $("#temp_save").on("click", function(){
 				var content = tinymce.activeEditor.getContent();
 		        
@@ -64,6 +65,7 @@
 		        $("#approval_form").submit();
 		    });
 		    
+		    //전자결재 제출
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
 		        
@@ -75,6 +77,13 @@
 		        console.log("empId:" + $("#empId").val());
 		        console.log("title: " + $("#title").val());
 		        console.log("approvalCategoryId:" + $("#approvalCategoryId").val());
+		        
+		        /* for (i = 0; i < length; i++) {
+					var testMap = new Map();
+					
+					testMap.set("empId", selectEl.options[i].id);
+					approvalLine[i] = selectEl.options[i].id;
+				} */
 		        
 		        $("#approval_form").submit();
 		        
@@ -150,19 +159,19 @@
         		</a>
         		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
           			</li> 
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
       		</li><!-- End 내 문서함 -->
@@ -257,40 +266,9 @@
               							</div>
               		
 	              						<div class="row">
-	              							<input type="hidden" id="approvalLine">
-	              							<div id="approval_line">
+	              							<div id="approval_line" class="d-flex">
 	              							
 	              							</div>
-	              							<!-- <div class="col-sm-3">
-		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
-					            					<div class="row g-0">
-					              						<div class="col-md-12">
-					                						<div class="card-body">
-					                  							<div class="row">
-					                  								<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-			                    									<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-			                    	  							</div>
-					                  							<p>공공사업1 / 솔루션개발팀</p>
-					                						</div>
-					              						</div>
-					            					</div>
-					        					</div>
-	                    					</div>
-	                    					<div class="col-sm-3">
-		                    					<div class="card mb-3" style="background-color:#FCF6C2;">
-					            					<div class="row g-0">
-					              						<div class="col-md-12">
-					                						<div class="card-body">
-					                  							<div class="row">
-					                  								<div class="col-lg-10"><h5 class="card-title"><b>이연희</b> <span>차장</span></h5></div>
-			                    									<div class="col-lg-2 mt-2"><i class="bi bi-x-square"></i></div>
-			                    	  							</div>
-					                  							<p>공공사업1 / 솔루션개발팀</p>
-					                						</div>
-					              						</div>
-					            					</div>
-					        					</div>
-	                    					</div> -->
 	                  					</div>
                 					</div>
                 				</div>

@@ -1,6 +1,7 @@
 package com.mycompany.webapp.approval.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,5 +21,11 @@ public class Approval {
 	
 	private String empName;
 	private String categoryName;
+	
+	private String gradeName;
+	private String teamName;
+	private String deptName;
+	 
+	private List<ApprovalLine> approvalLine;
 	
 }

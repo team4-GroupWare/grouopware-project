@@ -11,6 +11,7 @@
 		]]>
 	</select>
 
+	<!-- 전자결재 작성 양식 불러오기  -->
 	<select id="selectApprovalForm" parameterType="int" resultType="string">
 		<![CDATA[
 			SELECT approval_form as "approvalForm"
@@ -25,6 +26,15 @@
 			INSERT INTO approval (approval_id, title, write_date, content, emp_id, approval_category_id, status, temp_approval)
 			VALUES (seq_approval.nextval, #{title}, sysdate, #{content}, #{empId}, #{approvalCategoryId}, default, #{tempApproval})
 		]]>
+	</insert>
+	
+	<!-- 전자결재 작성 -->
+	<insert id="insertApprovalLine" parameterType="approval_line">
+		<selectKey keyProperty="approvalId" resultType="int" order="BEFORE">
+			SELECT seq_approval.CURRVAL FROM dual
+		</selectKey>
+		INSERT INTO approval_line (approval_line_id, approval_id, emp_id, seq)
+		VALUES (seq_approval_line.nextval, #{approvalId}, #{empId}, #{seq})
 	</insert>
 	
 	<!-- 전자결재 상태별 갯수 -->
