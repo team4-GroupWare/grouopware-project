@@ -2,6 +2,8 @@ package com.mycompany.webapp.email.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
@@ -144,4 +146,11 @@ public interface IEmailService {
 	 * @return
 	 */
 	int cancelEmail(int emailId);
+	/**
+	 * 
+	 * @param emailDetail
+	 * @param files : 이메일에 업로드한 파일
+	 * @return
+	 */
+	int writeEmail(EmailDetail emailDetail, MultipartFile[] files);
 }

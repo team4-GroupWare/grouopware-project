@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.email.repository.EmailFileRepository">
+	<insert id="insertFileData" parameterType="emailFile">
+		<![CDATA[
+			insert into email_files
+				(
+				EMAIL_FILE_ID,
+				EMAIL_CONTENT_ID,
+				EMAIL_FILE_NAME,
+				EMAIL_FILE_SIZE,
+				EMAIL_FILE_DATA,
+				EMAIL_FILE_CONTENT_TYPE
+				)
+			values
+				(
+				SEQ_EMAIL_FILE.NEXTVAL,
+				#{emailContentId},
+				#{emailFileName},
+				#{emailFileSize},
+				#{emailFileData},
+				#{emailFileContentType}
+				
+				)
+		]]>
+	
+	</insert>
+
+
+
+</mapper>
