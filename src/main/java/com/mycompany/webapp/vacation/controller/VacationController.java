@@ -70,4 +70,11 @@ public class VacationController {
 		
 		return "vacation/myvacation";
 	}
+	
+	@GetMapping("/vacation/employ")
+	public String getEmployeeInfo(Model model) {
+		log.info("실행");
+		
+		return "vacation/myvacation";
+	}
 }

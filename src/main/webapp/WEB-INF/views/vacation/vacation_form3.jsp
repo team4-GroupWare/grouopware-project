@@ -5,21 +5,18 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	
-	<!-- datapicker -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
-	
-	<!-- file -->
+	 
+    <!-- datepicker -->
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 </head>
+	
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<!-- =========================sideber=============================== -->
+	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
 				<!--휴가 작성 -->
@@ -168,31 +165,28 @@
 									</script>
 									<!-- 날짜 선택 -->
 									<div class="row mb-3">
-											
 											<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
-											<div class="col-sm-10">
- 												<input type="text" id="datePicker" name="writeDate" style="width:600px" onclick="count()">
- 												<div id="result">선택일수: 0일</div>
+											<div class="col-sm-4">
+												<div class="input-daterange input-group" id="datepicker">
+												   <input type="text" class="input-sm form-control" name="start" />
+												    <span class="input-group-addon">to</span>
+												    <input type="text" class="input-sm form-control" name="end" />
+												</div>
 											</div>
+											<div class="col-sm-2 mt-2">선택 일수 : 3일</div>
+											<div class="col-sm-2 mt-2">사용 일수 : 3일</div>
 											<script type="text/javascript">
-												$('#datePicker').datepicker({
-													format: "yyyy년 mm월 dd일",
-												    multidate: true,
-												    multidateSeparator: " ,",
-												    datesDisabled: ['2023/03/01'],
+											$(function(){
+												$('.input-daterange').datepicker({
+													format: "yyyy/mm/dd",
+												    todayBtn: "linked",
+												    clearBtn: true,
 												    daysOfWeekDisabled: "0,6",
-												    todayHighlight: true
-												});
-										
-												$('#click-btn').on('click', function() {
-													var date = $('#dateRangePicker').val();
-													alert(date);
-													 
-												});
-												function count(){
-													console.log($('.active day').length);
-													document.getElementById("result").innerText="선택일수:  "+$('.active.day').length+"일";
-												}
+												    daysOfWeekHighlighted: "0,6",
+												    todayHighlight: true,
+												    datesDisabled: ['2023/03/06']
+												});  
+											});
 												
 											</script>
 									</div>
@@ -201,7 +195,7 @@
 									<div class="row mb-3">
 										<label for="text" class="col-sm-2 col-form-label"><b>사유</b></label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="writeDate">
+											<input type="text" class="form-control">
 										</div>
 									</div>
 									
