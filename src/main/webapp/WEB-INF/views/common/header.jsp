@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- =========================Header=============================== -->
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -41,7 +42,13 @@
 					<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class="topprofile rounded-circle pe-0" style="width:40px;"/>
 				</a> --%>
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-		        	<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class=" rounded-circle">
+		        	<c:if test="${loginEmployee.profileData eq null}">
+		        	<img src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png" alt="Profile" class=" rounded-circle">
+		            </c:if>
+		            <c:if test="${loginEmployee.profileData ne null}">
+		        	<img src="${pageContext.request.contextPath}/employee/img" alt="Profile" class=" rounded-circle">
+		            </c:if>
+		            
 		            <span class="d-none d-md-block p-1" style="font-size: 18px;">${loginEmployee.name}</span>
 		            <span class="d-none d-md-block dropdown-toggle " >${loginEmployee.gradeName}</span>
 		        </a>

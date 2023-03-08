@@ -1,6 +1,8 @@
 package com.mycompany.webapp.employee.model;
 
-import java.sql.Date;
+import java.sql.Date; 
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -23,7 +25,8 @@ public class Employee {
 	private int dayoffRemain;
 	private int addDayoffRemain;
 	private boolean initialPassword;
-	
+	private MultipartFile attachFiles;
+	private String delete;
 	private String teamName;
 	private String deptName;
 	private String gradeName;

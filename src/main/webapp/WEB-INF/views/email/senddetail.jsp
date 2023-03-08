@@ -165,16 +165,28 @@
 			               </div>
 		               <hr/>
 		                
+		                <c:if test="${emailDetail.emailFiles.size() != 0}">
 		                <div class="row mb-3 file-list" style="margin-left:15px; margin-right:15px;background-color:#F6F6F6">
 			                <div class="filebox">
 			                <ul style="list-style:none;">
 				                <li>
-					               <p class="name">file.name</p>
-					               <p class="size">file.size/1000 KB</p>
+				                   <table style="width:60%;overflow: auto;">
+						               <c:forEach var="emailFile" items="${emailDetail.emailFiles}">
+						                 <tr>
+						               		<td style="width:70%;padding-bottom:3px">
+						               			<a href="${pageContext.request.contextPath}/email/filedownload?emailFileId=${emailFile.emailFileId}">${emailFile.emailFileName}</a>
+						               		</td>
+						               		<td  style="width:30%;color:#949291">
+						               			${emailFile.emailFileSize/1000}KB<i class="bi bi-paperclip"></i>
+						               		</td>
+						                 </tr>
+						               </c:forEach>
+					               </table>
 					             <li>
 				             </ul>	
 		               		</div>
 		                </div>
+		                </c:if>
 		                
 		                <div class="row mb-3 px-4">
 		                  <div class="col-sm-12 mail-content px-3" style="height:320px">

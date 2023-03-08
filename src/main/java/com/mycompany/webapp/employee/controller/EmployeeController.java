@@ -3,13 +3,16 @@ package com.mycompany.webapp.employee.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +57,7 @@ public class EmployeeController {
 	private IGradeService gradeService;
 	@Autowired
 	private EmpValidator empValidator;
+	
 	
 	@InitBinder("employee")
 	private void initBinder(WebDataBinder binder) {
@@ -244,11 +248,20 @@ public class EmployeeController {
 	
 	@PostMapping("/update")
 	public String updatePhone(Employee employee, HttpSession session) {
+		//사진 바꾸는거 해야합니다 3월 8일에..
 		log.info("실행");
-		String phone = employee.getPhone();
+		log.info("employee: "+employee);
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
-		employeeService.updatePhone(originEmployee.getEmpId(), phone);
-		originEmployee.setPhone(phone);
+		employee.setEmpId(originEmployee.getEmpId());
+		if(employee.getProfileContentType() !=null) {
+			//프로필 사진을 바꾸지 않거나 사진을 삭제함
+			employee.setProfileContentType(originEmployee.getProfileContentType());
+			employee.setProfileData(originEmployee.getProfileData());
+		}
+		employeeService.updateEmployee(employee);
+		employee = employeeService.getEmp(employee.getEmpId());
+		session.setAttribute("loginEmployee", employee);
+		
 		return "redirect:/employee/myPage";
 	}
 	
@@ -256,6 +269,20 @@ public class EmployeeController {
 	public String change(HttpSession session) {
 		log.info("실행");
 		return "employee/change";
+	}
+	
+	@GetMapping("/img")
+	public ResponseEntity<byte[]> getImageFile(HttpSession session){
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		final HttpHeaders headers = new HttpHeaders();
+		if(employee.getProfileContentType() != null) {
+			String[] mtypes = employee.getProfileContentType().split("/");
+			headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+			return new ResponseEntity<byte[]>(employee.getProfileData(), headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<byte[]>(employee.getProfileData(), headers, HttpStatus.NOT_FOUND);
+		}
+		
 	}
 	
 }

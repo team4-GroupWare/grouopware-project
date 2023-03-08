@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.email.model.EmailFile;
+import com.mycompany.webapp.employee.model.Employee;
 
 @Component
 public class MultipartFileResolver {
@@ -23,5 +24,12 @@ public class MultipartFileResolver {
 			emailFileList.add(emailFile);
 		}
 		return emailFileList;
+	}
+	
+	public Employee getEmployeeFile(Employee employee) throws IOException{
+		MultipartFile file = employee.getAttachFiles();
+		employee.setProfileContentType(file.getContentType());
+		employee.setProfileData(file.getBytes());
+		return employee;
 	}
 }

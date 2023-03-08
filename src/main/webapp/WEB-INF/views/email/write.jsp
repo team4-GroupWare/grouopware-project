@@ -111,10 +111,11 @@
 
               <!-- General Form Elements -->
               <form id="writeForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/email/write">
-                <div class="row mb-3">
+                <div class="row mb-2">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="receiveId" id="receiver">
+                    <p style="color:grey" class="small"> ","로 받을 아이디를 구분하여 입력해주세요
                   </div>
                 </div>
                 
