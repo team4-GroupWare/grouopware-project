@@ -5,21 +5,14 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	
-	<!-- datapicker -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
-	
-	<!-- file -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/assets/css/mobiscroll.javascript.min.css" rel="stylesheet" />
+	<script src="${pageContext.request.contextPath}/resources/assets/js/mobiscroll.javascript.min.js"></script>
 </head>
 	<body>
+		<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
+		
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<!-- =========================sideber=============================== -->
+	<!-- =========================sideber=============================== -->
 		<aside id="sidebar" class="sidebar">
 			<ul class="sidebar-nav" id="sidebar-nav">
 				<!--휴가 작성 -->
@@ -171,37 +164,111 @@
 											
 											<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
 											<div class="col-sm-10">
- 												<input type="text" id="datePicker" name="writeDate" style="width:600px" onclick="count()">
- 												<div id="result">선택일수: 0일</div>
-											</div>
-											<script type="text/javascript">
-												$('#datePicker').datepicker({
-													format: "yyyy년 mm월 dd일",
-												    multidate: true,
-												    multidateSeparator: " ,",
-												    datesDisabled: ['2023/03/01'],
-												    daysOfWeekDisabled: "0,6",
-												    todayHighlight: true
-												});
-										
-												$('#click-btn').on('click', function() {
-													var date = $('#dateRangePicker').val();
-													alert(date);
-													 
-												});
-												function count(){
-													console.log($('.active day').length);
-													document.getElementById("result").innerText="선택일수:  "+$('.active.day').length+"일";
-												}
+ 												<label class="m-0">
+												    Center
+												    <input id="demo-center" mbsc-input data-input-style="outline" data-label-style="stacked" placeholder="Please select..." />
+												</label>
 												
-											</script>
+												<div class='parent ice'>
+
+												  <div>1</div>
+												  <div>Trial</div>
+											
+												  
+												</div>
+												
+												<div class='parent ice'>
+
+												  <div>2</div>
+												  <div>Trial</div>
+											
+												 
+												</div>
+												
+												<div class='parent ice'>
+
+												  <div>3</div>
+												  <div>Trial</div>
+											
+												  
+												</div>
+												
+												<div class='parent ice'>
+			 									
+												  <div>4</div>
+												  <div>Trial</div>
+											
+												 
+												</div>
+												
+												
+												<input type='button' value='자식노드 삭제' onclick='remove_children()' />
+												
+												<script>
+													function remove_children() {
+														let element = $("div:contains('Trial')"); 
+														let count = element.length;
+														console.log(element);
+														console.log(count);
+													
+														$('div').filter(":contains('Trial')")[count-1].remove();
+														
+														
+														/* while(typeof element !='undefinded'){
+															console.log(element);
+															console.log(count);
+															element = $('div').filter(":contains('Trial')");
+															count = element.length;
+															$('div').filter(":contains('Trial')")[count-1].remove();
+															
+															
+														} */
+														
+													}
+													
+													mobiscroll.setOptions({
+													    theme: 'ios',
+													    themeVariant: 'light'
+													});
+	
+													mobiscroll.datepicker('#demo-center', {
+													    controls: ['calendar'],
+													    selectMultiple: true,
+													    selectCounter: true,
+													    invalid: [
+															{
+																recurring: {
+																	repeat: 'yearly',
+																	day: 24,
+																	month: 12
+																}
+															},
+															{
+																recurring: {
+																	repeat: 'yearly',
+																	day: 31,
+																	month: 12
+																}
+															},
+															{
+																recurring: {
+																	repeat: 'weekly',
+																	weekDays: 'SA,SU'
+																}
+															}
+														]
+													    
+													});
+													
+												</script>
+											</div>
 									</div>
 									
 									<!-- 사유 -->
 									<div class="row mb-3">
 										<label for="text" class="col-sm-2 col-form-label"><b>사유</b></label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="writeDate">
+											<input type="text" class="form-control">
 										</div>
 									</div>
 									
@@ -217,23 +284,20 @@
 					                
 									<!-- 결재선 -->
 									<div class="row mb-3">
-                  					<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
-	                  					<div class="col-sm-10">
-	                  						<div class="row mb-3">
-	                  							<div class="col-sm-10">
-	                    							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-	                    								결재선 선택
-	              									</button>
-	              								</div>
-	              							</div>
-	              		
-		              						<div class="row">
-		              							<div id="approval_line" class="d-flex">
-		              							
-		              							</div>
-		                  					</div>
-	                					</div>
-	                				</div>
+										<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
+										<div class="col-sm-10">
+											<!-- 결재선 선택 Button -->
+											<div class="row mb-3">
+												<div class="col-sm-10">
+													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                    								결재선 선택
+              										</button>
+												</div>
+											</div>
+											
+										
+										</div>
+									</div>
 									<%@ include file="/WEB-INF/views/vacation/form_modal.jsp" %>
 								</form>
 							</div>

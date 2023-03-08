@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -50,10 +54,10 @@
 		
 	</script>
 	<style>
-	  .line th, td {
-	  	text-align : center;
-	  	vertical-align : middle;
-	  }
+		.line th, td {
+			text-align : center;
+		  	vertical-align : middle;
+		}
 	</style>
  
 </head>
@@ -149,80 +153,82 @@
           			<div class="card">
             			<div class="card-body m-4">
               				<!-- General Form Elements -->
-              				<form>
-              					<input id="approval_content" type="hidden" value='${approval.content}'>
+              				<input id="approval_content" type="hidden" value='${approval.content}'>
+              				<form method="post" action="${pageContext.request.contextPath}/approval/confirm">
+              					<input type="hidden" id="approvalId" name="approvalId" value='${approval.approvalId}'>
+              					<input type="hidden" id="approvalLineId" name="approvalLineId" value='${approvalLines[mySeq].approvalLineId}'>
+              					<input type="hidden" id="lastSeq" name="lastSeq" value='${fn:length(approvalLines)}'>
 			              		<div class="row mb-3">
-			                  		<div class="col-sm-12 d-flex justify-content-end">
-			                  			<button type="submit" class="btn btn-primary" style="margin-right: 8px">승인</button>
-			                    		<button type="submit" class="btn btn-danger">반려</button>
-			                  		</div>
+			              			<c:if test="${myTurn == 1}">
+				                  		<div class="col-sm-12 d-flex justify-content-end">
+				                  			<button type="submit" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y">승인</button>
+				                    		<button type="submit" class="btn btn-danger" name="isApproved" value="n">반려</button>
+				                  		</div>
+			                  		</c:if>
 			                	</div>
-                
-                				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">
-						            <tr>
-						                <th style="background-color:#E9EFFE; width:10%">결재 양식</th>
-						                <td style="width: 40%">${approval.categoryName}</td>
-						                <th style="background-color:#E9EFFF; width:10%">기안 날짜</th>
-						                <td style="width: 40%">${approval.writeDate}</td>
-						            </tr>
-						            <tr>
-						                <th style="background-color:#E9EFFE; width:10%">기안자</th>
-						                <td style="width: 40%">${approval.empName}</td>
-						                <th style="background-color:#E9EFFE; width:10%">소속</th>
-						                <td style="width: 40%">공공사업1 Div / 솔루션개발팀</td>
-						            </tr>
-						            <tr>
-						                <th style="background-color:#E9EFFE; width:10%">참조</th>
-						                <td style="width: 40%"></td>
-						                <th style="background-color:#E9EFFE; width:10%">열람</th>
-						                <td style="width: 40%"></td>
-						        	</tr>
-						        </table>
-						        
-						        <div class="row">
-						        	<div class="col-lg-2" style="margin-left: auto;">
-							        	<table class="line table table-bordered" style="height: 120px; border:black;">
-								            <tr>
-								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">신청</th>
-								                <td style="height: 25%; padding:0px; margin:0px;">대표이사</td>
-								            </tr>
-								            <tr>
-								                <td style="height: 50%;">${approval.empName}</td>
-								            </tr>
-								            <tr>
-								                <td style="height: 25%; padding:0px; margin:0px;">${approval.writeDate}</td>
-								        	</tr>
-								        </table>
-							        </div>
-							        <div class="col-lg-5">
-								        <table class="line table table-bordered" style="height: 120px; border:black;">
-								            <tr>
-								                <th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">승인</th>
-								                <td style="height: 25%; padding:0px; margin:0px;">대리</td>
-								                <td style="height: 25%; padding:0px; margin:0px;">차장</td>
-								                <td style="height: 25%; padding:0px; margin:0px;">부장</td>
-								            </tr>
-								            <tr>
-								                <td style="height: 50%;">${approval.empName}</td>
-								                <td style="height: 50%;">이지호</td>
-								                <td style="height: 50%;">이연희</td>
-								            </tr>
-								            <tr>
-								            	<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
-								                <td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
-								        		<td style="height: 25%; padding:0px; margin:0px;"><b>승인</b>    03.06</td>
-								        	</tr>
-								        </table>
-							        </div>
+                			</form>
+               				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">
+					            <tr>
+					                <th style="background-color:#E9EFFE; width:10%">결재 양식</th>
+					                <td style="width: 40%">${approval.categoryName}</td>
+					                <th style="background-color:#E9EFFF; width:10%">기안 날짜</th>
+					                <td style="width: 40%">${approval.writeDate}</td>
+					            </tr>
+					            <tr>
+					                <th style="background-color:#E9EFFE; width:10%">기안자</th>
+					                <td style="width: 40%"><b>${approval.empName}</b> ${approval.gradeName} </td>
+					                <th style="background-color:#E9EFFE; width:10%">소속</th>
+					                <td style="width: 40%">${approval.deptName} / ${approval.teamName}</td>
+					            </tr>
+					            <tr>
+					                <th style="background-color:#E9EFFE; width:10%">참조</th>
+					                <td style="width: 40%"></td>
+					                <th style="background-color:#E9EFFE; width:10%">열람</th>
+					                <td style="width: 40%"></td>
+					        	</tr>
+					        </table>
+					        
+					        <div class="row">
+						        <div class="col-lg-5" style="margin-left: auto;">
+							        <table class="line table table-bordered" style="height: 120px; border:black;">
+							        	<thead>
+							        	</thead>
+							        	<tbody>
+							        	
+										<c:forEach var="i" begin="1" end="3">
+											<tr>
+											<c:if test="${i == 1}">
+												<th style="background-color:#E9EFFE; color:black; width:30px;" rowspan="3">승인</th>
+											</c:if>
+										    <c:forEach var="approvalLine" items="${approvalLines}">
+						        				<c:if test="${i == 1}">
+						        					<td style="height: 25%; padding:0px; margin:0px;">${approvalLine.gradeName}</td>
+						        				</c:if>
+						        				<c:if test="${i == 2}">
+						        					<td style="height: 50%;">${approvalLine.empName}</td>
+						        				</c:if>
+						        				<c:if test="${i == 3}">
+						        					<td style="height: 25%; padding:0px; margin:0px;">
+						        					<c:if test="${approvalLine.isApproved == null}"><span></span></c:if>
+						        					<c:if test="${approvalLine.isApproved == 'y'}"><span style="color:#004389;">승인</span></c:if>
+						        					<c:if test="${approvalLine.isApproved == 'n'}"><span style="color:red;">반려</span></c:if>
+						        					<fmt:formatDate value="${approvalLine.approvalDate}" dateStyle="short"/>
+						        					</td>
+						        				</c:if>
+						        			</c:forEach>
+						        			</tr>
+										</c:forEach>
+							        	</tbody>
+							        </table>
 						        </div>
-                				
-				                <div class="row mb-3">
-				                	<div class="col-sm-12">
-					                	<textarea id="myTextarea">
-										</textarea>
-									</div>
-                				</div>
-              				</form><!-- End General Form Elements -->
+					        </div>
+               				
+			                <div class="row mb-3">
+			                	<div class="col-sm-12">
+				                	<textarea id="myTextarea">
+									</textarea>
+								</div>
+               				</div>
             			</div>
           			</div>
         		</div>
