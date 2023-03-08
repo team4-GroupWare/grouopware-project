@@ -94,7 +94,7 @@ public class ApprovalController {
 		}
 		approvalService.writeApproval(approval);
 		
-		return "redirect:/approval/write";
+		return "redirect:/approval/mylist";
 	}
 	
 	/**
