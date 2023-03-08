@@ -94,9 +94,9 @@
 										console.log("성공: "+data);
 										if(data == 'important'){
 											if(type == 'delete'){
-												$("#importantTrashModal").modal('show');	
-											} else {
 												$("#importantDeleteModal").modal('show');	
+											} else {
+												$("#importantTrashModal").modal('show');	
 											}
 										} else{
 											if(type == 'delete'){
@@ -252,7 +252,7 @@
 			      </div>
 			      <div class="modal-footer">
 			      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			        <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/email/deleteDetail?emailId=${emailDetail.sendEmailId}">삭제</a>
+			        <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/email/deleteDetail?emailId=${emailDetail.receiveEmailId}">삭제</a>
 			      </div>
 			    </div>
 			  </div>
