@@ -87,17 +87,14 @@ public class ApprovalController {
 	 */
 	@PostMapping("/write")
 	public String writeApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("=======실행=============");
-		log.info(approval.getApprovalLine());
+		log.info("실행");
 		
 		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
 			approval.getApprovalLine().get(i).setSeq(i+1);
 		}
-		log.info("=======approval=====================");
-		log.info(approval);
 		approvalService.writeApproval(approval);
 		
-		return "redirect:/approval/write";
+		return "redirect:/approval/mylist";
 	}
 	
 	/**
@@ -138,16 +135,16 @@ public class ApprovalController {
 	}
 	
 	/**
-	 * 전자결재 목록
+	 * 전자결재 내 문서함(내가 작성한 기안들) 목록
 	 * @author : LEEJIHO
-	 * @param pageNo
-	 * @param status : 
+	 * @param pageNo : 현재 페이지
+	 * @param status : 승인 상태
 	 * @param model
 	 * @param session
 	 * @return
 	 */
 	@GetMapping("/mylist")
-	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
+	public String getMyApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
@@ -156,10 +153,43 @@ public class ApprovalController {
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
 		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status);
+		//전자결재 카테고리 목록
+		List<ApprovalCategory> approval_category = approvalService.getCategory();
+				
+		model.addAttribute("approvals", approvals);
+		model.addAttribute("pager", pager);
+		model.addAttribute("status", status);
+		model.addAttribute("approval_category", approval_category);
+		
+		return "approval/approval_mylist";
+	}
+	
+	/**
+	 * 전자결재 결재문서함(내가 결재해야하는 문서들) 목록
+	 * @author : LEEJIHO
+	 * @param pageNo : 현재 페이지
+	 * @param status : 승인 상태
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/list")
+	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
+		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		String empId = loginEmp.getEmpId();
+		
+		int confirmRow = approvalService.getConfirmRow(empId, status);
+		Pager pager = new Pager(10, 5, confirmRow, pageNo);
+		
+		List<Approval> approvals = approvalService.getConfirmList(pager, empId, status);
+		//전자결재 카테고리 목록
+		List<ApprovalCategory> approval_category = approvalService.getCategory();
 		
 		model.addAttribute("approvals", approvals);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
+		model.addAttribute("approval_category", approval_category);
 		
 		return "approval/approval_list";
 	}
@@ -182,9 +212,12 @@ public class ApprovalController {
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
 		List<Approval> approvals = approvalService.getApprovalTempList(pager, empId);
-		
+		//전자결재 카테고리 목록
+		List<ApprovalCategory> approval_category = approvalService.getCategory();
+				
 		model.addAttribute("approvals", approvals);
 		model.addAttribute("pager", pager);
+		model.addAttribute("approval_category", approval_category);
 		
 		return "approval/approval_templist";
 	}
@@ -198,16 +231,60 @@ public class ApprovalController {
 	 * @return
 	 */
 	@GetMapping("/detail")
-	public String detail(@RequestParam int approvalId, @RequestParam int pageNo, @RequestParam() String status, Model model) {
+	public String detail(@RequestParam int approvalId, @RequestParam int pageNo, @RequestParam() String status, Model model, HttpSession session) {
 		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		String empId = loginEmp.getEmpId();
 		
+		//전자결재 문서 상세 정보
 		Approval approval = approvalService.getApprovalDetail(approvalId);
+		//전자결재 결재선 리스트
+		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approval.getApprovalId());
+		//해당 전자결재 문서에 대한 내 결재 순서
+		int mySeq = approvalService.getMySeq(approvalId, empId) - 1;
+		int myTurn = 0;
 		
+		for(int i = 0; i < approvalLines.size(); i++) {
+			if(mySeq == -1) { //결재선이 아닐 때
+				myTurn = 0;
+				break;
+			} else if(mySeq == 0) { //첫번째 순서일때
+				if(approvalLines.get(mySeq).getIsApproved() == null) {
+					myTurn = 1;
+					break;
+				}
+				if(approvalLines.get(mySeq).getIsApproved() != null) {
+					myTurn = 0;
+					break;
+				}
+			} else if(!approval.getStatus().equals("승인") &&
+					!approval.getStatus().equals("반려") &&
+					approvalLines.get(mySeq-1).getIsApproved() != null && 
+					approvalLines.get(mySeq).getIsApproved() == null) { //첫번째 순서가 아닐때
+				myTurn = 1;
+			}
+		}
+		
+		log.info(myTurn);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
 		model.addAttribute("approval", approval);
+		model.addAttribute("approvalLines", approvalLines);
+		model.addAttribute("mySeq", mySeq);
+		model.addAttribute("myTurn", myTurn);
 		
 		return "approval/approval_detail";
+	}
+	
+	@PostMapping("/confirm")
+	public String confirm(ApprovalLine approvalLine, HttpSession session) {
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		String empId = loginEmp.getEmpId();
+		approvalLine.setEmpId(empId);
+		
+		approvalService.confirm(approvalLine);
+		
+		return "redirect:/approval/list";
 	}
 	
 }

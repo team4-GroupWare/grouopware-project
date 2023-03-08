@@ -5,14 +5,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script>
-		$(document).ready(function () {
-			$(".docuMenu").click(function () {
-				colsole.log("실행");
-				$(".docuMenu").addClass("active");
-		  	});
-		});
-	</script>
 	<style>
 		thead tr {
 			border-bottom:2px solid #004389;
@@ -45,35 +37,35 @@
         		</a>
       		</li>
       		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
+        		<a class="nav-link" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
-        		<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        		<ul id="approval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list" class="active"><span>전체</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='대기'"><span>대기</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=대기"><span>대기</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='진행'"><span>진행</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=진행"><span>진행</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='승인'"><span>승인</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=승인"><span>승인</span></a>
           			</li>
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='반려'"><span>반려</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/list?status=반려"><span>반려</span></a>
           			</li>
         		</ul>
      		</li><!-- End 결재 문서함 -->
 
       		<li class="nav-item">
-        		<a class="nav-link" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
+        		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
           			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
         		</a>
-        		<ul id="myapproval-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist?" class="active"><span>전체</span></a>
+            			<a href="${pageContext.request.contextPath}/approval/mylist"><span>전체</span></a>
           			</li>
           			<li>
             			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
@@ -90,7 +82,6 @@
         		</ul>
       		</li><!-- End 내 문서함 -->
       		
-
       		<li class="nav-item">
         		<a class="nav-link collapsed" href="#">
           			<i class="bi bi-eye"></i><span>열람함</span>
@@ -141,27 +132,11 @@
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">결재 양식</span>
 	          								</a>
 	          								<ul class="dropdown-menu ">
-	            							<li>
-	              								<a class="dropdown-item d-flex align-items-center" href="#">
-	                								<span>기안서</span>
+	          								<c:forEach var="approval_category" items="${approval_category}">
+	          									<a class="dropdown-item d-flex align-items-center" href="#">
+	                								<span>${approval_category.approvalName}</span>
 	              								</a>
-	            							</li>
-	            							<li>
-	              								<hr class="dropdown-divider">
-	            							</li>
-	            							<li>
-	              								<a class="dropdown-item d-flex align-items-center" href="#">
-	                								<span>지출품의서</span>
-	              								</a>
-	            							</li>
-	            							<li>
-	              								<hr class="dropdown-divider">
-	            							</li>
-	            							<li>
-	              								<a class="dropdown-item d-flex align-items-center" href="#">
-	                								<span>사직서</span>
-	              								</a>
-								            </li>
+	          								</c:forEach>
 								    	</ul>
           								</th>
 					                    <th scope="col" width="35%">제목</th>
@@ -177,7 +152,7 @@
 						                    <%-- <th scope="row">${index.count}</th> --%>
 						                    <td>${approval.categoryName}</td>
 						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
-						                    <td>${approval.empName}</td>
+						                    <td>${approval.empName} / ${approval.deptName}</td>
 						                    <c:if test="${approval.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 						                    </c:if>
@@ -201,35 +176,35 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="mylist?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="mylist?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="mylist?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="mylist?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="mylist?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="mylist?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="list?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	

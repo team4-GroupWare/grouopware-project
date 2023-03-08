@@ -9,29 +9,29 @@ function addFile(obj){
     var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
 
     // 첨부파일 개수 확인
-        for (const file of obj.files) {
-            // 첨부파일 검증
-            if (validation(file)) {
-                // 파일 배열에 담기
-                var reader = new FileReader();
-                reader.onload = function () {
-                    filesArr.push(file);
-                };
-                reader.readAsDataURL(file);
+    for (const file of obj.files) {
+        // 첨부파일 검증
+        if (validation(file)) {
+            // 파일 배열에 담기
+            var reader = new FileReader();
+            reader.onload = function () {
+                filesArr.push(file);
+            };
+            reader.readAsDataURL(file);
 
-                // 목록 추가
-                let htmlData = '';
-                htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
-                htmlData += '   <p class="email-file name" style="margin-bottom:0">' + file.name + '</p>';
-                htmlData += '	<p class="email-file size"style="margin-bottom:0">' + file.size/1000 + 'KB</p>'; 	
-                htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
-                htmlData += '</div>';
-                $(".file-list").append(htmlData);
-                fileNo++;
-            } else {
-                continue;
-            }
+            // 목록 추가
+            let htmlData = '';
+            htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
+            htmlData += '   <p class="email-file name" style="margin-bottom:0">' + file.name + '</p>';
+            htmlData += '	<p class="email-file size"style="margin-bottom:0">' + file.size/1000 + 'KB</p>'; 	
+            htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
+            htmlData += '</div>';
+            $(".file-list").append(htmlData);
+            fileNo++;
+        } else {
+            continue;
         }
+    }
     
     // 초기화
     //document.querySelector("input[type=file]").value = "";
