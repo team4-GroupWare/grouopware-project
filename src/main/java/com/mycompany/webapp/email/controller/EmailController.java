@@ -203,9 +203,10 @@ public class EmailController {
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		String[] receiver = emailDetail.getReceiveId().split(",");
-		for(String receiveEmpId : receiver) {
-			emailDetail.setReceiveId(receiveEmpId);
+		String[] receiverArr = emailDetail.getReceiveId().split(",");
+		for(String receiveEmpId : receiverArr) {
+			String receiver = receiveEmpId.trim();
+			emailDetail.setReceiveId(receiver);
 			int row = emailService.writeEmail(emailDetail);
 		}
 		
