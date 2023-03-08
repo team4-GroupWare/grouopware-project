@@ -8,6 +8,7 @@ import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.TempEmail;
 
@@ -153,6 +154,18 @@ public interface IEmailService {
 	 * @return
 	 */
 	EmailFile getFile(int emailFileId);
+	/**
+	 * 
+	 * @param empId
+	 * @return
+	 */
+	List<MainEmailList> getSendMainEmailList(String empId);
+	/**
+	 * 
+	 * @param empId
+	 * @return
+	 */
+	List<MainEmailList> getReceiveMainEmailList(String empId);
 	
 	
 }

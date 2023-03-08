@@ -32,6 +32,7 @@ import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ImportantCheck;
+import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.repository.EmailRepository;
@@ -203,9 +204,10 @@ public class EmailController {
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		String[] receiver = emailDetail.getReceiveId().split(",");
-		for(String receiveEmpId : receiver) {
-			emailDetail.setReceiveId(receiveEmpId);
+		String[] receiverArr = emailDetail.getReceiveId().split(",");
+		for(String receiveEmpId : receiverArr) {
+			String receiver = receiveEmpId.trim();
+			emailDetail.setReceiveId(receiver);
 			int row = emailService.writeEmail(emailDetail);
 		}
 		
@@ -393,6 +395,23 @@ public class EmailController {
 		fileName = fileName.replaceAll("\\+", "%20");
 		headers.setContentDispositionFormData("attachment", fileName);
 		return new ResponseEntity<byte[]>(emailFile.getEmailFileData(), headers, HttpStatus.OK);
-		
+	}
+	
+	@GetMapping("/sendEmailListMain")
+	public String emailSendListMain(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		List<MainEmailList> emailList = emailService.getSendMainEmailList(employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		return "email/mainemaillist";
+	}
+	
+	@GetMapping("/receiveEmailListMain")
+	public String emailReceiveListMain(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		List<MainEmailList> emailList = emailService.getReceiveMainEmailList(employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		return "email/mainreceiveemaillist";
 	}
 }

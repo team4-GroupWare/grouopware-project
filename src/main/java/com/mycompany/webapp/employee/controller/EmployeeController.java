@@ -272,8 +272,8 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/img")
-	public ResponseEntity<byte[]> getImageFile(HttpSession session){
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
+	public ResponseEntity<byte[]> getImageFile(HttpSession session, @RequestParam String empId){
+		Employee employee = employeeService.getEmp(empId);
 		final HttpHeaders headers = new HttpHeaders();
 		if(employee.getProfileContentType() != null) {
 			String[] mtypes = employee.getProfileContentType().split("/");

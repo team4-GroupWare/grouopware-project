@@ -3,6 +3,7 @@ package com.mycompany.webapp.email.repository;
 import java.util.List;
 
 import com.mycompany.webapp.email.model.EmailFile;
+import com.mycompany.webapp.email.model.MainEmailList;
 
 public interface EmailFileRepository {
 	/**
@@ -23,4 +24,5 @@ public interface EmailFileRepository {
 	 * @return
 	 */
 	EmailFile selectEmailFileByFileId(int emailFileId);
+
 }

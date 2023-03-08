@@ -65,8 +65,24 @@
 	  	    var date = modifyNumber(today.getDate());		//일
 	  	  	var isHoli = false;								//공휴일 판별
 	  	   
-	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회
+	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회, 해당 사원에 대한 메일 리스트를 조회
 	  		$(document).ready(function() {
+	  			$.ajax({
+	  				url:"${pageContext.request.contextPath}/email/sendEmailListMain",
+	  				type: "GET",
+	  			}).done(function(data){
+	  				$("#mail-send").empty();
+	  				$("#mail-send").html(data);
+	  			}); 
+	  			
+	  			$.ajax({
+	  				url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
+	  				type: "GET",
+	  			}).done(function(data){
+	  				$("#mail-receive").empty();
+	  				$("#mail-receive").html(data);
+	  			}); 
+	  			
 	  			//현재 시간, 날짜 
 	  			nowClock();
         	    setInterval(nowClock,1000); 
@@ -372,98 +388,12 @@
 									
 									<!-- 받은 메일함 -->
 									<div class="tab-pane fade show active" id="mail-receive" role="tabpanel" aria-labelledby="receive-tab">
-										<table class="table table-borderless datatable">
-											
-											<thead style="border-bottom:2px solid #EBEEF4;">
-												<tr>
-													<th scope="col">보낸사람</th>
-													<th scope="col">제목</th>
-													<th scope="col">날짜</th>
-
-												 </tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													이지호</td>
-													<td><a href="#" class="mail-title">견적서 문의 관련 사항</a></td>
-													<td>2023.02.27</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													이연희</td>
-													<td><a href="#" class="mail-title">그룹 메일 문의 사항</a></td>
-													<td>2023.02.27</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													김철수</td>
-													<td><a href="#" class="mail-title">2월 비용 정산 안내</a></td>
-													<td>2023.02.28</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													이지호</td>
-													<td><a href="#" class="mail-title">2/28 ㅇㅇㅇ 프로젝트 회의록</a></td>
-													<td>2023.02.28</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													김과장</td>
-													<td><a href="#" class="mail-title">[오티아이] 계약서류 전달</a></td>
-													<td>2023.03.02</td>
-												</tr>
-											</tbody>
-										</table>
 									</div><!-- End 받은 메일함 -->
 									
 									<!-- 보낸 메일함 -->
 									<div class="tab-pane fade" id="mail-send" role="tabpanel" aria-labelledby="send-tab">
-										<table class="table table-borderless datatable">
-											
-											<thead>
-												<tr style="border-bottom:2px solid #EBEEF4;">
-													<th scope="col">받는 사람</th>
-													<th scope="col">제목</th>
-													<th scope="col">날짜</th>
-												 </tr>
-											</thead>
-										  
-											<tbody>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													박차장</td>
-													<td><a href="#" class="mail-title">3월 홍보전략 회의 사전 안내</a></td>
-													<td>2023.02.28</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													김사원</td>
-													<td><a href="#" class="mail-title">사내 ㅇㅇ 준비사항 점검</a></td>
-													<td>2023.02.28</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													이지호</td>
-													<td><a href="#" class="mail-title">2월 24일 회의록 점검</a></td>
-													<td>2023.03.02</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													김대리</td>
-													<td><a href="#" class="mail-title">ㅇㅇㅇ견적 관련 안내</a></td>
-													<td>2023.03.02</td>
-												</tr>
-												<tr>
-													<td><img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right:8px" width="30px">
-													이연희</td>
-													<td><a href="#" class="mail-title">그룹웨어 문의사항</a></td>
-													<td>2023.03.02</td>
-												</tr>
-											</tbody>
-										</table>
 									</div><!--End 보낸 메일함 -->
+									
 								</div><!--End mail content -->
 							</div>
 						</div><!--End mail Card --> 
