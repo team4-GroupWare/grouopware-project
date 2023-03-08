@@ -115,8 +115,17 @@
 																'<option value="2">오전 반차</option>'+
 																'<option value="3">오후 반차</option>';
 															$('#POP').append(element);
-															$('#datePicker').empty();
-															$('#datePicker1').attr('id','datePicker');
+															$("#datePicker1").datepicker('setDate', "");
+															$("#datePicker1").datepicker('destroy');
+															$("#datePicker1").attr('id','datePicker');
+															$('#datePicker').datepicker({
+																format: "yyyy년 mm월 dd일",
+															    multidate: true,
+															    multidateSeparator: " ,",
+															    datesDisabled: ['2023/03/01'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
 														
 														} else if(chkValue == '2') {
 															$('#POP').empty();
@@ -124,15 +133,55 @@
 															'<option value="5">출산</option>'+
 															'<option value="6">사망</option>';
 															$('#POP').append(element);
-															$('#datePicker1').empty();
-															$('#datePicker').attr('id','datePicker1');
+															
+															$("#datePicker").datepicker('setDate', "");
+															$("#datePicker").datepicker('destroy');
+															$("#datePicker").attr('id','datePicker1');
+															$('#datePicker1').datepicker({
+																format: "yyyy-mm-dd",
+															    
+															    datesDisabled: ['2023/03/02'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
+															/* $("#datePicker1").on("propertychange change paste input", function() {
+																console.log(document.getElementById('datePicker1').value);
+																let date = new Date(document.getElementById('datePicker1').value);
+																date.setDate(date.getDate() + 90);
+															    
+																document.getElementById('endDate').value =formatDate(date);
+															});
+															
+															function formatDate(date) {
+															    var d = new Date(date),
+															        month = '' + (d.getMonth() + 1),
+															        day = '' + d.getDate(),
+															        year = d.getFullYear();
+
+															    if (month.length < 2) 
+															        month = '0' + month;
+															    if (day.length < 2) 
+															        day = '0' + day;
+
+															    return [year, month, day].join('-');
+															} */
+															
 														}
 														else if(chkValue == '3') {
 															$('#POP').empty();
 															let element = '<option value="7" selected>병가</option>';
 															$('#POP').append(element);
-															$('#datePicker').empty();
-															$('#datePicker1').attr('id','datePicker');
+															$("#datePicker1").datepicker('setDate', "");
+															$("#datePicker1").datepicker('destroy');
+															$("#datePicker1").attr('id','datePicker');
+															$('#datePicker').datepicker({
+																format: "yyyy년 mm월 dd일",
+															    multidate: true,
+															    multidateSeparator: " ,",
+															    datesDisabled: ['2023/03/01'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
 														}
 													});
 												});
@@ -160,10 +209,16 @@
 									<div class="row mb-3">
 											
 											<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
-											<div class="col-sm-10">
- 												<input type="text" id="datePicker" name="dates" style="width:600px" onclick="count()">
- 												<div id="result">선택일수: 0일</div>
+											<div class="col-sm-2 mx-0">
+ 												<input type="text" id="datePicker" name="dates" style="width:100%">
 											</div>
+											<div class="col-sm-1 d-flex justify-content-center" >
+ 												~
+											</div>
+											<div class="col-sm-2">
+ 												<input type="text" id="endDate" name="endDate" style="width:100%" >
+											</div>
+											
 											<script>
 												$('#datePicker').datepicker({
 													format: "yyyy년 mm월 dd일",
@@ -174,24 +229,8 @@
 												    todayHighlight: true
 												});
 												
-												$('#datePicker1').datepicker({
-													format: "yyyy년 mm월 dd일",
-												    multidateSeparator: " ,",
-												    datesDisabled: ['2023/03/02'],
-												    daysOfWeekDisabled: "0,6",
-												    todayHighlight: true
-												});
-										
-												$('#click-btn').on('click', function() {
-													var date = $('#dateRangePicker').val();
-													alert(date);
-													 
-												});
 												
-												function count(){
-													console.log($('.active day').length);
-													document.getElementById("result").innerText="선택일수:  "+$('.active.day').length+"일";
-												}
+												
 												
 											</script>
 									</div>

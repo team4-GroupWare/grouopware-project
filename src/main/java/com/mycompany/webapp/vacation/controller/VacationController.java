@@ -73,7 +73,7 @@ public class VacationController {
 	public String getVacationList(Model model) {
 		log.info("실행");
 		
-		return "vacation/vacation_docu";
+		return "vacation/vacation_document";
 	}
 	
 	@GetMapping("/vacation/my")

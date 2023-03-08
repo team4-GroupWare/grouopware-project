@@ -72,102 +72,13 @@
 					<div class="col-lg-12">
 						<div class="card mt-2">
 							<div class="card-body mt-3">
-							 	
-									
-									<!--============================= documents-tab============================================-->
-									<div id="documents" role="tabpanel" aria-labelledby="documents-tab">
-										
-										<!-- 필터링바 -->
-										<div class="dropdown d-flex justify-content-end">
-											<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-										    	모든문서
-										  	</button>
-											<ul class="dropdown-menu">
-												<li><a class="dropdown-item" href="#">모든문서</a></li>
-										    	<li><a class="dropdown-item" href="#">대기</a></li>
-										    	<li><a class="dropdown-item" href="#">진행</a></li>
-										    	<li><a class="dropdown-item" href="#">승인</a></li>
-										    	<li><a class="dropdown-item" href="#">반려</a></li>
-										  	</ul>
-										</div>		
-										
-										<!-- Table -->
-										<table class="table table-hover">
-											<thead>
-												<tr bgcolor="#EFF4FC">
-												    <th scope="col">문서번호</th>
-												    <th scope="col">제목</th>
-												    <th scope="col">기안자</th>
-												    <th scope="col">기안일</th>
-												    <th scope="col">상태</th>
-											  	</tr>
-											</thead>
-											<tbody>
-											  	<tr>
-												    <th scope="row">1</th>
-												    <td>휴가 신청</td>
-												    <td>김이사</td>
-												    <td>2023-02-10</td>
-												    <td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-											  	</tr>
-											  	<tr>
-											    	<th scope="row">2</th>
-												    <td>휴가 신청</td>
-												    <td>김이사</td>
-												    <td>2023-02-10</td>
-											     	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-											  	</tr>
-												<tr>
-													<th scope="row">3</th>
-												  	<td>휴가 신청</td>
-												   	<td>김이사</td>
-												   	<td>2023-02-10</td>
-												   	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-												</tr>
-												<tr>
-													<th scope="row">4</th>
-													<td>휴가 신청</td>
-													<td>김이사</td>
-													<td>2023-02-10</td>
-													<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-												</tr>
-												<tr>
-													<th scope="row">5</th>
-													<td>휴가 신청</td>
-													<td>김이사</td>
-													<td>2023-02-10</td>
-													<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
-												</tr>
-											
-											</tbody>
-										</table>
-										
-										<!-- 페이징 필터링 바 -->
-										<div class="d-flex justify-content-center">
-											<nav aria-label="Page navigation example">
-												<ul class="pagination">
-													<li class="page-item">
-													  <a class="page-link" href="#" aria-label="Previous">
-													    <span aria-hidden="true">«</span>
-													  </a>
-													</li>
-													<li class="page-item"><a class="page-link" href="#">1</a></li>
-													<li class="page-item"><a class="page-link" href="#">2</a></li>
-													<li class="page-item"><a class="page-link" href="#">3</a></li>
-													<li class="page-item">
-														<a class="page-link" href="#" aria-label="Next">
-														  <span aria-hidden="true">»</span>
-														</a>
-													</li>
-												</ul>
-											</nav>
-										</div>
-									
-									</div><!--=============================End documents-tab============================================-->
-								
-									
+								<div class="row">
+									<div class="col-lg-6">
+										<table class="table table-bordered" style="border-collapse: collapse; width: 100%; height:800px;" border="1"><colgroup><col style="width: 13.3971%;" data-mce-style="width: 13.3971%;"><col style="width: 18.0223%;"><col style="width: 23.764%;"><col style="width: 21.6855%;"><col style="width: 23.1311%;"></colgroup><tbody><tr style="height: 0.5px;"><td colspan="5" rowspan="2" style="text-align: center; height: 129.469px;"><p><span style="font-size: 24pt;" data-mce-style="font-size: 24pt;"><strong>휴가 신청서</strong></span><br></p><p><strong><br data-mce-bogus="1"></strong></p></td></tr><tr style="height: 128.969px;"></tr><tr style="height: 22.3906px;"><td colspan="2" style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">문서번호<br></td><td style="height: 22.3906px; text-align: center;"><br></td><td style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">작성일자</td><td style="height: 22.3906px; text-align: center;"><br></td></tr><tr style="height: 22.3906px;"><td colspan="2" style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">이름<br></td><td style="height: 22.3906px; text-align: center;"><br></td><td style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">부서(팀)</td><td style="height: 22.3906px; text-align: center;"><br></td></tr><tr style="height: 22.3906px;"><td colspan="2" style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">제목<br></td><td style="height: 22.3906px; text-align: center;" colspan="3"><br></td></tr><tr style="height: 22.3906px;"><td rowspan="3" style="height: 89.5624px; text-align: center; background-color: rgb(233, 239, 255);">신청내용</td><td style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">휴가종류</td><td colspan="3" style="height: 22.3906px; text-align: center;"><br></td></tr><tr style="height: 22.3906px;"><td style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">날짜</td><td colspan="3" style="height: 22.3906px; text-align: center;"><br></td></tr><tr style="height: 22.3906px;"><td style="height: 22.3906px; text-align: center; background-color: rgb(233, 239, 255);">신청사유</td><td colspan="3" style="height: 22.3906px; text-align: center;"><br></td></tr><tr><td rowspan="5" style="text-align: center; background-color: rgb(233, 239, 255);" data-mce-style="text-align: center; background-color: rgb(233, 239, 255);">첨부파일</td><td colspan="4" rowspan="5" style="text-align: center;"><br></td></tr><tr></tr><tr></tr><tr></tr><tr></tr></tbody></table>
+									</div>
 								</div>
-							</div>
+							 </div>	
+									
 						</div><!-- End Card -->
 					</div>
 				</div>
