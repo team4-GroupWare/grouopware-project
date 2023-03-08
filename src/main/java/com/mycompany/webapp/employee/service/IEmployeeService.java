@@ -27,5 +27,5 @@ public interface IEmployeeService {
 	 * @author : LEEYESEUNG
 	 * @param phone
 	 */
-	public int updatePhone(String empId, String phone);
+	public int updateEmployee(Employee employee);
 }

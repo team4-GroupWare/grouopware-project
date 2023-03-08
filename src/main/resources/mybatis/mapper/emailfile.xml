@@ -23,8 +23,35 @@
 				
 				)
 		]]>
-	
 	</insert>
+	
+	<select id="selectEmailFileByContentId" parameterType="int" resultType="emailFile">
+		<![CDATA[
+		select  EMAIL_FILE_ID as emailFileId,
+				EMAIL_CONTENT_ID as emailContentId,
+				EMAIL_FILE_NAME as emailFileName,
+				EMAIL_FILE_SIZE as emailFileSize,
+				EMAIL_FILE_DATA as emailFileData,
+				EMAIL_FILE_CONTENT_TYPE as emailFileContentType
+		from	email_file
+		where 	email_content_id = #{emailContentId}
+		]]>
+	</select>
+	
+	<select id="selectEmailFileByFileId" parameterType="int" resultType="emailFile">
+		<![CDATA[
+		select  EMAIL_FILE_ID as emailFileId,
+				EMAIL_CONTENT_ID as emailContentId,
+				EMAIL_FILE_NAME as emailFileName,
+				EMAIL_FILE_SIZE as emailFileSize,
+				EMAIL_FILE_DATA as emailFileData,
+				EMAIL_FILE_CONTENT_TYPE as emailFileContentType
+		from	email_file
+		where 	email_file_id = #{emailFileId}
+		]]>
+	
+	
+	</select>
 
 
 
