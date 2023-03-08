@@ -107,67 +107,55 @@
 										<div class="col-sm-6">
 											<script>
 												$(function (){
-													$('input[type=radio][name=tp_cd]').on('click', function() {
-														var chkValue = $('input[type=radio][name=tp_cd]:checked').val();
+													$('input[type=radio][name=vacationType]').on('click', function() {
+														var chkValue = $('input[type=radio][name=vacationType]:checked').val();
 														if (chkValue == '1') {
-															$('#POP1').css('display', 'block');
-															$('#POP2').css('display', 'none');
-															$('#POP3').css('display', 'none');
+															$('#POP').empty();
+															let element = '<option value="1" selected>연차</option>'+
+																'<option value="2">오전 반차</option>'+
+																'<option value="3">오후 반차</option>';
+															$('#POP').append(element);
+															$('#datePicker').empty();
+															$('#datePicker1').attr('id','datePicker');
+														
 														} else if(chkValue == '2') {
-															$('#POP1').css('display', 'none');
-															$('#POP2').css('display', 'block');
-															$('#POP3').css('display', 'none');
+															$('#POP').empty();
+															let element = '<option value="4" selected>결혼</option>'+
+															'<option value="5">출산</option>'+
+															'<option value="6">사망</option>';
+															$('#POP').append(element);
+															$('#datePicker1').empty();
+															$('#datePicker').attr('id','datePicker1');
 														}
 														else if(chkValue == '3') {
-															$('#POP1').css('display', 'none');
-															$('#POP2').css('display', 'none');
-															$('#POP3').css('display', 'block');
+															$('#POP').empty();
+															let element = '<option value="7" selected>병가</option>';
+															$('#POP').append(element);
+															$('#datePicker').empty();
+															$('#datePicker1').attr('id','datePicker');
 														}
 													});
 												});
 											</script>
-											<input type="radio" name="tp_cd" value="1" checked="checked"> 정기휴가
-											<input type="radio" name="tp_cd" value="2" > 경조사
-											<input type="radio" name="tp_cd" value="3" > 공가
+											<input type="radio" name="vacationType" value="1" checked="checked"> 정기휴가
+											<input type="radio" name="vacationType" value="2" > 경조사
+											<input type="radio" name="vacationType" value="3" > 공가
 										</div>
 									</div>
 									
 									<!-- 휴가 종류 -->
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label"><b>휴가 종류</b></label>
-									 
-										<div id="POP1" class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">연차</option>
-												<option value="1">오전 반차</option>
-												<option value="2">오후 반차</option>
-											</select>
-										</div>
-									  
-										<div id="POP2" style="display: none;" class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">결혼</option>
-												<option value="1">출산</option>
-												<option value="2">사망</option>
-											</select>
-										</div>
-									
-										<div id="POP3" style="display: none;"  class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">병가</option>
-												<option value="1">예비군</option>
+										<div class="col-sm-4">
+											<select id="POP" name="vacationCategoryId" class="form-select" aria-label="Default select example">
+												<option value="1" selected>연차</option>
+												<option value="2">오전 반차</option>
+												<option value="3">오후 반차</option>
 											</select>
 										</div>
 										<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
-										<input type="hidden" name="vacationCategoryId" value="1" > 
 									</div>
 									
-									<script >
-										function input(){
-										    const dday = document.querySelector("#input_date").value;
-										    console.log(dday);
-										}
-									</script>
 									<!-- 날짜 선택 -->
 									<div class="row mb-3">
 											
@@ -176,12 +164,20 @@
  												<input type="text" id="datePicker" name="dates" style="width:600px" onclick="count()">
  												<div id="result">선택일수: 0일</div>
 											</div>
-											<script type="text/javascript">
+											<script>
 												$('#datePicker').datepicker({
 													format: "yyyy년 mm월 dd일",
 												    multidate: true,
 												    multidateSeparator: " ,",
 												    datesDisabled: ['2023/03/01'],
+												    daysOfWeekDisabled: "0,6",
+												    todayHighlight: true
+												});
+												
+												$('#datePicker1').datepicker({
+													format: "yyyy년 mm월 dd일",
+												    multidateSeparator: " ,",
+												    datesDisabled: ['2023/03/02'],
 												    daysOfWeekDisabled: "0,6",
 												    todayHighlight: true
 												});
@@ -191,6 +187,7 @@
 													alert(date);
 													 
 												});
+												
 												function count(){
 													console.log($('.active day').length);
 													document.getElementById("result").innerText="선택일수:  "+$('.active.day').length+"일";

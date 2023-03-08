@@ -37,4 +37,17 @@
 		INSERT INTO vacation_line (vacation_line_id, vacation_id, emp_id, seq)
 		VALUES (seq_vacation_line.nextval, #{vacationId}, #{empId}, #{seq})
 	</insert>
+	
+	<!-- 휴가 날짜 저장 -->
+	<insert id="insertVacationDate" parameterType="vacationDate">
+		<selectKey keyProperty="vacationId" resultType="int" order="BEFORE">
+			SELECT seq_vacation.CURRVAL FROM dual
+		</selectKey>
+		INSERT INTO vacation_date (vacation_date_id, vacation_id, start_date, end_date)
+		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
+	</insert>
+	
+	
+	
+	
 </mapper>

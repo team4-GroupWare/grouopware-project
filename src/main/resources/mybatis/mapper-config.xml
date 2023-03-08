@@ -20,6 +20,7 @@
 		<typeAlias type="com.mycompany.webapp.email.model.EmailFile" alias="emailFile"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationLine" alias="vacationLine"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.Vacation" alias="vacation"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDate" alias="vacationDate"/>
 		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
 	</typeAliases>
 </configuration>

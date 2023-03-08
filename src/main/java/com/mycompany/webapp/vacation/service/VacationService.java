@@ -32,9 +32,9 @@ public class VacationService implements IVacationService {
 			vacationRepository.insertVacationLine(vacation.getVacationLine().get(i));
 		}
 		
-		/*for(int i = 0; i < vacation.getVacationDate().size(); i++) {
+		for(int i = 0; i < vacation.getVacationDate().size(); i++) {
 			vacationRepository.insertVacationDate(vacation.getVacationDate().get(i));
-		}*/
+		}
 		
 		return 2;
 	}

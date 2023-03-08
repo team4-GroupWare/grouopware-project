@@ -10,6 +10,7 @@ import lombok.ToString;
 @Data
 @ToString(exclude="vacationFileData")
 public class Vacation {
+	private int vacationType;
 	private int vacationId;
 	private String content;
 	private String writeDate;
