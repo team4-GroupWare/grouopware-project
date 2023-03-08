@@ -93,7 +93,7 @@
 							<div class="card-body m-4">
 								
 								<!-- Form -->
-								<form>
+								<form method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write" enctype="multipart/form-data">
 									<!-- 제출하기 Button -->
 									<div class="row mb-3">
 										<div class="col-sm-12 d-flex justify-content-end">
@@ -158,6 +158,8 @@
 												<option value="1">예비군</option>
 											</select>
 										</div>
+										<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
+										<input type="hidden" name="vacationCategoryId" value="1" > 
 									</div>
 									
 									<script >
@@ -171,7 +173,7 @@
 											
 											<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
 											<div class="col-sm-10">
- 												<input type="text" id="datePicker" name="writeDate" style="width:600px" onclick="count()">
+ 												<input type="text" id="datePicker" name="dates" style="width:600px" onclick="count()">
  												<div id="result">선택일수: 0일</div>
 											</div>
 											<script type="text/javascript">
@@ -201,7 +203,7 @@
 									<div class="row mb-3">
 										<label for="text" class="col-sm-2 col-form-label"><b>사유</b></label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="writeDate">
+											<input type="text" class="form-control" name="content">
 										</div>
 									</div>
 									
@@ -228,7 +230,7 @@
 	              							</div>
 	              		
 		              						<div class="row">
-		              							<div id="approval_line" class="d-flex">
+		              							<div id="vacation_line" class="d-flex">
 		              							
 		              							</div>
 		                  					</div>

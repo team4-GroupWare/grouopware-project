@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.vacation.repository.VacationRepository">
+
+	<!-- 휴가 결재선 선택 사원정보-->
+	<select id="selectVacationLine" parameterType="string" resultType="vacationLine">
+		<![CDATA[
+			SELECT e.emp_id as "empId", 
+				name as "empName",
+                team_name as "teamName",
+                dept_name as "deptName",
+                grade_name as "gradeName"
+      		FROM EMPLOYEES e, departments d, teams t, grade g
+            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
+            	and g.grade_id= e.grade_id
+                and e.emp_id=#{empId}
+		]]>
+	</select>
+	 
+	<insert id="insertVacation" parameterType="vacation">
+		INSERT INTO vacation (
+			vacation_id, content, write_date, vacation_category_id, emp_id, 
+			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
+			status)
+		
+		VALUES (
+			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
+			null,null,null,null,
+			default)
+	</insert> 
+	
+	<!-- 휴가 결제선  저장 -->
+	<insert id="insertVacationLine" parameterType="vacationLine">
+		<selectKey keyProperty="vacationId" resultType="int" order="BEFORE">
+			SELECT seq_vacation.CURRVAL FROM dual
+		</selectKey>
+		INSERT INTO vacation_line (vacation_line_id, vacation_id, emp_id, seq)
+		VALUES (seq_vacation_line.nextval, #{vacationId}, #{empId}, #{seq})
+	</insert>
+</mapper>

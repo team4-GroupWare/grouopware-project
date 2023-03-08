@@ -1,9 +1,8 @@
 package com.mycompany.webapp.vacation.model;
 
 import java.sql.Blob;
+import java.util.Date;
 import java.util.List;
-
-import com.mycompany.webapp.approval.model.ApprovalLine;
 
 import lombok.Data;
 import lombok.ToString;
@@ -14,13 +13,15 @@ public class Vacation {
 	private int vacationId;
 	private String content;
 	private String writeDate;
-	private String type;
+	private String dates;
+	private int vacationCategoryId;
 	private String empId;
 	private String vacationFileName;
 	private String vacationFileContentType;
 	private Blob vacationFileData;
 	private String vacationFileSize;
 	
-	private List<ApprovalLine> approvalLine;
+	private List<VacationDate> vacationDate;
+	private List<VacationLine> vacationLine;
 	
 }
