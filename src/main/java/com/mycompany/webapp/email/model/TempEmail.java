@@ -13,6 +13,7 @@ public class TempEmail {
 	private String content;
 	private String title;
 	private String sentId;
+	private Boolean important;
 	private int emailContentId;
 	
 

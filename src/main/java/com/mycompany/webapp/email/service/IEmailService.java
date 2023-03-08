@@ -166,6 +166,25 @@ public interface IEmailService {
 	 * @return
 	 */
 	List<MainEmailList> getReceiveMainEmailList(String empId);
+	/**
+	 * 
+	 * @param tempEmailId
+	 * @return
+	 */
+	TempEmail getTempEmailDetail(int tempEmailId);
+	/**
+	 * 
+	 * @param tempEmail
+	 * @return
+	 */
+	int updateTempEmail(TempEmail tempEmail);
+	/**
+	 * 
+	 * @param emailContentId
+	 * @param receiveEmailId
+	 * @return
+	 */
+	EmailDetail getEmailDetail(int receiveEmailId);
 	
 	
 }

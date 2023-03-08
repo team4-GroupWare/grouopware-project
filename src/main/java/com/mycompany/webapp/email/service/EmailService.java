@@ -276,7 +276,21 @@ public class EmailService implements IEmailService {
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
 		log.info("실행");
-		int row = emailRepository.insertTempEmail(tempEmail);
+		EmailContent emailContent = new EmailContent();
+		if(tempEmail.getTitle() == null) {
+			tempEmail.setTitle("제목없음");
+		}
+		if(tempEmail.getContent() == null) {
+			tempEmail.setContent(" ");
+		}
+		//이메일 컨텐트 테이블 insert
+		//emailContent.setImportant(tempEmail.getImportant());
+		emailContent.setContent(tempEmail.getContent());
+		emailContent.setTitle(tempEmail.getTitle());
+		int row = emailRepository.insertEmailContent(emailContent);
+		tempEmail.setEmailContentId(emailContent.getEmailContentId());
+		log.info("tempEmail: "+tempEmail);
+		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}
 
@@ -357,6 +371,28 @@ public class EmailService implements IEmailService {
 	@Override
 	public List<MainEmailList> getReceiveMainEmailList(String empId) {
 		return emailRepository.selectMainReceiveEmail(empId);
+	}
+
+	@Override
+	public TempEmail getTempEmailDetail(int tempEmailId) {
+		return emailRepository.selectTempEailDetail(tempEmailId);
+	}
+
+	@Override
+	public int updateTempEmail(TempEmail tempEmail) {
+		EmailContent emailContent = new EmailContent();
+		emailContent.setContent(tempEmail.getContent());
+		emailContent.setEmailContentId(tempEmail.getEmailContentId());
+		emailContent.setTitle(tempEmail.getTitle());
+		int row =emailRepository.updateEmailContent(emailContent);
+		row = emailRepository.updateTempEmail(tempEmail);
+		return row;
+	}
+
+	@Override
+	public EmailDetail getEmailDetail(int receiveEmailId) {
+		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
+		return emailDetail;
 	}
 
 }

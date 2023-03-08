@@ -505,6 +505,53 @@
 		]]>
 	
 	</select>
+	
+	<insert id="insertTempEmail" parameterType="tempEmail">
+		insert into temp_email (TEMP_EMAIL_ID
+		<if test="receiveId != null">
+			, RECEIVED_EMP_ID
+		</if>
+			,TEMP_DATE, EMAIL_CONTENT_ID, WRITER
+		)
+		
+		values (
+		seq_temp_email.nextval
+		<if test="receiveId != null">
+			, #{receiveId}
+		</if>
+			, sysdate, #{emailContentId}, #{sentId}
+		)
+	</insert>
+	
+	<select id="selectTempEailDetail" parameterType="int" resultType="tempEmail">
+		<![CDATA[
+		select t.temp_email_id as tempEmailId,
+			   t.writer as sentId,
+			   c.title,
+			   c.content,
+			   t.received_emp_id as receiveId
+		from temp_email t, email_content c
+		where t.email_content_id = c.email_content_id
+			  and temp_email_id = #{tempEmailId}
+		]]>
+	</select>
+	
+	<update id="updateTempEmail" parameterType="tempEmail">
+	<![CDATA[
+		update temp_email
+		set received_emp_id = #{receiveId}, temp_date = sysdate
+		where temp_email_id = #{tempEmailId}
+		]]>
+	</update>
+	
+	<update id="updateEmailContent" parameterType="emailContent">
+	<![CDATA[
+		update email_content
+		set title = #{title}, content = #{content}
+		where email_content_id = #{emailContentId}
+		]]>
+	
+	</update>
 
 
 

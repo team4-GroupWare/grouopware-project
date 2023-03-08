@@ -9,7 +9,6 @@
 	
 	<script>
 		$(function(){
-			var form= $('#content').val();
 		    tinymce.init({
 		        // Select the element(s) to add TinyMCE to using any valid CSS selector
 		        selector: "#tinymce-editor",
@@ -17,11 +16,6 @@
 		        height: '900px',
 		        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
 		        autosave_restore_when_empty: true,
-		        setup: function (editor) {
-		       		editor.on('init', function (e) {
-		            	editor.setContent(form);
-		            });
-		        },
 		    });
 		});
 		
@@ -36,14 +30,7 @@
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
 			var receiveId = $("#receiver").val();
-			if(receiveId == ''){
-				receiveId = '발신자 없음';
-			}
 			var title = $("#title").val();
-			if(title == ''){
-				title = '제목 없음';
-			}
-			
 			
 			var data = {receiveId : receiveId, 
 						title : title, 
@@ -52,7 +39,7 @@
 			console.log(data);
 			
 			$.ajax({
-				url : "${pageContext.request.contextPath}/email/tempupdate",
+				url : "${pageContext.request.contextPath}/email/tempsave",
 				method : "post",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"
@@ -125,12 +112,7 @@
                 <div class="row mb-2">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'reply'}">
-                    <input type="text" class="form-control" name="receiveId" id="receiver">
-                  	</c:if>
-                  	<c:if test="${type eq 'reply'}">
-                    <input type="text" class="form-control" name="receiveId" id="receiver" value="${emailDetail.sendId}">
-                  	</c:if>
+                    <input type="text" class="form-control" name="receiveId" id="receiver" value="${tempEmail.receiveId}">
                     <p style="color:grey" class="small"> ","로 받을 아이디를 구분하여 입력해주세요
                   </div>
                 </div>
@@ -138,12 +120,7 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">제목</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'reply'}">
-                    <input type="text" class="form-control" name="title" id="title">
-                    </c:if>
-                    <c:if test="${type eq 'reply'}">
-                    <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
-                    </c:if>
+                    <input type="text" class="form-control" name="title" id="title" value="${tempEmail.title}">
                   </div>
                 </div>
                 
@@ -174,12 +151,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-12">
                      <textarea id="tinymce-editor">
-                		<c:if test="${type eq 'reply'}">
-	                    <input type="hidden" class="form-control"  id="content" value="${emailDetail.content}">
-	                    </c:if>
-	                    <c:if test="${type ne 'reply'}">
-	                    <input type="hidden" class="form-control"  id="content" value="">
-	                    </c:if>
+                		${tempEmail.content}
               		</textarea><!-- End TinyMCE Editor -->
               		<input id="content" type="hidden" name="content">
                   </div>

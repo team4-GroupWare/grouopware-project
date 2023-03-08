@@ -233,5 +233,23 @@ public interface EmailRepository {
 	 * @return
 	 */
 	List<MainEmailList> selectMainReceiveEmail(String receiveId);
+	/**
+	 * 
+	 * @param tempEmailId
+	 * @return
+	 */
+	TempEmail selectTempEailDetail(int tempEmailId);
+	/**
+	 * 
+	 * @param tempEmail
+	 * @return
+	 */
+	int updateTempEmail(TempEmail tempEmail);
+	/**
+	 * 
+	 * @param emailContent
+	 * @return
+	 */
+	int updateEmailContent(EmailContent emailContent);
 
 }

@@ -1,12 +1,9 @@
 package com.mycompany.webapp.email.controller;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.List; 
+import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -23,19 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
-import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.model.MainEmailList;
-import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.TempEmail;
-import com.mycompany.webapp.email.repository.EmailRepository;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
 
@@ -321,20 +313,38 @@ public class EmailController {
 	}
 	
 	@GetMapping("/writeTempEmail")
-	public String writeTeampEmail(@RequestParam int tempEmailId) {
+	public String writeTeampEmail(@RequestParam int tempEmailId, Model model) {
 		log.info("실행");
-		return "email/write";
+		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
+		model.addAttribute("tempEmail", tempEmail);
+		return "email/temp";
 	}
 	
 	@ResponseBody
 	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
-	public String tempSave(@RequestBody TempEmail tempEmail) {
+	public String tempSave(@RequestBody TempEmail tempEmail, HttpSession session) {
 		log.info("실행");
 		log.info(tempEmail);
-		//int row = emailService.tempSaveEmail(tempEmail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.tempSaveEmail(tempEmail);
 		String result = "성공";
 		return result;
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/tempupdate", produces="application/text; charset=UTF-8")
+	public String tempUpdate(@RequestBody TempEmail tempEmail, HttpSession session) {
+		log.info("실행");
+		log.info(tempEmail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.updateTempEmail(tempEmail);
+		String result = "성공";
+		return result;
+	}
+	
+	
 	
 	@GetMapping("/restoreEmail")
 	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
@@ -413,5 +423,14 @@ public class EmailController {
 		List<MainEmailList> emailList = emailService.getReceiveMainEmailList(employee.getEmpId());
 		model.addAttribute("emailList", emailList);
 		return "email/mainreceiveemaillist";
+	}
+	
+	@GetMapping("/reply")
+	public String ReplyEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(receiveEmailId);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "reply");
+		return "email/write";
 	}
 }
