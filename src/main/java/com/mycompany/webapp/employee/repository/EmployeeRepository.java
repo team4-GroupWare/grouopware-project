@@ -25,5 +25,5 @@ public interface EmployeeRepository {
 	 * @param phone
 	 * @return
 	 */
-	public int updatePhone(@Param("empId")String empId, @Param("phone") String phone);
+	public int updateEmployee(Employee employee);
 }

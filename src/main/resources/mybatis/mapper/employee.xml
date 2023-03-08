@@ -171,12 +171,16 @@
     	]]>
 	</select>
 	
-	<update id="updatePhone" parameterType="String">
-		<![CDATA[
+	<update id="updateEmployee" parameterType="employee">
 		update employees
 		set phone = #{phone}
+			<if test="profileContentType != null">
+				, PROFILE_CONTENT_TYPE = #{profileContentType}
+				, PROFILE_DATA = #{profileData}
+			</if>
+				
+			
 		where emp_id = #{empId}
-		]]>
 	</update>
 	
 </mapper>

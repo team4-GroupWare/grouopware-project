@@ -3,7 +3,6 @@ package com.mycompany.webapp.email.service;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -245,37 +244,15 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 
-	/**
-	 * @author LEEYESEUNG
-	 */
-	@Override
-	public int writeEmail(EmailDetail emailDetail) {
-		log.info("실행");
-		EmailContent emailContent = new EmailContent();
-		ReceiveEmail receiveEmail = new ReceiveEmail();
-		SendEmail sendEmail = new SendEmail();
-	
-		//이메일 컨텐트 테이블 insert
-		emailContent.setContent(emailDetail.getContent());
-		emailContent.setImportant(emailDetail.isImportant());
-		emailContent.setTitle(emailDetail.getTitle());
-		int row = emailRepository.insertEmailContent(emailContent);
-		//넣었던 emailContentId로 send_email 테이블 insert
-		sendEmail.setReceiveEmpId(emailDetail.getReceiveId());
-		sendEmail.setEmailContentId(emailContent.getEmailContentId());
-		row += emailRepository.insertSendEmail(sendEmail);
-		//넣었던 emailContentId로 receive_email 테이블 insert
-		receiveEmail.setSentEmpId(emailDetail.getSendId());
-		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
-		row += emailRepository.insertReceiveEmail(receiveEmail);
-		
-		return row;
-	}
-
 	@Override
 	public EmailDetail readReceiveEmail(int receiveEmailId) {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
+		int emailContentId = emailRepository.selectEmailContentId(receiveEmailId);
+		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
+		log.info(emailFileList);
+		emailDetail.setEmailFiles(emailFileList);
+		log.info(emailDetail.getEmailFiles());
 		if(emailDetail.getReadDate()==null) {
 			int row = emailRepository.updateReadDate(receiveEmailId);
 		}
@@ -286,6 +263,11 @@ public class EmailService implements IEmailService {
 	public EmailDetail readSendEmail(int sendEmailId) {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
+		int emailContentId = emailRepository.selectEmailContentId(sendEmailId);
+		log.info("emailContentId: "+ emailContentId);
+		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
+		log.info(emailFileList);
+		emailDetail.setEmailFiles(emailFileList);
 		log.info(emailDetail);
 		return emailDetail;
 	}
@@ -300,18 +282,32 @@ public class EmailService implements IEmailService {
 	@Override
 	public int cancelEmail(int emailId) {
 		log.info("실행");
+		int receiveEmailId  = emailRepository.selectReceiveEmailIdBySendEmail(emailId);
+		int emailContentId = emailRepository.selectEmailContentId(emailId);
 		int row = emailRepository.deleteSendEmail(emailId);
-		row = emailRepository.deleteReceiveEmail(emailId);
+		row = emailRepository.deleteReceiveEmail(receiveEmailId);
+		int count = emailRepository.selectSendEmailByContentId(emailContentId);
+		count = emailRepository.selectReceiveEmailByContentId(emailContentId);
+		if(count != 2) {
+			emailRepository.deleteEmailContent(emailContentId);
+		}
 		return row;
 	}
 
 	@Override
-	public int writeEmail(EmailDetail emailDetail, MultipartFile[] files) {
+	public int writeEmail(EmailDetail emailDetail) {
 		log.info("실행");
 		EmailContent emailContent = new EmailContent();
 		ReceiveEmail receiveEmail = new ReceiveEmail();
 		SendEmail sendEmail = new SendEmail();
-	
+		
+		if(emailDetail.getTitle() == null) {
+			emailDetail.setTitle("제목없음");
+		}
+		
+		if(emailDetail.getContent() == null) {
+			emailDetail.setContent(" ");
+		}
 		//이메일 컨텐트 테이블 insert
 		emailContent.setContent(emailDetail.getContent());
 		emailContent.setImportant(emailDetail.isImportant());
@@ -326,21 +322,30 @@ public class EmailService implements IEmailService {
 		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
 		row += emailRepository.insertReceiveEmail(receiveEmail);
 		
-		List<EmailFile> fileList =  null;
-		try {
-			fileList = multipartFileResolver.getEmailFileList(files, emailContent.getEmailContentId());
-			
-			if(fileList.size() != 0) {
-				for(int i=0; i<fileList.size();i++) {
-					if(fileList.get(i).getEmailFileName() != null && !fileList.get(i).getEmailFileName().equals("")) {
-						row += emailFileRepository.insertFileData(fileList.get(i));
+		//emailDetail에 파일이 존재한다면 MultipartFile배열에 담긴 파일들을 파일VO에 담아 DB에 저장한다
+		MultipartFile[] files = emailDetail.getAttachFiles();
+		if(files != null) {
+			List<EmailFile> fileList =  null;
+			try {
+				fileList = multipartFileResolver.getEmailFileList(files, emailContent.getEmailContentId());
+				
+				if(fileList.size() != 0) {
+					for(int i=0; i<fileList.size();i++) {
+						if(fileList.get(i).getEmailFileName() != null && !fileList.get(i).getEmailFileName().equals("")) {
+							row += emailFileRepository.insertFileData(fileList.get(i));
+						}
 					}
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return row;
+	}
+
+	@Override
+	public EmailFile getFile(int emailFileId) {
+		return emailFileRepository.selectEmailFileByFileId(emailFileId);
 	}
 
 }

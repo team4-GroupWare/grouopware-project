@@ -51,9 +51,16 @@
           <div class="card col-9">
           	<div class="row my-4">
 	           <div class="col-md-5 card-body profile-card pt-4 d-flex flex-column align-items-center" style="text-align:center">
+				  <c:if test="${loginEmployee.profileData eq null}">
 				  <div class="mb-1" style="width:100%">
-					 <img src="${pageContext.request.contextPath}/resources/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
+					<img id="profile-image" src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
 				  </div>
+				  </c:if>
+				  <c:if test="${loginEmployee.profileData ne null}">
+				  <div class="mb-1" style="width:100%">
+					<img id="profile-image" src="${pageContext.request.contextPath}/employee/img" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
+				  </div>
+				  </c:if>
 	              <h2>${employee.name}</h2>
 	              <p style="color: grey;size:20px">${employee.gradeName}</p>
 	             <a class="btn btn-primary" href="${pageContext.request.contextPath}/employee/myUpdate">회원정보 수정</a>

@@ -1,16 +1,26 @@
 package com.mycompany.webapp.email.controller;
 
-import java.util.List;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.List; 
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -19,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
+import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.model.ReceiveEmail;
@@ -184,18 +195,29 @@ public class EmailController {
 	 * 
 	 * @return
 	 */
-	@PostMapping("/write")
-	public String writeEmail(HttpSession session, EmailDetail emailDetail, @RequestPart("files") MultipartFile[] files) {
+	
+	@ResponseBody
+	@PostMapping(value="/write", produces="application/json")
+	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
 		log.info("실행");
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		int row = 0;
-		if(files != null) {
-			row = emailService.writeEmail(emailDetail, files);
-		} else {
-			row = emailService.writeEmail(emailDetail);
+		String[] receiver = emailDetail.getReceiveId().split(",");
+		for(String receiveEmpId : receiver) {
+			emailDetail.setReceiveId(receiveEmpId);
+			int row = emailService.writeEmail(emailDetail);
 		}
+		
+		String result = "success";
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("uri", result);
+		return jsonObject;
+	}
+	
+	@GetMapping("/complete")
+	public String emailComplete() {
+		log.info("실행");
 		return "email/complete";
 	}
 	
@@ -355,5 +377,22 @@ public class EmailController {
 		log.info("실행");
 		int row = emailService.cancelEmail(emailId);
 		return getSendEmail(model, session, 1);
+	}
+	
+	@GetMapping("/filedownload")
+	public ResponseEntity<byte[]> fileDownLoad(@RequestHeader("User-Agent") String userAgent,@RequestParam("emailFileId")int emailFileId) throws UnsupportedEncodingException {
+		log.info("실행");
+		EmailFile emailFile = emailService.getFile(emailFileId);
+		final HttpHeaders headers = new HttpHeaders();
+		log.info(emailFile.getEmailFileContentType());
+		String[] mtypes = emailFile.getEmailFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(emailFile.getEmailFileSize());
+		log.info("파일이름: " + emailFile.getEmailFileName());
+		String fileName = URLEncoder.encode(emailFile.getEmailFileName(), "UTF-8");
+		fileName = fileName.replaceAll("\\+", "%20");
+		headers.setContentDispositionFormData("attachment", fileName);
+		return new ResponseEntity<byte[]>(emailFile.getEmailFileData(), headers, HttpStatus.OK);
+		
 	}
 }
