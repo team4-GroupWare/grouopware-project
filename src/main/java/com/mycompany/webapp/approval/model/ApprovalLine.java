@@ -22,4 +22,6 @@ public class ApprovalLine {
 	private String teamName;
 	private String deptName;
 	private String gradeName;
+	
+	private int lastSeq;
 }

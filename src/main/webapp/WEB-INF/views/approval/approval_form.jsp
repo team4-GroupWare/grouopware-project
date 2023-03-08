@@ -286,7 +286,7 @@
 										</textarea>
         							</div>
         						</div>
-        						<%@ include file="/WEB-INF/views/vacation/form_modal.jsp" %>
+        						<%@ include file="/WEB-INF/views/approval/approvalform_modal.jsp" %>
     						</form>
     					</div>
     				</div>

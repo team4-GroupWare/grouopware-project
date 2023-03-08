@@ -19,6 +19,15 @@ public interface ApprovalRepository {
 
 	//전자결재 상태별 갯수
 	public int selectApprovalCount(@Param("empId") String empId, @Param("status") String status);
+	
+	/**
+	 * 결재문서함 상태별 갯수
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @param status
+	 * @return
+	 */
+	public int selectConfirmCount(@Param("empId") String empId, @Param("status") String status);
 	//전자결재 목록
 	public List<Approval> selectApprovalList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
 	//전자결재 임시저장 갯수
@@ -33,11 +42,48 @@ public interface ApprovalRepository {
 	public ApprovalLine selectApprovalLine(String empId);
 	//전자결재 결재선 저장
 	public int insertApprovalLine(ApprovalLine approvalLine);
+	
 	/**
 	 * 전자결재 결재선 목록
 	 * @author : LEEJIHO
 	 * @param approvalId
 	 */
 	public List<ApprovalLine> selectApprovalLineList(int approvalId);
+	
+	/**
+	 * 결재문서함 목록
+	 * @author : LEEJIHO
+	 * @param pager
+	 * @param empId
+	 * @param status
+	 * @return
+	 */
+	public List<Approval> selectConfirmList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
+	
+	/**
+	 * 해당 문서에 대한 내 결재 순서
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @param empId
+	 * @return
+	 */
+	public int selectMySeq(@Param("approvalId") int approvalId, @Param("empId") String empId);
+	
+	/**
+	 * 결재선 승인, 반려 update
+	 * @author : LEEJIHO
+	 * @param approvalLine
+	 * @return
+	 */
+	public int updateisApproved(ApprovalLine approvalLine);
+	
+	/**
+	 * 전자결재 문서 상태 update
+	 * @author : LEEJIHO
+	 * @param approvalLine
+	 * @param status
+	 * @return
+	 */
+	public int updateApprovalStatus(@Param("approvalLine") ApprovalLine approvalLine, @Param("status") String status);
 	
 }

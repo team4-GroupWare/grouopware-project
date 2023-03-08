@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.approval.repository.ApprovalRepository">
 
 	<!-- 전자결재 카테고리 목록 -->
-	<select id="selectApprovalCategory" resultType="approval_category">
+	<select id="selectApprovalCategory" resultType="approvalCategory">
 		<![CDATA[
 			SELECT approval_category_id as "approvalCategoryId",
 					approval_name as "approvalName"
@@ -21,7 +21,7 @@
 	</select>
 
 	<!-- 전자결재 결재선 선택 시 사원정보-->
-	<select id="selectApprovalLine" parameterType="String" resultType="approval_line">
+	<select id="selectApprovalLine" parameterType="String" resultType="approvalLine">
 		<![CDATA[
 			SELECT e.emp_id as "empId", 
 				name as "empName",
@@ -44,7 +44,7 @@
 	</insert>
 	
 	<!-- 전자결재 작성 결재선 저장 -->
-	<insert id="insertApprovalLine" parameterType="approval_line">
+	<insert id="insertApprovalLine" parameterType="approvalLine">
 		<selectKey keyProperty="approvalId" resultType="int" order="BEFORE">
 			SELECT seq_approval.CURRVAL FROM dual
 		</selectKey>
@@ -52,7 +52,7 @@
 		VALUES (seq_approval_line.nextval, #{approvalId}, #{empId}, #{seq})
 	</insert>
 	
-	<!-- 전자결재 상태별 갯수 -->
+	<!-- 내 문서함 상태별 갯수 -->
 	<select id="selectApprovalCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM approval
@@ -62,22 +62,60 @@
 			</if>
 	</select>
 	
-	<!-- 전자결재 목록 -->
+	<!-- 결재문서함 상태별 갯수 -->
+	<select id="selectConfirmCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM approval a, approval_line l
+		WHERE a.approval_id = l.approval_id
+		    and temp_approval='n' and l.emp_id = #{empId}
+		    <if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+	</select>
+	
+	<!-- 내 문서함 목록 -->
 	<select id="selectApprovalList" parameterType="map" resultType="approval">
 		SELECT approval_id as "approvalId", 
 				title as "title",
 				a.emp_id as "empId",
 				name as "empName",
+				dept_name as "deptName",
 				write_date as "writeDate", 
 				a.approval_category_id as "approvalCategoryId", 
                 approval_name as "categoryName",
 				status, 
 				temp_approval as "tempApproval"
-		FROM approval a, employees e, approval_category c
-		WHERE a.emp_id=e.emp_id 
+		FROM approval a, employees e, approval_category c, departments d
+		WHERE a.emp_id=e.emp_id and e.dept_id = d.dept_id
 			and a.approval_category_id=c.approval_category_id
 			and temp_approval='n' 
 			and a.emp_id = #{empId} 
+			<if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+		ORDER BY write_date desc
+        OFFSET #{pager.startRowNo}-1 ROWS
+        FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<!-- 결재문서함 목록 -->
+	<select id="selectConfirmList" parameterType="map" resultType="approval">
+		SELECT l.approval_id as "approvalId", 
+				title as "title",
+				a.emp_id as "empId",
+				name as "empName",
+				dept_name as "deptName",
+				write_date as "writeDate", 
+				a.approval_category_id as "approvalCategoryId", 
+                approval_name as "categoryName",
+				status, 
+				temp_approval as "tempApproval"
+		FROM approval a, approval_line l, employees e, approval_category c, departments d
+		WHERE a.emp_id=e.emp_id  and e.dept_id = d.dept_id
+            and a.approval_id = l.approval_id
+			and a.approval_category_id=c.approval_category_id
+			and temp_approval='n' 
+			and l.emp_id = #{empId} 
 			<if test="!status.equals('')">
 				AND status = #{status}
 			</if>
@@ -99,16 +137,17 @@
 				title as "title",
 				a.emp_id as "empId",
 				name as "empName",
+				dept_name as "deptName",
 				write_date as "writeDate", 
 				a.approval_category_id as "approvalCategoryId", 
                 approval_name as "categoryName",
 				status, 
 				temp_approval as "tempApproval"
-		FROM approval a, employees e, approval_category c
-		WHERE a.emp_id=e.emp_id 
+		FROM approval a, employees e, approval_category c, departments d
+		WHERE a.emp_id=e.emp_id and e.dept_id = d.dept_id
 			and a.approval_category_id=c.approval_category_id
 			and temp_approval='y' 
-			and a.emp_id = #{empId} 
+			and a.emp_id = #{empId}
 		ORDER BY write_date desc
         OFFSET #{pager.startRowNo}-1 ROWS
         FETCH FIRST 10 ROWS ONLY
@@ -139,7 +178,7 @@
 	</select>
 	
 	<!-- 전자결재 결재선 목록 -->
-	<select id="selectApprovalLineList" parameterType="int" resultType="approval_line">
+	<select id="selectApprovalLineList" parameterType="int" resultType="approvalLine">
 		<![CDATA[
 			SELECT l.approval_id as "approvalId", 
 			    approval_line_id as "approvalLineId", 
@@ -159,4 +198,39 @@
 			    and a.approval_id = #{approvalId}
 		]]>
 	</select>
+	
+	<!-- 해당 문서에 대한 내 결재 순서 -->
+	<select id="selectMySeq" parameterType="map" resultType="int">
+		<![CDATA[
+			SELECT NVL(seq, 0) as "seq"
+			FROM(SELECT seq
+			    FROM approval a, approval_line l
+			    WHERE a.approval_id = l.approval_id
+			        and a.approval_id = #{approvalId}
+			        and l.emp_id = #{empId}
+			    UNION ALL
+			    SELECT NULL as "seq"
+			    FROM DUAL)
+			WHERE seq IS NOT NULL OR rownum = 1
+		]]>
+	</select>
+	
+	<!-- 결재선 승인, 반려 update -->
+	<update id="updateisApproved" parameterType="approvalLine">
+		<![CDATA[
+			UPDATE approval_line
+			SET is_approved = #{isApproved},
+				approval_date = sysdate
+			WHERE approval_line_id = #{approvalLineId}
+		]]>
+	</update>
+	
+	<!-- 전자결재 문서 상태 update -->
+	<update id="updateApprovalStatus" parameterType="map">
+		<![CDATA[
+			UPDATE approval
+			SET status = #{status}
+			WHERE approval_id = #{approvalLine.approvalId}
+		]]>
+	</update>
 </mapper>

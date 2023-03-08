@@ -18,10 +18,10 @@ public interface IApprovalService {
 	//전자결재 작성
 	public int writeApproval(Approval approval);
 
-	//전자결재 목록
+	//내 문서함 목록
 	public List<Approval> getApprovalList(Pager pager, String empId, String status);
 
-	//전자결재 상태에 따른 목록 갯수
+	//내 문서함 상태에 따른 목록 갯수
 	public int getApprovalRow(String empId, String status);
 
 	//전자결재 상세보기
@@ -43,5 +43,40 @@ public interface IApprovalService {
 	 * @return List<ApprovalLine> : 결재선 목록
 	 */
 	public List<ApprovalLine> getApprovalLineList(int approvalId);
+
+	/**
+	 * 결재문서함 상태에 따른 목록 갯수
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @param status
+	 * @return
+	 */
+	public int getConfirmRow(String empId, String status);
+
+	/**
+	 * 결재문서함 목록
+	 * @author : LEEJIHO
+	 * @param pager
+	 * @param empId
+	 * @param status
+	 * @return
+	 */
+	public List<Approval> getConfirmList(Pager pager, String empId, String status);
+
+	/**
+	 * 해당 문서에 대한 내 결재 순서
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @param empId
+	 * @return
+	 */
+	public int getMySeq(int approvalId, String empId);
+
+	/**
+	 * 문서 결재
+	 * @author : LEEJIHO
+	 * @param approvalLine
+	 */
+	public int confirm(ApprovalLine approvalLine);
 
 }

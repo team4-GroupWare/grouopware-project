@@ -87,4 +87,50 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectApprovalLineList(approvalId);
 	}
 
+	//결재문서함 상태에 따른 목록 갯수
+	@Override
+	public int getConfirmRow(String empId, String status) {
+		log.info("실행");
+		return approvalRepository.selectConfirmCount(empId, status);
+	}
+
+	//결재문서함 목록
+	@Override
+	public List<Approval> getConfirmList(Pager pager, String empId, String status) {
+		log.info("실행");
+		return approvalRepository.selectConfirmList(pager, empId, status);
+	}
+
+	//해당 문서에 대한 내 결재 순서
+	@Override
+	public int getMySeq(int approvalId, String empId) {
+		log.info("실행");
+		return approvalRepository.selectMySeq(approvalId, empId);
+	}
+
+	//문서 결재(승인, 반려)
+	@Transactional
+	public int confirm(ApprovalLine approvalLine) {
+		int row = 0;
+		String status;
+		int mySeq = getMySeq(approvalLine.getApprovalId(), approvalLine.getEmpId());
+		if(approvalLine.getLastSeq() == mySeq) {
+			if(approvalLine.getIsApproved().equals("y")) {
+				status = "승인";
+			} else {
+				status = "반려";
+			}
+		} else {
+			if(approvalLine.getIsApproved().equals("y")) {
+				status = "진행";
+			} else {
+				status = "반려";
+			}
+		}
+		
+		row = approvalRepository.updateisApproved(approvalLine);
+		row += approvalRepository.updateApprovalStatus(approvalLine, status);
+		return row;
+	}
+
 }
