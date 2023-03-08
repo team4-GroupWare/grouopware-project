@@ -203,7 +203,12 @@ public class EmailController {
 		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		int row = emailService.writeEmail(emailDetail);
+		String[] receiver = emailDetail.getReceiveId().split(",");
+		for(String receiveEmpId : receiver) {
+			emailDetail.setReceiveId(receiveEmpId);
+			int row = emailService.writeEmail(emailDetail);
+		}
+		
 		String result = "success";
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("uri", result);
