@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
+import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.TempEmail;
@@ -148,9 +149,10 @@ public interface IEmailService {
 	int cancelEmail(int emailId);
 	/**
 	 * 
-	 * @param emailDetail
-	 * @param files : 이메일에 업로드한 파일
+	 * @param emailFileId
 	 * @return
 	 */
-	int writeEmail(EmailDetail emailDetail, MultipartFile[] files);
+	EmailFile getFile(int emailFileId);
+	
+	
 }

@@ -1,11 +1,13 @@
 package com.mycompany.webapp.employee.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.email.MultipartFileResolver;
 import com.mycompany.webapp.employee.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
@@ -21,6 +23,8 @@ public class EmployeeService implements IEmployeeService {
 		SUCCESS, WRONG_ID, WRONG_PASSWORD, INITIAL_PASSWORD
 	}
 	
+	@Autowired
+	private MultipartFileResolver multipartFileResolver;
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
@@ -166,9 +170,16 @@ public class EmployeeService implements IEmployeeService {
 	 * @author : LEEYESEUNG
 	 */
 	@Override
-	public int updatePhone(String empId, String phone) {
+	public int updateEmployee(Employee employee) {
 		log.info("실행");
-		return employeeRepository.updatePhone(empId,phone);
+		if(employee.getAttachFiles() != null) {
+			try {
+				employee = multipartFileResolver.getEmployeeFile(employee);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return employeeRepository.updateEmployee(employee);
 	}
 
 	

@@ -1523,4 +1523,15 @@ table. type02. table-content{
 	color:red;
 }
 
+.upload-file p{
+	padding:0px;
+	margin-bottom:0px;
+}
+
+.filebox ul{
+	padding-left:15px;
+	margin-bottom:10px;
+	margin-top:10px;
+}
+
 
