@@ -13,6 +13,7 @@ import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
 import com.mycompany.webapp.email.model.TempEmail;
@@ -346,6 +347,16 @@ public class EmailService implements IEmailService {
 	@Override
 	public EmailFile getFile(int emailFileId) {
 		return emailFileRepository.selectEmailFileByFileId(emailFileId);
+	}
+
+	@Override
+	public List<MainEmailList> getSendMainEmailList(String empId) {
+		return emailRepository.selectMainSendEmail(empId);
+	}
+
+	@Override
+	public List<MainEmailList> getReceiveMainEmailList(String empId) {
+		return emailRepository.selectMainReceiveEmail(empId);
 	}
 
 }

@@ -58,7 +58,7 @@
 				  </c:if>
 				  <c:if test="${loginEmployee.profileData ne null}">
 				  <div class="mb-1" style="width:100%">
-					<img id="profile-image" src="${pageContext.request.contextPath}/employee/img" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
+					<img id="profile-image" src="${pageContext.request.contextPath}/employee/img?empId=${loginEmployee.empId}" alt="Profile" class="rounded-circle" style="width:100%;height:100%">
 				  </div>
 				  </c:if>
 	              <h2>${employee.name}</h2>

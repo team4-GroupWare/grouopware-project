@@ -46,7 +46,7 @@
 		        	<img src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png" alt="Profile" class=" rounded-circle">
 		            </c:if>
 		            <c:if test="${loginEmployee.profileData ne null}">
-		        	<img src="${pageContext.request.contextPath}/employee/img" alt="Profile" class=" rounded-circle">
+		        	<img src="${pageContext.request.contextPath}/employee/img?empId=${loginEmployee.empId}" alt="Profile" class=" rounded-circle">
 		            </c:if>
 		            
 		            <span class="d-none d-md-block p-1" style="font-size: 18px;">${loginEmployee.name}</span>
