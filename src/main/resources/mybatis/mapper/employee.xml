@@ -140,6 +140,23 @@
 		]]>
 	</select>
 	
+	<select id="selectEmpPasswordCount" parameterType="map" resultType="int">
+	<![CDATA[
+			select count(*)
+			from employees
+			where EMP_ID = #{empId} and password = #{oldPwd} 
+		]]>
+	
+	</select>
+	
+	<update id="updatePassword" parameterType="map">
+	<![CDATA[
+			update employees
+			set password = #{newPwd}, INITIAL_PASSWORD = 0
+			where EMP_ID = #{empId}
+		]]>
+	</update>
+	
 	<insert id="insertEmployee" parameterType="employee">
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select seq_employee.nextval from dual

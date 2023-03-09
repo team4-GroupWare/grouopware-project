@@ -26,4 +26,16 @@ public interface EmployeeRepository {
 	 * @return
 	 */
 	public int updateEmployee(Employee employee);
+	/**
+	 * 
+	 * @param oldPwd
+	 * @return
+	 */
+	public int selectEmpPasswordCount(@Param("oldPwd")String oldPwd, @Param("empId")String empId);
+	/**
+	 * 
+	 * @param newPwd
+	 * @return
+	 */
+	public int updatePassword(@Param("newPwd")String newPwd, @Param("empId")String empId);
 }

@@ -50,13 +50,14 @@ public class EmployeeService implements IEmployeeService {
 			return LoginResult.WRONG_PASSWORD;
 		} 
 		
-		if(employee.isInitialPassword()) {
-			return LoginResult.INITIAL_PASSWORD;
-		}
 		employee.setName(dbEmployee.getName());
 		employee.setTeamId(dbEmployee.getTeamId());
 		employee.setGradeId(dbEmployee.getGradeId());
 		employee.setManagerId(dbEmployee.getManagerId());
+		employee.setInitialPassword(dbEmployee.isInitialPassword());
+		if(employee.isInitialPassword()) {
+			return LoginResult.INITIAL_PASSWORD;
+		}
 		return LoginResult.SUCCESS;
 	}
 
@@ -196,6 +197,21 @@ public class EmployeeService implements IEmployeeService {
 			}
 		}
 		return employeeRepository.updateEmployee(employee);
+	}
+
+	@Override
+	public int checkPassword(String oldPwd, String empId) {
+		log.info("실행");
+		int row = employeeRepository.selectEmpPasswordCount(oldPwd, empId);
+		return row;
+	}
+
+	@Override
+	public int updatePassword(String newPwd, String empId) {
+		log.info("실행");
+		int row = employeeRepository.updatePassword(newPwd, empId);
+		return row;
+		
 	}
 
 }

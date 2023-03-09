@@ -28,4 +28,15 @@ public interface IEmployeeService {
 	 * @param phone
 	 */
 	public int updateEmployee(Employee employee);
+	/**
+	 * 
+	 * @param oldPwd
+	 * @return
+	 */
+	public int checkPassword(String oldPwd, String empId);
+	/**
+	 * 
+	 * @param newPwd
+	 */
+	public int updatePassword(String newPwd, String empId);
 }

@@ -440,4 +440,5 @@ public class EmailController {
 		model.addAttribute("type", "reply");
 		return "email/write";
 	}
+	
 }

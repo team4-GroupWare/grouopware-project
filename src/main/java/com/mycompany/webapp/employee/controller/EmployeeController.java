@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import com.mycompany.webapp.employee.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.EmpValidator;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService;
 import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
@@ -96,12 +98,43 @@ public class EmployeeController {
 			return "employee/login";
 		} else if (loginResult == EmployeeService.LoginResult.INITIAL_PASSWORD) {
 			//초기 비밀번호인 경우
-			return "redirect:/employee/chagepwd";
+			Employee initEmployee = new Employee();
+			initEmployee.setEmpId(employee.getEmpId());
+			session.setAttribute("loginEmployee", initEmployee);
+			return "redirect:/employee/change";
 		}
 		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
 		session.setAttribute("loginEmployee", dbEmployee);
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		model.addAttribute("empId", employee.getEmpId());
+		return "employee/change";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/changeinitial", produces="application/text; charset=UTF-8")
+	public String changeInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
+		log.info("실행");
+		int count = employeeService.checkPassword(employeePassword.getOldPwd(), employeePassword.getEmpId());
+		if(count == 0) {
+			return "false";
+		} else {
+			employeeService.updatePassword(employeePassword.getNewPwd(),employeePassword.getEmpId());
+			return "success";
+		}
+		
+	}
+	
+	@GetMapping("/grantpassword")
+	public String grantPassword() {
+		log.info("실행");
+		return "employee/grantpassword";
 	}
 	
 	
@@ -198,7 +231,6 @@ public class EmployeeController {
 		
 		try {
 			//insert했을 때 오류가 나면 catch로 오류 제어
-			
 			int row = employeeService.register(employee);
 			
 			//아이디 중복 오류를 잡는다
@@ -271,11 +303,7 @@ public class EmployeeController {
 		return "redirect:/employee/myPage";
 	}
 	
-	@GetMapping("/change")
-	public String change(HttpSession session) {
-		log.info("실행");
-		return "employee/change";
-	}
+	
 	
 	@GetMapping("/img")
 	public ResponseEntity<byte[]> getImageFile(HttpSession session, @RequestParam String empId){
@@ -290,5 +318,7 @@ public class EmployeeController {
 		}
 		
 	}
+	
+	
 	
 }
