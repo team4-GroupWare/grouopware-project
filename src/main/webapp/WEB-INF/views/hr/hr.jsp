@@ -101,8 +101,20 @@
 	                				<tbody>
 	                					<c:forEach var="employee" items="${employees}">
 		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')" style="cursor:pointer;">
-							                    <th scope="row"><img src="${pageContext.request.contextPath}/resources/assets/img/profile_img.png" alt="Profile" class="rounded-circle" width="40px">
-							                    ${employee.name} <span>(${employee.gradeName})</span>
+							                    <th scope="row">
+							                    	<c:if test="${employee.profileData ne null}">
+                                    <img
+                                      src="${pageContext.request.contextPath}/employee/img?empId=${employee.empId}"
+                                      alt="Profile" class="rounded-circle" style="margin-right: 8px"
+                                      width="30px">
+                                    </c:if>
+                                    <c:if test="${employee.profileData eq null}">
+                                    <img
+                                      src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"
+                                      alt="Profile" class="rounded-circle" style="margin-right: 8px"
+                                      width="30px">
+                                    </c:if>
+							                    	${employee.name} <span>(${employee.gradeName})</span>
 							                    </th>
 							                    <td>${employee.phone}</td>
 							                    <td>${employee.empId}@mycompany.com</td>
