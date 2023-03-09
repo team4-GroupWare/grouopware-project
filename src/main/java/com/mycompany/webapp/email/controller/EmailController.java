@@ -425,10 +425,21 @@ public class EmailController {
 		return "email/mainreceiveemaillist";
 	}
 	
-	@GetMapping("/reply")
-	public String ReplyEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
+	@GetMapping("/response")
+	public String ResponseEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
 		log.info("실행");
 		EmailDetail emailDetail = emailService.getEmailDetail(receiveEmailId);
+		log.info("emailDetail: "+ emailDetail);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "response");
+		return "email/write";
+	}
+	
+	@GetMapping("/reply")
+	public String ReplyEmail(HttpSession session, @RequestParam int emailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(emailId);
+		log.info("emailDetail: "+ emailDetail);
 		model.addAttribute("emailDetail", emailDetail);
 		model.addAttribute("type", "reply");
 		return "email/write";

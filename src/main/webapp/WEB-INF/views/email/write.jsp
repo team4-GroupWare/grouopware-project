@@ -9,7 +9,8 @@
 	
 	<script>
 		$(function(){
-			var form= $('#content').val();
+			var form= $('#origincontent').val();
+			console.log(form);
 		    tinymce.init({
 		        // Select the element(s) to add TinyMCE to using any valid CSS selector
 		        selector: "#tinymce-editor",
@@ -17,11 +18,6 @@
 		        height: '900px',
 		        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
 		        autosave_restore_when_empty: true,
-		        setup: function (editor) {
-		       		editor.on('init', function (e) {
-		            	editor.setContent(form);
-		            });
-		        },
 		    });
 		});
 		
@@ -125,10 +121,10 @@
                 <div class="row mb-2">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'reply'}">
+                  	<c:if test="${type ne 'response'}">
                     <input type="text" class="form-control" name="receiveId" id="receiver">
                   	</c:if>
-                  	<c:if test="${type eq 'reply'}">
+                  	<c:if test="${type eq 'response'}">
                     <input type="text" class="form-control" name="receiveId" id="receiver" value="${emailDetail.sendId}">
                   	</c:if>
                     <p style="color:grey" class="small"> ","로 받을 아이디를 구분하여 입력해주세요
@@ -138,10 +134,13 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">제목</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'reply'}">
+                  	<c:if test="${type ne 'response' and type ne 'reply'}">
                     <input type="text" class="form-control" name="title" id="title">
                     </c:if>
-                    <c:if test="${type eq 'reply'}">
+                    <c:if test="${type eq 'response'}">
+                    <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
+                    </c:if>
+                     <c:if test="${type eq 'reply'}">
                     <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
                     </c:if>
                   </div>
@@ -174,11 +173,11 @@
                 <div class="row mb-3">
                   <div class="col-sm-12">
                      <textarea id="tinymce-editor">
-                		<c:if test="${type eq 'reply'}">
-	                    <input type="hidden" class="form-control"  id="content" value="${emailDetail.content}">
+                		<c:if test="${type eq 'response'}">
+	                    ${emailDetail.content}
 	                    </c:if>
-	                    <c:if test="${type ne 'reply'}">
-	                    <input type="hidden" class="form-control"  id="content" value="">
+	                    <c:if test="${type eq 'reply'}">
+	                    ${emailDetail.content}
 	                    </c:if>
               		</textarea><!-- End TinyMCE Editor -->
               		<input id="content" type="hidden" name="content">

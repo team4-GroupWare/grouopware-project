@@ -75,7 +75,7 @@
 		              		<!-- 수신자가 미수신 상태일 경우 -->
 		                    <a type="button" class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/email/cancelEmail?emailId=${emailDetail.sendEmailId}">발신취소</a>
 		                    </c:if>
-		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
+		                    <button type="button" class="btn btn-primary btn-sm" onclick="reply(${emailDetail.sendEmailId})">전달</button>
 		                    <c:if test="${emailDetail.strashDate eq null}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.sendEmailId}','trash')">삭제</button>
@@ -84,6 +84,12 @@
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.sendEmailId}','delete')">영구삭제</button>
 		                  	</c:if>
 		                  	<script>
+		                  	
+		                  	function reply(sendEmailId){
+		                  		location.href="${pageContext.request.contextPath}/email/reply?emailId="
+	                  				+ sendEmailId;
+		                  	}
+		                  	
 		                  	function checkEmail(emailId, type){
 									var data = {"emailId" : emailId};
 									$.ajax({
