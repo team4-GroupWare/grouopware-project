@@ -17,11 +17,11 @@ public interface IEmployeeService {
 	 * @param employee
 	 * @return 검색 조건에 부합한 사원 행 수 
 	 */
-	public int getSearchEmpRows(Employee employee);
+	public int getSearchEmpRows(Employee employee, int deptId);
 	public boolean checkId(String empId);
 	public int register(Employee employee) throws Exception;
 	public List<Employee> getEmpList();
-	public List<Employee> getSearchEmpList(Pager pager, Employee employee);
+	public List<Employee> getSearchEmpList(Pager pager, Employee employee, int deptId);
 	public List<Employee> getEmpList(int teamid);
 	/**
 	 * @author : LEEYESEUNG

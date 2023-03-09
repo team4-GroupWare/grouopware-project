@@ -84,6 +84,7 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int getTotalRows() {
+		log.info("실행");
 		return employeeRepository.selectEmpCount();
 	}
 
@@ -94,6 +95,7 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public Employee getEmp(String empId) {
+		log.info("실행");
 		return employeeRepository.selectByEmpId(empId);
 	}
 
@@ -103,8 +105,9 @@ public class EmployeeService implements IEmployeeService {
 	 * @return 검색한 사원 수
 	 */
 	@Override
-	public int getSearchEmpRows(Employee employee) {
-		return employeeRepository.selectSearchEmpCount(employee);
+	public int getSearchEmpRows(Employee employee, int deptId) {
+		log.info("실행");
+		return employeeRepository.selectSearchEmpCount(employee, deptId);
 	}
 
 	@Override
@@ -150,8 +153,9 @@ public class EmployeeService implements IEmployeeService {
 	 * @return 검색한 사원 목록
 	 */
 	@Override
-	public List<Employee> getSearchEmpList(Pager pager, Employee employee) {
-		return employeeRepository.selectSearchEmpList(pager, employee);
+	public List<Employee> getSearchEmpList(Pager pager, Employee employee, int deptId) {
+		log.info("실행");
+		return employeeRepository.selectSearchEmpList(pager, employee, deptId);
 	}
 	
 	
@@ -163,6 +167,7 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public List<Employee> getEmpList(int teamid) {
+		log.info("실행");
 		return employeeRepository.selectEmpListByTeamId(teamid);
 	}
 
@@ -182,5 +187,4 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.updateEmployee(employee);
 	}
 
-	
 }
