@@ -13,9 +13,9 @@ public interface EmployeeRepository {
 
 	public Employee selectByEmpId(String empId);
 	public List<Employee> selectEmpList(Pager pager);
-	public List<Employee> selectSearchEmpList(@Param("pager") Pager pager, @Param("employee") Employee employee);
+	public List<Employee> selectSearchEmpList(@Param("pager") Pager pager, @Param("employee") Employee employee, @Param("deptId") int deptId);
 	public int selectEmpCount();
-	public int selectSearchEmpCount(Employee employee);
+	public int selectSearchEmpCount(@Param("employee") Employee employee, @Param("deptId") int deptId);
 	public int selectEmpId(String empId);
 	public int insertEmployee(Employee employee);
 	public int selectManagerNo(int empNo);
