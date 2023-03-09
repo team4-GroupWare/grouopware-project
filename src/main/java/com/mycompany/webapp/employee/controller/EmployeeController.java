@@ -323,7 +323,9 @@ public class EmployeeController {
 	@PostMapping("/updateemployee")
 	public String updateEmployee(Employee employee) {
 		log.info("실행");
-		employeeService.updateEmployee(employee);
+		if(employee.getTeamId()!=0) {
+			employeeService.updateEmployee(employee);
+		}
 		return "redirect:/hr/group";
 		
 	}
