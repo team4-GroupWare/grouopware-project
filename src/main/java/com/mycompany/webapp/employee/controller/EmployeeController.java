@@ -153,7 +153,7 @@ public class EmployeeController {
 	/**
 	 * @author : LEEYESEUNG
 	 * @return 회원 등록 페이지
-	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
+	 * @param model : 화면에 부서, 팀, 직급 리스트 담아 보여줌
 	 */
 	@GetMapping("/register")
 	public String register(Model model) {
@@ -166,13 +166,18 @@ public class EmployeeController {
 		model.addAttribute("grades", grades);
 		
 		return "employee/register";
-	}	
+	}
+	/**
+	 * @author : LEEYESEUNG
+	 * @return 유효성 검사 실행 return : 적었던 값과 함께 다시 회원 등록 페이지
+	 * @return 유효성 검사 통과 return : home으로 리턴
+	 * @param model : 화면에 부서, 팀, 직급 리스트와 작성했던 employee 객체
+	 */
 	@PostMapping(value="/register")
 	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee, BindingResult errors) throws Exception{
 		log.info("실행");
 		//정규식 유효성 검사
 		if(errors.hasErrors()) {
-			log.info("errors: "+errors);
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
@@ -206,7 +211,6 @@ public class EmployeeController {
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			log.info("errors: "+errors);
 			return "employee/register";
 			
 			//매니저 아이디가 없으면 삽입할 수 없다
@@ -218,12 +222,16 @@ public class EmployeeController {
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			log.info("errors: "+errors);
 			return "employee/register";
 		}
 		
 		return "redirect:/";
 	}
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session : 만료하기 위한 session
+	 * @return home으로 리다이렉트
+	 */
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		log.info("실행");
@@ -250,7 +258,6 @@ public class EmployeeController {
 	public String updatePhone(Employee employee, HttpSession session) {
 		//사진 바꾸는거 해야합니다 3월 8일에..
 		log.info("실행");
-		log.info("employee: "+employee);
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
 		employee.setEmpId(originEmployee.getEmpId());
 		if(employee.getProfileContentType() !=null) {

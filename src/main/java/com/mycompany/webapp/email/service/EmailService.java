@@ -44,7 +44,6 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getReceiveEmailList(Pager pager, String receiveId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectReceiveEmail(pager, receiveId);
-		log.info(emailList);
 		return emailList;
 	}
 	
@@ -81,7 +80,6 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getSendEmailList(Pager pager, String sendId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectSendEmail(pager, sendId);
-		log.info(emailList);
 		return emailList; 
 	}
 	
@@ -251,9 +249,7 @@ public class EmailService implements IEmailService {
 		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
 		int emailContentId = emailRepository.selectEmailContentId(receiveEmailId);
 		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
-		log.info(emailFileList);
 		emailDetail.setEmailFiles(emailFileList);
-		log.info(emailDetail.getEmailFiles());
 		if(emailDetail.getReadDate()==null) {
 			int row = emailRepository.updateReadDate(receiveEmailId);
 		}
@@ -265,11 +261,8 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
 		int emailContentId = emailRepository.selectEmailContentId(sendEmailId);
-		log.info("emailContentId: "+ emailContentId);
 		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
-		log.info(emailFileList);
 		emailDetail.setEmailFiles(emailFileList);
-		log.info(emailDetail);
 		return emailDetail;
 	}
 
@@ -289,7 +282,6 @@ public class EmailService implements IEmailService {
 		emailContent.setTitle(tempEmail.getTitle());
 		int row = emailRepository.insertEmailContent(emailContent);
 		tempEmail.setEmailContentId(emailContent.getEmailContentId());
-		log.info("tempEmail: "+tempEmail);
 		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}

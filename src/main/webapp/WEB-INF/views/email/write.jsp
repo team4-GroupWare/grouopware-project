@@ -138,7 +138,7 @@
                     <input type="text" class="form-control" name="title" id="title">
                     </c:if>
                     <c:if test="${type eq 'response'}">
-                    <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
+                    <input type="text" class="form-control" name="title" id="title" value="RE: ${emailDetail.title}">
                     </c:if>
                      <c:if test="${type eq 'reply'}">
                     <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
@@ -174,10 +174,17 @@
                   <div class="col-sm-12">
                      <textarea id="tinymce-editor">
                 		<c:if test="${type eq 'response'}">
+                		<p><b>[original message] </b>
+                		<p><b> from</b> : ${emailDetail.sendName} ${emailDetail.sendGrade}
+                		<p> <b>to </b>: ${loginEmployee.name} ${loginEmployee.gradeName}
+                		<p>-----------------------------------------------------------------------------
 	                    ${emailDetail.content}
+	                    -----------------------------------------------------------------------------
+	                    
 	                    </c:if>
 	                    <c:if test="${type eq 'reply'}">
 	                    ${emailDetail.content}
+	                    -----------------------------------------------------------------------------
 	                    </c:if>
               		</textarea><!-- End TinyMCE Editor -->
               		<input id="content" type="hidden" name="content">

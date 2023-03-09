@@ -193,7 +193,6 @@ public class EmailController {
 	@PostMapping(value="/write", produces="application/json")
 	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
 		log.info("실행");
-		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
 		String[] receiverArr = emailDetail.getReceiveId().split(",");
@@ -307,7 +306,6 @@ public class EmailController {
 	public String readSendEmail(@RequestParam int sendEmailId, Model model) {
 		log.info("실행");
 		EmailDetail emailDetail = emailService.readSendEmail(sendEmailId);
-		log.info("emailDetail: "+emailDetail);
 		model.addAttribute("emailDetail", emailDetail);
 		return "email/senddetail";
 	}
@@ -324,7 +322,6 @@ public class EmailController {
 	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
 	public String tempSave(@RequestBody TempEmail tempEmail, HttpSession session) {
 		log.info("실행");
-		log.info(tempEmail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		tempEmail.setSentId(employee.getEmpId());
 		int row = emailService.tempSaveEmail(tempEmail);
@@ -400,7 +397,6 @@ public class EmailController {
 		String[] mtypes = emailFile.getEmailFileContentType().split("/");
 		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 		headers.setContentLength(emailFile.getEmailFileSize());
-		log.info("파일이름: " + emailFile.getEmailFileName());
 		String fileName = URLEncoder.encode(emailFile.getEmailFileName(), "UTF-8");
 		fileName = fileName.replaceAll("\\+", "%20");
 		headers.setContentDispositionFormData("attachment", fileName);
