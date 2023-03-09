@@ -221,6 +221,7 @@ public class ApprovalController {
 		
 		return "approval/approval_templist";
 	}
+	
 	/**
 	 * 전자결재 상세보기
 	 * @author : LEEJIHO

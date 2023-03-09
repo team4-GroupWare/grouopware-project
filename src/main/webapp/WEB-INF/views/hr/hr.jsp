@@ -13,7 +13,7 @@
 	    <aside id="sidebar" class="sidebar">
 	    	<ul class="sidebar-nav" id="sidebar-nav">
 	      		<li class="nav-item">
-	        		<a class="nav-link " href="#">
+	        		<a class="nav-link " href="${pageContext.request.contextPath}/hr/group">
 	          			<i class="bi bi-diagram-3"></i>
 	          			<span>인사</span>
 	        		</a>
@@ -21,23 +21,16 @@
 	    	</ul>
 	    	<ul class="sidebar-nav">
 		  		<li class="nav-item">
-	        		<a class="nav-link active" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+	        		<a class="nav-link collapse active" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
 	          			<span>엑사아이엔티</span><i class="bi bi-chevron-down ms-auto"></i>
 	        		</a>
 	        		
-	        		<ul id="hr-nav" class="nav-content collapsed" data-bs-parent="#sidebar-nav">
-	        			<c:forEach var="dept" items="${departments}" varStatus="status">
+	        		<ul id="hr-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+	        			<c:forEach var="dept" items="${departments}">
 		          			<li class="nav-item">
-			            		<a class="nav-link collapsed" data-bs-target="#nav-dept${status.count}" data-bs-toggle="collapse" href="#" aria-expanded="false">
-			              			<span>${dept.deptName}</span><i class="bi bi-chevron-down ms-auto"></i>
+			            		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/hr/list/${dept.deptId}" aria-expanded="false">
+			              			${dept.deptName}
 			            		</a>
-				            	<ul id="nav-dept${status.count}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-					              	<c:forEach var="team" items="${teams[status.index]}">
-					              	<li>
-					              		<a href="#"><span style="color:#808080">&nbsp;&nbsp;${team.teamName}</span></a>
-					              	</li>
-					              	</c:forEach>
-				            	</ul>
 		          			</li>
 	          			</c:forEach>
 	        		</ul>
@@ -59,11 +52,6 @@
 				<div class="row">
 					<form name="emp-search">
 						<div class="input-group me-auto p-2" style="width:600px">
-			            	 <!-- <div class="select" >
-							 	<input type="radio" id="select" name="where" value="dept"><label for="select">부서</label>
-							    <input type="radio" id="select2" name="where" value="team"><label for="select2">팀</label>
-								<input type="radio" id="select3" name="where" value="name"><label for="select3">이름</label>
-							</div> -->
 							<select name="type" style="margin-right:10px; border-radius: 10px; width:150px;">
 								<option selected value="">검색 내용 선택</option>
 								<option value="deptName">부서</option>
@@ -113,7 +101,21 @@
 	                				<tbody>
 	                					<c:forEach var="employee" items="${employees}">
 		                  					<tr class="modal-open" onclick="javascript:empInfo('${employee.empId}')" style="cursor:pointer;">
-							                    <th scope="row"><img src="${pageContext.request.contextPath}/resources/assets/img/profile_img.png" alt="Profile" class="rounded-circle" width="40px">${employee.name}</th>
+							                    <th scope="row">
+							                    	<c:if test="${employee.profileData ne null}">
+                                    <img
+                                      src="${pageContext.request.contextPath}/employee/img?empId=${employee.empId}"
+                                      alt="Profile" class="rounded-circle" style="margin-right: 8px"
+                                      width="30px">
+                                    </c:if>
+                                    <c:if test="${employee.profileData eq null}">
+                                    <img
+                                      src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"
+                                      alt="Profile" class="rounded-circle" style="margin-right: 8px"
+                                      width="30px">
+                                    </c:if>
+							                    	${employee.name} <span>(${employee.gradeName})</span>
+							                    </th>
 							                    <td>${employee.phone}</td>
 							                    <td>${employee.empId}@mycompany.com</td>
 							                    <td>${employee.deptName}</td>
@@ -128,35 +130,35 @@
 				  				<nav aria-label="Page navigation example">
 	                				<ul class="pagination">
 	                					<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=1" aria-label="Previous">
+	                    					<a class="page-link" href="${deptId}?pageNo=1" aria-label="Previous">
 	                      						<span aria-hidden="true">처음</span>
 	                    					</a>
 	                  					</li>	
 	                					<c:if test="${pager.groupNo>1}">
 		                  					<li class="page-item">
-		                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+		                    					<a class="page-link" href="${deptId}?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 		                      						<span aria-hidden="true">이전</span>
 		                    					</a>
 		                  					</li>
 	                  					</c:if>
 	                  					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 	                  						<c:if test="${pager.pageNo != i}">
-												<li class="page-item"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+												<li class="page-item"><a class="page-link" href="${deptId}?pageNo=${i}">${i}</a></li>
 											</c:if>
 											<c:if test="${pager.pageNo == i}">
-												<li class="page-item active"><a class="page-link" href="list?pageNo=${i}">${i}</a></li>
+												<li class="page-item active"><a class="page-link" href="${deptId}?pageNo=${i}">${i}</a></li>
 											</c:if>
 										</c:forEach>
 										
 										<c:if test="${pager.groupNo<pager.totalGroupNo}">
 											<li class="page-item">
-			                    				<a class="page-link" href="list?pageNo=${pager.endPageNo+1}" aria-label="Next">
+			                    				<a class="page-link" href="${deptId}?pageNo=${pager.endPageNo+1}" aria-label="Next">
 			                      					<span aria-hidden="true">다음</span>
 			                    				</a>
 		                  					</li>
 										</c:if>
 										<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	                    					<a class="page-link" href="${deptId}?pageNo=${pager.totalPageNo}" aria-label="Previous">
 	                      						<span aria-hidden="true">맨끝</span>
 	                    					</a>
 	                  					</li>	

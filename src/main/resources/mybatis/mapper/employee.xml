@@ -69,19 +69,22 @@
 	</select>
 	
 	<!-- 검색한 사원 수 -->
-	<select id="selectSearchEmpCount" parameterType="employee" resultType="int">
+	<select id="selectSearchEmpCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM EMPLOYEES e, departments d, teams t
 		WHERE e.dept_id=d.dept_id and e.team_id=t.team_id
 		<choose>
-			<when test="type != null and type.equals('deptName')">
+			<when test="employee.type != null and employee.type.equals('deptName')">
 				AND dept_name LIKE '%' ||  #{keyword} || '%'
 			</when>
-			<when test="type != null and type.equals('teamName')">
+			<when test="employee.type != null and employee.type.equals('teamName')">
 				AND team_name LIKE '%' ||  #{keyword} || '%'
 			</when>
-			<when test="type != null and type.equals('name')">
+			<when test="employee.type != null and employee.type.equals('name')">
 				AND name LIKE '%' ||  #{keyword} || '%'
+			</when>
+			<when test="deptId != null">
+				AND e.dept_id = #{deptId}
 			</when>
 		</choose>
 	</select>
@@ -118,6 +121,9 @@
 			</when>
 			<when test="employee.type != null and employee.type.equals('name')">
 				AND name LIKE '%' ||  #{employee.keyword} || '%'
+			</when>
+			<when test="deptId != null">
+				AND e.dept_id = #{deptId}
 			</when>
 		</choose>
 		ORDER BY e.grade_id
