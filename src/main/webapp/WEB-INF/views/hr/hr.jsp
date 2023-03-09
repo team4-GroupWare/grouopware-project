@@ -193,6 +193,7 @@
       						$('#empTeam').html(result.teamName);
       						$('#empEmail').html(result.empId + "@mycompany.com");
       						$('#empPhone').html(result.phone);
+      						$('#writeemail').prop('href', '${pageContext.request.contextPath}/email/writedirect?empId='+result.empId)
       						$("#popup").css('display','flex').hide().fadeIn();
 						})
 	      			};
@@ -244,8 +245,8 @@
 							</div>
 						</div>
 						<div class="popup-foot">
-							<span class="pop-btn confirm" id="confirm"><i class="bi bi-envelope"  style="margin-right:10px"></i> 메일 보내기</span>
-							<span class="pop-btn close" id="close">창 닫기</span>
+							<a class="pop-btn confirm" id="writeemail"><i class="bi bi-envelope" style="margin-right:10px"></i> 메일 보내기</a>
+							<a class="pop-btn close" id="close">창 닫기</a>
 						</div>
 				    </div>
 				</div><!-- End 사원 정보 모달 -->

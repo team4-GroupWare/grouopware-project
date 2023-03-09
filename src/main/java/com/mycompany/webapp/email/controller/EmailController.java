@@ -184,6 +184,15 @@ public class EmailController {
 		return "email/write";
 	}
 	
+	@GetMapping("/writedirect")
+	public String writeDirect(@RequestParam String empId, Model model) {
+		log.info("실행");
+		log.info("empId: "+ empId);
+		model.addAttribute("empId", empId);
+		model.addAttribute("type", "modal");
+		return "email/write";
+	}
+	
 	/**
 	 * 
 	 * @return
