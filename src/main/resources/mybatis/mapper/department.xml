@@ -6,6 +6,7 @@
 		<![CDATA[
 			SELECT dept_id as deptId, dept_name as deptName
 			FROM departments
+			ORDER BY dept_id
 		]]>
 	</select>
 

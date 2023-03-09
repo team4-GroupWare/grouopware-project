@@ -221,7 +221,7 @@
 							<div style="text-align:center; margin-top:10px">근태관리</div>
 						</div>
 					
-						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/list'">
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/hr/group'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-person-video fs-1" ></i>
 							</div>
