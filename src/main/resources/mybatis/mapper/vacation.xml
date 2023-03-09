@@ -70,10 +70,49 @@
 	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
 	
 		from vacation v, employees e, vacation_category c
-		where v.emp_id= #{empId} and e.emp_id = v.emp_id and c.vacation_category_id = v.vacation_category_id
-		order by vacation_id desc 
+		where v.emp_id= #{empId} 
+		and e.emp_id = v.emp_id 
+		and c.vacation_category_id = v.vacation_category_id
+		<if test="!status.equals('')">
+				AND status = #{status}
+		</if>
+		order by vacation_id desc
+		OFFSET #{pager.startRowNo}-1 ROWS
+        FETCH FIRST 10 ROWS ONLY 
 	</select>
 	
+	<!-- 내 문서함 상태별 갯수 -->
+	<select id="selectVacationCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM vacation
+		WHERE emp_id = #{empId}
+			<if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+	</select>
 	
+	<select id="selectVacationDays" parameterType="string" resultType="employee">
+		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
+		from employees
+		where emp_id = #{empId}
+	</select>
+	
+	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
+		select  c.vacation_name as "vacationName",
+	        t.team_name as "teamName",
+	        d.dept_name as "deptName",
+	        e.name as "name",
+	        vacation_id as "vacationId", 
+	        to_char(write_date,'yyyy-mm-dd') as writeDate, content, 
+	        count_day as "countDay"
+        
+
+		from vacation v , employees e, departments d, teams t,vacation_category c
+		where vacation_id = #{vacationId}
+	        and e.emp_id = v.emp_id 
+	        and e.dept_id= d.dept_id 
+	        and e.team_id= t.team_id 
+	        and c.vacation_category_id= v.vacation_category_id
+	</select>
 	
 </mapper>

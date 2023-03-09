@@ -95,37 +95,22 @@
 	           			<div class="card-body mt-4">
 			          		
 			          		<div class="row ">
-								<div class="col border-end">총 휴가 : 18일</div>
-								<div class="col border-end">사용 휴가: 1일</div>
-								<div class="col">잔여 휴가: 17일</div>
+								<div class="col border-end">잔여 연차 : ${dayoffRemain}일</div>
+								<div class="col">경조사 연차: ${addDayoffRemain}일</div>
 							</div>
 		            	
 		            	</div>
 	        		</div>
       			</div>
-      			<div class="col-lg-6">
-      				<div class="pagetitle">
-			   			<h1>대체휴가 현황</h1>
-					</div>
-      				<div class="card info-card sales-card mt-3" >
-	           			<div class="card-body mt-4">
-			          		
-			          		<div class="row ">
-								<div class="col border-end">휴가 일수: 90일</div>
-								
-							</div>
-		            	
-		            	</div>
-	        		</div>
-      			</div>
+      			
       		</div>
       		<div class="row">
         		<div class="col-lg-12">
         		<div class="pagetitle">
 			   			<h1>휴가 신청 목록</h1>
 					</div>
-          			<div class="card" style="height:400px">
-            			<div class="card-body">
+          			<div class="card" >
+            			<div class="card-body px-5">
               				<h5 class="card-title"></h5>
 
               				<!-- Table with hoverable rows -->
@@ -133,18 +118,17 @@
                 				<thead>
                   					<tr>
 					                    <!-- <th scope="col" width="10%">#</th> -->
-					                    <th scope="col" width="10%">번호</th>
-					                    <th scope="col" width="20%">신청자</th>
+					                    <th scope="col" width="20%">번호</th>
 					                    <th scope="col" width="20%">휴가종류</th>
+					                    <th scope="col" width="30%">기간</th>
 					                    <th scope="col" width="15%">일수</th>
-					                    <th scope="col" width="15%">기간</th>
-					                    <th scope="col" width="20%">
+					                    <th scope="col" width="15%">
 						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
 	          								</a>
 		          							<ul class="dropdown-menu ">
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my">
 		                								<span>전체</span>
 		              								</a>
 		            							</li>
@@ -152,7 +136,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=대기">
 		                								<span>대기</span>
 		              								</a>
 		            							</li>
@@ -160,7 +144,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=진행">
 		                								<span>진행</span>
 		              								</a>
 									            </li>
@@ -168,7 +152,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 									            <li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=승인">
 		                								<span>승인</span>
 		              								</a>
 		            							</li>
@@ -176,7 +160,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/vacation/my?status=반려">
 		                								<span>반려</span>
 		              								</a>
 		            							</li>
@@ -188,13 +172,12 @@
                 				</thead>
                 				<tbody>
                 					<c:forEach var="vacation" items="${vacationList}" varStatus="index">
-                						<tr>
+                						<tr onClick='location.href="${pageContext.request.contextPath}/vacation/detail?vacationId=${vacation.vacationId}&pageNo=${pager.pageNo}&status=${status}"'>
 						                    <%-- <th scope="row">${index.count}</th> --%>
 						                    <td>${vacation.vacationId}</td>
-						                    <td>${vacation.name}</td>
 						                    <td>${vacation.vacationName}</td>
-						                    <td>${vacation.countDay}</td>
 						                    <td>${vacation.startDate} ~ ${vacation.endDate}</td>
+						                    <td>${vacation.countDay}</td>
 						                    <c:if test="${vacation.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 						                    </c:if>
@@ -218,23 +201,23 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="my?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="my?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="my?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="my?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									

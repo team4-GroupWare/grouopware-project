@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
@@ -25,6 +26,7 @@ import com.mycompany.webapp.group.service.IDepartmentService;
 import com.mycompany.webapp.group.service.ITeamService;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
+import com.mycompany.webapp.vacation.model.VacationDetail;
 import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
 import com.mycompany.webapp.vacation.service.IVacationService;
@@ -80,14 +82,24 @@ public class VacationController {
 	}
 	
 	@GetMapping("/vacation/my")
-	public String getMyVacation(Model model,HttpSession session) {
+	public String getMyVacation(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		log.info("실행");
 		// 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		List<VacationList> vacationList = vacationService.getVacationList(empId);
-		log.info(vacationList);
+		
+		int vacationRow = vacationService.getVacationRow(empId, status);
+		log.info(vacationRow);
+		Pager pager = new Pager(10, 5, vacationRow, pageNo);
+		List<VacationList> vacationList = vacationService.getVacationList(pager, empId, status);
+		
+		Employee vacationDays = vacationService.getVacationDays(empId);
+		
+		model.addAttribute("dayoffRemain", vacationDays.getDayoffRemain());
+		model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
 		model.addAttribute("vacationList", vacationList);
+		model.addAttribute("pager", pager);
+		model.addAttribute("status", status);
 		return "vacation/myvacation";
 	}
 	
@@ -140,5 +152,18 @@ public class VacationController {
 		vacationService.writeVacation(vacation);
 		
 		return "redirect:/vacation/my";
+	}
+	
+	@GetMapping("vacation/detail")
+	public String detail(@RequestParam int vacationId, @RequestParam int pageNo, @RequestParam() String status, Model model, HttpSession session) {
+		log.info("실행");
+		log.info(vacationId);
+		VacationDetail vacationDetail = vacationService.getVacationDetail(vacationId);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("status", status);
+		model.addAttribute("vacationDetail", vacationDetail);
+		
+		log.info(vacationDetail);
+		return "vacation/vacation_document";
 	}
 }

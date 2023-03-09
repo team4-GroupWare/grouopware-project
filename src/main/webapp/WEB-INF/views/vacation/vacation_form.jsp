@@ -65,22 +65,29 @@
 		<!-- ======================================End Sidebar ============================================ -->
 	  	<!-- ======================================Main==================================================== -->
 		<main id="main" class="main">
-			<!-- PageTitle -->
-			<div class="pagetitle">
-			  <h1>휴가 신청</h1>
-			  <nav>
-			    <ol class="breadcrumb">
-			      <li class="breadcrumb-item"><a href="#">근태관리</a></li>
-			      <li class="breadcrumb-item">휴가 신청</li>
-			    </ol>
-			  </nav>
-			</div>
+			
 			
 			<!-- PageContent -->
 			<section class="section">
 				<div class="row">
-					<div class="col-lg-12">
-						<table id="vertical-1" 
+      			<div class="col-lg-8">
+      				<div class="pagetitle">
+			   			<h1>휴가 현황</h1>
+					</div>
+      				<div class="card info-card sales-card mt-3" >
+	           			<div class="card-body mt-4">
+			          		
+			          		<div class="row ">
+								<div class="col border-end">잔여 연차 : ${dayoffRemain}일</div>
+								<div class="col">경조사 연차: ${addDayoffRemain}일</div>
+							</div>
+		            	</div>
+	        		</div>
+      			</div>
+      		</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<!-- <table id="vertical-1" 
 							style="width:50%; box-shadow: 0px 0 30px rgb(1 41 112 / 10%);border: none;  border-radius: 5px;">
 				            <tr style="height: 50px; vertical-align:middle; ">
 				                <th class="ps-2" style="background-color:#004389; width:10%; color:white">잔여 휴가 일수</th>
@@ -88,7 +95,10 @@
 				                <th class="ps-2" style="background-color:#004389; width:10%;color:white">대체 연차</th>
 				                <td class="ps-2" style="width: 15%;background-color:white">출산(90일)</td>
 				            </tr>
-						</table>
+						</table> -->
+						<div class="pagetitle">
+			   			<h1>휴가 신청서</h1>
+					</div>
 						<div class="card mt-3">
 							<div class="card-body m-4">
 								

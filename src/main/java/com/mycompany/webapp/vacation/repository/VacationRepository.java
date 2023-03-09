@@ -2,10 +2,14 @@ package com.mycompany.webapp.vacation.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
+import com.mycompany.webapp.vacation.model.VacationDetail;
 import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
 
@@ -20,6 +24,13 @@ public interface VacationRepository {
 
 	public int insertVacationDate(VacationDate vacationDate);
 
-	public List<VacationList> selectVacationList(String empId);
+
+	public int selectVacationCount(@Param("empId") String empId, @Param("status") String status);
+
+	public List<VacationList> selectVacationList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
+
+	public Employee selectVacationDays(String empId);
+
+	public VacationDetail selectVacationDetail(int vacationId);
 
 }

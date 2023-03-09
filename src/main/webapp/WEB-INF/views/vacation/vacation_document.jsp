@@ -76,14 +76,14 @@
 		<div class="row">
 			<div class="col-lg-10">
 				<div class="card mt-2">
-					<div class="card-body mt-3">
+					<div class="card-body mt-3" style="height:800px">
 					
-					<div class="row mb-3">
+					<!-- <div class="row mb-3">
 						<div class="col-sm-12 d-flex justify-content-end">
                   			<button type="submit" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y">승인</button>
                     		<button type="submit" class="btn btn-danger" name="isApproved" value="n">반려</button>
                   		</div>
-					</div>
+					</div> -->
 					
 					<%-- <div class="row d-flex justify-content-end">
 				        <div class="col-lg-5" >
@@ -104,43 +104,48 @@
 			        </div> --%>
 					
 					<div class="row d-flex justify-content-center px-5">
-						<div class="col-9">
+						<div class="col-10">
 							<table  style="border-collapse: collapse;  border="1" cellspacing="0" cellpadding="0"
 							bordercolor="#000000 "
-							 class="form10 table table-bordered">
+							 class="form10 table table-bordered mt-5">
 
 							<tbody>
 								<tr>
+									<td height="50" colspan="3" align="center" class="form10b">결재 딤딩지</td>
+									<td align="center" class="form10">이지호</td>
+									<td align="center" class="form10b">승인</td>
+									<td align="center" class="form10">
+										<button type="submit" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y">승인</button>
+                    					<button type="submit" class="btn btn-danger" name="isApproved" value="n">반려</button>
+									</td>
+								</tr>
+								<tr>
 									<td height="50" colspan="3" align="center" class="form10b">문서번호</td>
-									<td align="center" class="form10"></td>
+									<td align="center" class="form10">${vacationDetail.vacationId}</td>
 									<td align="center" class="form10b">작성일자</td>
-									<td align="center" class="form10"></td>
+									<td align="center" class="form10">${vacationDetail.writeDate}</td>
 								</tr>
 
 								<tr>
 									<td height="50" colspan="3" align="center" class="form10b">이름</td>
-									<td align="center" class="form10"></td>
-									<td align="center" class="form10b">직책</td>
-									<td align="center" class="form10"></td>
+									<td align="center" class="form10">${vacationDetail.name}</td>
+									<td align="center" class="form10b">직급</td>
+									<td align="center" class="form10">차장</td>
 								</tr>
 								
 								<tr>
-									<td height="50" colspan="3" align="center" class="form10b">소속(본부)</td>
-									<td width="188" align="center" class="form10"></td>
-									<td width="79" align="center"  class="form10b">부서(팀)</td>
-									<td width="182" align="center" class="form10"></td>
+									<td height="50" colspan="3" align="center" class="form10b">부서</td>
+									<td width="188" align="center" class="form10">${vacationDetail.deptName}</td>
+									<td width="79" align="center"  class="form10b">팀</td>
+									<td width="182" align="center" class="form10">${vacationDetail.teamName}</td>
 											
-								</tr>
-								<tr>
-									<td height="50" colspan="3" align="center" bgcolor="#D9E2F3"class="form10b">제 목</td>
-									<td colspan="3" align="left" class="form10"></td>
 								</tr>
 								<tr>
 									<td width="38" rowspan="3" align="center" class="form10b">신<br> 청<br> 내<br> 용</td>
 									<td width="40" rowspan="2" align="center"class="form10b">휴<br> 가<br> 신<br> 청<br>서</td>
 									
 									<td width="103" height="50" align="center" class="form10b">종류</td>
-									<td colspan="3" align="left" class="form10"></td>
+									<td colspan="3" align="left" class="form10">${vacationDetail.vacationName}</td>
 								</tr>
 								<tr>
 									<td height="50" align="center" class="form10b">일정</td>
@@ -158,7 +163,7 @@
 														<div style="padding: 3px; cursor: hand;">2017.01.16.</div></td>
 													<td width="3%" align="left" class="form2">&nbsp;</td>
 													<td width="25%" align="left" class="form2">
-													<div id="h_caldate" style="padding: 3px">(1일)</div></td>
+													<div id="h_caldate" style="padding: 3px">(${vacationDetail.countDay}일)</div></td>
 												</tr>
 											</tbody>
 										</table>
@@ -167,10 +172,10 @@
 								
 								<tr>
 									<td height="200" colspan="2" align="center" bgcolor="#D9E2F3"
-										class="form10b">신청사유<br> (자세히)
+										class="form10b">신청사유<br>
 									</td>
 									<td colspan="3" align="left" valign="top" class="form10">
-										<div id="as2" style="padding: 3px;"></div>
+										<div id="as2" style="padding: 3px;">${vacationDetail.content}</div>
 									</td>
 								</tr>
 								<tr> 
