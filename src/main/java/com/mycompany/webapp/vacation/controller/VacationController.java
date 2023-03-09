@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ import com.mycompany.webapp.group.service.ITeamService;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
 import com.mycompany.webapp.vacation.model.VacationLine;
+import com.mycompany.webapp.vacation.model.VacationList;
 import com.mycompany.webapp.vacation.service.IVacationService;
 
 import lombok.extern.log4j.Log4j2;
@@ -77,9 +80,14 @@ public class VacationController {
 	}
 	
 	@GetMapping("/vacation/my")
-	public String getMyVacation(Model model) {
+	public String getMyVacation(Model model,HttpSession session) {
 		log.info("실행");
-		
+		// 로그인한 사원의 ID
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		List<VacationList> vacationList = vacationService.getVacationList(empId);
+		log.info(vacationList);
+		model.addAttribute("vacationList", vacationList);
 		return "vacation/myvacation";
 	}
 	
@@ -103,25 +111,34 @@ public class VacationController {
 	public String writeApproval(@ModelAttribute Vacation vacation, Model model) throws ParseException {
 		log.info("실행");
 		log.info(vacation);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일");
-		String[] dates = vacation.getDates().split(",");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		List<VacationDate> date= new ArrayList<>();
- 		
- 		//날짜 리스트 
- 		for(int i=0; i < dates.length; i++) {
- 			VacationDate vacationDate = new VacationDate();
- 			vacationDate.setStartDate(formatter.parse(dates[i]));
- 			vacationDate.setEndDate(formatter.parse(dates[i]));
+		
+		//날짜 리스트
+		if(vacation.getVacationType()==2) {
+			VacationDate vacationDate = new VacationDate();
+ 			vacationDate.setStartDate(formatter.parse(vacation.getStartDate()));
+ 			vacationDate.setEndDate(formatter.parse(vacation.getEndDate()));
  			date.add(vacationDate);
- 		}
- 		vacation.setVacationDate(date);
- 		
- 		//결제선 리스트
+ 			vacation.setVacationDate(date);
+		
+		}else{
+			String[] dates = vacation.getDates().split(",");
+	 		for(int i=0; i < dates.length; i++) {
+	 			VacationDate vacationDate = new VacationDate();
+	 			vacationDate.setStartDate(formatter.parse(dates[i]));
+	 			vacationDate.setEndDate(formatter.parse(dates[i]));
+	 			date.add(vacationDate);
+	 		}
+	 		vacation.setVacationDate(date);
+		}
+		
+		//결제선 리스트
 		for(int i = 0; i < vacation.getVacationLine().size(); i++) {
 			vacation.getVacationLine().get(i).setSeq(i+1);
 		}
 		vacationService.writeVacation(vacation);
 		
-		return "붐따";
+		return "redirect:/vacation/my";
 	}
 }

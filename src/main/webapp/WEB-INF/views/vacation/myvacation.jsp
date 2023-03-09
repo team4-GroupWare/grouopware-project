@@ -97,7 +97,7 @@
 			          		<div class="row ">
 								<div class="col border-end">총 휴가 : 18일</div>
 								<div class="col border-end">사용 휴가: 1일</div>
-								<div class="col">잔여 휴가: 17일(잔여 연차)</div>
+								<div class="col">잔여 휴가: 17일</div>
 							</div>
 		            	
 		            	</div>
@@ -111,8 +111,8 @@
 	           			<div class="card-body mt-4">
 			          		
 			          		<div class="row ">
-								<div class="col border-end">지급 : 7일</div>
-								<div class="col">휴가 종류: 경조사 (출산)</div>
+								<div class="col border-end">휴가 일수: 90일</div>
+								
 							</div>
 		            	
 		            	</div>
@@ -133,10 +133,12 @@
                 				<thead>
                   					<tr>
 					                    <!-- <th scope="col" width="10%">#</th> -->
-					                    <th scope="col" width="15%">결재양식</th>
-					                    <th scope="col" width="35%">제목</th>
-					                    <th scope="col" width="15%">기안자/부서</th>
-					                     <th scope="col" width="10%">
+					                    <th scope="col" width="10%">번호</th>
+					                    <th scope="col" width="20%">신청자</th>
+					                    <th scope="col" width="20%">휴가종류</th>
+					                    <th scope="col" width="15%">일수</th>
+					                    <th scope="col" width="15%">기간</th>
+					                    <th scope="col" width="20%">
 						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
 	          								</a>
@@ -181,30 +183,31 @@
 		            							
 									    	</ul>
           								</th>
-					                    <th scope="col" width="15%">기안일시</th>
                   					</tr>
 
                 				</thead>
                 				<tbody>
-                					<c:forEach var="approval" items="${approvals}" varStatus="index">
+                					<c:forEach var="vacation" items="${vacationList}" varStatus="index">
                 						<tr>
 						                    <%-- <th scope="row">${index.count}</th> --%>
-						                    <td>${approval.categoryName}</td>
-						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
-						                    <td>${approval.empName}</td>
-						                    <c:if test="${approval.status eq '대기'}">
+						                    <td>${vacation.vacationId}</td>
+						                    <td>${vacation.name}</td>
+						                    <td>${vacation.vacationName}</td>
+						                    <td>${vacation.countDay}</td>
+						                    <td>${vacation.startDate} ~ ${vacation.endDate}</td>
+						                    <c:if test="${vacation.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 						                    </c:if>
-											<c:if test="${approval.status eq '진행'}">
+											<c:if test="${vacation.status eq '진행'}">
 						                    	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
 						                    </c:if>						                    
-						                    <c:if test="${approval.status eq '승인'}">
+						                    <c:if test="${vacation.status eq '승인'}">
 						                    	<td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
 						                    </c:if>
-						                    <c:if test="${approval.status eq '반려'}">
+						                    <c:if test="${vacation.status eq '반려'}">
 						                    	<td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
 						                    </c:if>
-						                    <td>${approval.writeDate}</td>
+						                    
                   						</tr>
                 					</c:forEach>
                 				</tbody>

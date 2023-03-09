@@ -14,13 +14,18 @@ public class Vacation {
 	private int vacationId;
 	private String content;
 	private String writeDate;
+	private String startDate;
+	private String endDate;
 	private String dates;
 	private int vacationCategoryId;
 	private String empId;
+	private int countDay;
+	
 	private String vacationFileName;
 	private String vacationFileContentType;
 	private Blob vacationFileData;
 	private String vacationFileSize;
+
 	
 	private List<VacationDate> vacationDate;
 	private List<VacationLine> vacationLine;

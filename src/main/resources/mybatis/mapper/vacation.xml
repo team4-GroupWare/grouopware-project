@@ -21,12 +21,12 @@
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
 			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
-			status)
+			status,count_day)
 		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
 			null,null,null,null,
-			default)
+			default,#{countDay})
 	</insert> 
 	
 	<!-- 휴가 결제선  저장 -->
@@ -47,6 +47,32 @@
 		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
 	</insert>
 	
+	<!-- 휴가 리스트 조회-->
+	<select id="selectVacationList" parameterType="string" resultType="vacationList">
+		select v.vacation_id as "vacationId", 
+		e.name as "name", 
+		c.vacation_name as "vacationName", 
+		status, 
+		count_day as "countDay",
+	    to_char((SELECT *
+	     FROM (  select start_date
+	            from vacation_date
+	            where vacation_id = v.vacation_id
+	            order by start_date 
+	    )
+	    WHERE ROWNUM = 1),'yyyy-mm-dd') "startDate",
+	    to_char((SELECT  * 
+	    FROM (  select start_date
+	            from vacation_date
+	            where vacation_id = v.vacation_id
+	            order by start_date desc
+	    )
+	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
+	
+		from vacation v, employees e, vacation_category c
+		where v.emp_id= #{empId} and e.emp_id = v.emp_id and c.vacation_category_id = v.vacation_category_id
+		order by vacation_id desc 
+	</select>
 	
 	
 	
