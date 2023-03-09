@@ -109,7 +109,6 @@
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
-		
 		]]>
 	</select>
 	
@@ -455,6 +454,57 @@
 			where email_content_id = #{emailContentId}
 		]]>
 	</delete>
+	
+	<!-- 메인에서 보일 보낸 email List -->
+	<select id="selectMainSendEmail" parameterType="String" resultType="mainEmailList">
+		<![CDATA[
+			select 
+				   s.send_email_id as sendEmailId,
+				   r.sent_emp_id as sentId,
+				   s.received_emp_id as receiveId,
+				   c.title, s.sent_date as sentDate,
+				   e.name as receiveName,
+				   e.PROFILE_CONTENT_TYPE as receiveProfileContentType,
+				   e.PROFILE_DATA as receiveProfileData,
+				   r.read_date as readDate,
+				   c.important
+        	from receive_email r, email_content c, send_email s,  employees e
+        	where r.SENT_EMP_ID = #{sendId} 
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
+        	order by s.sent_date desc
+        	offset 0 rows
+        	fetch first 5 rows only
+		
+		]]>
+	</select>
+	
+	<!-- 받는 email List -->
+	<select id="selectMainReceiveEmail" resultType="mainEmailList" parameterType="String">
+		<![CDATA[
+			select
+				   r.receive_email_id as receiveEmailId,
+				   s.received_emp_id as receiveId,
+				   r.sent_emp_id as sentId,
+				   e.name as sentName,
+				   e.PROFILE_CONTENT_TYPE as sendProfileContentType,
+				   e.PROFILE_DATA as sendProfileData,
+				   c.title, s.sent_date as sentDate,
+				   c.important
+			from receive_email r, email_content c, send_email s, employees e
+			where s.RECEIVED_EMP_ID = #{receiveId} 
+				  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				  and r.trash_date is null
+				  and e.emp_id = r.sent_emp_id
+			order by s.sent_date desc
+			offset 0 rows
+			fetch first 5 rows only
+		]]>
+	
+	</select>
 
 
 

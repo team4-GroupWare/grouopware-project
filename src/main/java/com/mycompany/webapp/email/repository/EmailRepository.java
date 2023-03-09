@@ -8,6 +8,7 @@ import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.SendEmail;
 import com.mycompany.webapp.email.model.TempEmail;
@@ -220,5 +221,17 @@ public interface EmailRepository {
 	 * @param emailContentId
 	 */
 	void deleteEmailContent(int emailContentId);
+	/**
+	 * 
+	 * @param empId
+	 * @return
+	 */
+	List<MainEmailList> selectMainSendEmail(String sendId);
+	/**
+	 * 
+	 * @param empId
+	 * @return
+	 */
+	List<MainEmailList> selectMainReceiveEmail(String receiveId);
 
 }

@@ -18,5 +18,6 @@
 		<typeAlias type="com.mycompany.webapp.email.model.ReceiveEmail" alias="receiveEmail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailDetail" alias="emailDetail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailFile" alias="emailFile"/>
+		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
 	</typeAliases>
 </configuration>
