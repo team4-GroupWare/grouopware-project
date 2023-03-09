@@ -185,6 +185,19 @@ public interface IEmailService {
 	 * @return
 	 */
 	EmailDetail getEmailDetail(int receiveEmailId);
+	/**
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	int getSearchTempCount(String keyword);
+	List<EmailList> getSearchTempList(Pager pager, String keyword);
+	List<EmailList> getSearchTrashList(Pager pager, String keyword);
+	List<EmailList> getSearchReceiveList(Pager pager, String keyword);
+	List<EmailList> getSearchSendList(Pager pager, String keyword);
+	int getSearchTrashCount(String keyword);
+	int getSearchReceiveCount(String keyword);
+	int getSearchSendCount(String keyword);
 	
 	
 }

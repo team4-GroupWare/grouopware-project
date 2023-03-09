@@ -231,6 +231,17 @@
 									trashEmail(type);
 								}
 							}
+							
+							function search(type){
+								var keyword = $("#keyword").val();
+								 $.ajax({
+		    							url : "${pageContext.request.contextPath}/employee/search?keyword="+keyword+"&type="+type,
+		    							method : "get",
+		    						}).done((data)=> {
+		    							console.log("성공");
+		    						});
+								
+							}
 						</script>
 	                    
 	              </div>
@@ -238,8 +249,8 @@
 		             <span class="input-group-text" id="basic-addon1">
 		              	<i class="bi bi-search"></i>
 		             </span>
-	               	<input type="text" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
-	               	<button type="submit" class="btn btn-secondary btn-sm ">검색</button>
+	               	<input type="text" id="keyword" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
+	               	<button type="button" onclick="search('${type}')" class="btn btn-secondary btn-sm ">검색</button>
 	              </div>
 	            
 	             

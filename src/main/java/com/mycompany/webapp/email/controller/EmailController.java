@@ -450,4 +450,42 @@ public class EmailController {
 		return "email/write";
 	}
 	
+	@GetMapping("/search")
+	public String searchEmail(Model model, HttpSession session, @RequestParam String type, @RequestParam String keyword) {
+		log.info("실행");
+		//임시 보관함 검색 결과 리스트
+		if(type.equals("temp")) {
+			int row = emailService.getSearchTempCount(keyword);
+			Pager pager = new Pager(10, 5, row, 1);
+			List<EmailList> emailList = emailService.getSearchTempList(pager,keyword);
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+		//쓰레기통 검색 결과 리스트
+		} else if(type.equals("trash")) {
+			int row = emailService.getSearchTrashCount(keyword);
+			Pager pager = new Pager(10, 5, row, 1);
+			List<EmailList> emailList = emailService.getSearchTrashList(pager,keyword);
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+		//받은 메일함 검색 결과 리스트
+		} else if(type.equals("receive")) {
+			int row = emailService.getSearchReceiveCount(keyword);
+			Pager pager = new Pager(10, 5, row, 1);
+			List<EmailList> emailList = emailService.getSearchReceiveList(pager,keyword);
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+		//보낸 메일함 검색 결과 리스트
+		} else if(type.equals("send")) {
+			int row = emailService.getSearchSendCount(keyword);
+			Pager pager = new Pager(10, 5, row, 1);
+			List<EmailList> emailList = emailService.getSearchSendList(pager,keyword);
+			model.addAttribute("kind", type);
+			model.addAttribute("emailList", emailList);
+		}
+		
+		return "email/emaillist";
+	}
+	
+	
+	
 }

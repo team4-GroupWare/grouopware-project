@@ -330,8 +330,6 @@ public class EmployeeController {
 		
 	}
 	
-	
-	
 	@GetMapping("/img")
 	public ResponseEntity<byte[]> getImageFile(HttpSession session, @RequestParam String empId){
 		Employee employee = employeeService.getEmp(empId);

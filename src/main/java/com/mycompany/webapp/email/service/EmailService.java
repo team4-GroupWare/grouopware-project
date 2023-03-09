@@ -394,4 +394,52 @@ public class EmailService implements IEmailService {
 		return emailDetail;
 	}
 
+	@Override
+	public int getSearchTempCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<EmailList> getSearchTempList(Pager pager, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmailList> getSearchTrashList(Pager pager, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmailList> getSearchReceiveList(Pager pager, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmailList> getSearchSendList(Pager pager, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getSearchTrashCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getSearchReceiveCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getSearchSendCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
