@@ -93,7 +93,7 @@
 							<div class="card-body m-4">
 								
 								<!-- Form -->
-								<form>
+								<form method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write" enctype="multipart/form-data">
 									<!-- 제출하기 Button -->
 									<div class="row mb-3">
 										<div class="col-sm-12 d-flex justify-content-end">
@@ -107,101 +107,126 @@
 										<div class="col-sm-6">
 											<script>
 												$(function (){
-													$('input[type=radio][name=tp_cd]').on('click', function() {
-														var chkValue = $('input[type=radio][name=tp_cd]:checked').val();
+													$('input[type=radio][name=vacationType]').on('click', function() {
+														var chkValue = $('input[type=radio][name=vacationType]:checked').val();
 														if (chkValue == '1') {
-															$('#POP1').css('display', 'block');
-															$('#POP2').css('display', 'none');
-															$('#POP3').css('display', 'none');
+															$('#POP').empty();
+															let element = '<option value="1" selected>연차</option>'+
+																'<option value="2">오전 반차</option>'+
+																'<option value="3">오후 반차</option>';
+															$('#POP').append(element);
+															$("#datePicker1").datepicker('setDate', "");
+															$("#datePicker1").datepicker('destroy');
+															$("#datePicker1").attr('id','datePicker');
+															$('#datePicker').datepicker({
+																format: "yyyy년 mm월 dd일",
+															    multidate: true,
+															    multidateSeparator: " ,",
+															    datesDisabled: ['2023/03/01'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
+														
 														} else if(chkValue == '2') {
-															$('#POP1').css('display', 'none');
-															$('#POP2').css('display', 'block');
-															$('#POP3').css('display', 'none');
+															$('#POP').empty();
+															let element = '<option value="4" selected>결혼</option>'+
+															'<option value="5">출산</option>'+
+															'<option value="6">사망</option>';
+															$('#POP').append(element);
+															
+															$("#datePicker").datepicker('setDate', "");
+															$("#datePicker").datepicker('destroy');
+															$("#datePicker").attr('id','datePicker1');
+															$('#datePicker1').datepicker({
+																format: "yyyy-mm-dd",
+															    
+															    datesDisabled: ['2023/03/02'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
 														}
 														else if(chkValue == '3') {
-															$('#POP1').css('display', 'none');
-															$('#POP2').css('display', 'none');
-															$('#POP3').css('display', 'block');
+															$('#POP').empty();
+															let element = '<option value="7" selected>병가</option>';
+															$('#POP').append(element);
+															$("#datePicker1").datepicker('setDate', "");
+															$("#datePicker1").datepicker('destroy');
+															$("#datePicker1").attr('id','datePicker');
+															$('#datePicker').datepicker({
+																format: "yyyy년 mm월 dd일",
+															    multidate: true,
+															    multidateSeparator: " ,",
+															    datesDisabled: ['2023/03/01'],
+															    daysOfWeekDisabled: "0,6",
+															    todayHighlight: true
+															});
 														}
 													});
 												});
 											</script>
-											<input type="radio" name="tp_cd" value="1" checked="checked"> 정기휴가
-											<input type="radio" name="tp_cd" value="2" > 경조사
-											<input type="radio" name="tp_cd" value="3" > 공가
+											<input type="radio" name="vacationType" value="1" checked="checked"> 정기휴가
+											<input type="radio" name="vacationType" value="2" > 경조사
+											<input type="radio" name="vacationType" value="3" > 공가
 										</div>
 									</div>
 									
 									<!-- 휴가 종류 -->
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label"><b>휴가 종류</b></label>
-									 
-										<div id="POP1" class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">연차</option>
-												<option value="1">오전 반차</option>
-												<option value="2">오후 반차</option>
+										<div class="col-sm-4">
+											<select id="POP" name="vacationCategoryId" class="form-select" aria-label="Default select example">
+												<option value="1" selected>연차</option>
+												<option value="2">오전 반차</option>
+												<option value="3">오후 반차</option>
 											</select>
 										</div>
-									  
-										<div id="POP2" style="display: none;" class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">결혼</option>
-												<option value="1">출산</option>
-												<option value="2">사망</option>
-											</select>
-										</div>
+										<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
+									</div>
 									
-										<div id="POP3" style="display: none;"  class="col-sm-4">
-											<select class="form-select" aria-label="Default select example">
-												<option value="0">병가</option>
-												<option value="1">예비군</option>
-											</select>
+									<script>
+										$('#datePicker').datepicker({
+											format: "yyyy년 mm월 dd일",
+										    multidate: true,
+										    multidateSeparator: " ,",
+										    datesDisabled: ['2023/03/01'],
+										    daysOfWeekDisabled: "0,6",
+										    todayHighlight: true
+										});
+									</script>
+									
+									<!-- 일반 날짜 선택 -->
+									<div class="row mb-3">
+										<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
+										<div class="col-sm-10">
+											<input type="text" id="datePicker" name="dates" style="width:100%">
 										</div>
 									</div>
 									
-									<script >
-										function input(){
-										    const dday = document.querySelector("#input_date").value;
-										    console.log(dday);
-										}
-									</script>
-									<!-- 날짜 선택 -->
+									<!-- 경조사 날짜 선택 -->
 									<div class="row mb-3">
-											
-											<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>
-											<div class="col-sm-10">
- 												<input type="text" id="datePicker" name="writeDate" style="width:600px" onclick="count()">
- 												<div id="result">선택일수: 0일</div>
-											</div>
-											<script type="text/javascript">
-												$('#datePicker').datepicker({
-													format: "yyyy년 mm월 dd일",
-												    multidate: true,
-												    multidateSeparator: " ,",
-												    datesDisabled: ['2023/03/01'],
-												    daysOfWeekDisabled: "0,6",
-												    todayHighlight: true
-												});
+										<label for="text" class="col-sm-2 col-form-label"><b>시작날짜</b></label>
+										<div class="col-sm-4">
+											<input type="text" id="datePicker1" name="dates" style="width:100%">
+										</div>
 										
-												$('#click-btn').on('click', function() {
-													var date = $('#dateRangePicker').val();
-													alert(date);
-													 
-												});
-												function count(){
-													console.log($('.active day').length);
-													document.getElementById("result").innerText="선택일수:  "+$('.active.day').length+"일";
-												}
-												
-											</script>
+										<div class="col-sm-2">
+											<button type="button" class="btn btn-primary">버튼</button>
+										</div>
+									</div>
+									
+									<div class="row mb-3">
+										<label for="text" class="col-sm-2 col-form-label"><b>종료날짜</b></label>
+										<div class="col-sm-4">
+											<input type="text" id="endDate" name="endDate" style="width:100%">
+										</div>
+											
 									</div>
 									
 									<!-- 사유 -->
 									<div class="row mb-3">
 										<label for="text" class="col-sm-2 col-form-label"><b>사유</b></label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="writeDate">
+											<input type="text" class="form-control" name="content">
 										</div>
 									</div>
 									
@@ -228,7 +253,7 @@
 	              							</div>
 	              		
 		              						<div class="row">
-		              							<div id="approval_line" class="d-flex">
+		              							<div id="vacation_line" class="d-flex">
 		              							
 		              							</div>
 		                  					</div>

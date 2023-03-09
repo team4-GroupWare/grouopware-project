@@ -18,6 +18,9 @@
 		<typeAlias type="com.mycompany.webapp.email.model.ReceiveEmail" alias="receiveEmail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailDetail" alias="emailDetail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailFile" alias="emailFile"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.VacationLine" alias="vacationLine"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.Vacation" alias="vacation"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDate" alias="vacationDate"/>
 		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
 		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
 	</typeAliases>

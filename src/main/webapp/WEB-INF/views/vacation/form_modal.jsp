@@ -141,18 +141,18 @@ input[type=radio]:checked+label{
 		var length = document.getElementById('selectEl').length;
 		//var length = $("#selectEl").length;
 		console.log("length: " + length);
-		var approvalLine = new Array();
+		var vacationLine = new Array();
 
 		for (i = 0; i < length; i++) {
-			approvalLine[i] = selectEl.options[i].id;
+			vacationLine[i] = selectEl.options[i].id;
 		}
-		console.log(approvalLine);
+		console.log(vacationLine);
 		
 		$.ajax({
 			type: "post",
-		    url: "/webapp/approval/employee",
+		    url: "/webapp/vacation/employee",
 		    data: {
-		    	line : approvalLine
+		    	line : vacationLine
 		    },
 		    success: function (data) {
 		    	console.log("성공");
@@ -160,7 +160,7 @@ input[type=radio]:checked+label{
 		    	var lineHtml = "";
 		    	for(var i in data){
 					lineHtml += '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
-							'<input type="hidden" name="approvalLine[' + i + '].empId" value="' + data[i].empId + '">' +
+							'<input type="hidden" name="vacationLine[' + i + '].empId" value="' + data[i].empId + '">' +
 							'<span style="font-size:18px; font-weight:bold;">' + data[i].empName + '</span> ' +
 							data[i].gradeName + '<br>' +
 							data[i].deptName + " / " + data[i].teamName + '</div>';
@@ -170,7 +170,7 @@ input[type=radio]:checked+label{
 						lineHtml += '<div style="text-align: center; margin: auto 10px;"><i class="bi bi-caret-right-fill" style="font-size:25px;"></i></div>';
 					}
 				}
-				$("#approval_line").html(lineHtml);
+				$("#vacation_line").html(lineHtml);
 				$("#verticalycentered").modal("hide"); 
 			}
 		});
