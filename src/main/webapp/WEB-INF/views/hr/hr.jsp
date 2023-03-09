@@ -84,7 +84,7 @@
 				</div>
 	      		<div class="row">
 	        		<div class="col-lg-10">
-	          			<div class="card" style="height:780px">
+	          			<div class="card" style="height:650px">
 	            			<div class="card-body">
 	              				<h5 class="card-title"></h5>
 	              				<!-- Table with hoverable rows -->
@@ -126,7 +126,7 @@
 	              				</table>
 	             				<!-- End Table with hoverable rows -->
 	            			</div>
-	            			<div class="card-footer d-flex justify-content-center" style="vertical-align:bottom">
+	            			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 				  				<nav aria-label="Page navigation example">
 	                				<ul class="pagination">
 	                					<li class="page-item">
@@ -171,15 +171,22 @@
 	      		<script>
 	      			//사원 정보 모달
 	      			function empInfo(empId) {
-	      				console.log("empInfo 실행");
-	      				
 	      				$.ajax({
 	      					url: "${pageContext.request.contextPath}/employee/empinfo",
 	      					data: {"empId" : empId},
 	      					type: "GET"
 	      				}).done((result) => {
-							console.log("성공");
-      						console.log(result);
+      						var img = "";
+      						
+      						if(result.profileData == null) {
+      							img += '<img src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"' 
+      									+ 'alt="Profile" class="rounded-circle" width="200px">';
+      							
+      						} else if(result.profileData != null) {
+      							img += '<img src="${pageContext.request.contextPath}/employee/img?empId=' + result.empId
+  										+ '" alt="Profile" class="rounded-circle" width="200px">';
+      						}
+      						$('#empProfile').html(img);
       						$('#empName').html(result.name);
       						$('#empGrade').html(result.gradeName);
       						$('#empDept').html(result.deptName);
@@ -188,7 +195,6 @@
       						$('#empPhone').html(result.phone);
       						$("#popup").css('display','flex').hide().fadeIn();
 						})
-	      				
 	      			};
 	      			
 					$(function(){
@@ -213,8 +219,8 @@
 				      	<div class="popup-body">
 				        	<div class="body-content">
 				          		<div class="body-titlebox mb-4">
-				          			<img src="${pageContext.request.contextPath}/resources/assets/img/profile_img.png" alt="Profile" class="rounded-circle border" width="130px">
-				            		<h4>${employee.name}</h4>
+				          			<div id="empProfile">
+				          			</div>
 				          		</div>
 				          		<div class="body-contentbox" style="margin:0 50px;">
 				          			<div class="d-flex">
