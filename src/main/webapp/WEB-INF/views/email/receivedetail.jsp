@@ -183,7 +183,7 @@
 		                </c:if>
 		                
 		                <div class="row mb-3 px-4">
-		                  <div class="col-sm-12 mail-content px-3" style="height:320px">
+		                  <div class="col-sm-12 mail-content px-3" style="height:500px">
 		                    	${emailDetail.content}
 		                  </div>
 		                </div>
