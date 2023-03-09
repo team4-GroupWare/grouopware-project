@@ -9,8 +9,6 @@
 	
 	<script>
 		$(function(){
-			var form= $('#origincontent').val();
-			console.log(form);
 		    tinymce.init({
 		        // Select the element(s) to add TinyMCE to using any valid CSS selector
 		        selector: "#tinymce-editor",
@@ -32,14 +30,7 @@
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
 			var receiveId = $("#receiver").val();
-			if(receiveId == ''){
-				receiveId = '발신자 없음';
-			}
 			var title = $("#title").val();
-			if(title == ''){
-				title = '제목 없음';
-			}
-			
 			
 			var data = {receiveId : receiveId, 
 						title : title, 
@@ -48,7 +39,7 @@
 			console.log(data);
 			
 			$.ajax({
-				url : "${pageContext.request.contextPath}/email/tempsave",
+				url : "${pageContext.request.contextPath}/email/tempupdate",
 				method : "post",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"
@@ -121,12 +112,7 @@
                 <div class="row mb-2">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'response'}">
-                    <input type="text" class="form-control" name="receiveId" id="receiver">
-                  	</c:if>
-                  	<c:if test="${type eq 'response'}">
-                    <input type="text" class="form-control" name="receiveId" id="receiver" value="${emailDetail.sendId}">
-                  	</c:if>
+                    <input type="text" class="form-control" name="receiveId" id="receiver" value="${tempEmail.receiveId}">
                     <p style="color:grey" class="small"> ","로 받을 아이디를 구분하여 입력해주세요
                   </div>
                 </div>
@@ -134,15 +120,7 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">제목</label>
                   <div class="col-sm-10">
-                  	<c:if test="${type ne 'response' and type ne 'reply'}">
-                    <input type="text" class="form-control" name="title" id="title">
-                    </c:if>
-                    <c:if test="${type eq 'response'}">
-                    <input type="text" class="form-control" name="title" id="title" value="RE: ${emailDetail.title}">
-                    </c:if>
-                     <c:if test="${type eq 'reply'}">
-                    <input type="text" class="form-control" name="title" id="title" value="FW: ${emailDetail.title}">
-                    </c:if>
+                    <input type="text" class="form-control" name="title" id="title" value="${tempEmail.title}">
                   </div>
                 </div>
                 
@@ -173,21 +151,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-12">
                      <textarea id="tinymce-editor">
-                		<c:if test="${type eq 'response'}">
-                		<p><b>[original message] </b>
-                		<p><b> from</b> : ${emailDetail.sendName} ${emailDetail.sendGrade}
-                		<p> <b>to </b>: ${loginEmployee.name} ${loginEmployee.gradeName}
-                		<p>-----------------------------------------------------------------------------
-	                    ${emailDetail.content}
-	                    -----------------------------------------------------------------------------
-	                    
-	                    </c:if>
-	                    <c:if test="${type eq 'reply'}">
-	                    <p><b>[original message] </b>
-	                    <p>-----------------------------------------------------------------------------
-	                    ${emailDetail.content}
-	                    -----------------------------------------------------------------------------
-	                    </c:if>
+                		${tempEmail.content}
               		</textarea><!-- End TinyMCE Editor -->
               		<input id="content" type="hidden" name="content">
                   </div>
