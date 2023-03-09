@@ -131,10 +131,27 @@ public class EmployeeController {
 		
 	}
 	
-	@GetMapping("/grantpassword")
-	public String grantPassword() {
+	@GetMapping("/updateemployee")
+	public String updateEmployee(Model model, @RequestParam String empId) {
 		log.info("실행");
-		return "employee/grantpassword";
+		Employee employee = employeeService.getEmp(empId);
+		model.addAttribute("employee", employee);
+		//부서 List
+		List<Department> departments = departmentService.getDeptList();
+		model.addAttribute("departments", departments);
+		//직급 List
+		List<Grade> grades = gradeService.getGradeList();
+		model.addAttribute("grades", grades);
+		return "employee/update_employee";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/grantinitial", produces="application/text; charset=UTF-8")
+	public String grantInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
+		log.info("실행");
+		employeeService.grantInitialPassword(employeePassword);
+		return "success";
+		
 	}
 	
 	
@@ -301,6 +318,14 @@ public class EmployeeController {
 		session.setAttribute("loginEmployee", employee);
 		
 		return "redirect:/employee/myPage";
+	}
+	
+	@PostMapping("/updateemployee")
+	public String updateEmployee(Employee employee) {
+		log.info("실행");
+		employeeService.updateEmployee(employee);
+		return "redirect:/hr/group";
+		
 	}
 	
 	

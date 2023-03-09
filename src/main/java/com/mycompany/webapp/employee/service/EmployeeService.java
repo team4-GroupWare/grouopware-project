@@ -11,6 +11,7 @@ import com.mycompany.webapp.email.MultipartFileResolver;
 import com.mycompany.webapp.employee.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -196,6 +197,10 @@ public class EmployeeService implements IEmployeeService {
 				e.printStackTrace();
 			}
 		}
+		log.info(employee.getEmpId());
+		log.info(employee.getDeptId());
+		log.info(employee.getTeamId());
+		log.info(employee.getGradeId());
 		return employeeRepository.updateEmployee(employee);
 	}
 
@@ -212,6 +217,12 @@ public class EmployeeService implements IEmployeeService {
 		int row = employeeRepository.updatePassword(newPwd, empId);
 		return row;
 		
+	}
+
+	@Override
+	public int grantInitialPassword(EmployeePassword employeePassword) {
+		int row = employeeRepository.updateInitPassword(employeePassword.getNewPwd(), employeePassword.getEmpId());
+		return row;
 	}
 
 }

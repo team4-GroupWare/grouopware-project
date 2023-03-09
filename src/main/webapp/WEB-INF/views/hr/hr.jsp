@@ -41,11 +41,13 @@
 	  	<main id="main" class="main">
 			<section class="section">
 				<div class="row">
-					<div class="col-10 d-flex justify-content-between">
-						<div class="pagetitle">
+					<div class="col-12 d-flex justify-content-between">
+						<div class="col-6 pagetitle">
 			      			<h1>주소록</h1>
 			    		</div>
-						<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/employee/register'">+ 사원 추가</button>
+			    		<div class="col-6" style="text-align:right">
+							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/employee/register'">+ 사원 추가</button>
+						</div>
 					</div>
 					
 				</div>
@@ -83,7 +85,7 @@
 					</script>
 				</div>
 	      		<div class="row">
-	        		<div class="col-lg-10">
+	        		<div class="col-lg-12">
 	          			<div class="card" style="height:650px">
 	            			<div class="card-body">
 	              				<h5 class="card-title"></h5>
@@ -193,7 +195,8 @@
       						$('#empTeam').html(result.teamName);
       						$('#empEmail').html(result.empId + "@mycompany.com");
       						$('#empPhone').html(result.phone);
-      						$('#writeemail').prop('href', '${pageContext.request.contextPath}/email/writedirect?empId='+result.empId)
+      						$('#writeemail').prop('href', '${pageContext.request.contextPath}/email/writedirect?empId='+result.empId);
+      						$('#updateEmployee').prop('href', '${pageContext.request.contextPath}/employee/updateemployee?empId='+result.empId);
       						$("#popup").css('display','flex').hide().fadeIn();
 						})
 	      			};
@@ -227,6 +230,7 @@
 				          			<div class="d-flex">
 				          				<h5 id="empName" style="font-weight:bold; margin-right:10px"></h5>
 				            			<span id="empGrade"></span>
+				          			<a id="updateEmployee"style="margin-left:9px"><i style="font-size:20px" class="bi bi-pencil-fill"></i></a>
 				          			</div>
 				            		<div class="d-flex">
 				            			<span style="font-weight:bold; margin-right:10px">소속</span>
