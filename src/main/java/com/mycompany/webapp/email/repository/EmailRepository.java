@@ -251,5 +251,10 @@ public interface EmailRepository {
 	 * @return
 	 */
 	int updateEmailContent(EmailContent emailContent);
+	/**
+	 * 
+	 * @param emailId
+	 */
+	int selectReceiveEmailCountByEmailId(int emailId);
 
 }

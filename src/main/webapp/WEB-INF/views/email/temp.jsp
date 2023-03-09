@@ -39,7 +39,7 @@
 			console.log(data);
 			
 			$.ajax({
-				url : "${pageContext.request.contextPath}/email/tempsave",
+				url : "${pageContext.request.contextPath}/email/tempupdate",
 				method : "post",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"

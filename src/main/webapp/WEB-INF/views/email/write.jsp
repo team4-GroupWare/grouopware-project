@@ -48,7 +48,7 @@
 			console.log(data);
 			
 			$.ajax({
-				url : "${pageContext.request.contextPath}/email/tempupdate",
+				url : "${pageContext.request.contextPath}/email/tempsave",
 				method : "post",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"
@@ -141,7 +141,7 @@
                     <input type="text" class="form-control" name="title" id="title" value="RE: ${emailDetail.title}">
                     </c:if>
                      <c:if test="${type eq 'reply'}">
-                    <input type="text" class="form-control" name="title" id="title" value="${emailDetail.title}">
+                    <input type="text" class="form-control" name="title" id="title" value="FW: ${emailDetail.title}">
                     </c:if>
                   </div>
                 </div>
@@ -183,6 +183,8 @@
 	                    
 	                    </c:if>
 	                    <c:if test="${type eq 'reply'}">
+	                    <p><b>[original message] </b>
+	                    <p>-----------------------------------------------------------------------------
 	                    ${emailDetail.content}
 	                    -----------------------------------------------------------------------------
 	                    </c:if>

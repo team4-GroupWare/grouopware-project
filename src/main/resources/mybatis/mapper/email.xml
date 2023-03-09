@@ -552,6 +552,13 @@
 		]]>
 	
 	</update>
+	
+	<select id="selectReceiveEmailCountByEmailId" parameterType="int" resultType="int">
+		select count(receive_email_id)
+			from  receive_email
+			where receive_email_id = #{emailId}
+	</select>
+	
 
 
 

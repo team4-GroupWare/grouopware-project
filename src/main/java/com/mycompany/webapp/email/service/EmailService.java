@@ -281,6 +281,7 @@ public class EmailService implements IEmailService {
 		emailContent.setContent(tempEmail.getContent());
 		emailContent.setTitle(tempEmail.getTitle());
 		int row = emailRepository.insertEmailContent(emailContent);
+		log.info("반영된 행수: "+row);
 		tempEmail.setEmailContentId(emailContent.getEmailContentId());
 		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
@@ -382,8 +383,14 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public EmailDetail getEmailDetail(int receiveEmailId) {
-		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
+	public EmailDetail getEmailDetail(int emailId) {
+		EmailDetail emailDetail = new EmailDetail();
+		int receive = emailRepository.selectReceiveEmailCountByEmailId(emailId);
+		if(receive == 1) {
+			emailDetail = emailRepository.selectReceiveEmailDetail(emailId);
+		} else {
+			emailDetail = emailRepository.selectSendEmailDetail(emailId);
+		}
 		return emailDetail;
 	}
 
