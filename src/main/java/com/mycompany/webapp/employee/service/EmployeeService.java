@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.component.MultipartFileResolver;
-import com.mycompany.webapp.employee.AlreadyExistingIdException;
-import com.mycompany.webapp.employee.NotExistingManagerException;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
+import com.mycompany.webapp.exception.AlreadyExistingIdException;
+import com.mycompany.webapp.exception.NotExistingManagerException;
 
 import lombok.extern.log4j.Log4j2;
 

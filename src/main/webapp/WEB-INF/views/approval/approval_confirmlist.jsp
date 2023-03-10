@@ -54,42 +54,42 @@
 				               	<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
 				              		<li class="nav-item" role="presentation">
 				              			<c:if test="${empty status}">
-				              				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/list">전체</a>
+				              				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/confirmlist">전체</a>
 				              			</c:if>
 				              			<c:if test="${!empty status}">
-				              				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/list">전체</a>
+				              				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/confirmlist">전체</a>
 				              			</c:if>
 				              		</li>
 				               		<li class="nav-item" role="presentation">
 				               			<c:if test="${status == '대기'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/list?status=대기">대기</a>
+				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/confirmlist?status=대기">대기</a>
 				               			</c:if>
 				               			<c:if test="${status != '대기'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/list?status=대기">대기</a>
+				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/confirmlist?status=대기">대기</a>
 				               			</c:if>
 				               		</li>
 				               		<li class="nav-item" role="presentation">
 				               			<c:if test="${status == '진행'}">
-					               			<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/list?status=진행">진행</a>
+					               			<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/confirmlist?status=진행">진행</a>
 				               			</c:if>
 				               			<c:if test="${status != '진행'}">
-					               			<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/list?status=진행">진행</a>
+					               			<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/confirmlist?status=진행">진행</a>
 				               			</c:if>
 				               		</li>
 				               		<li class="nav-item" role="presentation">
 				               			<c:if test="${status == '승인'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/list?status=승인">승인</a>
+				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/confirmlist?status=승인">승인</a>
 				               			</c:if>
 				               			<c:if test="${status != '승인'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/list?status=승인">승인</a>
+				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/confirmlist?status=승인">승인</a>
 				               			</c:if>
 				               		</li>
 				               		<li class="nav-item" role="presentation">
 				               			<c:if test="${status == '반려'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/list?status=반려">반려</a>
+				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/confirmlist?status=반려">반려</a>
 				               			</c:if>
 				               			<c:if test="${status != '반려'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/list?status=반려">반려</a>
+				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/confirmlist?status=반려">반려</a>
 				               			</c:if>
 				               		</li>
 				           	    </ul>

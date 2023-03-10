@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mycompany.webapp.employee.AlreadyExistingIdException;
-import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.EmpValidator;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService;
 import com.mycompany.webapp.employee.service.IEmployeeService;
+import com.mycompany.webapp.exception.AlreadyExistingIdException;
+import com.mycompany.webapp.exception.NotExistingManagerException;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Grade;
 import com.mycompany.webapp.group.model.Team;

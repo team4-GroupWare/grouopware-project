@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
 import com.mycompany.webapp.approval.model.ApprovalFile;
 import com.mycompany.webapp.approval.model.ApprovalLine;
 import com.mycompany.webapp.approval.model.RefEmployee;
 import com.mycompany.webapp.approval.service.IApprovalService;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.component.Uri;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.service.IEmployeeService;

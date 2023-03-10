@@ -1,4 +1,4 @@
-package com.mycompany.webapp.attendance.controller;
+package com.mycompany.webapp.component;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;

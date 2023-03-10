@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
 import com.mycompany.webapp.approval.model.ApprovalFile;
@@ -16,6 +15,7 @@ import com.mycompany.webapp.approval.model.ApprovalLine;
 import com.mycompany.webapp.approval.model.RefEmployee;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
 import com.mycompany.webapp.component.MultipartFileResolver;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailFile;
 
 import lombok.extern.log4j.Log4j2;

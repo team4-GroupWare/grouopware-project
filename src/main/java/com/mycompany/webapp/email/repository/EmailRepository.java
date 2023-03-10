@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailList;

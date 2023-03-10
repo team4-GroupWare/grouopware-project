@@ -2,7 +2,7 @@ package com.mycompany.webapp.vacation.service;
 
 import java.util.List;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;

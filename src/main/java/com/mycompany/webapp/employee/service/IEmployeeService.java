@@ -2,7 +2,7 @@ package com.mycompany.webapp.employee.service;
 
 import java.util.List;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService.LoginResult;
