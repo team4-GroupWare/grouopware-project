@@ -104,6 +104,9 @@
 	                    <!-- 휴지통에서는 영구삭제가 가능함 -->
 	                    <button type="submit" class="btn btn-danger btn-sm" onclick="checkEmail('${type}')">영구삭제</button>
 	                    </c:if>
+	                    <c:if test="${type eq 'trash'}">
+		                <p class="small" style="color:grey;margin-bottom:0px;margin-top:5px">휴지통에 보관된 이메일은 10일 이후 자동으로 삭제됩니다.</p>
+		                </c:if>
 	                    <script>
 	                    	function restore(){
 	                    		var checkArr = [];

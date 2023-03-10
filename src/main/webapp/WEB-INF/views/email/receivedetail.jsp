@@ -72,8 +72,8 @@
 		              		<c:if test="${emailDetail.rtrashDate ne null}">
 		              		<a type="button" class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/email/restoreEmail?emailId=${emailDetail.receiveEmailId}">복구</a>
 		              		</c:if>
-		                    <button type="button" class="btn btn-secondary btn-sm">답장</button>
-		                    <button type="button" class="btn btn-primary btn-sm">전달</button>
+		                    <button type="button" class="btn btn-secondary btn-sm" onclick="response(${emailDetail.receiveEmailId})">답장</button>
+		                    <button type="button" class="btn btn-primary btn-sm" onclick="reply(${emailDetail.receiveEmailId})">전달</button>
 		                    <c:if test="${emailDetail.rtrashDate eq null}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.receiveEmailId}','trash')">삭제</button>
@@ -84,6 +84,16 @@
 		                  	</c:if>
 		                  </div>
 		                  <script>
+		                  	function response(receiveEmailId){
+		                  		location.href="${pageContext.request.contextPath}/email/response?receiveEmailId="
+		                  				+ receiveEmailId;
+		                  	}
+		                  	
+		                  	function reply(receiveEmailId){
+		                  		location.href="${pageContext.request.contextPath}/email/reply?emailId="
+	                  				+ receiveEmailId;
+		                  	}
+		                  
 		                  	function checkEmail(emailId, type){
 									var data = {"emailId" : emailId};
 									$.ajax({
@@ -173,7 +183,7 @@
 		                </c:if>
 		                
 		                <div class="row mb-3 px-4">
-		                  <div class="col-sm-12 mail-content px-3" style="height:320px">
+		                  <div class="col-sm-12 mail-content px-3" style="height:500px">
 		                    	${emailDetail.content}
 		                  </div>
 		                </div>
