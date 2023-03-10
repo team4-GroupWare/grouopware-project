@@ -33,22 +33,22 @@
 				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 					<a class="nav-link collapsed" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>근무 현황</span>
+				    	<span>나의 근무</span>
 				  	</a>
 				</li>
 			
 				<!--부서 근무 현황 -->
-				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+				<%-- <li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
 					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
 				  	</a>
-				</li>
+				</li> --%>
 			
 				<!--내 휴가 문서 -->
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
 					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>내 휴가</span>
+				    	<span>나의 휴가</span>
 					</a>
 					
 				</li>
@@ -57,7 +57,7 @@
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 결제 문서</span>
+				    	<span>휴가 결재 문서</span>
 					</a>
 				</li>
 			</ul>

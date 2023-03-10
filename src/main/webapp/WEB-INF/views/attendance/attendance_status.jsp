@@ -73,7 +73,7 @@
 				<!-- ====================================== First row ============================================ --> 
 				<div class="row">
 					<!-- 오늘 근무 현황 -->
-					<div class="col-lg-4">
+					<div class="col-lg-5">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="pagetitle">
@@ -136,14 +136,14 @@
 					              <h5 class="card-title"></h5>
 					
 					              <!-- Pie Chart -->
-					              <div id="pieChart"></div>
+					              <div id="pieChart" ></div>
 					
 					              <script>
 					                document.addEventListener("DOMContentLoaded", () => {
 					                  new ApexCharts(document.querySelector("#pieChart"), {
 					                    series: [44, 55, 13, 43, 22],
 					                    chart: {
-					                      height: 350,
+					                      height: 250,
 					                      type: 'pie',
 					                    },
 					                    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
@@ -156,11 +156,11 @@
 					          </div>
 					</div>
 					<!-- ====================================== 4th Card ============================================== --> 
-					<div class="col-lg-8">
+					<div class="col-lg-7">
 						<div class="pagetitle">
 							<h1>월별 근무 현황</h1>
 						</div>
-							<div class="card" style="height:700px;">
+							<div class="card" style="height:720px;">
 								<div class="card-body m-0 p-0">
 									<script>
 										$(document).ready(function(){

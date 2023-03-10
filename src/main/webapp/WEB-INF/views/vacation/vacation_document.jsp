@@ -9,56 +9,57 @@
  td.form10b{
  	background-color: #E9EFFE;
  }
+ td.form10c{
+ 	background-color: #c2d2f9;
+ }
 </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<!-- =========================sideber=============================== -->
-	<aside id="sidebar" class="sidebar">
-		<ul class="sidebar-nav" id="sidebar-nav">
-			<!--휴가 작성 -->
-			<li class="nav-item"
-				onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
-				<a class="btn btn-primary" type="button" href="#"
-				style="width: 100%"> <i class="bi bi-pencil-square"></i> <span>휴가
-						작성</span>
-			</a>
-			</li>
-			<!--근무 현황 -->
-			<li class="nav-item"
-				onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
-				<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
-					<span>근무 현황</span>
-			</a>
-			</li>
-
-			<!--부서 근무 현황 -->
-			<li class="nav-item"
-				onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
-				<a class="nav-link collapsed" data-bs-target="#approval-nav"
-				data-bs-toggle="collapse" href="#"> <i
-					class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
-			</a>
-			</li>
-
-			<!--내 휴가 문서 -->
-			<li class="nav-item"
-				onclick="location.href='${pageContext.request.contextPath}/vacation/my'">
-				<a class="nav-link collapsed" data-bs-target="#document2-nav"
-				data-bs-toggle="collapse" href="#"> <i class="bi bi-eye"></i> <span>내
-						휴가</span>
-			</a>
-
-			</li>
-
-			<!--휴가 결제 문서 -->
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-eye"></i> <span>휴가 결제 문서</span>
-			</a></li>
-		</ul>
-	</aside>
-	<!-- ======================================End Sidebar ============================================ -->
+		<aside id="sidebar" class="sidebar">
+			<ul class="sidebar-nav" id="sidebar-nav">
+				<!--휴가 작성 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
+					<a class="btn btn-primary" type="button" href="#" style="width:100%">
+					    <i class="bi bi-pencil-square"></i> 
+					    <span>휴가 작성</span>
+				  	</a>
+				</li>
+				<!--근무 현황 -->
+				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+					<a class="nav-link collapsed" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>나의 근무</span>
+				  	</a>
+				</li>
+			
+				<!--부서 근무 현황 -->
+				<%-- <li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
+				  	</a>
+				</li> --%>
+			
+				<!--내 휴가 문서 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
+					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>나의 휴가</span>
+					</a>
+					
+				</li>
+			
+				<!--휴가 결제 문서 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
+					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>휴가 결재 문서</span>
+					</a>
+				</li>
+			</ul>
+		</aside>
+		<!-- ======================================End Sidebar ============================================ -->
 	<!-- ======================================Main==================================================== -->
 	<main id="main" class="main"> <!-- 페이지 제목 -->
 	<div class="pagetitle">
@@ -109,15 +110,12 @@
 							bordercolor="#000000 "
 							 class="form10 table table-bordered mt-5">
 
-							<tbody>
-								<tr>
-									<td height="50" colspan="3" align="center" class="form10b">결재 딤딩지</td>
-									<td align="center" class="form10">이지호</td>
-									<td align="center" class="form10b">승인</td>
-									<td align="center" class="form10">
-										<button type="submit" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y">승인</button>
-                    					<button type="submit" class="btn btn-danger" name="isApproved" value="n">반려</button>
-									</td>
+							<tbody style =' vertical-align : middle '>
+								<tr style="border: 2px solid #d0d4d9">
+									<td height="50" colspan="3" align="center" class="form10c">결재 담당자</td>
+									<td align="center" class="form10">이지호(부장)<br><hr>공공사업  /  솔루션개발팀</td>
+									<td align="center" class="form10c">승인</td>
+									<td align="center" class="form10">대기</td>
 								</tr>
 								<tr>
 									<td height="50" colspan="3" align="center" class="form10b">문서번호</td>
@@ -145,7 +143,10 @@
 									<td width="40" rowspan="2" align="center"class="form10b">휴<br> 가<br> 신<br> 청<br>서</td>
 									
 									<td width="103" height="50" align="center" class="form10b">종류</td>
-									<td colspan="3" align="left" class="form10">${vacationDetail.vacationName}</td>
+									<td align="left" class="form10">${vacationDetail.vacationName}</td>
+									<td width="103" height="50" align="center" class="form10b">일수</td>
+									<td align="left" class="form10">총 ${vacationDetail.countDay}일</td>
+									
 								</tr>
 								<tr>
 									<td height="50" align="center" class="form10b">일정</td>
@@ -155,16 +156,22 @@
 										bordercolor="#ffffff" class="form2"
 										style="border-collapse: collapse;">
 											<tbody>
+											<c:forEach var="vacationDate" items="${vacationDate}">
 												<tr>
 													<td width="33%" align="left" class="form2">
-														<div style="padding: 3px; cursor: hand;">2017.01.16.</div></td>
-													<td width="6%" align="center" class="form2">~</td>
+														<div style="padding: 3px; ">${vacationDate.startDateStr}</div>
+													</td>
+													
+													<td width="6%" align="left" class="form2">~</td>
+													
 													<td width="33%" align="left" class="form2">
-														<div style="padding: 3px; cursor: hand;">2017.01.16.</div></td>
-													<td width="3%" align="left" class="form2">&nbsp;</td>
+														<div style="padding: 3px; cursor: hand;">${vacationDate.endDateStr}</div>
+													</td>
 													<td width="25%" align="left" class="form2">
-													<div id="h_caldate" style="padding: 3px">(${vacationDetail.countDay}일)</div></td>
 												</tr>
+											</c:forEach>
+												
+												
 											</tbody>
 										</table>
 									</td>

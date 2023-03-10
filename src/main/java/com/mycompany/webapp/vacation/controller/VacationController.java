@@ -78,7 +78,7 @@ public class VacationController {
 	public String getVacationList(Model model) {
 		log.info("실행");
 		
-		return "vacation/vacation_document";
+		return "vacation/vacation_approval";
 	}
 	
 	@GetMapping("/vacation/my")
@@ -105,18 +105,12 @@ public class VacationController {
 	
 	@PostMapping("/vacation/employee")
 	@ResponseBody
-	public List<VacationLine> getEmployeeInfo(@RequestParam(value="line[]") String[] line, Model model) {
+	public Vacation getEmployeeInfo(@RequestParam String empId, Model model) {
 		log.info("실행");
-		
-		List<VacationLine> vacationLines = new ArrayList<>();
-		
-		for(int i = 0; i < line.length; i++) {
-			VacationLine vacationLine = vacationService.getVacationLine(line[i]);
-			vacationLine.setSeq(i+1);
-			vacationLines.add(vacationLine);
-		}
-		
-		return vacationLines;
+		log.info(empId);
+		Vacation vacation = vacationService.getApprovalEmp(empId);
+		log.info(vacation);
+		return vacation;
 	}
 	
 	@PostMapping("/vacation/write")
@@ -157,11 +151,13 @@ public class VacationController {
 	@GetMapping("vacation/detail")
 	public String detail(@RequestParam int vacationId, @RequestParam int pageNo, @RequestParam() String status, Model model, HttpSession session) {
 		log.info("실행");
-		log.info(vacationId);
 		VacationDetail vacationDetail = vacationService.getVacationDetail(vacationId);
+		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
+		log.info(vacationDate);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
 		model.addAttribute("vacationDetail", vacationDetail);
+		model.addAttribute("vacationDate", vacationDate);
 		
 		log.info(vacationDetail);
 		return "vacation/vacation_document";

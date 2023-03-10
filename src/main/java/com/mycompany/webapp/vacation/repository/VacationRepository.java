@@ -16,8 +16,6 @@ import com.mycompany.webapp.vacation.model.VacationList;
 @Repository
 public interface VacationRepository {
 
-	public VacationLine selectVacationLine(String empId);
-
 	public int insertVacation(Vacation vacation);
 
 	public int insertVacationLine(VacationLine vacationLine);
@@ -32,5 +30,9 @@ public interface VacationRepository {
 	public Employee selectVacationDays(String empId);
 
 	public VacationDetail selectVacationDetail(int vacationId);
+
+	public List<VacationDate> selectVacationDate(int vacationId);
+
+	public Vacation selectApprovalEmp(String empId);
 
 }

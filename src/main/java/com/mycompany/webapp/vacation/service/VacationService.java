@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
+import com.mycompany.webapp.vacation.model.VacationDate;
 import com.mycompany.webapp.vacation.model.VacationDetail;
 import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
@@ -23,9 +24,9 @@ public class VacationService implements IVacationService {
 	private VacationRepository vacationRepository;
 	
 	@Override
-	public VacationLine getVacationLine(String empId) {
+	public Vacation getApprovalEmp(String empId) {
 		log.info("실행");
-		return vacationRepository.selectVacationLine(empId);
+		return vacationRepository.selectApprovalEmp(empId);
 	}
 
 	@Override
@@ -68,6 +69,12 @@ public class VacationService implements IVacationService {
 	public VacationDetail getVacationDetail(int vacationId) {
 		log.info("실행");
 		return vacationRepository.selectVacationDetail(vacationId);
+	}
+
+	@Override
+	public List<VacationDate> getVacationDate(int vacationId) {
+		log.info("실행");
+		return vacationRepository.selectVacationDate(vacationId);
 	}
 
 

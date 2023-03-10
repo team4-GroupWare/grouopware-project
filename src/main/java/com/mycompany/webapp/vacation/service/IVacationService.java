@@ -5,13 +5,12 @@ import java.util.List;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
+import com.mycompany.webapp.vacation.model.VacationDate;
 import com.mycompany.webapp.vacation.model.VacationDetail;
 import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
 
 public interface IVacationService {
-
-	VacationLine getVacationLine(String empId);
 
 	int writeVacation(Vacation vacation);
 
@@ -22,5 +21,9 @@ public interface IVacationService {
 	Employee getVacationDays(String empId);
 
 	VacationDetail getVacationDetail(int vacationId);
+
+	List<VacationDate> getVacationDate(int vacationId);
+
+	Vacation getApprovalEmp(String empId);
 
 }

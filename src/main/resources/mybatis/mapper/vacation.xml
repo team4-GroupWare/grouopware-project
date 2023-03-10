@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.vacation.repository.VacationRepository">
 
 	<!-- 휴가 결재선 선택 사원정보-->
-	<select id="selectVacationLine" parameterType="string" resultType="vacationLine">
+	<select id="selectApprovalEmp" parameterType="string" resultType="vacation">
 		<![CDATA[
 			SELECT e.emp_id as "empId", 
 				name as "empName",
@@ -113,6 +113,12 @@
 	        and e.dept_id= d.dept_id 
 	        and e.team_id= t.team_id 
 	        and c.vacation_category_id= v.vacation_category_id
+	</select>
+	
+	<select id="selectVacationDate" parameterType="int" resultType="vacationDate">
+		select to_char(start_date,'yyyy-mm-dd') as "startDateStr", to_char(end_date,'yyyy-mm-dd')as "endDateStr"
+		from vacation_date
+		where vacation_id = #{vacationId}
 	</select>
 	
 </mapper>

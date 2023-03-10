@@ -37,69 +37,70 @@
   
   		
   	<!-- =========================sideber=============================== -->
-	<aside id="sidebar" class="sidebar">
-		<ul class="sidebar-nav" id="sidebar-nav">
-			<!--휴가 작성 -->
-			<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
-				<a class="btn btn-primary" type="button" href="#" style="width:100%">
-				    <i class="bi bi-pencil-square"></i> 
-				    <span>휴가 작성</span>
-			  	</a>
-			</li>
-			<!--근무 현황 -->
-			<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
-				<a class="nav-link collapsed" href="#">
-			    	<i class="bi bi-eye"></i>
-			    	<span>근무 현황</span>
-			  	</a>
-			</li>
-		
-			<!--부서 근무 현황 -->
-			<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
-				<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
-			    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
-			  	</a>
-			</li>
-		
-			<!--내 휴가 문서 -->
-			<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
-				<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
-			    	<i class="bi bi-eye"></i>
-			    	<span>내 휴가</span>
-				</a>
-				
-			</li>
-		
-			<!--휴가 결제 문서 -->
-			<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
-				<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
-			    	<i class="bi bi-eye"></i>
-			    	<span>휴가 결제 문서</span>
-				</a>
-			</li>
-		</ul>
-	</aside>
-	<!-- ======================================End Sidebar ============================================ -->
+		<aside id="sidebar" class="sidebar">
+			<ul class="sidebar-nav" id="sidebar-nav">
+				<!--휴가 작성 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/form'">
+					<a class="btn btn-primary" type="button" href="#" style="width:100%">
+					    <i class="bi bi-pencil-square"></i> 
+					    <span>휴가 작성</span>
+				  	</a>
+				</li>
+				<!--근무 현황 -->
+				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+					<a class="nav-link collapsed" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>나의 근무</span>
+				  	</a>
+				</li>
+			
+				<!--부서 근무 현황 -->
+				<%-- <li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
+				  	</a>
+				</li> --%>
+			
+				<!--내 휴가 문서 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
+					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>나의 휴가</span>
+					</a>
+					
+				</li>
+			
+				<!--휴가 결제 문서 -->
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
+					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
+				    	<i class="bi bi-eye"></i>
+				    	<span>휴가 결재 문서</span>
+					</a>
+				</li>
+			</ul>
+		</aside>
+		<!-- ======================================End Sidebar ============================================ -->
 
   	<main id="main" class="main">
-    	
+    	<div class="pagetitle">
+    		<h1>휴가 결재 문서</h1>
+     		<nav>
+	        	<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">휴가 결재문서</li>
+	          		
+	        	</ol>
+     		</nav>
+    	</div><!-- End Page Title -->
     	<!-- 페이지 제목 -->
-		<div class="pagetitle">
-			<h1>휴가 결제 문서</h1>
-			<nav>
-				<ol class="breadcrumb">
-			    	<li class="breadcrumb-item"><a href="index.html">근태관리</a></li>
-			    	<li class="breadcrumb-item"><a href="index.html">휴가 문서</a></li>
-			  	</ol>
-			</nav>
-		</div>
-
-		<section class="section">
+		
+		<section class="section mt-3">
       		<div class="row">
         		<div class="col-lg-12">
-        		
-          			<div class="card" style="height:400px">
-            			<div class="card-body">
+        		<div class="pagetitle">
+			   			<h1>휴가 결재 목록</h1>
+					</div>
+          			<div class="card" >
+            			<div class="card-body px-5">
               				<h5 class="card-title"></h5>
 
               				<!-- Table with hoverable rows -->
@@ -107,16 +108,17 @@
                 				<thead>
                   					<tr>
 					                    <!-- <th scope="col" width="10%">#</th> -->
-					                    <th scope="col" width="15%">결재양식</th>
-					                    <th scope="col" width="35%">제목</th>
-					                    <th scope="col" width="15%">기안자/부서</th>
-					                     <th scope="col" width="10%">
+					                    <th scope="col" width="20%">번호</th>
+					                    <th scope="col" width="20%">휴가종류</th>
+					                    <th scope="col" width="30%">기간</th>
+					                    <th scope="col" width="15%">일수</th>
+					                    <th scope="col" width="15%">
 						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
 	          								</a>
 		          							<ul class="dropdown-menu ">
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my">
 		                								<span>전체</span>
 		              								</a>
 		            							</li>
@@ -124,7 +126,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=대기">
 		                								<span>대기</span>
 		              								</a>
 		            							</li>
@@ -132,7 +134,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=진행">
 		                								<span>진행</span>
 		              								</a>
 									            </li>
@@ -140,7 +142,7 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 									            <li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/my?status=승인">
 		                								<span>승인</span>
 		              								</a>
 		            							</li>
@@ -148,37 +150,37 @@
 		              								<hr class="dropdown-divider">
 		            							</li>
 		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="#">
+		              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/vacation/my?status=반려">
 		                								<span>반려</span>
 		              								</a>
 		            							</li>
 		            							
 									    	</ul>
           								</th>
-					                    <th scope="col" width="15%">기안일시</th>
                   					</tr>
 
                 				</thead>
                 				<tbody>
-                					<c:forEach var="approval" items="${approvals}" varStatus="index">
-                						<tr>
+                					<c:forEach var="vacation" items="${vacationList}" varStatus="index">
+                						<tr onClick='location.href="${pageContext.request.contextPath}/vacation/detail?vacationId=${vacation.vacationId}&pageNo=${pager.pageNo}&status=${status}"'>
 						                    <%-- <th scope="row">${index.count}</th> --%>
-						                    <td>${approval.categoryName}</td>
-						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
-						                    <td>${approval.empName}</td>
-						                    <c:if test="${approval.status eq '대기'}">
+						                    <td>${vacation.vacationId}</td>
+						                    <td>${vacation.vacationName}</td>
+						                    <td>${vacation.startDate} ~ ${vacation.endDate}</td>
+						                    <td>${vacation.countDay}</td>
+						                    <c:if test="${vacation.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 						                    </c:if>
-											<c:if test="${approval.status eq '진행'}">
+											<c:if test="${vacation.status eq '진행'}">
 						                    	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
 						                    </c:if>						                    
-						                    <c:if test="${approval.status eq '승인'}">
+						                    <c:if test="${vacation.status eq '승인'}">
 						                    	<td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
 						                    </c:if>
-						                    <c:if test="${approval.status eq '반려'}">
+						                    <c:if test="${vacation.status eq '반려'}">
 						                    	<td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
 						                    </c:if>
-						                    <td>${approval.writeDate}</td>
+						                    
                   						</tr>
                 					</c:forEach>
                 				</tbody>
@@ -189,23 +191,23 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="list?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="my?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="list?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="my?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="my?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="list?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="my?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
