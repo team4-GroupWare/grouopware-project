@@ -15,24 +15,21 @@ import com.mycompany.webapp.vacation.model.VacationList;
 
 @Repository
 public interface VacationRepository {
-
+	
+	//휴가 작성하기
 	public int insertVacation(Vacation vacation);
-
-	public int insertVacationLine(VacationLine vacationLine);
-
 	public int insertVacationDate(VacationDate vacationDate);
 
-
-	public int selectVacationCount(@Param("empId") String empId, @Param("status") String status);
-
-	public List<VacationList> selectVacationList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status);
-
-	public Employee selectVacationDays(String empId);
-
+	//휴가 리스트 조회하기
+	public int selectVacationCount(@Param("empId") String empId, @Param("status") String status,@Param("listType") int listType);
+	public List<VacationList> selectVacationList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status,@Param("listType") int listType);
+	public Employee selectVacationDays(@Param("empId")String empId , @Param("listType") int listType);
+	
+	//휴가 상세 문서
 	public VacationDetail selectVacationDetail(int vacationId);
-
 	public List<VacationDate> selectVacationDate(int vacationId);
-
+	
+	//휴가 결제자 정보 조회
 	public Vacation selectApprovalEmp(String empId);
 
 }

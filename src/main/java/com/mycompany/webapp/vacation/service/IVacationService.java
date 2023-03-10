@@ -14,16 +14,16 @@ public interface IVacationService {
 
 	int writeVacation(Vacation vacation);
 
-	int getVacationRow(String empId, String status);
-
-	List<VacationList> getVacationList(Pager pager, String empId, String status);
-
-	Employee getVacationDays(String empId);
-
 	VacationDetail getVacationDetail(int vacationId);
 
 	List<VacationDate> getVacationDate(int vacationId);
 
 	Vacation getApprovalEmp(String empId);
+
+	int getVacationRow(int listType, String empId, String status);
+
+	List<VacationList> getVacationList(Pager pager, String empId, String status, int listType);
+
+	Employee getVacationDays(String empId, int listType);
 
 }

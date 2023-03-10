@@ -42,7 +42,7 @@
 				</li> --%>
 			
 				<!--내 휴가 문서 -->
-				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/list/1'" >
 					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
 				    	<span>나의 휴가</span>
@@ -51,7 +51,7 @@
 				</li>
 			
 				<!--휴가 결제 문서 -->
-				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
+				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/list/2'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
 				    	<span>휴가 결재 문서</span>
@@ -105,7 +105,7 @@
 			        </div> --%>
 					
 					<div class="row d-flex justify-content-center px-5">
-						<div class="col-10">
+						<div class="col-12">
 							<table  style="border-collapse: collapse;  border="1" cellspacing="0" cellpadding="0"
 							bordercolor="#000000 "
 							 class="form10 table table-bordered mt-5">

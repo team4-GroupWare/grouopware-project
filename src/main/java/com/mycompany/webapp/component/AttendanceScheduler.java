@@ -20,8 +20,9 @@ public class AttendanceScheduler {
 	// 23시 59분에 결근으로 학생 추가
 	
 	//18시에 퇴근/결근 넣어주기
-	//@Scheduled(cron = "0 55 16 * * 1-5")
+	//@Scheduled(cron = "0 51 18 * * 1-5")
 	public void addAtt18() {
+		System.out.println("돌아가낭?");
 		Date date = new Date();
 		
 		/*Calendar c1 = new GregorianCalendar();

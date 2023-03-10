@@ -63,7 +63,7 @@ public class VacationController {
 		}
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
-		return "vacation/vacation_form";
+		return "vacation/vacation_form3";
 	}
 	
 	@GetMapping("/vacation/getemps/{teamid}")
@@ -74,24 +74,10 @@ public class VacationController {
 		return emplist;
 	}
 	
-	@GetMapping("/vacation/document")
+	/*@GetMapping("/vacation/document")
 	public String getVacationList(Model model,HttpSession session) {
 		log.info("실행");
 		
-		// 로그인한 사원의 ID
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		String empId = employee.getEmpId();
-		
-		
-		
-		
-		
-		return "vacation/vacation_approval";
-	}
-	
-	@GetMapping("/vacation/my")
-	public String getMyVacation(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
-		log.info("실행");
 		// 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
@@ -105,6 +91,30 @@ public class VacationController {
 		
 		model.addAttribute("dayoffRemain", vacationDays.getDayoffRemain());
 		model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
+		model.addAttribute("vacationList", vacationList);
+		model.addAttribute("pager", pager);
+		model.addAttribute("status", status);
+		
+		return "vacation/vacation_approval";
+	}
+	*/
+	@GetMapping("/vacation/list/{listType}")
+	public String getMyVacation(@PathVariable int listType, @RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
+		log.info("실행");
+		// 로그인한 사원의 ID
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		
+		int vacationRow = vacationService.getVacationRow(listType,empId, status);
+		log.info(vacationRow);
+		Pager pager = new Pager(10, 5, vacationRow, pageNo);
+		List<VacationList> vacationList = vacationService.getVacationList(pager, empId, status,listType);
+		if( listType ==1) {
+			Employee vacationDays = vacationService.getVacationDays(empId,listType);
+			model.addAttribute("dayoffRemain", vacationDays.getDayoffRemain());
+			model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
+		}
+		
 		model.addAttribute("vacationList", vacationList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);

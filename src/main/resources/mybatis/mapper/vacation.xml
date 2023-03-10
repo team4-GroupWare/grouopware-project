@@ -38,7 +38,23 @@
 		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
 	</insert>
 	
-	<!-- 휴가 리스트 조회-->
+	<!-- 리스트 개수 -->
+	<select id="selectVacationCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM vacation
+		WHERE 
+			<if test="listType ==1">
+				emp_id = #{empId}
+			</if>
+			<if test="listType ==2">
+				approval_emp_id = #{empId}
+			</if>
+			<if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+	</select>
+	
+	<!-- 리스트 조회 -->
 	<select id="selectVacationList" parameterType="string" resultType="vacationList">
 		select v.vacation_id as "vacationId", 
 		e.name as "name", 
@@ -61,7 +77,14 @@
 	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
 	
 		from vacation v, employees e, vacation_category c
-		where v.emp_id= #{empId} 
+		where 
+			<if test="listType ==1">
+				v.emp_id = #{empId}
+			</if>
+			<if test="listType ==2">
+				v.approval_emp_id = #{empId}
+			</if>
+			
 		and e.emp_id = v.emp_id 
 		and c.vacation_category_id = v.vacation_category_id
 		<if test="!status.equals('')">
@@ -72,21 +95,14 @@
         FETCH FIRST 10 ROWS ONLY 
 	</select>
 	
-	<!-- 내 문서함 상태별 갯수 -->
-	<select id="selectVacationCount" parameterType="map" resultType="int">
-		SELECT count(*)
-		FROM vacation
-		WHERE emp_id = #{empId}
-			<if test="!status.equals('')">
-				AND status = #{status}
-			</if>
+	<!-- 잔여연차 -->
+	<select id="selectVacationDays" parameterType="map" resultType="employee">
+		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
+		from employees e 
+		where e.emp_id = #{empId}
 	</select>
 	
-	<select id="selectVacationDays" parameterType="string" resultType="employee">
-		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
-		from employees
-		where emp_id = #{empId}
-	</select>
+	
 	
 	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
 		select  c.vacation_name as "vacationName",
