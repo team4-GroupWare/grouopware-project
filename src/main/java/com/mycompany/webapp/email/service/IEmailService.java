@@ -1,5 +1,6 @@
 package com.mycompany.webapp.email.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -198,6 +199,12 @@ public interface IEmailService {
 	int getSearchTrashCount(String keyword, String empId);
 	int getSearchReceiveCount(String keyword, String empId);
 	int getSearchSendCount(String keyword, String empId);
+	/**
+	 * 
+	 * @param sqlDate
+	 * @return
+	 */
+	int getTrashEmail(Date sqlDate);
 	
 	
 }

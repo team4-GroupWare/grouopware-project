@@ -615,7 +615,6 @@
 	
 	<!-- 나의 메일 중 쓰레기통에 있는 메일 list -->
 	<select id="selectSearchTrashList" parameterType="map" resultType="emailList">
-			
 			select * 
 			from (
 		        select s.send_email_id as sendEmailId,
@@ -728,7 +727,29 @@
         	order by s.sent_date desc
         	offset #{pager.startRowNo}-1 rows
         	fetch first 10 rows only
+	</select>
 	
+	<select id="selectExpiredTrash" parameterType="date" resultType="emailList">
+		 select * 
+			from (
+		        select s.send_email_id as sendEmailId,
+                       r.receive_email_id as receiveEmailId,
+		        	   r.trash_date rtrashDate,
+                       s.trash_date strashDate
+		        from email_content c, send_email s,receive_email r
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and r.trash_date = #{sqlDate}
+		        union 
+		        select  s.send_email_id as sendEmailId,
+                        r.receive_email_id as receiveEmailId,
+                        r.trash_date rtrashDate,
+		        		s.trash_date strashDate
+		        from email_content c, send_email s,receive_email r
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and s.trash_date = #{sqlDate}
+        		)
 	</select>
 
 

@@ -1,6 +1,7 @@
 package com.mycompany.webapp.email.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -448,6 +449,17 @@ public class EmailService implements IEmailService {
 	public int getSearchSendCount(String keyword, String empId) {
 		int row = emailRepository.selectSearchSendCount(keyword, empId);
 		return row;
+	}
+
+	@Override
+	public int getTrashEmail(Date sqlDate) {
+		List<EmailList> emailList = emailRepository.selectExpiredTrash(sqlDate);
+//		if(emailList.size()!=0) {
+//			for(EmailList list : emailList) {
+//				int row = emailRepository.
+//			}
+//		}
+		return 0;
 	}
 
 }
