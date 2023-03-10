@@ -33,12 +33,8 @@ public class VacationService implements IVacationService {
 	@Transactional
 	public int writeVacation(Vacation vacation) {
 		log.info("실행");
-		vacationRepository.insertVacation(vacation);
-		
-		for(int i = 0; i < vacation.getVacationLine().size(); i++) {
-			vacationRepository.insertVacationLine(vacation.getVacationLine().get(i));
-		}
-		
+		int result = vacationRepository.insertVacation(vacation);
+		log.info(result);
 		for(int i = 0; i < vacation.getVacationDate().size(); i++) {
 			vacationRepository.insertVacationDate(vacation.getVacationDate().get(i));
 		}

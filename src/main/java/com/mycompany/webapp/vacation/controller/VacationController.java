@@ -75,8 +75,16 @@ public class VacationController {
 	}
 	
 	@GetMapping("/vacation/document")
-	public String getVacationList(Model model) {
+	public String getVacationList(Model model,HttpSession session) {
 		log.info("실행");
+		
+		// 로그인한 사원의 ID
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		
+		
+		
+		
 		
 		return "vacation/vacation_approval";
 	}
@@ -139,10 +147,6 @@ public class VacationController {
 	 		vacation.setVacationDate(date);
 		}
 		
-		//결제선 리스트
-		for(int i = 0; i < vacation.getVacationLine().size(); i++) {
-			vacation.getVacationLine().get(i).setSeq(i+1);
-		}
 		vacationService.writeVacation(vacation);
 		
 		return "redirect:/vacation/my";

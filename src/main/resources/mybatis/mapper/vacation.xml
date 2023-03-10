@@ -21,22 +21,13 @@
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
 			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
-			status,count_day)
+			status,count_day, approval_emp_id)
 		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
-			null,null,null,null,
-			default,#{countDay})
+			null,null,null,null, 
+			default,#{countDay},#{approvalEmpId})
 	</insert> 
-	
-	<!-- 휴가 결제선  저장 -->
-	<insert id="insertVacationLine" parameterType="vacationLine">
-		<selectKey keyProperty="vacationId" resultType="int" order="BEFORE">
-			SELECT seq_vacation.CURRVAL FROM dual
-		</selectKey>
-		INSERT INTO vacation_line (vacation_line_id, vacation_id, emp_id, seq)
-		VALUES (seq_vacation_line.nextval, #{vacationId}, #{empId}, #{seq})
-	</insert>
 	
 	<!-- 휴가 날짜 저장 -->
 	<insert id="insertVacationDate" parameterType="vacationDate">
@@ -119,6 +110,7 @@
 		select to_char(start_date,'yyyy-mm-dd') as "startDateStr", to_char(end_date,'yyyy-mm-dd')as "endDateStr"
 		from vacation_date
 		where vacation_id = #{vacationId}
+		order by start_date
 	</select>
 	
 </mapper>
