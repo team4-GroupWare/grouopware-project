@@ -137,7 +137,6 @@ input[type=radio]:checked+label{
 	}
 	
 	function listSubmit() {
-		
 		var length = document.getElementById('selectEl').length;
 		//var length = $("#selectEl").length;
 		console.log("length: " + length);
@@ -164,8 +163,6 @@ input[type=radio]:checked+label{
 							'<span style="font-size:18px; font-weight:bold;">' + data[i].empName + '</span> ' +
 							data[i].gradeName + '<br>' +
 							data[i].deptName + " / " + data[i].teamName + '</div>';
-							console.log("i: " + i);
-							console.log("data.length: " + data.length);
 					if(i != data.length-1) {
 						lineHtml += '<div style="text-align: center; margin: auto 10px;"><i class="bi bi-caret-right-fill" style="font-size:25px;"></i></div>';
 					}
@@ -191,21 +188,6 @@ input[type=radio]:checked+label{
 			
 			<!-- Body -->
 			<div class="modal-body">
-				
-				<!-- search -->
-				<!-- <div class="row mb-3">
-					<div class="col-3" >
-						<form name="emp-search">
-							<div class="input-group me-auto p-2" style="width:200px">
-			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
-			               		<button class="input-group-text" id="basic-addon1" onclick="searchEmp()">
-				              		<i class="bi bi-search"></i>
-				             	</button>
-			              	</div>
-						</form>
-					</div>
-				</div> -->
-				
 				<!-- 순서 변경 버튼 -->
 				<div class="row d-flex justify-content-end">
 					<div class="col-9" >
@@ -261,7 +243,7 @@ input[type=radio]:checked+label{
 										for(var i in data){
 											teamHtml += '<div class="empList">'+'<input id="' + data[i].empId +'" class="emp1" type="radio" name="employee" value="'
 														+data[i].empId+'">'+'<label style="width:100%" id="'+ data[i].empId +'" for="' + data[i].empId + '">'
-											    +data[i].name+'</label>'+'</div>';
+											    +data[i].name+ ' (' + data[i].gradeName + ')</label>'+'</div>';
 										}
 										$("#empByteam").html(teamHtml);
 									},

@@ -75,13 +75,13 @@
 		WHERE e.dept_id=d.dept_id and e.team_id=t.team_id
 		<choose>
 			<when test="employee.type != null and employee.type.equals('deptName')">
-				AND dept_name LIKE '%' ||  #{keyword} || '%'
+				AND dept_name LIKE '%' ||  #{employee.keyword} || '%'
 			</when>
 			<when test="employee.type != null and employee.type.equals('teamName')">
-				AND team_name LIKE '%' ||  #{keyword} || '%'
+				AND team_name LIKE '%' ||  #{employee.keyword} || '%'
 			</when>
 			<when test="employee.type != null and employee.type.equals('name')">
-				AND name LIKE '%' ||  #{keyword} || '%'
+				AND name LIKE '%' ||  #{employee.keyword} || '%'
 			</when>
 			<when test="deptId != null">
 				AND e.dept_id = #{deptId}
@@ -140,6 +140,23 @@
 		]]>
 	</select>
 	
+	<select id="selectEmpPasswordCount" parameterType="map" resultType="int">
+	<![CDATA[
+			select count(*)
+			from employees
+			where EMP_ID = #{empId} and password = #{oldPwd} 
+		]]>
+	
+	</select>
+	
+	<update id="updatePassword" parameterType="map">
+	<![CDATA[
+			update employees
+			set password = #{newPwd}, INITIAL_PASSWORD = 0
+			where EMP_ID = #{empId}
+		]]>
+	</update>
+	
 	<insert id="insertEmployee" parameterType="employee">
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select seq_employee.nextval from dual
@@ -155,38 +172,42 @@
 	<!-- 팀별 사원 목록  -->
 	<select id="selectEmpListByTeamId" parameterType="int" resultType="employee">
 		<![CDATA[
-			select 
+			SELECT 
 				EMP_ID as "empId", 
             	MANAGER_ID as "managerId", 
             	DEPT_ID as "deptId",
                 TEAM_ID as "teamId",
-                GRADE_ID as "gradeId", 
-                EMP_NO as "empNo", 
-                PASSWORD, 
+                e.GRADE_ID as "gradeId", 
                 NAME, 
-                PHONE, 
-                BIRTH, 
-                HIRE_DATE as "hireDate", 
-                RESIGN_DATE as "resignDate", 
-                PROFILE_CONTENT_TYPE as "profileContentType",
-               	PROFILE_DATA as "profileData", 
-               	DAYOFF_REMAIN as "dayoffRemain", 
-               	ADD_DAYOFF_REMAIN as "addDayoffRemain"
-			from employees
-			where team_id = #{teamid}
+               	grade_name as "gradeName"
+			FROM employees e, grade g
+			WHERE e.grade_id = g.grade_id
+				AND team_id = #{teamid}
     	]]>
 	</select>
 	
 	<update id="updateEmployee" parameterType="employee">
 		update employees
-		set phone = #{phone}
-			<if test="profileContentType != null">
-				, PROFILE_CONTENT_TYPE = #{profileContentType}
-				, PROFILE_DATA = #{profileData}
-			</if>
-				
+		set 
+				dept_id = #{deptId},
+				grade_id = #{gradeId}
+				,team_id = #{teamId}
 			
+			<if test="profileContentType != null">
+				 ,PROFILE_CONTENT_TYPE = #{profileContentType}
+				,PROFILE_DATA = #{profileData}
+			</if>
+			<if test="phone != null">
+				,phone = #{phone}
+			</if>
+			where emp_id = #{empId}
+	</update>
+	
+	<update id="updateInitPassword" parameterType="map">
+		update employees
+		set password = #{newPwd}, INITIAL_PASSWORD = 1
 		where emp_id = #{empId}
+	
 	</update>
 	
 </mapper>

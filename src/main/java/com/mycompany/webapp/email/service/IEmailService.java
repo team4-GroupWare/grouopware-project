@@ -1,10 +1,11 @@
 package com.mycompany.webapp.email.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
@@ -185,6 +186,25 @@ public interface IEmailService {
 	 * @return
 	 */
 	EmailDetail getEmailDetail(int receiveEmailId);
+	/**
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	int getSearchTempCount(String keyword,String empId);
+	List<EmailList> getSearchTempList(Pager pager, String keyword, String empId);
+	List<EmailList> getSearchTrashList(Pager pager, String keyword,String empId);
+	List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId);
+	List<EmailList> getSearchSendList(Pager pager, String keyword, String empId);
+	int getSearchTrashCount(String keyword, String empId);
+	int getSearchReceiveCount(String keyword, String empId);
+	int getSearchSendCount(String keyword, String empId);
+	/**
+	 * 
+	 * @param sqlDate
+	 * @return
+	 */
+	int getTrashEmail(Date sqlDate);
 	
 	
 }

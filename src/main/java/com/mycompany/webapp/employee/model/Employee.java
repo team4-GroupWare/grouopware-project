@@ -5,8 +5,10 @@ import java.sql.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString(exclude="profileData")
 public class Employee {
 	private String empId;
 	private String managerId;

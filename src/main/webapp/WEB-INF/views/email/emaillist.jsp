@@ -86,7 +86,7 @@
 	    </div><!-- End Page Title -->
 
     <section class="section">
-      <div class="row">
+      <div id="part" class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
@@ -231,6 +231,12 @@
 									trashEmail(type);
 								}
 							}
+							
+							function search(type){
+								var keyword = $("#keyword").val();
+								location.href='${pageContext.request.contextPath}/email/search?keyword='+keyword+'&type='+type;
+								
+							}
 						</script>
 	                    
 	              </div>
@@ -238,220 +244,221 @@
 		             <span class="input-group-text" id="basic-addon1">
 		              	<i class="bi bi-search"></i>
 		             </span>
-	               	<input type="text" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
-	               	<button type="submit" class="btn btn-secondary btn-sm ">검색</button>
+	               	<input type="text" id="keyword" class="form-control" placeholder="제목이나 이름으로 검색" aria-label="검색" aria-describedby="basic-addon1">
+	               	<button type="button" onclick="search('${type}')" class="btn btn-secondary btn-sm ">검색</button>
 	              </div>
 	            
 	             
               </div>
-
-              <!-- Table with hoverable rows -->
-              <table class="table table-hover">
-                <thead>
-                  <tr style="border-bottom:2px solid #004389;">
-                  	<th scope="col" ><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
-                    <th scope="col">이름</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">날짜</th>
-                  </tr>
-                </thead>
-                <tbody>
-               	  <c:if test="${not empty emailList}">
-                  <c:forEach var="emailList" items="${emailList}" varStatus="status">
-                  	<tr>
-                  	<c:if test="${type eq 'receive'}">
-                  	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
-                  	</c:if>
-                  	<c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
-                  	<td><input name="selectone" class="form-check-input" value="${emailList.sendEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
-                  	</c:if>
-                  	<c:if test="${type eq 'trash'and emailList.receiveId eq loginEmployee.empId}">
-                  	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
-                  	</c:if>
-                  	<c:if test="${type eq 'temp'}">
-                  	<td><input name="selectone" class="form-check-input" value="${emailList.tempEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
-                  	</c:if>
-                  	<!-- 임시저장함이 아니고, 내가 보낸 사람일때 받은 사람 출력 -->
-                  	<c:if test="${loginEmployee.empId eq emailList.sentId and type ne 'temp' and type ne 'trash'}">
-                    <td>${emailList.receiveName}</td>
-                    </c:if>
-                    <!-- 내가 받은 사람일 때 보낸 사람 출력 -->
-                    <c:if test="${loginEmployee.empId eq emailList.receiveId and type ne 'trash'}">
-                    <td>${emailList.sentName}</td>
-                    </c:if>
-                    <c:if test="${ type eq 'trash'}">
-                    <td>${emailList.name}</td>
-                    </c:if>
-                    <!-- 임시보관함일 때 작성자(보내는 사람) 출력-->
-                    <c:if test="${type eq 'temp'}">
-                    <td>${loginEmployee.name}</td>
-                    </c:if>
-                    <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
-                    <c:if test="${type eq 'receive'}">
-                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">
-                    	${emailList.title}
-                    	</a>
-                    </td>
-                    </c:if>
-                    <!-- if조건을 바꿔야할 듯 -->
-                    <c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
-                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-                    	<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
-                    </td>
-                    </c:if>
-                    <!-- if조건을 바꿔야할 듯 -->
-                    <c:if test="${type eq 'trash' and emailList.receiveId eq loginEmployee.empId}">
-                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a>
-                    </td>
-                    </c:if>
-                     <c:if test="${type eq 'temp'}">
-                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-                    	<a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a>
-                    </td>
-                    </c:if>
-                    
-                    <c:if test="${type ne 'trash' and type ne 'temp'}">
-                    <td>${emailList.sentDate}</td>
-                    </c:if>
-                    <!-- 임시보관함일 때는 임시저장 날짜를 출력 -->
-                    <c:if test="${type eq 'temp'}">
-                    <td>${emailList.tempDate}</td>
-                    </c:if>
-                    <!-- 쓰레기통일 때는 쓰레기통에 넣었던 날짜를 출력. s는 내가 보낸 메일에서 삭제한 것, r은 내가 받은 메일에서 삭제한 것 -->
-                    <c:if test="${not empty emailList.strashDate and loginEmployee.empId eq emailList.sentId}">
-                    <td>${emailList.strashDate}</td>
-                    </c:if>
-                    <c:if test="${not empty emailList.rtrashDate and loginEmployee.empId eq emailList.receiveId}">
-                    <td>${emailList.rtrashDate}</td>
-                    </c:if>
-                    </tr>
-                  </c:forEach>
-                  </c:if>
-                </tbody>
-              </table>
-              <!-- End Table with hoverable rows -->
-              <c:if test="${empty emailList}">
-                <div style="height:200px;text-align:center;margin-top:150px">
-              			메일이 존재하지 않습니다.
-              	</div>
-              	</c:if>
-              <c:if test="${not empty emailList}">
-			  <div class="d-flex justify-content-center" style="vertical-align:bottom">
-  				<nav aria-label="Page navigation example">
-	   				<ul class="pagination">
-	   					<li class="page-item">
-	   						<c:if test="${type eq 'receive'}">
-	       					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=1" aria-label="Previous">
-	         						<span aria-hidden="true">처음</span>
-       						</a>
-       						</c:if>
-       						<c:if test="${type eq 'trash'}">
-	       					<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=1" aria-label="Previous">
-	         						<span aria-hidden="true">처음</span>
-       						</a>
-       						</c:if>
-       						<c:if test="${type eq 'important'}">
-	       					<a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=1" aria-label="Previous">
-	         						<span aria-hidden="true">처음</span>
-       						</a>
-       						</c:if>
-       						<c:if test="${type eq 'temp'}">
-	       					<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=1" aria-label="Previous">
-	         						<span aria-hidden="true">처음</span>
-       						</a>
-       						</c:if>
-     					</li>	
-   						<c:if test="${pager.groupNo>1}">
-      					<li class="page-item">
-      						<c:if test="${type eq 'receive'}">
-        					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
-          						<span aria-hidden="true">이전</span>
-        					</a>
-        					</c:if>
-        					<c:if test="${type eq 'trash'}">
-        					<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
-          						<span aria-hidden="true">이전</span>
-        					</a>
-        					</c:if>
-        					<c:if test="${type eq 'important'}">
-        					<a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
-          						<span aria-hidden="true">이전</span>
-        					</a>
-        					</c:if>
-        					<c:if test="${type eq 'temp'}">
-        					<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
-          						<span aria-hidden="true">이전</span>
-        					</a>
-        					</c:if>
-      					</li>
-     					</c:if>
-     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-     						<c:if test="${pager.pageNo != i}">
-     						<c:if test="${type eq 'receive'}">
-							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
+			  <div id="emailListpart">
+	              <!-- Table with hoverable rows -->
+	              <table class="table table-hover">
+	                <thead>
+	                  <tr style="border-bottom:2px solid #004389;">
+	                  	<th scope="col" ><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
+	                    <th scope="col">이름</th>
+	                    <th scope="col">제목</th>
+	                    <th scope="col">날짜</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+	               	  <c:if test="${not empty emailList}">
+	                  <c:forEach var="emailList" items="${emailList}" varStatus="status">
+	                  	<tr>
+	                  	<c:if test="${type eq 'receive'}">
+	                  	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
+	                  	</c:if>
+	                  	<c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
+	                  	<td><input name="selectone" class="form-check-input" value="${emailList.sendEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
+	                  	</c:if>
+	                  	<c:if test="${type eq 'trash'and emailList.receiveId eq loginEmployee.empId}">
+	                  	<td><input name="selectone" class="form-check-input" value="${emailList.receiveEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
+	                  	</c:if>
+	                  	<c:if test="${type eq 'temp'}">
+	                  	<td><input name="selectone" class="form-check-input" value="${emailList.tempEmailId}" onclick='checkSelectAll()' type="checkbox"></td>
+	                  	</c:if>
+	                  	<!-- 임시저장함이 아니고, 내가 보낸 사람일때 받은 사람 출력 -->
+	                  	<c:if test="${loginEmployee.empId eq emailList.sentId and type ne 'temp' and type ne 'trash'}">
+	                    <td>${emailList.receiveName}</td>
+	                    </c:if>
+	                    <!-- 내가 받은 사람일 때 보낸 사람 출력 -->
+	                    <c:if test="${loginEmployee.empId eq emailList.receiveId and type ne 'trash'}">
+	                    <td>${emailList.sentName}</td>
+	                    </c:if>
+	                    <c:if test="${ type eq 'trash'}">
+	                    <td>${emailList.name}</td>
+	                    </c:if>
+	                    <!-- 임시보관함일 때 작성자(보내는 사람) 출력-->
+	                    <c:if test="${type eq 'temp'}">
+	                    <td>${loginEmployee.name}</td>
+	                    </c:if>
+	                    <!-- 쓰레기통이 아니고, 임시보관함이 아닐 땐 작성날짜를 출력 -->
+	                    <c:if test="${type eq 'receive'}">
+	                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+	                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">
+	                    	${emailList.title}
+	                    	</a>
+	                    </td>
+	                    </c:if>
+	                    <!-- if조건을 바꿔야할 듯 -->
+	                    <c:if test="${type eq 'trash'and emailList.sentId eq loginEmployee.empId}">
+	                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+	                    	<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
+	                    </td>
+	                    </c:if>
+	                    <!-- if조건을 바꿔야할 듯 -->
+	                    <c:if test="${type eq 'trash' and emailList.receiveId eq loginEmployee.empId}">
+	                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+	                    	<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}">${emailList.title}</a>
+	                    </td>
+	                    </c:if>
+	                     <c:if test="${type eq 'temp'}">
+	                    <td><c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
+	                    	<a href="${pageContext.request.contextPath}/email/writeTempEmail?tempEmailId=${emailList.tempEmailId}">${emailList.title}</a>
+	                    </td>
+	                    </c:if>
+	                    
+	                    <c:if test="${type ne 'trash' and type ne 'temp'}">
+	                    <td>${emailList.sentDate}</td>
+	                    </c:if>
+	                    <!-- 임시보관함일 때는 임시저장 날짜를 출력 -->
+	                    <c:if test="${type eq 'temp'}">
+	                    <td>${emailList.tempDate}</td>
+	                    </c:if>
+	                    <!-- 쓰레기통일 때는 쓰레기통에 넣었던 날짜를 출력. s는 내가 보낸 메일에서 삭제한 것, r은 내가 받은 메일에서 삭제한 것 -->
+	                    <c:if test="${not empty emailList.strashDate and loginEmployee.empId eq emailList.sentId}">
+	                    <td>${emailList.strashDate}</td>
+	                    </c:if>
+	                    <c:if test="${not empty emailList.rtrashDate and loginEmployee.empId eq emailList.receiveId}">
+	                    <td>${emailList.rtrashDate}</td>
+	                    </c:if>
+	                    </tr>
+	                  </c:forEach>
+	                  </c:if>
+	                </tbody>
+	              </table>
+	              <!-- End Table with hoverable rows -->
+	              <c:if test="${empty emailList}">
+	                <div style="height:200px;text-align:center;margin-top:150px">
+	              			메일이 존재하지 않습니다.
+	              	</div>
+	              </c:if>
+	              <c:if test="${not empty emailList}">
+				  <div class="d-flex justify-content-center" style="vertical-align:bottom">
+	  				<nav aria-label="Page navigation example">
+		   				<ul class="pagination">
+		   					<li class="page-item">
+		   						<c:if test="${type eq 'receive'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
+	       						<c:if test="${type eq 'trash'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
+	       						<c:if test="${type eq 'important'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
+	       						<c:if test="${type eq 'temp'}">
+		       					<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=1" aria-label="Previous">
+		         						<span aria-hidden="true">처음</span>
+	       						</a>
+	       						</c:if>
+	     					</li>	
+	   						<c:if test="${pager.groupNo>1}">
+	      					<li class="page-item">
+	      						<c:if test="${type eq 'receive'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
+	        					<c:if test="${type eq 'trash'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
+	        					<c:if test="${type eq 'important'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/importantlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
+	        					<c:if test="${type eq 'temp'}">
+	        					<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	          						<span aria-hidden="true">이전</span>
+	        					</a>
+	        					</c:if>
+	      					</li>
+	     					</c:if>
+	     					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+	     						<c:if test="${pager.pageNo != i}">
+	     						<c:if test="${type eq 'receive'}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'trash'}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'temp'}">
+								<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+								<c:if test="${type eq 'receive'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'trash'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								<c:if test="${type eq 'temp'}">
+								<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
+								</c:if>
+								</c:if>
+							</c:forEach>
+									
+							<c:if test="${pager.groupNo<pager.totalGroupNo}">
+							<li class="page-item">
+								<c:if test="${type eq 'receive'}">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	         					</c:if>
+	         					<c:if test="${type eq 'trash'}">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	         					</c:if>
+	         					<c:if test="${type eq 'temp'}">
+	            				<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+	           						<span aria-hidden="true">다음</span>
+	         					</a>
+	         					</c:if>
+	   						</li>
 							</c:if>
-							<c:if test="${type eq 'trash'}">
-							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
-							</c:if>
-							<c:if test="${type eq 'temp'}">
-							<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
-							</c:if>
-							</c:if>
-							<c:if test="${pager.pageNo == i}">
-							<c:if test="${type eq 'receive'}">
-							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${i}">${i}</a></li>
-							</c:if>
-							<c:if test="${type eq 'trash'}">
-							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${i}">${i}</a></li>
-							</c:if>
-							<c:if test="${type eq 'temp'}">
-							<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${i}">${i}</a></li>
-							</c:if>
-							</c:if>
-						</c:forEach>
-								
-						<c:if test="${pager.groupNo<pager.totalGroupNo}">
-						<li class="page-item">
-							<c:if test="${type eq 'receive'}">
-            				<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.endPageNo+1}" aria-label="Next">
-           						<span aria-hidden="true">다음</span>
-         					</a>
-         					</c:if>
-         					<c:if test="${type eq 'trash'}">
-            				<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.endPageNo+1}" aria-label="Next">
-           						<span aria-hidden="true">다음</span>
-         					</a>
-         					</c:if>
-         					<c:if test="${type eq 'temp'}">
-            				<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.endPageNo+1}" aria-label="Next">
-           						<span aria-hidden="true">다음</span>
-         					</a>
-         					</c:if>
-   						</li>
-						</c:if>
-						<li class="page-item">
-							<c:if test="${type eq 'receive'}">
-       						<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.totalPageNo}" aria-label="Previous">
-    							<span aria-hidden="true">맨끝</span>
-   							</a>
-   							</c:if>
-   							<c:if test="${type eq 'trash'}">
-       						<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
-    							<span aria-hidden="true">맨끝</span>
-   							</a>
-   							</c:if>
-   							<c:if test="${type eq 'temp'}">
-       						<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.totalPageNo}" aria-label="Previous">
-    							<span aria-hidden="true">맨끝</span>
-   							</a>
-   							</c:if>
-   						</li>	
-   					 </ul>
- 				  </nav>
+							<li class="page-item">
+								<c:if test="${type eq 'receive'}">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/receivelist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   							</c:if>
+	   							<c:if test="${type eq 'trash'}">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/trashlist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   							</c:if>
+	   							<c:if test="${type eq 'temp'}">
+	       						<a class="page-link" href="${pageContext.request.contextPath}/email/templist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	    							<span aria-hidden="true">맨끝</span>
+	   							</a>
+	   							</c:if>
+	   						</li>	
+	   					 </ul>
+	 				  </nav>
+	 				</div>
+	 				</c:if>
  				</div>
- 				</c:if>
              </div>
           </div>
         </div>
