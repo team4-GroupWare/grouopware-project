@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.attendance.model.Attendance;
 import com.mycompany.webapp.attendance.service.IAttendanceService;
+import com.mycompany.webapp.component.Holiday;
 import com.mycompany.webapp.employee.model.Employee;
 
 import lombok.extern.log4j.Log4j2;

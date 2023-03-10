@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.Pager;
-import com.mycompany.webapp.email.MultipartFileResolver;
+import com.mycompany.webapp.component.MultipartFileResolver;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailContent;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;

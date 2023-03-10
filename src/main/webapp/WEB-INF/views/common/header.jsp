@@ -18,6 +18,7 @@
 	<!-- Dropbar -->
 	<div class="menudropbar d-flex align-items-center justify-content-between">
    		<select onchange="if(this.value) location.href=(this.value);" class="form-select" aria-label="Default select example">
+     		<option value="#">메뉴</option>
      		<option value="${pageContext.request.contextPath}/">오피스 홈</option>
      		<option value="${pageContext.request.contextPath}/attendance/status/info">근태관리</option>
      		<option value="${pageContext.request.contextPath}/hr/group">인사</option>

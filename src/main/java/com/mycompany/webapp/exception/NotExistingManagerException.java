@@ -1,4 +1,4 @@
-package com.mycompany.webapp.employee;
+package com.mycompany.webapp.exception;
 
 public class NotExistingManagerException extends RuntimeException {
 
