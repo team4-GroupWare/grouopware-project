@@ -34,3 +34,8 @@
 		</c:forEach>
 	</tbody>
 </table>
+<c:if test="${empty emailList}">
+    <div style="height:130px;text-align:center;margin-top:110px">
+             메일이 존재하지 않습니다.
+    </div>
+</c:if>

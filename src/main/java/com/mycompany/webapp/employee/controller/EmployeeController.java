@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import com.mycompany.webapp.employee.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.EmpValidator;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService;
 import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
@@ -96,12 +98,60 @@ public class EmployeeController {
 			return "employee/login";
 		} else if (loginResult == EmployeeService.LoginResult.INITIAL_PASSWORD) {
 			//초기 비밀번호인 경우
-			return "redirect:/employee/chagepwd";
+			Employee initEmployee = new Employee();
+			initEmployee.setEmpId(employee.getEmpId());
+			session.setAttribute("loginEmployee", initEmployee);
+			return "redirect:/employee/change";
 		}
 		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
 		session.setAttribute("loginEmployee", dbEmployee);
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		model.addAttribute("empId", employee.getEmpId());
+		return "employee/change";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/changeinitial", produces="application/text; charset=UTF-8")
+	public String changeInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
+		log.info("실행");
+		int count = employeeService.checkPassword(employeePassword.getOldPwd(), employeePassword.getEmpId());
+		if(count == 0) {
+			return "false";
+		} else {
+			employeeService.updatePassword(employeePassword.getNewPwd(),employeePassword.getEmpId());
+			return "success";
+		}
+		
+	}
+	
+	@GetMapping("/updateemployee")
+	public String updateEmployee(Model model, @RequestParam String empId) {
+		log.info("실행");
+		Employee employee = employeeService.getEmp(empId);
+		model.addAttribute("employee", employee);
+		//부서 List
+		List<Department> departments = departmentService.getDeptList();
+		model.addAttribute("departments", departments);
+		//직급 List
+		List<Grade> grades = gradeService.getGradeList();
+		model.addAttribute("grades", grades);
+		return "employee/update_employee";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/grantinitial", produces="application/text; charset=UTF-8")
+	public String grantInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
+		log.info("실행");
+		employeeService.grantInitialPassword(employeePassword);
+		return "success";
+		
 	}
 	
 	
@@ -152,7 +202,7 @@ public class EmployeeController {
 	/**
 	 * @author : LEEYESEUNG
 	 * @return 회원 등록 페이지
-	 * @param model : 화면에 부서, 팀, 직급, 매니저 리스트 담아 보여줌
+	 * @param model : 화면에 부서, 팀, 직급 리스트 담아 보여줌
 	 */
 	@GetMapping("/register")
 	public String register(Model model) {
@@ -165,13 +215,18 @@ public class EmployeeController {
 		model.addAttribute("grades", grades);
 		
 		return "employee/register";
-	}	
+	}
+	/**
+	 * @author : LEEYESEUNG
+	 * @return 유효성 검사 실행 return : 적었던 값과 함께 다시 회원 등록 페이지
+	 * @return 유효성 검사 통과 return : home으로 리턴
+	 * @param model : 화면에 부서, 팀, 직급 리스트와 작성했던 employee 객체
+	 */
 	@PostMapping(value="/register")
 	public String register(Model model, @Valid @ModelAttribute("employee") Employee employee, BindingResult errors) throws Exception{
 		log.info("실행");
 		//정규식 유효성 검사
 		if(errors.hasErrors()) {
-			log.info("errors: "+errors);
 			//부서 List
 			List<Department> departments = departmentService.getDeptList();
 			model.addAttribute("departments", departments);
@@ -193,7 +248,6 @@ public class EmployeeController {
 		
 		try {
 			//insert했을 때 오류가 나면 catch로 오류 제어
-			
 			int row = employeeService.register(employee);
 			
 			//아이디 중복 오류를 잡는다
@@ -205,7 +259,6 @@ public class EmployeeController {
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			log.info("errors: "+errors);
 			return "employee/register";
 			
 			//매니저 아이디가 없으면 삽입할 수 없다
@@ -217,12 +270,16 @@ public class EmployeeController {
 			//직급 List 
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
-			log.info("errors: "+errors);
 			return "employee/register";
 		}
 		
 		return "redirect:/";
 	}
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session : 만료하기 위한 session
+	 * @return home으로 리다이렉트
+	 */
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		log.info("실행");
@@ -249,7 +306,6 @@ public class EmployeeController {
 	public String updatePhone(Employee employee, HttpSession session) {
 		//사진 바꾸는거 해야합니다 3월 8일에..
 		log.info("실행");
-		log.info("employee: "+employee);
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
 		employee.setEmpId(originEmployee.getEmpId());
 		if(employee.getProfileContentType() !=null) {
@@ -264,10 +320,14 @@ public class EmployeeController {
 		return "redirect:/employee/myPage";
 	}
 	
-	@GetMapping("/change")
-	public String change(HttpSession session) {
+	@PostMapping("/updateemployee")
+	public String updateEmployee(Employee employee) {
 		log.info("실행");
-		return "employee/change";
+		if(employee.getTeamId()!=0) {
+			employeeService.updateEmployee(employee);
+		}
+		return "redirect:/hr/group";
+		
 	}
 	
 	@GetMapping("/img")
@@ -283,5 +343,7 @@ public class EmployeeController {
 		}
 		
 	}
+	
+	
 	
 }

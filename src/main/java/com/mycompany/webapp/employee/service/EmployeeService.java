@@ -11,6 +11,7 @@ import com.mycompany.webapp.component.MultipartFileResolver;
 import com.mycompany.webapp.employee.AlreadyExistingIdException;
 import com.mycompany.webapp.employee.NotExistingManagerException;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +19,11 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 public class EmployeeService implements IEmployeeService {
-	
+	/**
+	 * 
+	 * @author : LEEYESEUNG
+	 * @return enum : 성공, 아이디가 틀림, 비밀번호 틀림, 초기비밀번호임
+	 */
 	public enum LoginResult {
 		SUCCESS, WRONG_ID, WRONG_PASSWORD, INITIAL_PASSWORD
 	}
@@ -30,8 +35,8 @@ public class EmployeeService implements IEmployeeService {
 
 	/**
 	 * @author : LEEYESEUNG
-	 * @param : employee
-	 * @return LoginResult
+	 * @param : employee : 로그인한 정보를 담은 객체
+	 * @return LoginResult : 로그인한 결과가 무엇인지 Enum 타입으로 리턴
 	 */
 	@Override
 	public LoginResult login(Employee employee) {
@@ -46,13 +51,14 @@ public class EmployeeService implements IEmployeeService {
 			return LoginResult.WRONG_PASSWORD;
 		} 
 		
-		if(employee.isInitialPassword()) {
-			return LoginResult.INITIAL_PASSWORD;
-		}
 		employee.setName(dbEmployee.getName());
 		employee.setTeamId(dbEmployee.getTeamId());
 		employee.setGradeId(dbEmployee.getGradeId());
 		employee.setManagerId(dbEmployee.getManagerId());
+		employee.setInitialPassword(dbEmployee.isInitialPassword());
+		if(employee.isInitialPassword()) {
+			return LoginResult.INITIAL_PASSWORD;
+		}
 		return LoginResult.SUCCESS;
 	}
 
@@ -118,14 +124,19 @@ public class EmployeeService implements IEmployeeService {
 		}
 		return result;
 	}
-
+	/**
+	 * @author : LEEYESEUNG
+	 * @param employee : 등록할 Employee 객체
+	 */
 	public int register(Employee employee) throws Exception{
 		log.info("실행");
 		int checkId = employeeRepository.selectEmpId(employee.getEmpId());
+		//아이디가 이미 존재하면 예외를 발생시킴
 		if(checkId==1) {
 			throw new AlreadyExistingIdException("duplicate ID");
 		}
-	
+		
+		//없는 매니저 아이디를 입력하면 예외를 발생시킴
 		if(!employee.getManagerId().isEmpty()) {
 			int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
 			if(checkManager==0) {
@@ -163,10 +174,12 @@ public class EmployeeService implements IEmployeeService {
 
 	/**
 	 * @author : LEEYESEUNG
+	 * @param employee : 업데이트할 Employee 객체
 	 */
 	@Override
 	public int updateEmployee(Employee employee) {
 		log.info("실행");
+		//업데이트한 파일이 존재하면 파일을 VO에 다시 저장함
 		if(employee.getAttachFiles() != null) {
 			try {
 				employee = multipartFileResolver.getEmployeeFile(employee);
@@ -174,7 +187,32 @@ public class EmployeeService implements IEmployeeService {
 				e.printStackTrace();
 			}
 		}
+		log.info(employee.getEmpId());
+		log.info(employee.getDeptId());
+		log.info(employee.getTeamId());
+		log.info(employee.getGradeId());
 		return employeeRepository.updateEmployee(employee);
+	}
+
+	@Override
+	public int checkPassword(String oldPwd, String empId) {
+		log.info("실행");
+		int row = employeeRepository.selectEmpPasswordCount(oldPwd, empId);
+		return row;
+	}
+
+	@Override
+	public int updatePassword(String newPwd, String empId) {
+		log.info("실행");
+		int row = employeeRepository.updatePassword(newPwd, empId);
+		return row;
+		
+	}
+
+	@Override
+	public int grantInitialPassword(EmployeePassword employeePassword) {
+		int row = employeeRepository.updateInitPassword(employeePassword.getNewPwd(), employeePassword.getEmpId());
+		return row;
 	}
 
 }

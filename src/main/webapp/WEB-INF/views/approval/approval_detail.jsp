@@ -25,7 +25,7 @@
 		            });
 		        },
 		        height: '900px',
-		        content_style: `
+		        content_style: 
 		            body {
 		                background: #fff;
 		            }

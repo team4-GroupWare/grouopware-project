@@ -1,12 +1,9 @@
 package com.mycompany.webapp.email.controller;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.List; 
+import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -23,19 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
-import com.mycompany.webapp.email.model.ImportantCheck;
 import com.mycompany.webapp.email.model.MainEmailList;
-import com.mycompany.webapp.email.model.ReceiveEmail;
 import com.mycompany.webapp.email.model.TempEmail;
-import com.mycompany.webapp.email.repository.EmailRepository;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
 
@@ -192,6 +184,15 @@ public class EmailController {
 		return "email/write";
 	}
 	
+	@GetMapping("/writedirect")
+	public String writeDirect(@RequestParam String empId, Model model) {
+		log.info("실행");
+		log.info("empId: "+ empId);
+		model.addAttribute("empId", empId);
+		model.addAttribute("type", "modal");
+		return "email/write";
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -201,7 +202,6 @@ public class EmailController {
 	@PostMapping(value="/write", produces="application/json")
 	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
 		log.info("실행");
-		log.info("작성한 이메일: "+emailDetail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
 		String[] receiverArr = emailDetail.getReceiveId().split(",");
@@ -315,26 +315,42 @@ public class EmailController {
 	public String readSendEmail(@RequestParam int sendEmailId, Model model) {
 		log.info("실행");
 		EmailDetail emailDetail = emailService.readSendEmail(sendEmailId);
-		log.info("emailDetail: "+emailDetail);
 		model.addAttribute("emailDetail", emailDetail);
 		return "email/senddetail";
 	}
 	
 	@GetMapping("/writeTempEmail")
-	public String writeTeampEmail(@RequestParam int tempEmailId) {
+	public String writeTeampEmail(@RequestParam int tempEmailId, Model model) {
 		log.info("실행");
-		return "email/write";
+		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
+		model.addAttribute("tempEmail", tempEmail);
+		return "email/temp";
 	}
 	
 	@ResponseBody
 	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
-	public String tempSave(@RequestBody TempEmail tempEmail) {
+	public String tempSave(@RequestBody TempEmail tempEmail, HttpSession session) {
 		log.info("실행");
-		log.info(tempEmail);
-		//int row = emailService.tempSaveEmail(tempEmail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.tempSaveEmail(tempEmail);
 		String result = "성공";
 		return result;
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/tempupdate", produces="application/text; charset=UTF-8")
+	public String tempUpdate(@RequestBody TempEmail tempEmail, HttpSession session) {
+		log.info("실행");
+		log.info(tempEmail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.updateTempEmail(tempEmail);
+		String result = "성공";
+		return result;
+	}
+	
+	
 	
 	@GetMapping("/restoreEmail")
 	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
@@ -390,7 +406,6 @@ public class EmailController {
 		String[] mtypes = emailFile.getEmailFileContentType().split("/");
 		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 		headers.setContentLength(emailFile.getEmailFileSize());
-		log.info("파일이름: " + emailFile.getEmailFileName());
 		String fileName = URLEncoder.encode(emailFile.getEmailFileName(), "UTF-8");
 		fileName = fileName.replaceAll("\\+", "%20");
 		headers.setContentDispositionFormData("attachment", fileName);
@@ -414,4 +429,74 @@ public class EmailController {
 		model.addAttribute("emailList", emailList);
 		return "email/mainreceiveemaillist";
 	}
+	
+	@GetMapping("/response")
+	public String ResponseEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(receiveEmailId);
+		log.info("emailDetail: "+ emailDetail);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "response");
+		return "email/write";
+	}
+	
+	@GetMapping("/reply")
+	public String ReplyEmail(HttpSession session, @RequestParam int emailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(emailId);
+		log.info("emailDetail: "+ emailDetail);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "reply");
+		return "email/write";
+	}
+	
+	@GetMapping("/search")
+	public String searchEmail(Model model, HttpSession session, @RequestParam String type, @RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		//임시 보관함 검색 결과 리스트
+		if(type.equals("temp")) {
+			int row = emailService.getSearchTempCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchTempList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//쓰레기통 검색 결과 리스트
+		} else if(type.equals("trash")) {
+			int row = emailService.getSearchTrashCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchTrashList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//받은 메일함 검색 결과 리스트
+		} else if(type.equals("receive")) {
+			int row = emailService.getSearchReceiveCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchReceiveList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//보낸 메일함 검색 결과 리스트
+		} else if(type.equals("send")) {
+			int row = emailService.getSearchSendCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchSendList(pager,keyword, employee.getEmpId());
+			model.addAttribute("kind", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+			
+			return "email/sendlistsearch";
+		}
+		
+		return "email/emaillistpart";
+	}
+	
+	
+	
 }

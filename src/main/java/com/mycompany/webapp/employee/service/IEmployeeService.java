@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService.LoginResult;
 
 public interface IEmployeeService {
@@ -42,4 +43,20 @@ public interface IEmployeeService {
 	 * @param phone
 	 */
 	public int updateEmployee(Employee employee);
+	/**
+	 * 
+	 * @param oldPwd
+	 * @return
+	 */
+	public int checkPassword(String oldPwd, String empId);
+	/**
+	 * 
+	 * @param newPwd
+	 */
+	public int updatePassword(String newPwd, String empId);
+	/**
+	 * 
+	 * @param employeePassword
+	 */
+	public int grantInitialPassword(EmployeePassword employeePassword);
 }

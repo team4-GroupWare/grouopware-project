@@ -23,6 +23,9 @@
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationLine" alias="vacationLine"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.Vacation" alias="vacation"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDate" alias="vacationDate"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.VacationList" alias="vacationList"/>
+		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDetail" alias="vacationDetail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
+		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
 	</typeAliases>
 </configuration>

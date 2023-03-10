@@ -10,5 +10,7 @@ public class VacationDate {
 	private Date startDate;
 	private Date endDate;
 	private int vacationId;
-
+	
+	private String startDateStr;
+	private String endDateStr;
 }

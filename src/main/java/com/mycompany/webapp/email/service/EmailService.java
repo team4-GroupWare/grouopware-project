@@ -1,6 +1,7 @@
 package com.mycompany.webapp.email.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,6 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getReceiveEmailList(Pager pager, String receiveId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectReceiveEmail(pager, receiveId);
-		log.info(emailList);
 		return emailList;
 	}
 	
@@ -81,7 +81,6 @@ public class EmailService implements IEmailService {
 	public List<EmailList> getSendEmailList(Pager pager, String sendId) {
 		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectSendEmail(pager, sendId);
-		log.info(emailList);
 		return emailList; 
 	}
 	
@@ -251,9 +250,7 @@ public class EmailService implements IEmailService {
 		EmailDetail emailDetail = emailRepository.selectReceiveEmailDetail(receiveEmailId);
 		int emailContentId = emailRepository.selectEmailContentId(receiveEmailId);
 		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
-		log.info(emailFileList);
 		emailDetail.setEmailFiles(emailFileList);
-		log.info(emailDetail.getEmailFiles());
 		if(emailDetail.getReadDate()==null) {
 			int row = emailRepository.updateReadDate(receiveEmailId);
 		}
@@ -265,18 +262,29 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		EmailDetail emailDetail = emailRepository.selectSendEmailDetail(sendEmailId);
 		int emailContentId = emailRepository.selectEmailContentId(sendEmailId);
-		log.info("emailContentId: "+ emailContentId);
 		List<EmailFile> emailFileList = emailFileRepository.selectEmailFileByContentId(emailContentId);
-		log.info(emailFileList);
 		emailDetail.setEmailFiles(emailFileList);
-		log.info(emailDetail);
 		return emailDetail;
 	}
 
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
 		log.info("실행");
-		int row = emailRepository.insertTempEmail(tempEmail);
+		EmailContent emailContent = new EmailContent();
+		if(tempEmail.getTitle() == null) {
+			tempEmail.setTitle("제목없음");
+		}
+		if(tempEmail.getContent() == null) {
+			tempEmail.setContent(" ");
+		}
+		//이메일 컨텐트 테이블 insert
+		//emailContent.setImportant(tempEmail.getImportant());
+		emailContent.setContent(tempEmail.getContent());
+		emailContent.setTitle(tempEmail.getTitle());
+		int row = emailRepository.insertEmailContent(emailContent);
+		log.info("반영된 행수: "+row);
+		tempEmail.setEmailContentId(emailContent.getEmailContentId());
+		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}
 
@@ -357,6 +365,101 @@ public class EmailService implements IEmailService {
 	@Override
 	public List<MainEmailList> getReceiveMainEmailList(String empId) {
 		return emailRepository.selectMainReceiveEmail(empId);
+	}
+
+	@Override
+	public TempEmail getTempEmailDetail(int tempEmailId) {
+		return emailRepository.selectTempEailDetail(tempEmailId);
+	}
+
+	@Override
+	public int updateTempEmail(TempEmail tempEmail) {
+		EmailContent emailContent = new EmailContent();
+		emailContent.setContent(tempEmail.getContent());
+		emailContent.setEmailContentId(tempEmail.getEmailContentId());
+		emailContent.setTitle(tempEmail.getTitle());
+		int row =emailRepository.updateEmailContent(emailContent);
+		row = emailRepository.updateTempEmail(tempEmail);
+		return row;
+	}
+
+	@Override
+	public EmailDetail getEmailDetail(int emailId) {
+		EmailDetail emailDetail = new EmailDetail();
+		int receive = emailRepository.selectReceiveEmailCountByEmailId(emailId);
+		if(receive == 1) {
+			emailDetail = emailRepository.selectReceiveEmailDetail(emailId);
+		} else {
+			emailDetail = emailRepository.selectSendEmailDetail(emailId);
+		}
+		return emailDetail;
+	}
+
+	@Override
+	public int getSearchTempCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTempCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public List<EmailList> getSearchTempList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTempList(pager, keyword, empId);
+		return emailList;
+	}
+
+	@Override
+	public int getSearchTrashCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTrashCount(keyword, empId);
+		return row;
+	}
+	
+	@Override
+	public List<EmailList> getSearchTrashList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTrashList(pager, keyword, empId);
+		return emailList;
+	}
+	
+	@Override
+	public int getSearchReceiveCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchReceiveCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchReceiveList(pager, keyword, empId);
+		return emailList;
+	}
+
+	@Override
+	public List<EmailList> getSearchSendList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchSendList(pager, keyword, empId);
+		return emailList;
+	}
+	
+	
+
+	@Override
+	public int getSearchSendCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchSendCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public int getTrashEmail(Date sqlDate) {
+		List<EmailList> emailList = emailRepository.selectExpiredTrash(sqlDate);
+//		if(emailList.size()!=0) {
+//			for(EmailList list : emailList) {
+//				int row = emailRepository.
+//			}
+//		}
+		return 0;
 	}
 
 }
