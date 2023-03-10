@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class EmpValidator implements Validator {
 	
-	private static final String passwordRegExp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+	private static final String passwordRegExp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,15}$";
 	private static final String phoneRegExp = "^010-\\d{3,4}-\\d{4}$";
 	
 	private Pattern passwordPattern;

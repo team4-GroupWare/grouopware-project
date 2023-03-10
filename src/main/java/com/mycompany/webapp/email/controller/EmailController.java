@@ -184,6 +184,15 @@ public class EmailController {
 		return "email/write";
 	}
 	
+	@GetMapping("/writedirect")
+	public String writeDirect(@RequestParam String empId, Model model) {
+		log.info("실행");
+		log.info("empId: "+ empId);
+		model.addAttribute("empId", empId);
+		model.addAttribute("type", "modal");
+		return "email/write";
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -440,4 +449,54 @@ public class EmailController {
 		model.addAttribute("type", "reply");
 		return "email/write";
 	}
+	
+	@GetMapping("/search")
+	public String searchEmail(Model model, HttpSession session, @RequestParam String type, @RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int pageNo) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		//임시 보관함 검색 결과 리스트
+		if(type.equals("temp")) {
+			int row = emailService.getSearchTempCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchTempList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//쓰레기통 검색 결과 리스트
+		} else if(type.equals("trash")) {
+			int row = emailService.getSearchTrashCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchTrashList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//받은 메일함 검색 결과 리스트
+		} else if(type.equals("receive")) {
+			int row = emailService.getSearchReceiveCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchReceiveList(pager,keyword, employee.getEmpId());
+			model.addAttribute("type", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+		//보낸 메일함 검색 결과 리스트
+		} else if(type.equals("send")) {
+			int row = emailService.getSearchSendCount(keyword, employee.getEmpId());
+			Pager pager = new Pager(10, 5, row, pageNo);
+			List<EmailList> emailList = emailService.getSearchSendList(pager,keyword, employee.getEmpId());
+			model.addAttribute("kind", type);
+			model.addAttribute("emailList", emailList);
+			model.addAttribute("pager", pager);
+			model.addAttribute("keyword", keyword);
+			
+			return "email/sendlistsearch";
+		}
+		
+		return "email/emaillistpart";
+	}
+	
+	
+	
 }

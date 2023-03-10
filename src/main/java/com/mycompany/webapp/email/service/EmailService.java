@@ -1,6 +1,7 @@
 package com.mycompany.webapp.email.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -392,6 +393,73 @@ public class EmailService implements IEmailService {
 			emailDetail = emailRepository.selectSendEmailDetail(emailId);
 		}
 		return emailDetail;
+	}
+
+	@Override
+	public int getSearchTempCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTempCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public List<EmailList> getSearchTempList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTempList(pager, keyword, empId);
+		return emailList;
+	}
+
+	@Override
+	public int getSearchTrashCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTrashCount(keyword, empId);
+		return row;
+	}
+	
+	@Override
+	public List<EmailList> getSearchTrashList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTrashList(pager, keyword, empId);
+		return emailList;
+	}
+	
+	@Override
+	public int getSearchReceiveCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchReceiveCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchReceiveList(pager, keyword, empId);
+		return emailList;
+	}
+
+	@Override
+	public List<EmailList> getSearchSendList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchSendList(pager, keyword, empId);
+		return emailList;
+	}
+	
+	
+
+	@Override
+	public int getSearchSendCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchSendCount(keyword, empId);
+		return row;
+	}
+
+	@Override
+	public int getTrashEmail(Date sqlDate) {
+		List<EmailList> emailList = emailRepository.selectExpiredTrash(sqlDate);
+//		if(emailList.size()!=0) {
+//			for(EmailList list : emailList) {
+//				int row = emailRepository.
+//			}
+//		}
+		return 0;
 	}
 
 }

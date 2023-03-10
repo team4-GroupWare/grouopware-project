@@ -241,17 +241,17 @@
 				   				<ul class="pagination">
 				   					<li class="page-item">
 				   						<c:if test="${kind eq 'send'}">
-				       					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=1" aria-label="Previous">
+				       					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo=1" aria-label="Previous">
 				         						<span aria-hidden="true">처음</span>
 			       						</a>
 			       						</c:if>
 			       						<c:if test="${kind eq 'read'}">
-				       					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=1" aria-label="Previous">
+				       					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo=1" aria-label="Previous">
 				         						<span aria-hidden="true">처음</span>
 			       						</a>
 			       						</c:if>
 			       						<c:if test="${kind eq 'unread'}">
-				       					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=1" aria-label="Previous">
+				       					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo=1" aria-label="Previous">
 				         						<span aria-hidden="true">처음</span>
 			       						</a>
 			       						</c:if>
@@ -259,17 +259,17 @@
 			   						<c:if test="${pager.groupNo>1}">
 			      					<li class="page-item">
 			      						<c:if test="${kind eq 'send'}">
-			        					<a class="page-link" href="${pageContext.request.contextPath}/email/sendlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+			        					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo=${pager.startPageNo-1}" aria-label="Previous">
 			          						<span aria-hidden="true">이전</span>
 			        					</a>
 			        					</c:if>
 			        					<c:if test="${kind eq 'read'}">
-			        					<a class="page-link" href="${pageContext.request.contextPath}/email/readlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+			        					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo${pager.startPageNo-1}" aria-label="Previous">
 			          						<span aria-hidden="true">이전</span>
 			        					</a>
 			        					</c:if>
 			        					<c:if test="${kind eq 'unread'}">
-			        					<a class="page-link" href="${pageContext.request.contextPath}/email/unreadlist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+			        					<a class="page-link" href="${pageContext.request.contextPath}/email/search?keyword=${keyword}&type=${type}&pageNo=${pager.startPageNo-1}" aria-label="Previous">
 			          						<span aria-hidden="true">이전</span>
 			        					</a>
 			        					</c:if>

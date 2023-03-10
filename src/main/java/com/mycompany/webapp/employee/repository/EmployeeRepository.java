@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.model.EmployeePassword;
 
 @Repository
 public interface EmployeeRepository {
@@ -26,4 +27,22 @@ public interface EmployeeRepository {
 	 * @return
 	 */
 	public int updateEmployee(Employee employee);
+	/**
+	 * 
+	 * @param oldPwd
+	 * @return
+	 */
+	public int selectEmpPasswordCount(@Param("oldPwd")String oldPwd, @Param("empId")String empId);
+	/**
+	 * 
+	 * @param newPwd
+	 * @return
+	 */
+	public int updatePassword(@Param("newPwd")String newPwd, @Param("empId")String empId);
+	/**
+	 * 
+	 * @param employeePassword
+	 * @return
+	 */
+	public int updateInitPassword(@Param("newPwd")String newPwd, @Param("empId")String empId);
 }
