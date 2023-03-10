@@ -26,22 +26,22 @@
 				<li class="nav-item"  onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
 					<a class="nav-link collapsed" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>근무 현황</span>
+				    	<span>나의 근무</span>
 				  	</a>
 				</li>
 			
 				<!--부서 근무 현황 -->
-				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
+				<%-- <li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/attendance/dept'">
 					<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-clipboard2-check"></i><span>부서 근무 현황</span>
 				  	</a>
-				</li>
+				</li> --%>
 			
 				<!--내 휴가 문서 -->
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/my'" >
 					<a class="nav-link collapsed" data-bs-target="#document2-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>내 휴가</span>
+				    	<span>나의 휴가</span>
 					</a>
 					
 				</li>
@@ -50,7 +50,7 @@
 				<li class="nav-item" onclick="location.href='${pageContext.request.contextPath}/vacation/document'"  >
 					<a class="nav-link collapsed" data-bs-target="#document1-nav" data-bs-toggle="collapse" href="#">
 				    	<i class="bi bi-eye"></i>
-				    	<span>휴가 결제 문서</span>
+				    	<span>휴가 결재 문서</span>
 					</a>
 				</li>
 			</ul>
@@ -59,7 +59,7 @@
 	  	<!-- ====================================== Main ================================================== -->
 		<main id="main" class="main">
 			<!-- pagetitle -->
-			<div class="pagetitle">
+			<!-- <div class="pagetitle">
 				<h1>근무 현황</h1>
 				<nav>
 					<ol class="breadcrumb">
@@ -67,7 +67,7 @@
 				    	<li class="breadcrumb-item">근무 현황</li>
 				  	</ol>
 				</nav>
-			</div>
+			</div> -->
 		
 			<section class="section dashboard">
 				<!-- ====================================== First row ============================================ --> 
@@ -75,89 +75,8 @@
 					<!-- 오늘 근무 현황 -->
 					<div class="col-lg-5">
 						<div class="row">
-							<div class="col-lg-6 col-md-12">
-								<div class="row">
-									<div class="pagetitle">
-							   			<h1>오늘 근무 계획</h1>
-									</div>
-									<!-- ====================================== Second Card ================================= --> 
-									<div class="card info-card sales-card mb-0" style="height:140px;" >
-					           			<div class="card-body mt-4">
-							          		<div class="row">
-							          			<div class="col border-end">
-							          			<div>연장 근무  신청 </div>
-							          			<div>없음</div>
-								          		</div>
-								          		<div class="col">
-								          		  <button class="btn btn-primary">연장근무 신청</button>
-								          		</div>
-							          		</div>
-					            		</div>
-				        			</div>
-								</div>
-								<div class="row">
-									<!-- ====================================== Third Card ================================= --> 
-									<div class="card info-card sales-card mt-3" style="height:140px;">
-					           			<div class="card-body mt-4">
-							          		<div class="row">
-							          			<div class="col border-end">
-							          			<div>휴일 근무  신청 </div>
-							          			<div>없음</div>
-								          		</div>
-								          		<div class="col">
-								          		  <button class="btn btn-success"> 휴일근무 신청</button>
-								          		</div>
-							          		</div>
-						            	</div>
-					        		</div>
-								</div>
-							</div>
-							<!-- ====================================== First Card ================================= --> 
-							<div class="col-lg-6 col-md-12" >
+							<div class="col-md-12">
 								<div class="pagetitle">
-							   		<h1>월 근무 통계</h1>
-								</div>
-								<div class="card" style="height:300px">
-									<div class="card-body mt-4">
-										<!-- Doughnut Chart -->
-										<canvas id="doughnutChart" style="max-height: 400px;"></canvas>
-										<script>
-										document.addEventListener("DOMContentLoaded", () => {
-										  new Chart(document.querySelector('#doughnutChart'), {
-										    type: 'doughnut',
-										    data: {
-										      labels: [
-										        '출석',
-										        '결석',
-										        '지각',
-										        '휴가',
-										        '연장',
-										        '휴일'
-										      ],
-										      datasets: [{
-										        label: 'My First Dataset',
-										        data: [17, 0, 1, 4 , 1, 1],
-										        backgroundColor: [
-										          'rgb(54, 162, 235)',
-										          'rgb(255, 99, 132)',
-										          'rgb(255, 205, 86)',
-										          'rgb(95, 185, 110)',
-										          'rgb(255, 169, 77)',
-										          'rgb(131, 101, 216)'
-										          
-										        ],
-										        hoverOffset: 4
-										      }]
-										    }
-										  });
-										});
-										</script>
-									</div>	
-								</div>
-							</div>
-						</div>
-						<!-- ====================================== 4th Card ============================================== --> 
-						<div class="pagetitle">
 						   	<h1>주 근무 현황</h1>
 						</div>
 						<div class="card">
@@ -205,12 +124,43 @@
 								</script>
 							</div>
 				        </div>
+							</div>
+						</div>
+						<!-- ====================================== 4th Card ============================================== --> 
+						
+				        <div class="pagetitle">
+							   		<h1>월 근무 통계</h1>
+								</div>
+								<div class="card">
+					            <div class="card-body">
+					              <h5 class="card-title"></h5>
+					
+					              <!-- Pie Chart -->
+					              <div id="pieChart" ></div>
+					
+					              <script>
+					                document.addEventListener("DOMContentLoaded", () => {
+					                  new ApexCharts(document.querySelector("#pieChart"), {
+					                    series: [44, 55, 13, 43, 22],
+					                    chart: {
+					                      height: 250,
+					                      type: 'pie',
+					                    },
+					                    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+					                  }).render();
+					                });
+					              </script>
+					              <!-- End Pie Chart -->
+					
+					            </div>
+					          </div>
 					</div>
+					<!-- ====================================== 4th Card ============================================== --> 
 					<div class="col-lg-7">
 						<div class="pagetitle">
 							<h1>월별 근무 현황</h1>
 						</div>
-							<div class="card" style="height:700px;">
+							<div class="card" style="height:720px;">
 								<div class="card-body m-0 p-0">
 									<script>
 										$(document).ready(function(){

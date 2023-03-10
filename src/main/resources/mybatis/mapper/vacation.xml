@@ -3,7 +3,7 @@
 <mapper namespace="com.mycompany.webapp.vacation.repository.VacationRepository">
 
 	<!-- 휴가 결재선 선택 사원정보-->
-	<select id="selectVacationLine" parameterType="string" resultType="vacationLine">
+	<select id="selectApprovalEmp" parameterType="string" resultType="vacation">
 		<![CDATA[
 			SELECT e.emp_id as "empId", 
 				name as "empName",
@@ -21,12 +21,12 @@
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
 			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
-			status)
+			status,count_day)
 		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
 			null,null,null,null,
-			default)
+			default,#{countDay})
 	</insert> 
 	
 	<!-- 휴가 결제선  저장 -->
@@ -47,7 +47,78 @@
 		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
 	</insert>
 	
+	<!-- 휴가 리스트 조회-->
+	<select id="selectVacationList" parameterType="string" resultType="vacationList">
+		select v.vacation_id as "vacationId", 
+		e.name as "name", 
+		c.vacation_name as "vacationName", 
+		status, 
+		count_day as "countDay",
+	    to_char((SELECT *
+	     FROM (  select start_date
+	            from vacation_date
+	            where vacation_id = v.vacation_id
+	            order by start_date 
+	    )
+	    WHERE ROWNUM = 1),'yyyy-mm-dd') "startDate",
+	    to_char((SELECT  * 
+	    FROM (  select start_date
+	            from vacation_date
+	            where vacation_id = v.vacation_id
+	            order by start_date desc
+	    )
+	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
 	
+		from vacation v, employees e, vacation_category c
+		where v.emp_id= #{empId} 
+		and e.emp_id = v.emp_id 
+		and c.vacation_category_id = v.vacation_category_id
+		<if test="!status.equals('')">
+				AND status = #{status}
+		</if>
+		order by vacation_id desc
+		OFFSET #{pager.startRowNo}-1 ROWS
+        FETCH FIRST 10 ROWS ONLY 
+	</select>
 	
+	<!-- 내 문서함 상태별 갯수 -->
+	<select id="selectVacationCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM vacation
+		WHERE emp_id = #{empId}
+			<if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+	</select>
+	
+	<select id="selectVacationDays" parameterType="string" resultType="employee">
+		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
+		from employees
+		where emp_id = #{empId}
+	</select>
+	
+	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
+		select  c.vacation_name as "vacationName",
+	        t.team_name as "teamName",
+	        d.dept_name as "deptName",
+	        e.name as "name",
+	        vacation_id as "vacationId", 
+	        to_char(write_date,'yyyy-mm-dd') as writeDate, content, 
+	        count_day as "countDay"
+        
+
+		from vacation v , employees e, departments d, teams t,vacation_category c
+		where vacation_id = #{vacationId}
+	        and e.emp_id = v.emp_id 
+	        and e.dept_id= d.dept_id 
+	        and e.team_id= t.team_id 
+	        and c.vacation_category_id= v.vacation_category_id
+	</select>
+	
+	<select id="selectVacationDate" parameterType="int" resultType="vacationDate">
+		select to_char(start_date,'yyyy-mm-dd') as "startDateStr", to_char(end_date,'yyyy-mm-dd')as "endDateStr"
+		from vacation_date
+		where vacation_id = #{vacationId}
+	</select>
 	
 </mapper>
