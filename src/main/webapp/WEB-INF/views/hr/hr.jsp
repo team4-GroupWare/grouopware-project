@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
@@ -68,10 +68,13 @@
 						//검색
 						function searchEmp() {
 							console.log("searchEmp() 실행");
+							var keyword = $('input[name=keyword]').val();
+							var type = $("select[name=type]").val();
+
 							$.ajax({
 								type: "GET",
-								url: "${pageContext.request.contextPath}/hr/list",
-								data: $("form[name=emp-search]").serialize(),
+								url: "${pageContext.request.contextPath}/hr/list" +
+										"?type=" + type + "?keyword=" + keyword,
 								sueccess: function(result) {
 									console.log("searchEmp() 성공");
 								},

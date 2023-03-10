@@ -22,9 +22,9 @@ function addFile(obj){
             // 목록 추가
             let htmlData = '';
             htmlData += '<div id="file' + fileNo + '" class="filebox" style="margin-bottom:0">';
-            htmlData += '   <p class="email-file name" style="margin-bottom:0">' + file.name + '</p>';
-            htmlData += '	<p class="email-file size"style="margin-bottom:0">' + file.size/1000 + 'KB</p>'; 	
-            htmlData += '   <a class="email-file delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
+            htmlData += '   <p class="name" style="margin-bottom:0; margin-right:10px;">' + file.name + '</p>';
+            htmlData += '	<p class="size" style="margin-bottom:0; color:#8998A6">' + file.size/1000 + 'KB</p>'; 	
+            htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="bi bi-dash-square"></i></a>';
             htmlData += '</div>';
             $(".file-list").append(htmlData);
             fileNo++;
@@ -59,7 +59,7 @@ function deleteFile(num) {
     filesArr[num].is_delete = true;
 }
 
-/* 폼 전송 */
+/* 이메일 폼 전송 */
 function submitEmailForm() {
     // 폼데이터 담기
     var form = document.querySelector("#writeForm");
@@ -92,3 +92,40 @@ function submitEmailForm() {
         }
     })
 }
+
+
+/* 전자결재 폼 전송 */
+/*function submitApproval() {
+	//폼데이터 담기
+	var form = document.querySelector("#approval_form");
+	var formData = new FormData(form);
+	for (var i = 0; i < filesArr.length; i++) {
+	    // 삭제되지 않은 파일만 폼데이터에 담기
+	    if (!filesArr[i].is_delete) {
+	        formData.append("attachFiles", filesArr[i]);
+	    }
+	}
+
+	var path = sessionStorage.getItem("contextpath");
+
+	$.ajax({
+	    method: 'POST',
+	    url: path+'/approval/write',
+	    dataType: 'json',
+	    data: formData,
+	    contentType: false,			
+	    processData: false,
+		cache: false,
+	    success: function(data) {
+	    	let url = path + data.uri;
+	    	console.log("url: " + url)
+	    	location.replace(url);
+	    },
+	    error: function (xhr, desc, err) {
+	        console.log('에러');
+	        console.log('error:' + err);
+	        return;
+	    }
+	})
+}*/
+

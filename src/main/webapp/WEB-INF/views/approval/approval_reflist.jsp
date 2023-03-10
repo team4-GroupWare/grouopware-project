@@ -5,14 +5,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script>
-		$(document).ready(function () {
-			$(".docuMenu").click(function () {
-				colsole.log("실행");
-				$(".docuMenu").addClass("active");
-		  	});
-		});
-	</script>
 	<style>
 		thead tr {
 			border-bottom:2px solid #004389;
@@ -38,18 +30,10 @@
   	<!-- ======= Sidebar ======= -->
   	<%@ include file="/WEB-INF/views/approval/approval_sidebar.jsp" %>
 	<!-- ======= End Sidebar ======= -->
-
+	
   	<main id="main" class="main">
     	<div class="pagetitle">
-    		<h1>내 문서함</h1>
-     		<nav>
-	        	<ol class="breadcrumb">
-	          		<li class="breadcrumb-item">전자결재</li>
-	          		<li class="breadcrumb-item">내 문서함</li>
-	          		<c:if test="${empty status}"><li class="breadcrumb-item">전체</li></c:if>
-	          		<c:if test="${!empty status}"><li class="breadcrumb-item">${status}</li></c:if>
-	        	</ol>
-     		</nav>
+    		<h1>참조 문서함</h1>
     	</div><!-- End Page Title -->
 
 		<section class="section">
@@ -57,52 +41,8 @@
         		<div class="col-lg-12">
           			<div class="card" style="height:620px">
             			<div class="card-body">
-              				<!-- Bordered Tabs Justified -->
-              				<div style="padding-top:30px; padding-bottom:8px;">
-				               	<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
-				              		<li class="nav-item" role="presentation">
-				              			<c:if test="${empty status}">
-				              				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/mylist">전체</a>
-				              			</c:if>
-				              			<c:if test="${!empty status}">
-				              				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/mylist">전체</a>
-				              			</c:if>
-				              		</li>
-				               		<li class="nav-item" role="presentation">
-				               			<c:if test="${status == '대기'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/mylist?status=대기">대기</a>
-				               			</c:if>
-				               			<c:if test="${status != '대기'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/mylist?status=대기">대기</a>
-				               			</c:if>
-				               		</li>
-				               		<li class="nav-item" role="presentation">
-				               			<c:if test="${status == '진행'}">
-					               			<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/mylist?status=진행">진행</a>
-				               			</c:if>
-				               			<c:if test="${status != '진행'}">
-					               			<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/mylist?status=진행">진행</a>
-				               			</c:if>
-				               		</li>
-				               		<li class="nav-item" role="presentation">
-				               			<c:if test="${status == '승인'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/mylist?status=승인">승인</a>
-				               			</c:if>
-				               			<c:if test="${status != '승인'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/mylist?status=승인">승인</a>
-				               			</c:if>
-				               		</li>
-				               		<li class="nav-item" role="presentation">
-				               			<c:if test="${status == '반려'}">
-				               				<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/approval/mylist?status=반려">반려</a>
-				               			</c:if>
-				               			<c:if test="${status != '반려'}">
-				               				<a class="nav-link w-100" href="${pageContext.request.contextPath}/approval/mylist?status=반려">반려</a>
-				               			</c:if>
-				               		</li>
-				           	    </ul>
-							</div>
-
+              				<h5 class="card-title"></h5>
+              				
               				<!-- Table with hoverable rows -->
               				<table class="table table-hover">
                 				<thead>
@@ -113,8 +53,8 @@
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">결재 양식</span>
 	          								</a>
 	          								<ul class="dropdown-menu ">
-	            							<c:forEach var="approval_category" items="${approval_category}">
-	          									<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/approval/mylist/${approval_category.approvalCategoryId}">
+	          								<c:forEach var="approval_category" items="${approval_category}">
+	          									<a class="dropdown-item d-flex align-items-center" href="#">
 	                								<span>${approval_category.approvalName}</span>
 	              								</a>
 	          								</c:forEach>
@@ -157,35 +97,35 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="${approvalCategoryId}?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="reflist?pageNo=1" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="reflist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="reflist?pageNo=${i}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="reflist?pageNo=${i}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="reflist?pageNo=${pager.endPageNo+1}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="reflist?pageNo=${pager.totalPageNo}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	

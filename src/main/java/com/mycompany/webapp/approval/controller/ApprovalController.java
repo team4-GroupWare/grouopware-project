@@ -1,18 +1,24 @@
 package com.mycompany.webapp.approval.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,10 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mycompany.webapp.Pager;
 import com.mycompany.webapp.approval.model.Approval;
 import com.mycompany.webapp.approval.model.ApprovalCategory;
+import com.mycompany.webapp.approval.model.ApprovalFile;
 import com.mycompany.webapp.approval.model.ApprovalLine;
+import com.mycompany.webapp.approval.model.RefEmployee;
 import com.mycompany.webapp.approval.service.IApprovalService;
+import com.mycompany.webapp.component.Uri;
 import com.mycompany.webapp.employee.model.Employee;
-import com.mycompany.webapp.employee.service.EmployeeService;
 import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Team;
@@ -40,6 +48,9 @@ public class ApprovalController {
 	private IDepartmentService departmentService;
 	
 	@Autowired
+	private IEmployeeService employeeService;
+	
+	@Autowired
 	private ITeamService teamService;
 	
 	@Autowired
@@ -52,8 +63,9 @@ public class ApprovalController {
 	 * @return : approval/approval_form.jsp
 	 */
 	@GetMapping("/write")
-	public String getApprovalForm(Model model) {
+	public String getApprovalForm(Model model, HttpSession session) {
 		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
@@ -67,6 +79,15 @@ public class ApprovalController {
 			teams.add(teamService.getTeamListById(dept.getDeptId()));
 		}
 		
+		if(loginEmp.getManagerId() != null) {
+			//manager 정보
+			Employee manager = employeeService.getEmp(loginEmp.getManagerId());
+			log.info(manager);
+			model.addAttribute("manager", manager);
+		} else {
+			model.addAttribute("manager", null);
+		}
+		
 		//카테고리 양식
 		String form = approvalService.getApprovalForm(1);
 		
@@ -75,7 +96,7 @@ public class ApprovalController {
 		model.addAttribute("approval_category", approval_category);
 		model.addAttribute("form", form);
 		
-		return "approval/approval_form";
+		return "approval/approval_writeform";
 	}
 	
 	/**
@@ -85,22 +106,24 @@ public class ApprovalController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("/write")
-	public String writeApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("실행");
-		
+	@ResponseBody
+	@PostMapping(value="/write", produces="application/json")
+	public Uri writeApproval(@ModelAttribute Approval approval, Model model) {
+		log.info("writeApproval실행");
 		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
 			approval.getApprovalLine().get(i).setSeq(i+1);
 		}
 		approvalService.writeApproval(approval);
 		
-		return "redirect:/approval/mylist";
+		Uri uri = new Uri();
+		uri.setUri("/approval/mylist");
+		return uri;
 	}
 	
 	/**
 	 * 전자결재 카테고리별 작성 양식 불러오기
 	 * @author : LEEJIHO
-	 * @param approvalCategoryId
+	 * @param approvalCategoryId : 결재양식 카테고리 아이디
 	 * @param model
 	 * @return
 	 */
@@ -114,7 +137,7 @@ public class ApprovalController {
 	/**
 	 * 선택한 결재선 사원 정보
 	 * @author : LEEJIHO
-	 * @param line
+	 * @param line : 선택한 결재선 목록
 	 * @param model
 	 * @return
 	 */
@@ -143,16 +166,19 @@ public class ApprovalController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/mylist")
-	public String getMyApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
-		log.info("실행");
+	@GetMapping({"/mylist", "/mylist/{approvalCategoryId}"})
+	public String getMyApprovalList(@PathVariable(required = false) Integer approvalCategoryId, @RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
 		
-		int approvalRow = approvalService.getApprovalRow(empId, status);
+		if(approvalCategoryId == null) {
+			approvalCategoryId = 0;
+		}
+		
+		int approvalRow = approvalService.getApprovalRow(empId, status, approvalCategoryId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
-		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status);
+		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status, approvalCategoryId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
 				
@@ -160,6 +186,7 @@ public class ApprovalController {
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		model.addAttribute("approval_category", approval_category);
+		model.addAttribute("approvalCategoryId", approvalCategoryId);
 		
 		return "approval/approval_mylist";
 	}
@@ -173,16 +200,20 @@ public class ApprovalController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/list")
-	public String getApprovalList(@RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
+	@GetMapping({"/confirmlist", "/confirmlist/{approvalCategoryId}"})
+	public String getApprovalList(@PathVariable(required = false) Integer approvalCategoryId, @RequestParam(defaultValue="1") int pageNo, @RequestParam(value="status", defaultValue="") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
 		
-		int confirmRow = approvalService.getConfirmRow(empId, status);
+		if(approvalCategoryId == null) {
+			approvalCategoryId = 0;
+		}
+		
+		int confirmRow = approvalService.getConfirmRow(empId, status, approvalCategoryId);
 		Pager pager = new Pager(10, 5, confirmRow, pageNo);
 		
-		List<Approval> approvals = approvalService.getConfirmList(pager, empId, status);
+		List<Approval> approvals = approvalService.getConfirmList(pager, empId, status, approvalCategoryId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
 		
@@ -190,14 +221,15 @@ public class ApprovalController {
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		model.addAttribute("approval_category", approval_category);
+		model.addAttribute("approvalCategoryId", approvalCategoryId);
 		
-		return "approval/approval_list";
+		return "approval/approval_confirmlist";
 	}
 	
 	/**
 	 * 임시저장 목록
 	 * @author : LEEJIHO
-	 * @param pageNo
+	 * @param pageNo : 현재 페이지
 	 * @param model
 	 * @param session
 	 * @return
@@ -225,8 +257,8 @@ public class ApprovalController {
 	/**
 	 * 전자결재 상세보기
 	 * @author : LEEJIHO
-	 * @param approvalId
-	 * @param pageNo
+	 * @param approvalId : 전자결재 문서 아이디
+	 * @param pageNo : 현재 페이지
 	 * @param status
 	 * @param model
 	 * @return
@@ -239,8 +271,16 @@ public class ApprovalController {
 		
 		//전자결재 문서 상세 정보
 		Approval approval = approvalService.getApprovalDetail(approvalId);
+		//전자결재 문서 참조 사원 정보
+		RefEmployee refEmp = approvalService.getReferEmpInfo(approvalId);
+		log.info("======================refEmp==============");
+		log.info(refEmp);
+		
 		//전자결재 결재선 리스트
-		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approval.getApprovalId());
+		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approvalId);
+		//전자결재 문서의 첨부파일 목록
+		List<ApprovalFile> approvalFiles = approvalService.getApprovalFileList(approvalId);
+		
 		//해당 전자결재 문서에 대한 내 결재 순서
 		int mySeq = approvalService.getMySeq(approvalId, empId) - 1;
 		int myTurn = 0;
@@ -265,18 +305,26 @@ public class ApprovalController {
 				myTurn = 1;
 			}
 		}
-		
-		log.info(myTurn);
+
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
 		model.addAttribute("approval", approval);
 		model.addAttribute("approvalLines", approvalLines);
+		model.addAttribute("approvalFiles", approvalFiles);
 		model.addAttribute("mySeq", mySeq);
 		model.addAttribute("myTurn", myTurn);
+		model.addAttribute("refEmp", refEmp);
 		
 		return "approval/approval_detail";
 	}
 	
+	/**
+	 * 전자결재 승인, 반려 처리
+	 * @author : LEEJIHO
+	 * @param approvalLine : 전자결재 결재선
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/confirm")
 	public String confirm(ApprovalLine approvalLine, HttpSession session) {
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
@@ -288,4 +336,48 @@ public class ApprovalController {
 		return "redirect:/approval/list";
 	}
 	
+	/**
+	 * 전자결재 파일 다운로드
+	 * @author : LEEJIHO
+	 * @param userAgent
+	 * @param approvalFileId
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@GetMapping("/filedownload")
+	public ResponseEntity<byte[]> fileDownLoad(@RequestHeader("User-Agent") String userAgent, @RequestParam("approvalFileId") int approvalFileId) throws UnsupportedEncodingException {
+		log.info("실행");
+		ApprovalFile approvalFile = approvalService.getFile(approvalFileId);
+		final HttpHeaders headers = new HttpHeaders();
+		
+		String[] mtypes = approvalFile.getApprovalFileContentType().split("/");
+		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+		headers.setContentLength(approvalFile.getApprovalFileSize());
+		
+		String fileName = URLEncoder.encode(approvalFile.getApprovalFileName(), "UTF-8");
+		fileName = fileName.replaceAll("\\+", "%20");
+		headers.setContentDispositionFormData("attachment", fileName);
+		
+		return new ResponseEntity<byte[]>(approvalFile.getApprovalFileData(), headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/reflist")
+	public String getApprovalRefList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
+		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		String empId = loginEmp.getEmpId();
+		
+		int approvalRow = approvalService.getRefApprovalRow(empId);
+		Pager pager = new Pager(10, 5, approvalRow, pageNo);
+		
+		List<Approval> approvals = approvalService.getRefApprovalList(pager, empId);
+		//전자결재 카테고리 목록
+		List<ApprovalCategory> approval_category = approvalService.getCategory();
+				
+		model.addAttribute("approvals", approvals);
+		model.addAttribute("pager", pager);
+		model.addAttribute("approval_category", approval_category);
+		
+		return "approval/approval_reflist";
+	}
 }

@@ -1,4 +1,4 @@
-package com.mycompany.webapp.email;
+package com.mycompany.webapp.component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mycompany.webapp.approval.model.ApprovalFile;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.employee.model.Employee;
 
@@ -31,5 +32,19 @@ public class MultipartFileResolver {
 		employee.setProfileContentType(file.getContentType());
 		employee.setProfileData(file.getBytes());
 		return employee;
+	}
+	
+	public List<ApprovalFile> getApprovalFileList(MultipartFile[] multipartFile, int approvalId) throws IOException{
+		List<ApprovalFile> approvalFileList = new ArrayList<ApprovalFile>();
+		for(MultipartFile file : multipartFile) {
+			ApprovalFile approvalFile = new ApprovalFile();
+			approvalFile.setApprovalId(approvalId);
+			approvalFile.setApprovalFileName(file.getOriginalFilename());
+			approvalFile.setApprovalFileData(file.getBytes());
+			approvalFile.setApprovalFileContentType(file.getContentType());
+			approvalFile.setApprovalFileSize(file.getSize());
+			approvalFileList.add(approvalFile);
+		}
+		return approvalFileList;
 	}
 }

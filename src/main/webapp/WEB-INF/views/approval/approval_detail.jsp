@@ -66,80 +66,8 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
   	<!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-    	<ul class="sidebar-nav" id="sidebar-nav">
-      		<li class="nav-item">
-        		<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/approval/write" style="width:100%">
-	          		<i class="bi bi-pencil-square"></i> 
-	          		<span>결재 작성</span>
-        		</a>
-      		</li>
-      		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#approval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-clipboard2-check"></i><span>결재 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
-        		</a>
-        		<ul id="approval-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list"><span>전체</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='대기'"><span>대기</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='진행'"><span>진행</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='승인'"><span>승인</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/list?status='반려'"><span>반려</span></a>
-          			</li>
-        		</ul>
-     		</li><!-- End 결재 문서함 -->
-
-      		<li class="nav-item">
-        		<a class="nav-link collapsed" data-bs-target="#myapproval-nav" data-bs-toggle="collapse" href="${pageContext.request.contextPath}/approval/list">
-          			<i class="bi bi-file-text"></i><span>내 문서함</span><i class="bi bi-chevron-down ms-auto"></i>
-        		</a>
-        		<ul id="myapproval-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist"><span>전체</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist?status=대기"><span>대기</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist?status=진행"><span>진행</span></a>
-          			</li> 
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist?status=승인"><span>승인</span></a>
-          			</li>
-          			<li>
-            			<a href="${pageContext.request.contextPath}/approval/mylist?status=반려"><span>반려</span></a>
-          			</li>
-        		</ul>
-      		</li><!-- End 내 문서함 -->
-      		
-
-      		<li class="nav-item">
-        		<a class="nav-link collapsed" href="#">
-          			<i class="bi bi-eye"></i><span>열람함</span>
-        		</a>
-      		</li><!-- End 열람함 -->
-      		
-      		<li class="nav-item">
-        		<a class="nav-link collapsed" href="#">
-          			<i class="bi bi-tags"></i><span>참조 문서함</span>
-        		</a>
-      		</li><!-- End 참조 문서함 -->
-
-      		<li class="nav-item">
-        		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/templist">
-          			<i class="bi bi-file-earmark"></i><span>임시저장함</span>
-        		</a>
-      		</li><!-- End 임시저장함 -->
-    	</ul>
-  	</aside><!-- End Sidebar -->
+  	<%@ include file="/WEB-INF/views/approval/approval_sidebar.jsp" %>
+	<!-- ======= End Sidebar ======= -->
 
 	<!-- 내용 -->
   	<main id="main" class="main">
@@ -176,13 +104,13 @@
 					            </tr>
 					            <tr>
 					                <th style="background-color:#E9EFFE; width:10%">기안자</th>
-					                <td style="width: 40%"><b>${approval.empName}</b> ${approval.gradeName} </td>
+					                <td style="width: 40%"><b>${approval.empName}</b> (${approval.gradeName}) </td>
 					                <th style="background-color:#E9EFFE; width:10%">소속</th>
 					                <td style="width: 40%">${approval.deptName} / ${approval.teamName}</td>
 					            </tr>
 					            <tr>
 					                <th style="background-color:#E9EFFE; width:10%">참조</th>
-					                <td style="width: 40%"></td>
+					                <td style="width: 40%"><c:if test="${approval.refEmpId != null}">${refEmp.refEmpName} (${refEmp.refGrade})</c:if></td>
 					                <th style="background-color:#E9EFFE; width:10%">열람</th>
 					                <td style="width: 40%"></td>
 					        	</tr>
@@ -222,13 +150,37 @@
 							        </table>
 						        </div>
 					        </div>
-               				
 			                <div class="row mb-3">
 			                	<div class="col-sm-12">
 				                	<textarea id="myTextarea">
 									</textarea>
 								</div>
                				</div>
+               				<div class="row mb-3">
+               					<label><b>첨부 파일</b></label>
+	               				<c:if test="${approvalFiles.size() != 0}">
+					                <div class="file-list" style="background-color:#F6F6F6">
+						            	<div class="filebox">
+						            		<ul style="list-style:none;">
+						            			<li>
+						            				<table style="width:60%; overflow: auto;">
+										            	<c:forEach var="approvalFile" items="${approvalFiles}">
+										                	<tr>
+										               			<td style="width:70%; padding-bottom:3px; text-align: left;">
+										               				<a href="${pageContext.request.contextPath}/approval/filedownload?approvalFileId=${approvalFile.approvalFileId}">${approvalFile.approvalFileName}</a>
+										               			</td>
+											               		<td style="width:30%; color:#949291; text-align: left;">
+											               			${approvalFile.approvalFileSize/1000}KB<i class="bi bi-paperclip"></i>
+											               		</td>
+										                	</tr>
+										           		</c:forEach>
+									               	</table>
+						            			</li>
+						            		</ul>
+					               		</div>
+					                </div>
+				                </c:if>
+				        	</div>
             			</div>
           			</div>
         		</div>
