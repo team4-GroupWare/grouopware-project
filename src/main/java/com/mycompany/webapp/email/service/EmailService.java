@@ -395,51 +395,59 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public int getSearchTempCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getSearchTempCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTempCount(keyword, empId);
+		return row;
 	}
 
 	@Override
-	public List<EmailList> getSearchTempList(Pager pager, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EmailList> getSearchTempList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTempList(pager, keyword, empId);
+		return emailList;
 	}
 
 	@Override
-	public List<EmailList> getSearchTrashList(Pager pager, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getSearchTrashCount(String keyword, String empId) {
+		log.info("실행");
+		int row = emailRepository.selectSearchTrashCount(keyword, empId);
+		return row;
+	}
+	
+	@Override
+	public List<EmailList> getSearchTrashList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchTrashList(pager, keyword, empId);
+		return emailList;
+	}
+	
+	@Override
+	public int getSearchReceiveCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchReceiveCount(keyword, empId);
+		return row;
 	}
 
 	@Override
-	public List<EmailList> getSearchReceiveList(Pager pager, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchReceiveList(pager, keyword, empId);
+		return emailList;
 	}
 
 	@Override
-	public List<EmailList> getSearchSendList(Pager pager, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EmailList> getSearchSendList(Pager pager, String keyword, String empId) {
+		log.info("실행");
+		List<EmailList> emailList = emailRepository.selectSearchSendList(pager, keyword, empId);
+		return emailList;
 	}
+	
+	
 
 	@Override
-	public int getSearchTrashCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getSearchReceiveCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getSearchSendCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getSearchSendCount(String keyword, String empId) {
+		int row = emailRepository.selectSearchSendCount(keyword, empId);
+		return row;
 	}
 
 }

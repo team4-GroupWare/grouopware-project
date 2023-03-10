@@ -256,5 +256,24 @@ public interface EmailRepository {
 	 * @param emailId
 	 */
 	int selectReceiveEmailCountByEmailId(int emailId);
+	/**
+	 * 
+	 * @param keyword
+	 * @return
+	 */
+	int selectSearchTempCount(@Param("keyword")String keyword, @Param("empId") String empId);
+	/**
+	 * 
+	 * @param pager
+	 * @param keyword
+	 * @return
+	 */
+	List<EmailList> selectSearchTempList(@Param("pager")Pager pager, @Param("keyword")String keyword, @Param("empId") String empId);
+	int selectSearchTrashCount(@Param("keyword")String keyword, @Param("empId")String empId);
+	List<EmailList> selectSearchTrashList(@Param("pager")Pager pager, @Param("keyword")String keyword, @Param("empId")String empId);
+	List<EmailList> selectSearchReceiveList(@Param("pager")Pager pager, @Param("keyword")String keyword, @Param("empId")String empId);
+	int selectSearchReceiveCount(@Param("keyword")String keyword, @Param("empId")String empId);
+	List<EmailList> selectSearchSendList(@Param("pager")Pager pager, @Param("keyword")String keyword, @Param("empId")String empId);
+	int selectSearchSendCount(@Param("keyword")String keyword, @Param("empId")String empId);
 
 }

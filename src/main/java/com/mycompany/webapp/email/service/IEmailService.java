@@ -190,14 +190,14 @@ public interface IEmailService {
 	 * @param emailId
 	 * @return
 	 */
-	int getSearchTempCount(String keyword);
-	List<EmailList> getSearchTempList(Pager pager, String keyword);
-	List<EmailList> getSearchTrashList(Pager pager, String keyword);
-	List<EmailList> getSearchReceiveList(Pager pager, String keyword);
-	List<EmailList> getSearchSendList(Pager pager, String keyword);
-	int getSearchTrashCount(String keyword);
-	int getSearchReceiveCount(String keyword);
-	int getSearchSendCount(String keyword);
+	int getSearchTempCount(String keyword,String empId);
+	List<EmailList> getSearchTempList(Pager pager, String keyword, String empId);
+	List<EmailList> getSearchTrashList(Pager pager, String keyword,String empId);
+	List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId);
+	List<EmailList> getSearchSendList(Pager pager, String keyword, String empId);
+	int getSearchTrashCount(String keyword, String empId);
+	int getSearchReceiveCount(String keyword, String empId);
+	int getSearchSendCount(String keyword, String empId);
 	
 	
 }

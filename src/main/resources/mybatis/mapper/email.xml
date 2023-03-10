@@ -559,6 +559,178 @@
 			where receive_email_id = #{emailId}
 	</select>
 	
+	<select id="selectSearchTempCount" parameterType="map" resultType="int">
+		 	select count(temp_email_id) 
+            from temp_email t, email_content c, employees e
+            where 
+            t.email_content_id = c.email_content_id 
+            and t.writer = e.emp_Id
+            and t.writer = #{empId}
+            and (e.name like '%' || #{keyword} || '%' or c.title like '%' || #{keyword} || '%')
+	</select>
+	
+	<select id="selectSearchTempList" parameterType="map" resultType="emailList">
+		select t.temp_email_id as tempEmailId,
+			   t.writer as sentId,
+			   t.temp_date as tempDate,
+			   c.title
+		from temp_email t, email_content c, employees e
+		where t.email_content_id = c.email_content_id 
+			  and t.writer = e.emp_Id
+			  and t.writer = #{empId}
+			  and (e.name like '%' || #{keyword} || '%' 
+			  or c.title like '%' || #{keyword} || '%' )
+		order by tempDate desc
+		offset #{pager.startRowNo}-1 rows
+		fetch first 10 rows only
+	</select>
+	
+	<select id="selectSearchTrashCount" parameterType="map" resultType="int">
+		select count(*) 
+			from (
+		        select count(*)
+		        from email_content c, send_email s,receive_email r, employees e
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and r.trash_date is not null
+		        	  and s.received_emp_id = #{empId}
+		        	  and r.is_deleted = 0
+		        	  and e.emp_id = r.sent_emp_id
+		        	  and (e.name like '%' || #{keyword} || '%' 
+			  		  or c.title like '%' || #{keyword} || '%' )
+		        union 
+		        select  count(*)
+		        from email_content c, send_email s,receive_email r, employees e
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and s.trash_date is not null
+		        	  and r.SENT_EMP_ID = #{empId}
+		        	  and s.is_deleted = 0
+		        	  and e.emp_id = s.received_emp_id
+		        	  and (e.name like '%' || #{keyword} || '%' 
+			 		  or c.title like '%' || #{keyword} || '%' )
+        		)
+	
+	</select>
+	
+	<!-- 나의 메일 중 쓰레기통에 있는 메일 list -->
+	<select id="selectSearchTrashList" parameterType="map" resultType="emailList">
+			
+			select * 
+			from (
+		        select s.send_email_id as sendEmailId,
+                       r.receive_email_id as receiveEmailId,
+		        	   r.SENT_EMP_ID as sentId,
+		        	   s.received_emp_id as receiveId,
+		        	   s.sent_date as sentDate,
+		        	   c.title, r.trash_date rtrashDate,
+                       s.trash_date strashDate,
+		        	   e.name as name,
+		        	   c.important
+		        from email_content c, send_email s,receive_email r, employees e
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and r.trash_date is not null
+		        	  and s.received_emp_id = #{empId}
+		        	  and r.is_deleted = 0
+		        	  and e.emp_id = r.sent_emp_id
+		        	  and (e.name like '%' || #{keyword} || '%' 
+			 		  or c.title like '%' || #{keyword} || '%' )
+		        union 
+		        select  s.send_email_id as sendEmailId,
+                        r.receive_email_id as receiveEmailId,
+		        	    r.SENT_EMP_ID as sentId,
+		        		s.received_emp_id as receiveId,
+		        		s.sent_date as sentDate, c.title,
+                        r.trash_date rtrashDate,
+		        		s.trash_date strashDate,
+		        		e.name as name,
+		        		c.important
+		        from email_content c, send_email s,receive_email r, employees e
+		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
+		        	  and s.trash_date is not null
+		        	  and r.SENT_EMP_ID = #{empId}
+		        	  and s.is_deleted = 0
+		        	  and e.emp_id = s.received_emp_id
+		        	  and (e.name like '%' || #{keyword} || '%' 
+			 		  or c.title like '%' || #{keyword} || '%' )
+        		)
+			order by sentDate desc
+			offset #{pager.startRowNo}-1 rows
+			fetch first 10 rows only
+			
+	</select>
+	
+	<select id="selectSearchReceiveCount" parameterType="map" resultType="int">
+		select count(s.send_email_id)
+			from receive_email r, email_content c, send_email s, employees e
+			where s.RECEIVED_EMP_ID = #{empId} 
+				and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+				and r.trash_date is null
+				and e.emp_id = r.sent_emp_id
+				and (e.name like '%' || #{keyword} || '%' 
+			 		 or c.title like '%' || #{keyword} || '%' )
+	
+	</select>
+	
+	<select id="selectSearchReceiveList" parameterType="map" resultType="emailList">
+		select distinct 
+				   r.receive_email_id as receiveEmailId,
+				   s.received_emp_id as receiveId,
+				   r.sent_emp_id as sentId,
+				   e.name as sentName,
+				   c.title, s.sent_date as sentDate,
+				   c.important
+			from receive_email r, email_content c, send_email s, employees e
+			where s.RECEIVED_EMP_ID = #{empId} 
+				  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+				  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID 
+				  and r.trash_date is null
+				  and e.emp_id = r.sent_emp_id
+				  and (e.name like '%' || #{keyword} || '%' 
+			 		 or c.title like '%' || #{keyword} || '%' )
+			order by s.sent_date desc
+			offset #{pager.startRowNo}-1 rows
+			fetch first 10 rows only
+	</select>
+	
+	<select id="selectSearchSendCount" parameterType="map" resultType="int">
+		select distinct count(*)
+        	from receive_email r, email_content c, send_email s,  employees e
+        	where r.SENT_EMP_ID = #{empId} 
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
+              	  and (e.name like '%' || #{keyword} || '%' 
+			 		 or c.title like '%' || #{keyword} || '%' )
+	</select>
+	
+	<select id="selectSearchSendList" parameterType="map" resultType="emailList">
+		select distinct 
+				   s.send_email_id as sendEmailId,
+				   r.sent_emp_id as sentId,
+				   s.received_emp_id as receiveId,
+				   c.title, s.sent_date as sentDate,
+				   e.name as receiveName,
+				   r.read_date as readDate,
+				   c.important
+        	from receive_email r, email_content c, send_email s,  employees e
+        	where r.SENT_EMP_ID = #{empId} 
+        		  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID 
+              	  and c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
+              	  and s.trash_date is null
+              	  and e.emp_id = s.received_emp_id
+              	   and (e.name like '%' || #{keyword} || '%' 
+			 		 or c.title like '%' || #{keyword} || '%' )
+        	order by s.sent_date desc
+        	offset #{pager.startRowNo}-1 rows
+        	fetch first 10 rows only
+	
+	</select>
+
 
 
 
