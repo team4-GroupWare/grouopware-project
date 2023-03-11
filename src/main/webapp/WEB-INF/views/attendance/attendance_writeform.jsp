@@ -81,9 +81,40 @@
 	<!-- ======================================Main==================================================== -->
 	<main id="main" class="main"> <!-- PageContent -->
 	<section class="section">
+		<div class="row ">
 
-		<div class="row mt-5">
-			<div class="col-lg-7">
+			<div class="col-5">
+				<div class="card profile mt-3">
+					<div class="card-header">연장 근무현황</div>
+					<div class="card-body pt-3 m-0">
+						<div class="tab-pane fade show active profile-overview"
+							id="profile-overview">
+
+
+							<div class="row">
+								<div class="col">
+									<div class="row">
+										<div class="col label ">주 근무 계획 시간</div>
+										<div class="col">40시간</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="row">
+										<div class="col label">주 연장 근무 시간</div>
+										<div class="col">5시간</div>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-10">
 				<!-- <table id="vertical-1" 
 							style="width:50%; box-shadow: 0px 0 30px rgb(1 41 112 / 10%);border: none;  border-radius: 5px;">
 				            <tr style="height: 50px; vertical-align:middle; ">
@@ -94,53 +125,13 @@
 				            </tr>
 						</table> -->
 
-							<div class="card" ">
-							  <div class="card-header">
-							    Table in a card
-							  </div>
-							  <table class="card-table table">
-							    <thead>
-							      <tr>
-							        <th scope="col">문서 번호</th>
-							        <th scope="col">#3</th>
-							      </tr>
-							      <tr>
-							        <th scope="col">승인</th>
-							        <th scope="col">대기상태</th>
-							      </tr>
-							     
-							    </thead>
-							    <tbody>
-							      <tr>
-							        <td rowspan="3">Name 01</td>
-							        <td>data 1</td>
-							      </tr>
-							      <tr>
-							        <td class="not-first-cell">data 2</td>
-							      </tr>
-							      <tr>
-							        <td class="not-first-cell">data 3</td>
-							      </tr>
-							      <tr>
-							        <td rowspan="2">Name 02</td>
-							        <td class="not-first-cell">data 1</td>
-							      </tr>
-							      <tr>
-							        <td class="not-first-cell">data 2</td>
-							      </tr>
-							    </tbody>
-							  </table>
-							</div>
-					<br><br>
+				<div class="card profile">
+					<div class="card-header">연장근무 신청서</div>
+					<div class="card-body m-4">
 
-			</div>
-			<div class="col-5">
-				<div class="card profile mt-3">
-					<div class="card-header">신청자 정보</div>
-					<div class="card-body pt-3">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-
+						<!-- Form -->
+						<!-- General Form Elements -->
+						<form class="profile-overview">
 
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label ">이름</div>
@@ -161,34 +152,43 @@
 								<div class="col-lg-3 col-md-4 label">팀</div>
 								<div class="col-lg-9 col-md-8">솔루션개발팀</div>
 							</div>
-
-
-
-
-						</div>
-					</div>
-				</div>
-				<div class="card profile mt-3">
-					<div class="card-header">연차 보유현황</div>
-					<div class="card-body pt-3">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-
-
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
-								<div class="col-lg-9 col-md-8">20 일</div>
+							<div class="row mb-3">
+								<label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+								<div class="col-sm-10">
+									<input type="date" class="form-control">
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputTime" class="col-sm-2 col-form-label">Time</label>
+								<div class="col-sm-10">
+									<input type="time" class="form-control">
+								</div>
 							</div>
 
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">경조사 연차</div>
-								<div class="col-lg-9 col-md-8">7일</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">결재선 선택</label>
+								<div class="col-sm-10">
+									<label class="btn btn-secondary btn-sm mb-2 " for="input-file">선택</label>
+								</div>
 							</div>
 
-						</div>
+
+
+
+
+
+							<div class="row mb-3">
+								<div class="col-sm-12 d-flex justify-content-end">
+									<button type="submit" class="btn btn-primary">제출하기</button>
+								</div>
+							</div>
+						</form>
+
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</section>
 	</main>

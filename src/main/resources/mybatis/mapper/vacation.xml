@@ -43,10 +43,10 @@
 		SELECT count(*)
 		FROM vacation
 		WHERE 
-			<if test="listType ==1">
+			<if test="type == 1 ">
 				emp_id = #{empId}
 			</if>
-			<if test="listType ==2">
+			<if test="type == 2 ">
 				approval_emp_id = #{empId}
 			</if>
 			<if test="!status.equals('')">
@@ -78,13 +78,12 @@
 	
 		from vacation v, employees e, vacation_category c
 		where 
-			<if test="listType ==1">
+			<if test="type == 1 ">
 				v.emp_id = #{empId}
 			</if>
-			<if test="listType ==2">
+			<if test="type == 2 ">
 				v.approval_emp_id = #{empId}
 			</if>
-			
 		and e.emp_id = v.emp_id 
 		and c.vacation_category_id = v.vacation_category_id
 		<if test="!status.equals('')">
@@ -108,7 +107,9 @@
 		select  c.vacation_name as "vacationName",
 	        t.team_name as "teamName",
 	        d.dept_name as "deptName",
+	        approval_emp_id as "approvalEmpId",
 	        e.name as "name",
+	        status,
 	        vacation_id as "vacationId", 
 	        to_char(write_date,'yyyy-mm-dd') as writeDate, content, 
 	        count_day as "countDay"

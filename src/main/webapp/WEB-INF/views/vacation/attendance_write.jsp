@@ -81,9 +81,9 @@
 	<!-- ======================================Main==================================================== -->
 	<main id="main" class="main"> <!-- PageContent -->
 	<section class="section">
-
-		<div class="row mt-5">
-			<div class="col-lg-7">
+		
+		<div class="row">
+			<div class="col-lg-10">
 				<!-- <table id="vertical-1" 
 							style="width:50%; box-shadow: 0px 0 30px rgb(1 41 112 / 10%);border: none;  border-radius: 5px;">
 				            <tr style="height: 50px; vertical-align:middle; ">
@@ -94,76 +94,73 @@
 				            </tr>
 						</table> -->
 
-				<div class="card profile mt-3">
-					<div class="card-header">휴가 신청서</div>
+				<div class="card profile">
+					<div class="card-header">연장근무 신청서</div>
 					<div class="card-body m-4">
 
 						<!-- Form -->
 						<!-- General Form Elements -->
 						<form class="profile-overview">
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">휴가 종류</label>
+							<div class="row">
+							<div class="col">
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label ">이름</div>
+								<div class="col-lg-9 col-md-8">이연희</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">직책</div>
+								<div class="col-lg-9 col-md-8">차장</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">부서</div>
+								<div class="col-lg-9 col-md-8">공공사업관리부</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">팀</div>
+								<div class="col-lg-9 col-md-8">
+								솔루션개발팀<br>
+								솔루션개발팀<br>
+								솔루션개발팀<br>
+								솔루션개발팀<br></div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">날짜</div>
 								<div class="col-sm-6">
-									<input type="radio" name="vacationType" value="1"
-										checked="checked"> 정기휴가 <input type="radio"
-										name="vacationType" value="2"> 경조사 <input
-										type="radio" name="vacationType" value="3"> 공가
+									<input type="date" class="form-control">
+								</div>
+							</div>
+							
+							<div class="row mb-3">
+								<div class="col-lg-3 col-md-4 label">Time</div>
+								<div class="col-sm-6">
+									<input type="time" class="form-control">
 								</div>
 							</div>
 
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">휴가 종류</label>
-								<div class="col-sm-4">
-									<select class="form-select" aria-label="Default select example">
-										<option selected>연차</option>
-										<option value="1">One</option>
-									</select>
-								</div>
-							</div>
 
 							<div class="row mb-3">
-								<label for="inputPassword" class="col-sm-2 col-form-label">날짜
-									선택</label>
-								<div class="col-sm-4">
-									<textarea class="form-control" style="height: 60px"></textarea>
-								</div>
-							</div>
-
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">결재선 선택</label>
-								<div class="col-sm-10">
+								<label  class="col-lg-3 col-md-4 label">결재선 선택</label>
+								<div class="col-sm-6">
 									<label class="btn btn-secondary btn-sm mb-2 " for="input-file">선택</label>
 								</div>
 							</div>
 
-							<div class="row mb-3">
-								<label for="inputPassword" class="col-sm-2 col-form-label">사유</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" style="height: 60px"></textarea>
-								</div>
-							</div>
 
-							
 
-							
-							<div class="row mb-3">
-								<div class="col-sm-12 d-flex justify-content-end">
-									<button type="submit" class="btn btn-primary">제출하기</button>
-								</div>
-							</div>
-						</form>
+
+
+
 						
-					</div>
-				</div>
-			</div>
-			<div class="col-5">
-				<div class="card profile mt-3">
-					<div class="card-header">신청자 정보</div>
-					<div class="card-body pt-3">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-
-
+							</div>
+							<!-- ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+							<div class="col">
+								
+								
+								
+							
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label ">이름</div>
 								<div class="col-lg-9 col-md-8">이연희</div>
@@ -183,34 +180,20 @@
 								<div class="col-lg-3 col-md-4 label">팀</div>
 								<div class="col-lg-9 col-md-8">솔루션개발팀</div>
 							</div>
-
-
-
-
-						</div>
-					</div>
-				</div>
-				<div class="card profile mt-3">
-					<div class="card-header">연차 보유현황</div>
-					<div class="card-body pt-3">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-
-
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
-								<div class="col-lg-9 col-md-8">20 일</div>
+							<div class="row mb-3">
+								<div class="col-sm-12 d-flex justify-content-end">
+									<button type="submit" class="btn btn-primary">제출하기</button>
+								</div>
 							</div>
-
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">경조사 연차</div>
-								<div class="col-lg-9 col-md-8">7일</div>
 							</div>
+							</div>
+							
+						</form>
 
-						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</section>
 	</main>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.attendance.model.Attendance;
+import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
 import com.mycompany.webapp.attendance.repository.AttendanceRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -85,8 +86,8 @@ public class AttendanceService implements IAttendanceService {
 		// 1-1 전체 사원의 아이디 조회
 		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
 		log.info(totalEmpId);
-		String clock_in = date+" 09:00:00";
-		String clock_out = date+" 18:00:00";
+		String clock_in = date+" 08:43:00";
+		String clock_out = date+" 18:47:00";
 		for(String empId : totalEmpId ) {
 			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
 		}
@@ -137,6 +138,23 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public List<String> getAttStatus(String empId, int month) {
 		return attendanceRepository.selectAttStatusCal(empId,month);
+	}
+
+	@Override
+	public int updateHalfAtt(String empId, String today) {
+		return attendanceRepository.updateHalfAtt(empId,today);
+	}
+
+	@Override
+	public AttendanceMonthStatus getMonthCount(String empId,String month) {
+		log.info(empId);
+		log.info(month);
+		return attendanceRepository.selectMonthCount(empId,month);
+	}
+
+	@Override
+	public int getlateTime(String today, String empId) {
+		return attendanceRepository.selectLateTime(today,empId);
 	}
 
 }

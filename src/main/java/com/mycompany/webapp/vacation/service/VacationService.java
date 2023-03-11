@@ -55,23 +55,21 @@ public class VacationService implements IVacationService {
 	}
 
 	@Override
-	public int getVacationRow(int listType, String empId, String status) {
+	public int getVacationRow(String empId, String status, int type) {
 		log.info("실행");
-		return vacationRepository.selectVacationCount(empId, status,listType);
+		return vacationRepository.selectVacationCount(empId, status, type);
 	}
 
 	@Override
-	public List<VacationList> getVacationList(Pager pager, String empId, String status, int listType) {
+	public List<VacationList> getVacationList(Pager pager, String empId, String status, int type) {
 		log.info("실행");
-		return vacationRepository.selectVacationList(pager, empId, status,listType);
+		return vacationRepository.selectVacationList(pager, empId, status, type);
 	}
 
 	@Override
-	public Employee getVacationDays(String empId, int listType) {
+	public Employee getVacationDays(String empId) {
 		log.info("실행");
-		log.info(empId);
-		log.info(listType);
-		return vacationRepository.selectVacationDays(empId,listType);
+		return vacationRepository.selectVacationDays(empId);
 	}
 
 

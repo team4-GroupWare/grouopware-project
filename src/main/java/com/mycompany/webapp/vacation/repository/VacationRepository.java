@@ -21,9 +21,9 @@ public interface VacationRepository {
 	public int insertVacationDate(VacationDate vacationDate);
 
 	//휴가 리스트 조회하기
-	public int selectVacationCount(@Param("empId") String empId, @Param("status") String status,@Param("listType") int listType);
-	public List<VacationList> selectVacationList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status,@Param("listType") int listType);
-	public Employee selectVacationDays(@Param("empId")String empId , @Param("listType") int listType);
+	public int selectVacationCount(@Param("empId") String empId, @Param("status") String status,  @Param("type") int type );
+	public List<VacationList> selectVacationList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status,@Param("type") int type);
+	public Employee selectVacationDays(@Param("empId")String empId);
 	
 	//휴가 상세 문서
 	public VacationDetail selectVacationDetail(int vacationId);
