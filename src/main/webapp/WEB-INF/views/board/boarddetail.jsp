@@ -106,24 +106,19 @@
 		              <!-- General Form Elements -->
 		                <div class="row ">
 			                <div class="col-sm-6 row">
-			                  <label for="inputText" class="col-md-2 col-form-label">작성자</label>
+			                  <label for="inputText" class="col-md-2 col-form-label">조회수</label>
 			                  <div class="col-md-8 my-auto d-flex">
-			                   		<p style="color:grey" class="my-auto">김잡스 </p>
-			                   		<p style="color:grey;margin-left:2px" class="my-auto">대표이사 </p>
-			                   		<p  class="my-auto mx-1">| </p>
-			                   		<p style="color:grey" class="my-auto">test1@exaient.com</p>
+			                   		<p style="color:grey" class="my-auto">129 </p>
 			                  </div>
 			                </div>
-		                </div>
-		                
-		                <div class="row mb-3">
-			                <div class="col-sm-6 row">
+			                
+			                 <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">작성 날짜</label>
 			                  <div class="col-sm-8 my-auto">
 			                    <p class="my-auto" style="color:grey;font-size:15px">2023-03-12</p>
 			                  </div>
 			                 </div>
-			               </div>
+		                </div>
 		               <hr/>
 		                
 		                <div class="row mb-3 file-list" style="margin-left:15px; margin-right:15px;background-color:#F6F6F6">
