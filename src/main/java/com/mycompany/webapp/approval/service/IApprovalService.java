@@ -22,6 +22,14 @@ public interface IApprovalService {
 	//전자결재 작성
 	public int writeApproval(Approval approval);
 	
+	/**
+	 * 임시저장
+	 * @author : LEEJIHO
+	 * @param approval
+	 * @return
+	 */
+	public int updateApproval(Approval approval);
+	
 	//내 문서함 목록
 	public List<Approval> getApprovalList(Pager pager, String empId, String status, int approvalCategoryId);
 
@@ -36,7 +44,7 @@ public interface IApprovalService {
 
 	//전자결재 임시저장 갯수
 	public int getTempApprovalRow(String empId);
-
+	
 	//전자결재 결재선 선택 시 사원정보
 	public ApprovalLine getApprovalLine(String empId);
 

@@ -80,7 +80,7 @@
                 						<tr>
 						                    <%-- <th scope="row">${index.count}</th> --%>
 						                    <td>${approval.categoryName}</td>
-						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
+						                    <td><a href="${pageContext.request.contextPath}/approval/tempForm?approvalId=${approval.approvalId}">${approval.title}</a></td>
 						                    <td>${approval.empName} / ${approval.deptName}</td>
 						                    <c:if test="${approval.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>

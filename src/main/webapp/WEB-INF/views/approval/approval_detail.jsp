@@ -96,6 +96,10 @@
 			                	</div>
                 			</form>
                				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">
+               					<tr>
+					                <th style="background-color:#E9EFFE; width:10%">제목</th>
+					                <td style="width: 40%" colspan="3">${approval.title}</td>
+					            </tr>
 					            <tr>
 					                <th style="background-color:#E9EFFE; width:10%">결재 양식</th>
 					                <td style="width: 40%">${approval.categoryName}</td>

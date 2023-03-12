@@ -16,7 +16,6 @@ import com.mycompany.webapp.approval.model.RefEmployee;
 import com.mycompany.webapp.approval.repository.ApprovalRepository;
 import com.mycompany.webapp.component.MultipartFileResolver;
 import com.mycompany.webapp.component.Pager;
-import com.mycompany.webapp.email.model.EmailFile;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -40,6 +39,42 @@ public class ApprovalService implements IApprovalService {
 		log.info("전자결재 작성 실행");
 		int row = 0;
 		approvalRepository.insertApproval(approval);
+		
+		if(approval.getApprovalLine() != null) {
+			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+				row += approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
+			}
+		}
+		
+		MultipartFile[] files = approval.getAttachFiles();
+		if(files != null) {
+			List<ApprovalFile> fileList =  null;
+			try {
+				fileList = multipartFileResolver.getApprovalFileList(files, approval.getApprovalId());
+				
+				if(fileList.size() != 0) {
+					for(int i=0; i<fileList.size();i++) {
+						if(fileList.get(i).getApprovalFileName() != null && !fileList.get(i).getApprovalFileName().equals("")) {
+							row += approvalRepository.insertApprovalFile(fileList.get(i));
+						}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
+	
+	@Transactional
+	public int updateApproval(Approval approval) {
+		log.info("=====updateApproval==========(임시저장 문서 수정, 제출)");
+		log.info("+++++++++approval++++++++++");
+		log.info(approval);
+		int row = 0;
+		approvalRepository.updateApproval(approval);
+		
+		row += approvalRepository.deleteApprovalLine(approval.getApprovalId());
 		
 		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
 			row += approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));

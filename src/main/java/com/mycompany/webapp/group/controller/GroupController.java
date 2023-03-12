@@ -64,6 +64,8 @@ public class GroupController {
 		model.addAttribute("departments", departments);
 		model.addAttribute("employees", employees);
 		model.addAttribute("deptId", deptId);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
 		
 		return "hr/hr";
 	}

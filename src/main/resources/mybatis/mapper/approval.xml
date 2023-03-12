@@ -69,6 +69,22 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 전자결재 수정 -->
+	<update id="updateApproval" parameterType="approval">
+		UPDATE approval SET
+			title = #{title}, 
+			write_date = sysdate, 
+			content = #{content}, 
+			approval_category_id = #{approvalCategoryId}, 
+			status = default, 
+			temp_approval = #{tempApproval}
+			<if test="refEmpId != null">
+				, ref_emp_id = #{refEmpId}
+			</if>
+		WHERE emp_id = #{empId}
+			AND approval_id = #{approvalId}
+	</update>
+	
 	<!-- 전자결재 파일 -->
 	<insert id="insertApprovalFile" parameterType="approvalFile">
 		<![CDATA[
@@ -80,11 +96,21 @@
 	<!-- 전자결재 작성 결재선 저장 -->
 	<insert id="insertApprovalLine" parameterType="approvalLine">
 		<selectKey keyProperty="approvalId" resultType="int" order="BEFORE">
-			SELECT seq_approval.CURRVAL FROM dual
+			<if test="approvalId != 0">
+				SELECT approval_id FROM approval WHERE approval_id = #{approvalId}
+			</if>
+			<if test="approvalId == 0">
+				SELECT seq_approval.CURRVAL FROM dual
+			</if>
 		</selectKey>
 		INSERT INTO approval_line (approval_line_id, approval_id, emp_id, seq)
 		VALUES (seq_approval_line.nextval, #{approvalId}, #{empId}, #{seq})
 	</insert>
+	
+	<!-- 전자결재선 삭제 -->
+	<delete id="deleteApprovalLine" parameterType="int">
+		DELETE FROM approval_line WHERE approval_id = #{approvalId}
+	</delete>
 	
 	<!-- 내 문서함 상태별 갯수 -->
 	<select id="selectApprovalCount" parameterType="map" resultType="int">
@@ -280,6 +306,7 @@
 			    and e.grade_id = g.grade_id and e.dept_id = d.dept_id
 			    and e.team_id = t.team_id
 			    and a.approval_id = #{approvalId}
+			ORDER BY seq
 		]]>
 	</select>
 	

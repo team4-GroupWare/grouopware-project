@@ -54,7 +54,7 @@
 		}
 	</style>
 </head>
-	<body  style="overflow-x: hidden">
+	<body style="overflow-x: hidden">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>

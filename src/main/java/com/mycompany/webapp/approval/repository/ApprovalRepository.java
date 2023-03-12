@@ -143,4 +143,19 @@ public interface ApprovalRepository {
 	 */
 	public RefEmployee selectRefEmployeeByApprovalId(int approvalId);
 	
+	/**
+	 * 전자결재 문서 수정 (임시저장 수정 및 제출)
+	 * @author : LEEJIHO
+	 * @param approval
+	 */
+	public void updateApproval(Approval approval);
+	
+	/**
+	 * 전자결재선 삭제
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @return
+	 */
+	public int deleteApprovalLine(int approvalId);
+	
 }
