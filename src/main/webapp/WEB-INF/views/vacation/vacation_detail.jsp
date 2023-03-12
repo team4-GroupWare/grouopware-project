@@ -50,11 +50,36 @@
 								<div class="col mt-2">결재 정보</div>
 								<c:if test="${loginEmployee.empId == vacationDetail.approvalEmpId && vacationDetail.status eq '대기'}">
 									<div class="col d-flex justify-content-end">
-										<button type="submit" class="btn btn-primary" name="isApproved"
-											style="margin-right: 8px" value="y">승인</button>
-										<button type="submit" class="btn btn-danger" name="isApproved"
-											value="n">반려</button>
+										<button type="button" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y" onclick="confirm(this)">승인</button>
+											
+										<button type="button" class="btn btn-danger" name="isApproved" value="n" onclick="confirm(this)">반려</button>
+											
 									</div>
+									<script >
+										
+										function confirm (e) {
+											var type = $(e).attr('value');
+											var vacationId = ${vacationDetail.vacationId};
+											var vacationName ="${vacationDetail.vacationName}";
+											
+											$.ajax({
+												type: "post",
+											    url: "${pageContext.request.contextPath}/vacation/process",
+											    dataType : "text",
+											    data: {
+											    	type : type,
+											    	vacationId: vacationId,
+											    	vacationName : vacationName
+											    },
+											    success: function (data) {
+											    	alert(data);
+												},
+												error: function(e){
+													alert("값을 가져오지 못했습니다.")
+												}
+											})
+										}
+									</script>
 								</c:if>
 							</div>
 
@@ -83,7 +108,7 @@
 										</div>
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label ">승인 날짜</div>
-											<div class="col-lg-9 col-md-8">2023-03-11</div>
+											<div class="col-lg-9 col-md-8"></div>
 										</div>
 									</div>
 								</div>
@@ -93,7 +118,6 @@
 				</div>
 			</div>
 			<!--================================================신청자 정보==================================================-->
-
 			<!-- ===================================휴가 신청서============================================= -->
 			<div class="col-lg-10">
 				<div class="card profile mt-3">

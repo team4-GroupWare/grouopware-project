@@ -93,16 +93,19 @@ public class OvertimeController {
 			String empId = emp.getEmpId();
 			
 			Overtime overtime = overtimeService.getOvertimeDetail(overtimeId);
-			log.info(overtime);
 			
 			Employee employee;
-			if(empId == overtime.getEmpId()) {
+			if(empId.equals(overtime.getEmpId())) {
+				log.info("트루라면");
+				
 				 employee = employeeService.getEmp(overtime.getApprovalEmpId());
+				 log.info("그래 이거지"+employee);
+					
 			}else {
 				 employee = employeeService.getEmp(overtime.getEmpId());
 			}
 			log.info(overtime);
-			log.info(employee);
+			log.info("dork sjgdjwla"+ employee);
 			model.addAttribute("employee", employee);
 			model.addAttribute("pageNo", pageNo);
 			model.addAttribute("status", status);

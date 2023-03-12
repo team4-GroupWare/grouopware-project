@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,8 +45,8 @@ public class VacationController {
 	private IEmployeeService employeeService;
 	@Autowired
 	private IVacationService vacationService;
-	
-	// 1. 휴가 신청 
+
+	// 1. 휴가 신청
 	@GetMapping("/vacation/write")
 	public String getDepList(Model model) {
 		log.info("실행");
@@ -57,7 +59,7 @@ public class VacationController {
 		model.addAttribute("teams", teams);
 		return "vacation/vacation_writeform";
 	}
-	
+
 	// 휴가 작성 결재선 modal 부서 팀 list
 	@GetMapping("/vacation/getemps/{teamid}")
 	@ResponseBody
@@ -111,16 +113,17 @@ public class VacationController {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		int vacationRow = vacationService.getVacationRow(empId, status ,type);
+		int vacationRow = vacationService.getVacationRow(empId, status, type);
 		log.info(vacationRow);
 		Pager pager = new Pager(10, 5, vacationRow, pageNo);
-		List<VacationList> vacationList = vacationService.getVacationList(pager, empId, status ,type);
-		if(type == 1) {
+		List<VacationList> vacationList = vacationService.getVacationList(pager, empId, status, type);
+		if (type == 1) {
 			Employee vacationDays = vacationService.getVacationDays(empId);
 			model.addAttribute("dayoffRemain", vacationDays.getDayoffRemain());
 			model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
 		}
 		model.addAttribute("vacationList", vacationList);
+		log.info(vacationList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		return "vacation/vacation_list";
@@ -143,6 +146,26 @@ public class VacationController {
 		log.info(vacationDetail);
 		return "vacation/vacation_detail";
 	}
+
 	
-			
+	@RequestMapping(value="/vacation/process",method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String process(@RequestParam String type,@RequestParam int vacationId,@RequestParam String vacationName, Model model) {
+		if(type.equals("y")) {
+			if(vacationName.contains("경조사")) {
+				//해당 날짜를 가져옴
+				//VacationDate ranges = vacationService.getRanges(vacationId);
+				//날짜하암 어캐
+			}else if(vacationName.contains("반차")) {
+				
+			}else {
+				
+			}
+			return "으악";
+		}else {
+			return "aaaaa";
+		}
+		
+	}
+
 }

@@ -220,6 +220,7 @@
 									document.getElementById('endDate').value =dateFormat2 ;
 									$('#choiceDate').text('선택 일수 : '+day+'일');
 									$('#countDay').val(day);
+									console.log($('#countDay').val());
 								};
 								
 								function countDate(){
@@ -231,6 +232,7 @@
 									}
 									$('#choiceDate').text('선택 일수 : '+count+'일');
 									$('#countDay').val(count);
+									console.log("????"+$('#countDay').val());
 								}
 								
 							</script>

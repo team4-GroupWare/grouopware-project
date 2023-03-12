@@ -132,7 +132,7 @@
 			<!-- ====================================== 4th Card ============================================== -->
 			<div class="col-lg-7">
 				<div class="pagetitle">
-					<h1>월별 근무 현황</h1>
+					<h1>나의 근무 현황</h1>
 				</div>
 				<div class="card" style="height: 720px;">
 					<div class="card-body m-0 p-0">

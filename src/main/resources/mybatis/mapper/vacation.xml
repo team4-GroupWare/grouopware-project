@@ -58,6 +58,7 @@
 	<select id="selectVacationList" parameterType="string" resultType="vacationList">
 		select v.vacation_id as "vacationId", 
 		e.name as "name", 
+		e.emp_id as "empId", 
 		c.vacation_name as "vacationName", 
 		status, 
 		count_day as "countDay",

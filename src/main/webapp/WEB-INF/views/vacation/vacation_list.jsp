@@ -43,7 +43,8 @@
     	<!-- 페이지 제목 -->
 		
 		<section class="section mt-3">
-      		<div class="row">
+		<c:if test="${loginEmployee.empId == vacationList[0].empId}">
+			<div class="row">
       			<div class="col-lg-6">
       				<div class="pagetitle">
 			   			<h1>휴가 현황</h1>
@@ -61,6 +62,8 @@
       			</div>
       			
       		</div>
+		</c:if>
+      		
       		<div class="row">
         		<div class="col-lg-12">
         		<div class="pagetitle">

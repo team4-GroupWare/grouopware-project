@@ -133,10 +133,10 @@
 										<div class="col-lg-3 col-md-4 label ">이름</div>
 										
 										<c:if test="${loginEmployee.empId == overtime.empId}">
-											<div class="col-lg-9 col-md-8">${employee.name}</div>
+											<div class="col-lg-9 col-md-8">${overtime.empName}</div>
 										</c:if>
 										<c:if test="${loginEmployee.empId == overtime.approvalEmpId}">
-											<div class="col-lg-9 col-md-8">${overtime.empName}</div>
+											<div class="col-lg-9 col-md-8">${employee.name}</div>
 										</c:if>
 										
 									</div>
