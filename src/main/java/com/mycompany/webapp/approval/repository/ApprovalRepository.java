@@ -166,4 +166,18 @@ public interface ApprovalRepository {
 	 */
 	public int deleteApproval(int approvalId);
 	
+	/**
+	 * 사직서 처리
+	 * @author : LEEJIHO
+	 * @param empId
+	 */
+	public void updateEmployeeResignDate(String empId);
+	
+	/**
+	 * 경조 휴가 신청서 처리
+	 * @author : LEEJIHO
+	 * @param empId
+	 */
+	public void updateEmployeeAddDayoffRemain(@Param("empId") String empId, @Param("eventName") String eventName);
+	
 }

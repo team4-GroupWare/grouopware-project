@@ -411,14 +411,14 @@ public class ApprovalController {
 	 * @return
 	 */
 	@PostMapping("/confirm")
-	public String confirm(ApprovalLine approvalLine, HttpSession session) {
+	public String confirm(ApprovalLine approvalLine, Approval approval, HttpSession session) {
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
 		approvalLine.setEmpId(empId);
 		
-		approvalService.confirm(approvalLine);
+		approvalService.confirm(approvalLine, approval);
 		
-		return "redirect:/approval/list";
+		return "redirect:/approval/confirmlist";
 	}
 	
 	/**

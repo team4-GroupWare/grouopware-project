@@ -95,6 +95,8 @@
               					<input type="hidden" id="approvalId" name="approvalId" value='${approval.approvalId}'>
               					<input type="hidden" id="approvalLineId" name="approvalLineId" value='${approvalLines[mySeq].approvalLineId}'>
               					<input type="hidden" id="lastSeq" name="lastSeq" value='${fn:length(approvalLines)}'>
+              					<input type="hidden" id="approvalCategoryId" name="approvalCategoryId" value="${approval.approvalCategoryId}">
+              					<input type="hidden" id="empId" name="empId" value="${approval.empId}">
 			              		<div class="row mb-3">
 			              			<c:if test="${myTurn == 1}">
 				                  		<div class="col-sm-12 d-flex justify-content-end">
@@ -107,13 +109,6 @@
 			                  				<button type="button" class="btn btn-danger" id="delete" name="delete">삭제</button>
 			                  			</div>
 			                  		</c:if>
-			                  		<!-- <script>
-										function delete() {
-											console.log("delete!");
-											$("form").attr("action", "${pageContext.request.contextPath}/approval/delete");
-											$("#approval_form").submit();
-										}
-									</script> -->
 			                	</div>
                 			</form>
                				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">

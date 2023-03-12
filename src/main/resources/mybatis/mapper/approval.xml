@@ -374,10 +374,30 @@
 		]]>
 	</update>
 	
+	<!-- 전자결재 문서 삭제 -->
 	<delete id="deleteApproval" parameterType="int">
 		<![CDATA[
 			DELETE FROM approval WHERE approval_id = #{approvalId}
 		]]>
 	</delete>
+	
+	<update id="updateEmployeeResignDate" parameterType="string">
+		<![CDATA[
+			UPDATE employees
+			SET resign_date = sysdate
+			WHERE emp_id = #{empId}
+		]]>
+	</update>
+	
+	<update id="updateEmployeeAddDayoffRemain" parameterType="map">
+		<selectKey keyProperty="eventCount" resultType="int" order="BEFORE">
+			SELECT event_count FROM family_event WHERE event_name = #{eventName}
+		</selectKey>
+		<![CDATA[
+			UPDATE employees
+			SET add_dayoff_remain = #{eventCount}
+			WHERE emp_id = #{empId}
+		]]>
+	</update>
 	
 </mapper>

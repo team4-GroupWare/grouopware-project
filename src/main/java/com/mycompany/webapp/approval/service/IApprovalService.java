@@ -89,7 +89,7 @@ public interface IApprovalService {
 	 * @author : LEEJIHO
 	 * @param approvalLine
 	 */
-	public int confirm(ApprovalLine approvalLine);
+	public int confirm(ApprovalLine approvalLine, Approval approval);
 
 	/**
 	 * 해당 문서에 대한 첨부파일 목록

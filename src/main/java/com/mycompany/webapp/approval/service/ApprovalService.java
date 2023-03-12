@@ -178,13 +178,26 @@ public class ApprovalService implements IApprovalService {
 
 	//문서 결재(승인, 반려)
 	@Transactional
-	public int confirm(ApprovalLine approvalLine) {
+	public int confirm(ApprovalLine approvalLine, Approval approval) {
 		log.info("실행");
 		int row = 0;
 		String status;
 		int mySeq = getMySeq(approvalLine.getApprovalId(), approvalLine.getEmpId());
 		if(approvalLine.getLastSeq() == mySeq) {
 			if(approvalLine.getIsApproved().equals("y")) {
+				if(approval.getApprovalCategoryId() == 3) { //사직서일 때 
+					//사직 날짜를 마지막 승인날짜로 업데이트
+					approvalRepository.updateEmployeeResignDate(approval.getEmpId());
+				} else if(approval.getApprovalCategoryId() == 4) { //경조 휴가 신청일 때
+					String eventName = "결혼";
+					approvalRepository.updateEmployeeAddDayoffRemain(approval.getEmpId(), eventName);
+				} else if(approval.getApprovalCategoryId() == 5) {
+					String eventName = "사망";
+					approvalRepository.updateEmployeeAddDayoffRemain(approval.getEmpId(), eventName);
+				} else if(approval.getApprovalCategoryId() == 6) {
+					String eventName = "출산";
+					approvalRepository.updateEmployeeAddDayoffRemain(approval.getEmpId(), eventName);
+				}
 				status = "승인";
 			} else {
 				status = "반려";
