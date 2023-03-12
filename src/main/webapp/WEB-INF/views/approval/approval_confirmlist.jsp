@@ -98,7 +98,6 @@
               				<table class="table table-hover">
                 				<thead>
                   					<tr>
-					                    <!-- <th scope="col" width="10%">#</th> -->
 					                    <th scope="col" width="15%">
 						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
 	            								<span class="d-none d-md-block dropdown-toggle ps-2">결재 양식</span>
@@ -121,7 +120,6 @@
                 				<tbody>
                 					<c:forEach var="approval" items="${approvals}" varStatus="index">
                 						<tr>
-						                    <%-- <th scope="row">${index.count}</th> --%>
 						                    <td>${approval.categoryName}</td>
 						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
 						                    <td>${approval.empName} / ${approval.deptName}</td>
@@ -144,45 +142,52 @@
               				</table>
              				<!-- End Table -->
             			</div>
+            			<c:if test="${empty approvals}">
+		              		<div style="height:200px;text-align:center;">
+		              			내용이 존재하지 않습니다.
+		              	  	</div>
+		              	</c:if>
+		              	<c:if test="${not empty approvals}">
             			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="confirmlist?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="confirmlist?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="confirmlist?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="confirmlist?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="confirmlist?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="confirmlist?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="confirmlist/${approvalCategoryId}?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	
                 				</ul>
               				</nav>
               			</div>
+              			</c:if>
           			</div>
         		</div>
       		</div>

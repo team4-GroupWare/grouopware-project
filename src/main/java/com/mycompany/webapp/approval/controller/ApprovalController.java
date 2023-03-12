@@ -96,7 +96,6 @@ public class ApprovalController {
 		if(loginEmp.getManagerId() != null) {
 			//manager 정보
 			Employee manager = employeeService.getEmp(loginEmp.getManagerId());
-			log.info(manager);
 			model.addAttribute("manager", manager);
 		} else {
 			model.addAttribute("manager", null);
@@ -169,7 +168,6 @@ public class ApprovalController {
 		if(loginEmp.getManagerId() != null) {
 			//manager 정보
 			Employee manager = employeeService.getEmp(loginEmp.getManagerId());
-			log.info(manager);
 			model.addAttribute("manager", manager);
 		} else {
 			model.addAttribute("manager", null);
@@ -202,11 +200,7 @@ public class ApprovalController {
 	@ResponseBody
 	@PostMapping(value="/updateTemp", produces="application/json")
 	public Uri updateTempApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("===========updateTempApproval실행===============");
-		log.info("approval");
-		log.info("approvalId : " + approval.getApprovalId());
-		log.info("approvalId : " + approval.getApprovalCategoryId());
-		log.info("11111approvalLine : " + approval.getApprovalLine());
+		log.info("updateTempApproval실행");
 		
 		if(approval.getApprovalLine() != null) {
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
@@ -214,9 +208,6 @@ public class ApprovalController {
 				approval.getApprovalLine().get(i).setApprovalId(approval.getApprovalId());
 			}
 		}
-		log.info("222222approvalLine : " + approval.getApprovalLine());
-		log.info("3333333333333333    approval");
-		log.info(approval);
 		
 		approvalService.updateApproval(approval);
 
@@ -364,7 +355,7 @@ public class ApprovalController {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
-		log.info("======approvalId========" + approvalId);
+		
 		//전자결재 문서 상세 정보
 		Approval approval = approvalService.getApprovalDetail(approvalId);
 		//전자결재 문서 참조 사원 정보
@@ -473,5 +464,16 @@ public class ApprovalController {
 		model.addAttribute("approval_category", approval_category);
 		
 		return "approval/approval_reflist";
+	}
+	
+	@PostMapping("/delete")
+	public String deleteApproval(@RequestParam("approvalId") int[] approvalId) {
+		log.info("==========deleteApproval실행==========");
+		for(int i = 0; i < approvalId.length; i++) {
+			log.info("approvalId : " + approvalId[i]);
+			approvalService.deleteApproval(approvalId[i]);
+		}
+		
+		return "redirect:/approval/templist";
 	}
 }

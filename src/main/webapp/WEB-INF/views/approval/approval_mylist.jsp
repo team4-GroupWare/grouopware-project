@@ -58,7 +58,7 @@
           			<div class="card" style="height:620px">
             			<div class="card-body">
               				<!-- Bordered Tabs Justified -->
-              				<div style="padding-top:30px; padding-bottom:8px;">
+              				<div style="padding-top:20px; padding-bottom:8px;">
 				               	<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
 				              		<li class="nav-item" role="presentation">
 				              			<c:if test="${empty status}">
@@ -153,33 +153,39 @@
               				</table>
              				<!-- End Table -->
             			</div>
+            			<c:if test="${empty approvals}">
+		              		<div style="height:200px;text-align:center;">
+		              			내용이 존재하지 않습니다.
+		              	  	</div>
+		              	</c:if>
+		              	<c:if test="${not empty approvals}">
             			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="${approvalCategoryId}?pageNo=1&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=1&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
+	                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=${pager.startPageNo-1}&status=${status}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=${i}&status=${status}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
+		                    				<a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=${pager.endPageNo+1}&status=${status}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
@@ -192,6 +198,7 @@
                 				</ul>
               				</nav>
               			</div>
+              			</c:if>
           			</div>
         		</div>
       		</div>

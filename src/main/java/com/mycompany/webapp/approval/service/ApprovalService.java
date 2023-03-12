@@ -68,9 +68,8 @@ public class ApprovalService implements IApprovalService {
 	
 	@Transactional
 	public int updateApproval(Approval approval) {
-		log.info("=====updateApproval==========(임시저장 문서 수정, 제출)");
-		log.info("+++++++++approval++++++++++");
-		log.info(approval);
+		log.info("updateApproval실행");
+		
 		int row = 0;
 		approvalRepository.updateApproval(approval);
 		
@@ -228,6 +227,13 @@ public class ApprovalService implements IApprovalService {
 	@Override
 	public List<Approval> getRefApprovalList(Pager pager, String empId) {
 		return approvalRepository.selectRefApprovalList(pager, empId);
+	}
+
+	//전자결재 삭제
+	@Override
+	public int deleteApproval(int approvalId) {
+		return approvalRepository.deleteApproval(approvalId);
+		
 	}
 
 }

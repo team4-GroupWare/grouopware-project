@@ -50,7 +50,16 @@
 		        `,
 		    });
 		    tinymce.activeEditor.mode.set("readonly");
+		    
+		    $("#delete").on("click", function(){
+		    	console.log("delete!");
+				$("form").attr("action", "${pageContext.request.contextPath}/approval/delete");
+				$("#approval_form").submit();
+		    });
 		});
+		
+	</script>
+	<script>
 		
 	</script>
 	<style>
@@ -82,7 +91,7 @@
             			<div class="card-body m-4">
               				<!-- General Form Elements -->
               				<input id="approval_content" type="hidden" value='${approval.content}'>
-              				<form method="post" action="${pageContext.request.contextPath}/approval/confirm">
+              				<form id="approval_form" method="post" action="${pageContext.request.contextPath}/approval/confirm">
               					<input type="hidden" id="approvalId" name="approvalId" value='${approval.approvalId}'>
               					<input type="hidden" id="approvalLineId" name="approvalLineId" value='${approvalLines[mySeq].approvalLineId}'>
               					<input type="hidden" id="lastSeq" name="lastSeq" value='${fn:length(approvalLines)}'>
@@ -93,6 +102,18 @@
 				                    		<button type="submit" class="btn btn-danger" name="isApproved" value="n">반려</button>
 				                  		</div>
 			                  		</c:if>
+			                  		<c:if test="${loginEmployee.empId == approval.empId && approval.status=='대기'}">
+			                  			<div class="col-sm-12 d-flex justify-content-end">
+			                  				<button type="button" class="btn btn-danger" id="delete" name="delete">삭제</button>
+			                  			</div>
+			                  		</c:if>
+			                  		<!-- <script>
+										function delete() {
+											console.log("delete!");
+											$("form").attr("action", "${pageContext.request.contextPath}/approval/delete");
+											$("#approval_form").submit();
+										}
+									</script> -->
 			                	</div>
                 			</form>
                				<table id="vertical-1" class="table table-bordered" style="width:100%; border:black">

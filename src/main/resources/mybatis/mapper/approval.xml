@@ -374,5 +374,10 @@
 		]]>
 	</update>
 	
+	<delete id="deleteApproval" parameterType="int">
+		<![CDATA[
+			DELETE FROM approval WHERE approval_id = #{approvalId}
+		]]>
+	</delete>
 	
 </mapper>

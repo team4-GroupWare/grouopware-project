@@ -132,5 +132,12 @@ public interface IApprovalService {
 	 */
 	public RefEmployee getReferEmpInfo(int approvalId);
 
+	/**
+	 * 전자결재 문서 삭제
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 */
+	public int deleteApproval(int approvalId);
+
 
 }

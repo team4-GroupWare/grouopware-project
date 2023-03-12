@@ -158,4 +158,12 @@ public interface ApprovalRepository {
 	 */
 	public int deleteApprovalLine(int approvalId);
 	
+	/**
+	 * 전자결재 문서 삭제
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @return
+	 */
+	public int deleteApproval(int approvalId);
+	
 }
