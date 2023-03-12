@@ -243,7 +243,7 @@
 						</div>
 					
 						<div class="menu col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" onclick="location.href='${pageContext.request.contextPath}/board/list'" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-bell fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
