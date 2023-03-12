@@ -200,7 +200,7 @@ public class ApprovalController {
 	@ResponseBody
 	@PostMapping(value="/updateTemp", produces="application/json")
 	public Uri updateTempApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("++++++++++++++++updateTempApproval실행+++++++++++++");
+		log.info("updateTempApproval실행");
 		
 		if(approval.getApprovalLine() != null) {
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
@@ -321,11 +321,15 @@ public class ApprovalController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/templist")
-	public String getApprovalTempList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
+	@GetMapping({"/templist", "/templist/{approvalCategoryId}"})
+	public String getApprovalTempList(@PathVariable(required = false) Integer approvalCategoryId, @RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
+		
+		if(approvalCategoryId == null) {
+			approvalCategoryId = 0;
+		}
 		
 		int approvalRow = approvalService.getTempApprovalRow(empId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
@@ -446,6 +450,14 @@ public class ApprovalController {
 		return new ResponseEntity<byte[]>(approvalFile.getApprovalFileData(), headers, HttpStatus.OK);
 	}
 	
+	/**
+	 * 전자결재 참조함 목록
+	 * @author : LEEJIHO
+	 * @param pageNo : 현재 페이지
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/reflist")
 	public String getApprovalRefList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");
@@ -466,9 +478,15 @@ public class ApprovalController {
 		return "approval/approval_reflist";
 	}
 	
+	/**
+	 * 전자결재 문서 삭제
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public String deleteApproval(@RequestParam("approvalId") int[] approvalId) {
-		log.info("==========deleteApproval실행==========");
+		log.info("deleteApproval실행");
 		for(int i = 0; i < approvalId.length; i++) {
 			log.info("approvalId : " + approvalId[i]);
 			approvalService.deleteApproval(approvalId[i]);

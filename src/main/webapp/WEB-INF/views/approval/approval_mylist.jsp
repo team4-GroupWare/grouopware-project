@@ -191,7 +191,7 @@
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="${approvalCategoryId}?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
+                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/mylist/${approvalCategoryId}?pageNo=${pager.totalPageNo}&status=${status}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	

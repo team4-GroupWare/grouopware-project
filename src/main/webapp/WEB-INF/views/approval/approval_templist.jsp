@@ -108,35 +108,35 @@
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
                 					<li class="page-item">
-                    					<a class="page-link" href="tmplist?pageNo=1" aria-label="Previous">
+                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=1" aria-label="Previous">
                       						<span aria-hidden="true">처음</span>
                     					</a>
                   					</li>	
                 					<c:if test="${pager.groupNo>1}">
 	                  					<li class="page-item">
-	                    					<a class="page-link" href="templist?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+	                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=${pager.startPageNo-1}" aria-label="Previous">
 	                      						<span aria-hidden="true">이전</span>
 	                    					</a>
 	                  					</li>
                   					</c:if>
                   					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
                   						<c:if test="${pager.pageNo != i}">
-											<li class="page-item"><a class="page-link" href="templist?pageNo=${i}">${i}</a></li>
+											<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=${i}">${i}</a></li>
 										</c:if>
 										<c:if test="${pager.pageNo == i}">
-											<li class="page-item active"><a class="page-link" href="templist?pageNo=${i}">${i}</a></li>
+											<li class="page-item active"><a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=${i}">${i}</a></li>
 										</c:if>
 									</c:forEach>
 									
 									<c:if test="${pager.groupNo<pager.totalGroupNo}">
 										<li class="page-item">
-		                    				<a class="page-link" href="templist?pageNo=${pager.endPageNo+1}" aria-label="Next">
+		                    				<a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=${pager.endPageNo+1}" aria-label="Next">
 		                      					<span aria-hidden="true">다음</span>
 		                    				</a>
 	                  					</li>
 									</c:if>
 									<li class="page-item">
-                    					<a class="page-link" href="templist?pageNo=${pager.totalPageNo}" aria-label="Previous">
+                    					<a class="page-link" href="${pageContext.request.contextPath}/approval/templist/${approvalCategoryId}?pageNo=${pager.totalPageNo}" aria-label="Previous">
                       						<span aria-hidden="true">맨끝</span>
                     					</a>
                   					</li>	
