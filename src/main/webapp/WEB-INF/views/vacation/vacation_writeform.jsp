@@ -23,7 +23,15 @@
 	.card-header {
 		background-color: #d5e0fd;
 		color: black;
+		font-style: italic ; 
+		font-weight: 500   ; 
+		font-size: 17px;
+		
 	}
+	.profile .profile-overview   {
+	margin-bottom: 20px;
+	font-size: 20px;
+}
 </style>
 
 </head>
@@ -34,12 +42,56 @@
 	<main id="main" class="main">
 	<section class="section">
 		<div class="row mt-5" >
+			<!--================================================신청자 정보==================================================-->
+			<div class="col-4">
+				<div class="card profile mt-3">
+					<div class="card-header">신청자 정보</div>
+					<div class="card-body pt-4">
+						<div class="tab-pane fade show active profile-overview"
+							id="profile-overview">
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label ">이름</div>
+								<div class="col-lg-9 col-md-8">이연희</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">직책</div>
+								<div class="col-lg-9 col-md-8">차장</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">부서</div>
+								<div class="col-lg-9 col-md-8">공공사업관리부</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">팀</div>
+								<div class="col-lg-9 col-md-8">솔루션개발팀</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--================================================연차 보유현황==================================================-->
+				<div class="card profile">
+					<div class="card-header">연차 보유현황</div>
+					<div class="card-body pt-2 pb-3">
+						<div class="tab-pane fade show active profile-overview"
+							id="profile-overview">
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
+								<div class="col-lg-9 col-md-8">20 일</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-4 label">경조사 연차</div>
+								<div class="col-lg-9 col-md-8">7일</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- ===================================휴가 신청서============================================= -->
 			<div class="col-lg-6">
 				<div class="card profile mt-3">
 					<div class="card-header">휴가 신청서</div>
 					<div class="card-body pt-4">
-						<form class="profile-overview" method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write">	
+						<form class="profile-overview " method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write">	
 							<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
 							<!-- 휴가 종류 -->
 							<script>
@@ -110,16 +162,16 @@
 								});
 							});
 							</script>
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">휴가</label>
+							<div class="row ">
+								<label class="col-sm-2 label">휴가</label>
 								<div class="col-sm-6">
 									<input type="radio" name="vacationType" value="1" checked="checked"> 정기휴가
 									<input type="radio" name="vacationType" value="2"> 경조사 
 								</div>
 							</div>
 							<!-- 휴가 종류 -->
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">휴가 종류</label>
+							<div class="row ">
+								<label class="col-sm-2 label">휴가 종류</label>
 								<div class="col-sm-4">
 									<select id="POP" name="vacationCategoryId" class="form-select" aria-label="Default select example">
 										<option value="1" selected>연차</option>
@@ -131,8 +183,8 @@
 							<!-- 날짜 선택 datapicker -->
 							<div id="dateplace">
 								<div class="row mb-1">
-									<label class="col-sm-2 col-form-label">날짜 선택</label>
-									<div class="col-sm-10">
+									<label class="col-sm-2 label">날짜 선택</label>
+									<div class="col-sm-10 label">
 										<input type="text" id="datePicker" name="dates" style="width:100%" onchange="countDate()" class="form-control" required>
 										<p id="choiceDate" class="small">선택 일수 : 0일</p>
 									</div>
@@ -183,8 +235,8 @@
 								
 							</script>
 							<!-- 결재선 선택 -->
-							<div class="row mb-3">
-								<div class="col-sm-2">
+							<div class="row ">
+								<div class="col-sm-2 label">
 									<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
 	                    					결재선 선택
 	              					</button>
@@ -195,14 +247,14 @@
 								</div>
 							</div>
 							<!-- 사유 -->
-							<div class="row mb-3">
-								<label class="col-sm-2 col-form-label">사유</label>
+							<div class="row ">
+								<label class="col-sm-2 label">사유</label>
 								<div class="col-sm-10">
 									<input name="content" class="form-control" style="height: 60px"></input>
 								</div>
 							</div>
 							<!-- 제출하기 -->
-							<div class="row mb-3">
+							<div class="row ">
 								<div class="col-sm-12 d-flex justify-content-end">
 									<button type="submit" class="btn btn-primary" form="vacation_form">제출하기</button>
 								</div>
@@ -212,50 +264,7 @@
 					</div>
 				</div>
 			</div>
-			<!--================================================신청자 정보==================================================-->
-			<div class="col-4">
-				<div class="card profile mt-3">
-					<div class="card-header">신청자 정보</div>
-					<div class="card-body pt-4">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label ">이름</div>
-								<div class="col-lg-9 col-md-8">이연희</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">직책</div>
-								<div class="col-lg-9 col-md-8">차장</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">부서</div>
-								<div class="col-lg-9 col-md-8">공공사업관리부</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">팀</div>
-								<div class="col-lg-9 col-md-8">솔루션개발팀</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--================================================연차 보유현황==================================================-->
-				<div class="card profile">
-					<div class="card-header">연차 보유현황</div>
-					<div class="card-body pt-2 pb-3">
-						<div class="tab-pane fade show active profile-overview"
-							id="profile-overview">
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
-								<div class="col-lg-9 col-md-8">20 일</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3 col-md-4 label">경조사 연차</div>
-								<div class="col-lg-9 col-md-8">7일</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		
 		</div>
 	</section>
 	</main>

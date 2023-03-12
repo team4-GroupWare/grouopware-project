@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <html>
 
 <head>
@@ -48,7 +49,7 @@
 						<div class="card-header  py-2">
 							<div class="row">
 								<div class="col mt-2">결재 정보</div>
-								<c:if test="${loginEmployee.empId == vacationDetail.approvalEmpId && vacationDetail.status eq '대기'}">
+								<c:if test="${loginEmployee.empId == overtime.approvalEmpId && overtime.status eq '대기'}">
 									<div class="col d-flex justify-content-end">
 										<button type="submit" class="btn btn-primary" name="isApproved"
 											style="margin-right: 8px" value="y">승인</button>
@@ -56,6 +57,8 @@
 											value="n">반려</button>
 									</div>
 								</c:if>
+								
+								
 							</div>
 
 
@@ -64,29 +67,49 @@
 							<div class="tab-pane fade show active profile-overview"
 								id="profile-overview">
 								<div class="row">
-									<div class="col">
-										<div class="row mb-4">
-											<div class="col-lg-3 col-md-4 label ">이연희</div>
-											<div class="col-lg-9 col-md-8">${vacation.empName}(${vacation.gradeName})</div>
+									
+									<c:if test="${loginEmployee.empId == overtime.approvalEmpId}">
+										<div class="col">
+											<div class="row mb-4">
+												<div class="col-lg-3 col-md-4 label ">이름</div>
+												<div class="col-lg-9 col-md-8">${loginEmployee.name}</div>
+											</div>
+											<div class="row mb-4">
+												<div class="col-lg-3 col-md-4 label ">결재자 부서/팀</div>
+												<div class="col-lg-9 col-md-8">${loginEmployee.deptName}/${loginEmployee.teamName}</div>
+											</div>
 										</div>
-										<div class="row mb-4">
-											<div class="col-lg-3 col-md-4 label ">결재자 부서/팀</div>
-											<div class="col-lg-9 col-md-8">${vacation.deptName}/${vacation.teamName}</div>
+									</c:if>
+									
+									<c:if test="${loginEmployee.empId == overtime.empId}">
+										<div class="col">
+											<div class="row mb-4">
+												<div class="col-lg-3 col-md-4 label ">이름</div>
+												<div class="col-lg-9 col-md-8">${employee.name}</div>
+											</div>
+											<div class="row mb-4">
+												<div class="col-lg-3 col-md-4 label ">결재자 부서/팀</div>
+												<div class="col-lg-9 col-md-8">${employee.deptName}/${employee.teamName}</div>
+											</div>
 										</div>
-									</div>
+									</c:if>
 									<div class="col">
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label ">결재 상태</div>
 											<div class="col-lg-9 col-md-8">
-												<div class="col-sm-12">대기</div>
+												${overtime.status}
 											</div>
 										</div>
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label ">승인 날짜</div>
-											<div class="col-lg-9 col-md-8">2023-03-11</div>
+											<div class="col-lg-9 col-md-8">${overtime.approvalDate}</div>
 										</div>
 									</div>
 								</div>
+								
+								
+								
+								
 							</div>
 						</div>
 					</div>
@@ -97,88 +120,63 @@
 			<!-- ===================================휴가 신청서============================================= -->
 			<div class="col-lg-10">
 				<div class="card profile mt-3">
-					<div class="card-header">휴가 신청서</div>
+					<div class="card-header">연장근무 신청서</div>
 					<div class="card-body pt-4">
 						<form class="profile-overview">
 							<div class="row">
 								<div class="col">
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label ">작성날짜</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.writeDate}</div>
+										<div class="col-lg-3 col-md-4 label ">문서번호</div>
+										<div class="col-lg-9 col-md-8">${overtime.overtimeId}</div>
 									</div>
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label ">이름</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.name}</div>
+										
+										<c:if test="${loginEmployee.empId == overtime.empId}">
+											<div class="col-lg-9 col-md-8">${employee.name}</div>
+										</c:if>
+										<c:if test="${loginEmployee.empId == overtime.approvalEmpId}">
+											<div class="col-lg-9 col-md-8">${overtime.empName}</div>
+										</c:if>
+										
 									</div>
 
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">부서</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.deptName}</div>
+								
+										<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yyyy.MM.dd"/>
+										<div class="col-lg-3 col-md-4 label">근무날짜</div>
+										<div class="col-lg-9 col-md-8">${workDate}</div>
 									</div>
 
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">휴가종류</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.vacationName}</div>
+										<div class="col-lg-3 col-md-4 label">근무시간</div>
+										<div class="col-lg-9 col-md-8">${overtime.workTime}</div>
 									</div>
-
-									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">날짜</div>
-										<div class="col-lg-6 col-md-8">
-											<table width="100%" border="0" align="left" cellpadding="0"
-												cellspacing="0" bordercolor="#ffffff" class="form2"
-												style="border-collapse: collapse;">
-												<tbody>
-													<c:forEach var="vacationDate" items="${vacationDate}">
-														<tr>
-															<td width="30%" align="left" class="form2">
-																<div class="mb-3">${vacationDate.startDateStr}</div>
-															</td>
-
-															<td width="15%" align="center" class="form2">
-																<div class="mb-3">-</div>
-															</td>
-
-															<td width="30%" align="left" class="form2">
-																<div class="mb-3"cursor:hand;">${vacationDate.endDateStr}</div>
-															</td>
-
-														</tr>
-													</c:forEach>
-
-
-												</tbody>
-											</table>
-										</div>
-									</div>
-
-
-
 
 
 								</div>
 								<!-- ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
 								<div class="col">
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">직급</div>
-										<div class="col-lg-9 col-md-8">차장</div>
+										<div class="col-lg-3 col-md-4 label">작성날짜</div>
+										<fmt:formatDate var="writeDate" value="${overtime.writeDate}" pattern="yyyy.MM.dd"/>
+										<div class="col-lg-9 col-md-8">${writeDate}</div>
 									</div>
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">팀</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.teamName}</div>
+										<div class="col-lg-3 col-md-4 label">부서/팀</div>
+										<c:if test="${loginEmployee.empId == overtime.empId}">
+											<div class="col-lg-9 col-md-8">${loginEmployee.deptName}/${loginEmployee.teamName}</div>
+										</c:if>
+										
+										<c:if test="${loginEmployee.empId == overtime.approvalEmpId}">
+											<div class="col-lg-9 col-md-8">${employee.deptName}/${employee.teamName}</div>
+										</c:if>
 									</div>
-
-
 
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">일수</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.countDay}</div>
+										<div class="col-lg-3 col-md-4 label">근무내용</div>
+										<div class="col-lg-9 col-md-8">${overtime.content}</div>
 									</div>
-
-									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label">사유</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.content}</div>
-									</div>
-
 
 
 								</div>

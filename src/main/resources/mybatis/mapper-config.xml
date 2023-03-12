@@ -28,5 +28,6 @@
 		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
 		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
 		<typeAlias type="com.mycompany.webapp.attendance.model.AttendanceMonthStatus" alias="attendanceMonthStatus"/>
+		<typeAlias type="com.mycompany.webapp.overtime.model.Overtime" alias="overtime"/>
 	</typeAliases>
 </configuration>

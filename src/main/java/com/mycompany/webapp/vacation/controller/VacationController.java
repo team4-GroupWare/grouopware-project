@@ -101,7 +101,7 @@ public class VacationController {
 		}
 		log.info(vacation);
 		vacationService.writeVacation(vacation);
-		return "redirect:/vacation/my/list";
+		return "redirect:/vacation/list";
 	}
 
 	// 3. 나의 휴가

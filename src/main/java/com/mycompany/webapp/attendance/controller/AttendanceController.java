@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.attendance.model.Attendance;
@@ -374,6 +376,24 @@ public class AttendanceController {
 	public String deptList() {
 		log.info("실행");
 
-		return "vacation/attendance_write";
+		return "attendance/attendance_writeform";
+	}
+	
+	@GetMapping("/attendance/list/{type}")
+	public String attList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
+	
+		log.info("실행");
+
+		return "attendance/attendance_list";
+	}
+	
+	@GetMapping("/attendance/datail/{type}")
+	public String attDetail(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
+	
+		log.info("실행");
+
+		return "attendance/attendance_detail";
 	}
 }

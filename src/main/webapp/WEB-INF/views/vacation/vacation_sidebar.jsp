@@ -14,7 +14,7 @@
 		<!--근무 신청 -->
 		<div class="col p-1">
 			<button class="btn btn-success" type="button" style="width: 100%; height: 50px"
-					onclick="location.href='${pageContext.request.contextPath}/attendance/write'">
+					onclick="location.href='${pageContext.request.contextPath}/overtime/write'">
 				<i class="bi bi-pencil-square"></i> 근무신청
 			</button>
 		</div>
@@ -24,14 +24,14 @@
 	<ul class="sidebar-nav mt-2" id="sidebar-nav">
 		<!--근무 현황 -->
 		<li class="nav-item"
-			onclick="location.href='${pageContext.request.contextPath}/attendance/status'">
+			onclick="location.href='${pageContext.request.contextPath}/attendance/info'">
 			<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
 				<span>근무 현황</span>
 			</a>
 		</li>
 		<!--나의 근무 -->
 		<li class="nav-item"
-			onclick="location.href='${pageContext.request.contextPath}/attendance/my/list'">
+			onclick="location.href='${pageContext.request.contextPath}/overtime/list/1'">
 			<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
 				<span>나의 근무</span>
 			</a>
@@ -52,7 +52,7 @@
 			</a>
 			<ul id="mydocument-nav" class="nav-content collapse"
 				data-bs-parent="#sidebar-nav">
-				<li><a href='${pageContext.request.contextPath}/attendance/document/list'><span>근무 문서</span></a></li>
+				<li><a href='${pageContext.request.contextPath}/overtime/list/2'><span>근무 문서</span></a></li>
 				<li><a href='${pageContext.request.contextPath}/vacation/list/2'><span>휴가 문서</span></a></li>
 			</ul>
 		</li>

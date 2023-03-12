@@ -122,7 +122,7 @@
 		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
 	 </update>
 	 
-	 <select id="selectMonthCount" parameterType="map" resultType="attendanceMonthStatus">
+	  <select id="selectMonthCount" parameterType="map" resultType="attendanceMonthStatus">
 		select (
 		    select count (*) 
 		    from attendance
@@ -160,5 +160,5 @@
 	 	 	select TO_NUMBER(to_char(clock_in,'HH24')) -  TO_NUMBER(9) + 1
 			from attendance
 			where emp_id =#{empId} and TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
-	 </select>
+	 </select> 
 </mapper>
