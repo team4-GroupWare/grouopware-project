@@ -72,12 +72,17 @@ public class ApprovalService implements IApprovalService {
 		
 		int row = 0;
 		approvalRepository.updateApproval(approval);
-		
-		row += approvalRepository.deleteApprovalLine(approval.getApprovalId());
-		
-		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
-			row += approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
+		log.info("11111111111111111    updateApproval실행");
+		if(approval.getApprovalLine() != null) {
+			row += approvalRepository.deleteApprovalLine(approval.getApprovalId());
+			log.info("2222222222222222    deleteApprovalLine실행");
+			
+			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+				row += approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
+			}
 		}
+		log.info("333333333333333    insertApprovalLine실행");
+		
 		
 		MultipartFile[] files = approval.getAttachFiles();
 		if(files != null) {

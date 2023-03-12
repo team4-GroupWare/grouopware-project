@@ -72,9 +72,11 @@
 		    	    dataType: 'json',
 		    	    data: formData,
 		    	    success: function(data) {
+		    	    	console.log(data.uri);
 		    	    	location.replace(path+data.uri);
 		    	    },
 		    	    error: function(err) {
+		    	    	alert(err);
 		    	        return;
 		    	    }
 		    	})
@@ -83,6 +85,14 @@
 		    //전자결재 제출
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
+		        
+		        var approval_line = $('.approvalLines').val();
+		        var title = $('#title').val();
+		        
+		        if( approval_line == undefined || title == "" ){
+		        	$('#inputModal').modal('show');
+		        	return;
+		        }
 		        
 		        $("#content").val(content);
 		        $("#tempApproval").val("n");
@@ -114,6 +124,7 @@
 		    	    error: function (xhr, desc, err) {
 		    	        console.log('에러');
 		    	        console.log('error:' + err);
+		    	        $('#inputModal').modal('show');
 		    	        return;
 		    	    }
 		    	})
@@ -272,6 +283,23 @@
     						</form>
     					</div>
     				</div>
+    				<!-- 모달 -->
+    				<div class="modal fade" id="inputModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog">
+					    	<div class="modal-content">
+					      		<div class="modal-header"><b>전자결재 작성</b>
+					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      		</div>
+					      		<div class="modal-body">
+					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>제목과 결재선은 필수항목입니다.</p>
+					        		<p>필수항목을 입력해주세요.</p>
+					      		</div>
+					      		<div class="modal-footer">
+					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
     			</div>
     		</div>
     	</section><!-- End section -->

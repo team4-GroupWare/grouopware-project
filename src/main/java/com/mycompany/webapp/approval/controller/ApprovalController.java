@@ -200,7 +200,7 @@ public class ApprovalController {
 	@ResponseBody
 	@PostMapping(value="/updateTemp", produces="application/json")
 	public Uri updateTempApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("updateTempApproval실행");
+		log.info("++++++++++++++++updateTempApproval실행+++++++++++++");
 		
 		if(approval.getApprovalLine() != null) {
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
@@ -217,7 +217,7 @@ public class ApprovalController {
 		} else if (approval.getTempApproval().equals("n")) { //제출일 경우 내 문서함 목록으로 return
 			uri.setUri("/approval/mylist");
 		}
-		
+		log.info("uri : " + uri);
 		return uri;
 	}
 	
