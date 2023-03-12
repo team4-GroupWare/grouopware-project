@@ -220,8 +220,9 @@ public interface EmailRepository {
 	/**
 	 * 
 	 * @param emailContentId
+	 * @return 
 	 */
-	void deleteEmailContent(int emailContentId);
+	int deleteEmailContent(int emailContentId);
 	/**
 	 * 
 	 * @param empId
@@ -277,5 +278,8 @@ public interface EmailRepository {
 	List<EmailList> selectSearchSendList(@Param("pager")Pager pager, @Param("keyword")String keyword, @Param("empId")String empId);
 	int selectSearchSendCount(@Param("keyword")String keyword, @Param("empId")String empId);
 	List<EmailList> selectExpiredTrash(Date sqlDate);
+	int updateReceiveDelete(int emailId);
+	int updateSendDelete(int emailId);
+	List<Integer> selectIsDeletedEmail();
 
 }

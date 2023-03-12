@@ -730,6 +730,7 @@
 	</select>
 	
 	<select id="selectExpiredTrash" parameterType="date" resultType="emailList">
+	<![CDATA[
 		 select * 
 			from (
 		        select s.send_email_id as sendEmailId,
@@ -739,7 +740,7 @@
 		        from email_content c, send_email s,receive_email r
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
-		        	  and r.trash_date = #{sqlDate}
+		        	  and r.trash_date <= #{sqlDate}
 		        union 
 		        select  s.send_email_id as sendEmailId,
                         r.receive_email_id as receiveEmailId,
@@ -748,11 +749,30 @@
 		        from email_content c, send_email s,receive_email r
 		        where c.EMAIL_CONTENT_ID = s.EMAIL_CONTENT_ID
 		        	  and r.EMAIL_CONTENT_ID = c.EMAIL_CONTENT_ID
-		        	  and s.trash_date = #{sqlDate}
+		        	  and s.trash_date <= #{sqlDate}
         		)
+        		]]>
 	</select>
+	
+	<update id="updateReceiveDelete" parameterType="int">
+		update receive_email
+		set is_deleted = 1
+		where receive_email_id = #{emailId}
+	</update>
+	
+	<update id="updateSendDelete" parameterType="int">
+		update send_email
+		set is_deleted = 1
+		where send_email_id = #{emailId}
+	</update>
 
-
+	<select id="selectIsDeletedEmail" resultType="int">
+		  select c.email_content_id
+          from receive_email r, send_email s, email_content c
+          where r.email_content_id = c.email_content_id and s.email_content_id = c.email_content_id 
+                and (r.is_deleted = 1 and s.is_deleted = 1)
+	
+	</select>
 
 
 </mapper>
