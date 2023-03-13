@@ -53,18 +53,45 @@
 		    $("#temp_save").on("click", function(){
 				var content = tinymce.activeEditor.getContent();
 		        
+				if(!$("#title").val()) {
+					$("#title").attr("value", "(제목없음)");
+				}
+					
 		        $("#content").val(content);
 		        $("#tempApproval").val("y");
 		        
-		        $("#approval_form").submit();
+		        var path = sessionStorage.getItem("contextpath");
+		        var formData = $("#approval_form").serialize();
+		        
+		    	$.ajax({
+		    	    method: 'POST',
+		    	    url: path+'/approval/write',
+		    	    dataType: 'json',
+		    	    data: formData,
+		    	    success: function(data) {
+		    	    	location.replace(path+data.uri);
+		    	    },
+		    	    error: function(err) {
+		    	        return;
+		    	    }
+		    	})
 		    });
 		    
 		    //전자결재 제출
 		    $("#approval").on("click", function(){
 		        var content = tinymce.activeEditor.getContent();
 		        
+		        var approval_line = $('.approvalLines').val();
+		        var title = $('#title').val();
+		        
+		        if( approval_line == undefined || title == "" ){
+		        	$('#inputModal').modal('show');
+		        	return;
+		        }
+		        
 		        $("#content").val(content);
 		        $("#tempApproval").val("n");
+		        
 		      	//폼데이터 담기
 		    	var form = document.querySelector("#approval_form");
 		    	var formData = new FormData(form);
@@ -86,13 +113,11 @@
 		    	    processData: false,
 		    		cache: false,
 		    	    success: function(data) {
-		    	    	let url = path + data.uri;
-		    	    	console.log("url: " + url)
-		    	    	location.replace(url);
+		    	    	console.log(data);
+		    	    	location.replace(path+data.uri);
 		    	    },
-		    	    error: function (xhr, desc, err) {
-		    	        console.log('에러');
-		    	        console.log('error:' + err);
+		    	    error: function (err) {
+		    	        $('#inputModal').modal('show');
 		    	        return;
 		    	    }
 		    	})
@@ -167,7 +192,7 @@
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>제목</b></label>
                  					<div class="col-sm-10">
-                    					<input id="title" name="title" type="text" class="form-control">
+                    					<input id="title" name="title" type="text" class="form-control" value="">
                   					</div>
                 				</div>
                 
@@ -199,24 +224,6 @@
 	                  				});
 	                  				</script>
                 				</div>
-                				<!-- <div class="row mb-3">
-                  					<label for="inputText" class="col-sm-2 col-form-label"><b>열람</b></label>
-                  					<div class="col-sm-10">
-                  						<div class="row mb-3">
-                  							<div class="col-sm-10">
-                    							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                    								
-              									</button>
-              								</div>
-              							</div>
-              		
-	              						<div class="row">
-	              							<div id="reading" class="d-flex">
-	              								
-	              							</div>
-	                  					</div>
-                					</div>
-                				</div> -->
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>결재선</b></label>
                   					<div class="col-sm-10">
@@ -255,6 +262,23 @@
     						</form>
     					</div>
     				</div>
+    				<!-- 모달 -->
+    				<div class="modal fade" id="inputModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog">
+					    	<div class="modal-content">
+					      		<div class="modal-header"><b>전자결재 작성</b>
+					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      		</div>
+					      		<div class="modal-body">
+					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>제목과 결재선은 필수항목입니다.</p>
+					        		<p>필수항목을 입력해주세요.</p>
+					      		</div>
+					      		<div class="modal-footer">
+					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
     			</div>
     		</div>
     	</section><!-- End section -->

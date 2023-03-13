@@ -81,7 +81,7 @@
 									console.log("searchEmp() 성공");
 								},
 								error: function(request,status,error){
-							        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							        //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 							    }
 							})
 						}
@@ -135,35 +135,35 @@
 				  				<nav aria-label="Page navigation example">
 	                				<ul class="pagination">
 	                					<li class="page-item">
-	                    					<a class="page-link" href="${deptId}?pageNo=1" aria-label="Previous">
+	                    					<a class="page-link" href="${deptId}?pageNo=1&type=${type}&keyword=${keyword}" aria-label="Previous">
 	                      						<span aria-hidden="true">처음</span>
 	                    					</a>
 	                  					</li>	
 	                					<c:if test="${pager.groupNo>1}">
 		                  					<li class="page-item">
-		                    					<a class="page-link" href="${deptId}?pageNo=${pager.startPageNo-1}" aria-label="Previous">
+		                    					<a class="page-link" href="${deptId}?pageNo=${pager.startPageNo-1}&type=${type}&keyword=${keyword}" aria-label="Previous">
 		                      						<span aria-hidden="true">이전</span>
 		                    					</a>
 		                  					</li>
 	                  					</c:if>
 	                  					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 	                  						<c:if test="${pager.pageNo != i}">
-												<li class="page-item"><a class="page-link" href="${deptId}?pageNo=${i}">${i}</a></li>
+												<li class="page-item"><a class="page-link" href="${deptId}?pageNo=${i}&type=${type}&keyword=${keyword}">${i}</a></li>
 											</c:if>
 											<c:if test="${pager.pageNo == i}">
-												<li class="page-item active"><a class="page-link" href="${deptId}?pageNo=${i}">${i}</a></li>
+												<li class="page-item active"><a class="page-link" href="${deptId}?pageNo=${i}&type=${type}&keyword=${keyword}">${i}</a></li>
 											</c:if>
 										</c:forEach>
 										
 										<c:if test="${pager.groupNo<pager.totalGroupNo}">
 											<li class="page-item">
-			                    				<a class="page-link" href="${deptId}?pageNo=${pager.endPageNo+1}" aria-label="Next">
+			                    				<a class="page-link" href="${deptId}?pageNo=${pager.endPageNo+1}&type=${type}&keyword=${keyword}" aria-label="Next">
 			                      					<span aria-hidden="true">다음</span>
 			                    				</a>
 		                  					</li>
 										</c:if>
 										<li class="page-item">
-	                    					<a class="page-link" href="${deptId}?pageNo=${pager.totalPageNo}" aria-label="Previous">
+	                    					<a class="page-link" href="${deptId}?pageNo=${pager.totalPageNo}&type=${type}&keyword=${keyword}" aria-label="Previous">
 	                      						<span aria-hidden="true">맨끝</span>
 	                    					</a>
 	                  					</li>	
