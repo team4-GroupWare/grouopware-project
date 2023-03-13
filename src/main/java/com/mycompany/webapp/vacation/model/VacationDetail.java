@@ -13,6 +13,8 @@ public class VacationDetail {
 	private String gradeName;
 	private String vacationName;
 	private String name;
+	private String approvalEmpId;
+	private String status;
 
 	
 	

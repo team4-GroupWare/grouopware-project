@@ -58,6 +58,7 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
+	  		
 		  	var today = new Date(); 						//오늘날짜
 	  		var day = today.getDay();						//요일
 	  	    var year = today.getFullYear();					//년
@@ -67,6 +68,7 @@
 	  	   
 	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회, 해당 사원에 대한 메일 리스트를 조회
 	  		$(document).ready(function() {
+	  			
 	  			$.ajax({
 	  				url:"${pageContext.request.contextPath}/email/sendEmailListMain",
 	  				type: "GET",
@@ -109,7 +111,7 @@
 	  	    //해당사원의 오늘날짜 출근 정보 가져옴
   			function todayAtt(){
   				//휴일일 경우
-		  		if(day == 6 || day == 0 || isHoli) {
+		  		if(day == 5 || day == 1 || isHoli) {
 		  			//출근 상태 표시
 		  			let status = "휴일"
 		  			let clockIn = "-- : -- : --";
@@ -124,7 +126,7 @@
 	  			//휴일이 아닐 경우	
 		  		} else{
 		  			$.ajax({
-		  				url : "${pageContext.request.contextPath}/attendanceinfo"
+		  				url : "${pageContext.request.contextPath}/attendance/today"
 		  				
 		  			}).done(function(data){
 		  				
@@ -214,7 +216,7 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/info'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-clock fs-1" ></i>
 							</div>
@@ -243,7 +245,7 @@
 						</div>
 					
 						<div class="menu col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" onclick="location.href='${pageContext.request.contextPath}/board/list'" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-bell fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
@@ -264,7 +266,7 @@
 					<div class="col-lg-4">
 						<!-- attendance Title -->
 						<div class="pagetitle">
-							<h1>근무확인</h1>
+							<h1>근무확인 ${message}</h1>
 						</div>
 			          	<!-- attendance Card -->
 			          	<div class="card info-card sales-card "  style="height:330px; ">
@@ -293,7 +295,7 @@
 											type='image'
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
 											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance'"
+											onClick="location.href='${pageContext.request.contextPath}/attendance/clockin'"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
@@ -423,32 +425,32 @@
 									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
 										<div class="news">
 											<div class="post-item ">
-											    <h4><a href="#">[공지] 출결(전자출결,휴가,지하철 연착 등)관련 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 출결(전자출결,휴가,지하철 연착 등)관련 안내</a></h4>
 											    <p>출결(전자출결,휴가,지하철 연착 등)관련 안내</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <h4><a href="#">[공지] 그룹웨어 사진 변경 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 그룹웨어 사진 변경 안내</a></h4>
 											    <p>그룹웨어 사진 변경 안내드립니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <h4><a href="#">[공지]사내 건강검진 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지]사내 건강검진 안내</a></h4>
 											    <p>2023년도 건강검진 안내드립니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <h4><a href="#">[공지] 개인정보처리방침 개정안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 개인정보처리방침 개정안내</a></h4>
 											    <p>개인정보처리방침 개정안내</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <h4><a href="#">[공지] 계량기 공사 관련 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
 											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <h4><a href="#">[공지] 계량기 공사 관련 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
 											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
 											</div>
 										
@@ -459,32 +461,32 @@
 									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
 										<div class="news">
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내]경조사 게시판 이용방법 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]경조사 게시판 이용방법 안내</a></h4>
 											    <p>동문들의 경조사를 공유하고 알리는 게시판...</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내]공공사업1div 이지호 차장 결혼 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]공공사업1div 이지호 차장 결혼 안내</a></h4>
 											    <p>2023년 3월 4일 삼성 00에 이지호 차장의 결혼....</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내] 야유회 관련</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내] 야유회 관련</a></h4>
 											    <p>부서별 야유회 관련 안내입니다.</p>
 											</div>
 										
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내]대표이사 취임식</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]대표이사 취임식</a></h4>
 											    <p>취임식 참석 안내입니다.</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내]000부장 부친상 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
 											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
 											</div>
 											
 											<div class="post-item clearfix">
-											    <h4><a href="#">[안내]000부장 부친상 안내</a></h4>
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
 											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
 											</div>
 										

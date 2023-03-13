@@ -453,13 +453,31 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public int getTrashEmail(Date sqlDate) {
+		log.info("실행");
 		List<EmailList> emailList = emailRepository.selectExpiredTrash(sqlDate);
-//		if(emailList.size()!=0) {
-//			for(EmailList list : emailList) {
-//				int row = emailRepository.
-//			}
-//		}
-		return 0;
+		int row = 0;
+		if(emailList.size()!=0) {
+			for(EmailList list : emailList) {
+				if(list.getRtrashDate() != null) {
+					row = emailRepository.updateReceiveDelete(list.getReceiveEmailId());
+				} 
+				if(list.getStrashDate() != null) {
+					row = emailRepository.updateSendDelete(list.getSendEmailId());
+				}
+			}
+		}
+		return row;
+	}
+
+	@Override
+	public int deleteEmail() {
+		log.info("실행");
+		int row = 0;
+		List<Integer> contentIdList = emailRepository.selectIsDeletedEmail();
+		for(int contentId : contentIdList) {
+			row = emailRepository.deleteEmailContent(contentId);
+		}
+		return row;
 	}
 
 }

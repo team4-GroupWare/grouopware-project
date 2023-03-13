@@ -46,6 +46,9 @@ public class EmailController {
 	@Autowired
 	IEmailService emailService;
 	
+	@Autowired
+	EmailScheduler emailScheduler;
+	
 	/**
 	 * @author LEEYESEUNG
 	 * @param model
@@ -65,6 +68,7 @@ public class EmailController {
 		model.addAttribute("pager", pager);
 		String type = "receive";
 		model.addAttribute("type", type);
+		emailScheduler.emailTrash();
 		return "email/emaillist";
 	}
 	

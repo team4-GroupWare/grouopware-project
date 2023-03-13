@@ -3,6 +3,7 @@ package com.mycompany.webapp.attendance.service;
 import java.util.List;
 
 import com.mycompany.webapp.attendance.model.Attendance;
+import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
 
 public interface IAttendanceService {
 
@@ -33,6 +34,12 @@ public interface IAttendanceService {
 	int getabsentCountMonth(int month, String empId);
 
 	List<String> getAttStatus(String empId, int month);
+
+	int updateHalfAtt(String today, String empId);
+
+	AttendanceMonthStatus getMonthCount(String empId,String month);
+
+	int getlateTime(String today, String empId);
 
 
 

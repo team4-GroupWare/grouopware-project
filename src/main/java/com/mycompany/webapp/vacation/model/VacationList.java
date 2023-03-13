@@ -13,4 +13,5 @@ public class VacationList {
 	private String startDate;
 	private String endDate;
 	private String status;
+	private String empId;
 }
