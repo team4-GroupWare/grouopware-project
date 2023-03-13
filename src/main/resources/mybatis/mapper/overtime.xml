@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.overtime.repository.OvertimeRepository">
+	
+	<insert id="insertOvertime" parameterType="overtime">
+		insert into over_time (
+			over_time_id, emp_id, write_date, work_date, status, content, approval_emp_id, work_time)
+		values(
+			seq_vacation.nextval , #{empId}, sysdate, #{workDate}, default, #{content}, #{approvalEmpId} , #{workTime}
+		)
+	</insert>
+	
+	<select id="selectOvertimeRow"  parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM over_time
+		WHERE 
+		<if test="type == 1 ">
+			emp_id = #{empId}
+		</if>
+		<if test="type == 2 ">
+			approval_emp_id = #{empId}
+		</if>
+		<if test="!status.equals('')">
+			AND status = #{status}
+		</if>
+	</select>
+	<select id="selectOvertimeList" parameterType="map" resultType="overtime">
+		select over_time_id as "overtimeId",
+        e.name as "empName",
+        write_date as "writeDate",
+        work_date as "workDate" ,
+        status ,
+        work_time as "workTime"
+		from over_time o, employees e
+		where  e.emp_id = o.emp_id 
+		<if test="type == 1 ">
+			and	o.emp_id = #{empId}
+		</if>
+		<if test="type == 2 ">
+			and o.approval_emp_id = #{empId}
+		</if>
+		<if test="!status.equals('')">
+			AND status = #{status}
+		</if>
+	</select>
+	
+	<select id ="selectOvertime"  parameterType="int" resultType="overtime">
+		select over_time_id as "overtimeId",
+        o.emp_id as "empId",
+        e.name as "empName",
+        approval_emp_id as "approvalEmpId",
+        write_date as "writeDate",
+        work_date as "workDate" ,
+        status ,
+        work_time as "workTime" 
+		from over_time o, employees e
+		where over_time_id = #{overtimeId} and e.emp_id = o.emp_id 
+	</select>
+	
+	
+	
+	
+</mapper>

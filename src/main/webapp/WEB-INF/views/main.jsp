@@ -58,6 +58,7 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
+	  		
 		  	var today = new Date(); 						//오늘날짜
 	  		var day = today.getDay();						//요일
 	  	    var year = today.getFullYear();					//년
@@ -67,6 +68,7 @@
 	  	   
 	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회, 해당 사원에 대한 메일 리스트를 조회
 	  		$(document).ready(function() {
+	  			
 	  			$.ajax({
 	  				url:"${pageContext.request.contextPath}/email/sendEmailListMain",
 	  				type: "GET",
@@ -109,7 +111,7 @@
 	  	    //해당사원의 오늘날짜 출근 정보 가져옴
   			function todayAtt(){
   				//휴일일 경우
-		  		if(day == 6 || day == 0 || isHoli) {
+		  		if(day == 5 || day == 1 || isHoli) {
 		  			//출근 상태 표시
 		  			let status = "휴일"
 		  			let clockIn = "-- : -- : --";
@@ -124,7 +126,7 @@
 	  			//휴일이 아닐 경우	
 		  		} else{
 		  			$.ajax({
-		  				url : "${pageContext.request.contextPath}/attendanceinfo"
+		  				url : "${pageContext.request.contextPath}/attendance/today"
 		  				
 		  			}).done(function(data){
 		  				
@@ -214,7 +216,7 @@
 					
 					<!-- menubar -->
 					<div class="row">
-						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/status/info'">
+						<div class="menu col-sm" onclick="location.href='${pageContext.request.contextPath}/attendance/info'">
 							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-clock fs-1" ></i>
 							</div>
@@ -264,7 +266,7 @@
 					<div class="col-lg-4">
 						<!-- attendance Title -->
 						<div class="pagetitle">
-							<h1>근무확인</h1>
+							<h1>근무확인 ${message}</h1>
 						</div>
 			          	<!-- attendance Card -->
 			          	<div class="card info-card sales-card "  style="height:330px; ">
@@ -293,7 +295,7 @@
 											type='image'
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
 											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance'"
+											onClick="location.href='${pageContext.request.contextPath}/attendance/clockin'"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
