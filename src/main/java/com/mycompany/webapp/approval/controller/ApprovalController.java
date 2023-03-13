@@ -372,7 +372,7 @@ public class ApprovalController {
 		
 		//해당 전자결재 문서에 대한 내 결재 순서
 		int mySeq = approvalService.getMySeq(approvalId, empId) - 1;
-		int myTurn = 0;
+		int myTurn = 0; //0: 내 결재순서, 1: 내 결재순서가 아님
 		
 		for(int i = 0; i < approvalLines.size(); i++) {
 			if(mySeq == -1) { //결재선이 아닐 때
@@ -467,6 +467,7 @@ public class ApprovalController {
 		int approvalRow = approvalService.getRefApprovalRow(empId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
+		//전자결재 참조함 목록
 		List<Approval> approvals = approvalService.getRefApprovalList(pager, empId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();

@@ -14,14 +14,38 @@ import com.mycompany.webapp.component.Pager;
 
 @Repository
 public interface ApprovalRepository {
-	//전자결재 카테고리 목록
+	
+	/**
+	 * 전자결재 카테고리 목록
+	 * @author : LEEJIHO
+	 * @return
+	 */
 	public List<ApprovalCategory> selectApprovalCategory();
-	//전자결재 작성
+	
+	/**
+	 * 전자결재 작성
+	 * @author : LEEJIHO
+	 * @param approval
+	 * @return
+	 */
 	public int insertApproval(Approval approval);
-	//전자결재 파일
+	
+	/**
+	 * 전자결재 파일 저장
+	 * @author : LEEJIHO
+	 * @param file
+	 * @return
+	 */
 	public int insertApprovalFile(ApprovalFile file);
 
-	//전자결재  내 문서함 상태별 갯수
+	/**
+	 * 전자결재  내 문서함 상태별 갯수
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @param status
+	 * @param approvalCategoryId
+	 * @return
+	 */
 	public int selectApprovalCount(@Param("empId") String empId, @Param("status") String status, @Param("approvalCategoryId") int approvalCategoryId);
 	
 	/**
@@ -45,17 +69,53 @@ public interface ApprovalRepository {
 	public List<Approval> selectApprovalList(@Param("pager") Pager pager, @Param("empId") String empId, 
 						@Param("status") String status, @Param("approvalCategoryId") int approvalCategoryId);
 	
-	//전자결재 임시저장 갯수
+	/**
+	 * 전자결재 임시저장 갯수
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @return
+	 */
 	public int selectTempApprovalCount(String empId);
-	//전자결재 임시저장 목록
+	
+	/**
+	 * 전자결재 임시저장 목록
+	 * @author : LEEJIHO
+	 * @param pager
+	 * @param empId
+	 * @return
+	 */
 	public List<Approval> selectApprovalTempList(@Param("pager")Pager pager, @Param("empId") String empId);
-	//전자결재 상세보기
+	
+	/**
+	 * 전자결재 상세보기
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @return
+	 */
 	public Approval selectApprovalDetail(int approvalId);
-	//전자결재 카테고리 양식
+	
+	/**
+	 * 전자결재 카테고리 양식 불러오기
+	 * @author : LEEJIHO
+	 * @param approvalCategoryId
+	 * @return
+	 */
 	public String selectApprovalForm(int approvalCategoryId);
-	//전자결재 결재선 사원정보
+	
+	/**
+	 * 전자결재 결재선 선택 시 사원정보
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @return
+	 */
 	public ApprovalLine selectApprovalLine(String empId);
-	//전자결재 결재선 저장
+	
+	/**
+	 * 전자결재 작성 결재선 저장
+	 * @author : LEEJIHO
+	 * @param approvalLine
+	 * @return
+	 */
 	public int insertApprovalLine(ApprovalLine approvalLine);
 	
 	/**

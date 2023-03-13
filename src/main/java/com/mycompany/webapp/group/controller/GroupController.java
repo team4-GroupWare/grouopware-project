@@ -70,6 +70,11 @@ public class GroupController {
 		return "hr/hr";
 	}
 	
+	/**
+	 * 조직도 사진 페이지
+	 * @author : LEEJIHO
+	 * @return
+	 */
 	@GetMapping("/hr/group")
 	public String getHrMain() {
 		return "hr/hrmain";

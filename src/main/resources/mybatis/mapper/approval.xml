@@ -12,7 +12,7 @@
 		]]>
 	</select>
 
-	<!-- 전자결재 작성 양식 불러오기  -->
+	<!-- 전자결재 카테고리 양식 불러오기  -->
 	<select id="selectApprovalForm" parameterType="int" resultType="string">
 		<![CDATA[
 			SELECT approval_form as "approvalForm"
@@ -21,7 +21,7 @@
 		]]>
 	</select>
 
-	<!-- 전자결재 결재선 선택 시 사원정보-->
+	<!-- 전자결재 결재선 선택 시 사원정보 -->
 	<select id="selectApprovalLine" parameterType="String" resultType="approvalLine">
 		<![CDATA[
 			SELECT e.emp_id as "empId", 
@@ -381,6 +381,7 @@
 		]]>
 	</delete>
 	
+	<!-- 사직서 승인 처리 시 사원의 퇴사날짜 수정 -->
 	<update id="updateEmployeeResignDate" parameterType="string">
 		<![CDATA[
 			UPDATE employees
@@ -389,6 +390,7 @@
 		]]>
 	</update>
 	
+	<!-- 경조 휴가 신청서 승인 처리 시 사원의 대체 연휴 갯수 수정 -->
 	<update id="updateEmployeeAddDayoffRemain" parameterType="map">
 		<selectKey keyProperty="eventCount" resultType="int" order="BEFORE">
 			SELECT event_count FROM family_event WHERE event_name = #{eventName}

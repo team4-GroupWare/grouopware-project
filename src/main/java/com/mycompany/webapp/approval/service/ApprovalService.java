@@ -34,6 +34,7 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectApprovalCategory();
 	}
 
+	//전자결재 작성
 	@Transactional
 	public int writeApproval(Approval approval) {
 		log.info("전자결재 작성 실행");
@@ -66,23 +67,20 @@ public class ApprovalService implements IApprovalService {
 		return row;
 	}
 	
+	//전자결재 수정(임시저장)
 	@Transactional
 	public int updateApproval(Approval approval) {
 		log.info("updateApproval실행");
 		
 		int row = 0;
 		approvalRepository.updateApproval(approval);
-		log.info("11111111111111111    updateApproval실행");
 		if(approval.getApprovalLine() != null) {
 			row += approvalRepository.deleteApprovalLine(approval.getApprovalId());
-			log.info("2222222222222222    deleteApprovalLine실행");
 			
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
 				row += approvalRepository.insertApprovalLine(approval.getApprovalLine().get(i));
 			}
 		}
-		log.info("333333333333333    insertApprovalLine실행");
-		
 		
 		MultipartFile[] files = approval.getAttachFiles();
 		if(files != null) {
@@ -104,18 +102,21 @@ public class ApprovalService implements IApprovalService {
 		return row;
 	}
 
+	//내 문서함 목록(승인상태, 기안형태)
 	@Override
 	public List<Approval> getApprovalList(Pager pager, String empId, String status, int approvalCategoryId) {
 		log.info("실행");
 		return approvalRepository.selectApprovalList(pager, empId, status, approvalCategoryId);
 	}
 
+	//내 문서함 갯수
 	@Override
 	public int getApprovalRow(String empId, String status, int approvalCategoryId) {
 		log.info("실행");
 		return approvalRepository.selectApprovalCount(empId, status, approvalCategoryId);
 	}
 
+	//전자결재 문서 상세조회
 	@Override
 	public Approval getApprovalDetail(int approvalId) {
 		log.info("실행");
@@ -128,25 +129,29 @@ public class ApprovalService implements IApprovalService {
 		log.info("실행");
 		return approvalRepository.selectRefEmployeeByApprovalId(approvalId);
 	}
-		
+	
+	//카테고리 별 작성 폼
 	@Override
 	public String getApprovalForm(int approvalCategoryId) {
 		log.info("실행");
 		return approvalRepository.selectApprovalForm(approvalCategoryId);
 	}
 
+	//임시저장함 목록(기안형태)
 	@Override
 	public List<Approval> getApprovalTempList(Pager pager, String empId) {
 		log.info("실행");
 		return approvalRepository.selectApprovalTempList(pager, empId);
 	}
 
+	//임시저장함 갯수
 	@Override
 	public int getTempApprovalRow(String empId) {
 		log.info("실행");
 		return approvalRepository.selectTempApprovalCount(empId);
 	}
 
+	//전자결재 결재선 선택 시 사원정보
 	@Override
 	public ApprovalLine getApprovalLine(String empId) {
 		log.info("실행");
@@ -167,7 +172,7 @@ public class ApprovalService implements IApprovalService {
 		return approvalRepository.selectConfirmCount(empId, status, approvalCategoryId);
 	}
 
-	//결재문서함 목록
+	//결재문서함 목록(승인상태, 기안형태)
 	@Override
 	public List<Approval> getConfirmList(Pager pager, String empId, String status, int approvalCategoryId) {
 		log.info("실행");
@@ -188,10 +193,10 @@ public class ApprovalService implements IApprovalService {
 		int row = 0;
 		String status;
 		int mySeq = getMySeq(approvalLine.getApprovalId(), approvalLine.getEmpId());
-		if(approvalLine.getLastSeq() == mySeq) {
+		if(approvalLine.getLastSeq() == mySeq) { //내가 마지막 결재 순서일 때 
 			if(approvalLine.getIsApproved().equals("y")) {
 				if(approval.getApprovalCategoryId() == 3) { //사직서일 때 
-					//사직 날짜를 마지막 승인날짜로 업데이트
+					//퇴사 날짜를 마지막 승인날짜로 업데이트
 					approvalRepository.updateEmployeeResignDate(approval.getEmpId());
 				} else if(approval.getApprovalCategoryId() == 4) { //경조 휴가 신청일 때
 					String eventName = "결혼";
@@ -207,7 +212,7 @@ public class ApprovalService implements IApprovalService {
 			} else {
 				status = "반려";
 			}
-		} else {
+		} else { //내가 마지막 결재 순서가 아닐 때
 			if(approvalLine.getIsApproved().equals("y")) {
 				status = "진행";
 			} else {
@@ -244,14 +249,15 @@ public class ApprovalService implements IApprovalService {
 	//전자결재 참조 목록
 	@Override
 	public List<Approval> getRefApprovalList(Pager pager, String empId) {
+		log.info("실행");
 		return approvalRepository.selectRefApprovalList(pager, empId);
 	}
 
 	//전자결재 삭제
 	@Override
 	public int deleteApproval(int approvalId) {
+		log.info("실행");
 		return approvalRepository.deleteApproval(approvalId);
-		
 	}
 
 }
