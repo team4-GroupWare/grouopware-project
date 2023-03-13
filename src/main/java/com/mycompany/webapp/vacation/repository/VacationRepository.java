@@ -33,6 +33,6 @@ public interface VacationRepository {
 	public Vacation selectApprovalEmp(String empId);
 	
 	//신청자 연차 정보
-	public int selectEmpDayOff(@Param("vacationCategoryId")int vacationCategoryId, @Param("vacationCategoryId")String empId);
+	public int selectEmpDayOff(@Param("vacationCategoryId")int vacationCategoryId, @Param("empId")String empId);
 
 }

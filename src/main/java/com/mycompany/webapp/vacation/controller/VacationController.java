@@ -143,8 +143,7 @@ public class VacationController {
 		model.addAttribute("vacationDetail", vacationDetail);
 		model.addAttribute("vacationDate", vacationDate);
 		model.addAttribute("vacation", vacation);
-		int dayOffCount = vacationService.getEmpDayOff(1,"test3");
-		log.info(dayOffCount);
+		log.info(vacationDetail);
 		return "vacation/vacation_detail";
 	}
 
@@ -154,8 +153,13 @@ public class VacationController {
 	public String process(@RequestParam String type,@RequestParam int vacationId,@RequestParam int vacationCategoryId, @RequestParam String empId, Model model) {
 		log.info("실행");
 		
-		
-		return "qkqh";
+		if(type.equals("y")) {
+			int dayOffCount = vacationService.getEmpDayOff(vacationCategoryId, empId);
+			log.info(dayOffCount);
+			return "성공";
+		}else {
+			return "aaaaa";
+		}
 		
 	}
 

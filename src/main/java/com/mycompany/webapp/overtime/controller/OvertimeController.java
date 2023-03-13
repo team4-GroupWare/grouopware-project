@@ -65,7 +65,7 @@ public class OvertimeController {
 		log.info("실행");
 		log.info(overtime);
 		overtimeService.writeOvertime(overtime);
-		return "redirect:/vacation/list";
+		return "redirect:/overtime/list/1";
 	}
 	//3. 나의 근무
 	@GetMapping("/overtime/list/{type}")
@@ -96,10 +96,8 @@ public class OvertimeController {
 			
 			Employee employee;
 			if(empId.equals(overtime.getEmpId())) {
-				log.info("트루라면");
 				
 				 employee = employeeService.getEmp(overtime.getApprovalEmpId());
-				 log.info("그래 이거지"+employee);
 					
 			}else {
 				 employee = employeeService.getEmp(overtime.getEmpId());

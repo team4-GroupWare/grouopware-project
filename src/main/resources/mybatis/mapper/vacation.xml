@@ -137,9 +137,14 @@
 	
 	<select id="selectEmpDayOff"  parameterType="map" resultType="int">
 		select 
+		<if test="vacationCategoryId lt 4 ">
 			dayoff_remain
-		from employees
-		where emp_id=#{empId}
+		</if>
+		<if test="vacationCategoryId gt 3 ">
+			add_dayoff_remain
+		</if>
+			from employees
+			where emp_id=#{empId}
 	</select>
 	
 </mapper>

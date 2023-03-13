@@ -111,7 +111,7 @@
 	  	    //해당사원의 오늘날짜 출근 정보 가져옴
   			function todayAtt(){
   				//휴일일 경우
-		  		if(day == 5 || day == 1 || isHoli) {
+		  		if(day == 6 || day == 0 || isHoli) {
 		  			//출근 상태 표시
 		  			let status = "휴일"
 		  			let clockIn = "-- : -- : --";
