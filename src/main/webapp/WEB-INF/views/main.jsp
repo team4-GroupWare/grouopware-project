@@ -69,6 +69,22 @@
 	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회, 해당 사원에 대한 메일 리스트를 조회
 	  		$(document).ready(function() {
 	  			
+	  			 $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/sendEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-send").empty();
+	                 $("#mail-send").html(data);
+	              }); 
+	              
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-receive").empty();
+	                 $("#mail-receive").html(data);
+	              }); 
+	  			
 	  			//현재 시간, 날짜 
 	  			nowClock();
         	    setInterval(nowClock,1000); 

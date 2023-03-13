@@ -187,13 +187,15 @@ public class EmployeeService implements IEmployeeService {
 	public int updateEmployee(Employee employee) {
 		log.info("실행");
 		//업데이트한 파일이 존재하면 파일을 VO에 다시 저장함
-		if(employee.getAttachFiles() != null) {
+		if(employee.getAttachFiles().getSize() != 0) {
+			log.info("파일 첨부: "+ employee.getAttachFiles());
 			try {
 				employee = multipartFileResolver.getEmployeeFile(employee);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		} 
+		log.info("employee: "+ employee);
 		log.info(employee.getEmpId());
 		log.info(employee.getDeptId());
 		log.info(employee.getTeamId());

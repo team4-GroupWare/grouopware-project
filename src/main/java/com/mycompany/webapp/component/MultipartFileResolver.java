@@ -11,6 +11,9 @@ import com.mycompany.webapp.approval.model.ApprovalFile;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.employee.model.Employee;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Component
 public class MultipartFileResolver {
 	public List<EmailFile> getEmailFileList(MultipartFile[] multipartFile, int emailContentId) throws IOException{
@@ -28,6 +31,7 @@ public class MultipartFileResolver {
 	}
 	
 	public Employee getEmployeeFile(Employee employee) throws IOException{
+		log.info("employee: "+ employee);
 		MultipartFile file = employee.getAttachFiles();
 		employee.setProfileContentType(file.getContentType());
 		employee.setProfileData(file.getBytes());

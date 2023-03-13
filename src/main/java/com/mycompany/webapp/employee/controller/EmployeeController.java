@@ -308,11 +308,25 @@ public class EmployeeController {
 		log.info("실행");
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
 		employee.setEmpId(originEmployee.getEmpId());
-		if(employee.getProfileContentType() !=null) {
-			//프로필 사진을 바꾸지 않거나 사진을 삭제함
-			employee.setProfileContentType(originEmployee.getProfileContentType());
-			employee.setProfileData(originEmployee.getProfileData());
+		log.info("conetntType: "+employee.getProfileContentType());
+		if(employee.getProfileContentType() != null) {
+			if(employee.getProfileContentType().equals("delete")) {
+				employee.setProfileContentType(null);
+				employee.setProfileData(null);
+				log.info("사진삭제함: "+employee);
+			} else if (originEmployee.getProfileData() !=null) {
+				log.info("delete가 아니고 오리진 없음");
+				employee.setProfileContentType(originEmployee.getProfileContentType());
+				employee.setProfileData(originEmployee.getProfileData());
+			}
+			
 		}
+		
+//		if(originEmployee.getProfileData() !=null && !employee.getProfileContentType().equals("delete")) {
+//			//프로필 사진을 바꾸지 않거나 사진을 삭제함
+//			employee.setProfileContentType(originEmployee.getProfileContentType());
+//			employee.setProfileData(originEmployee.getProfileData());
+//		}
 		employeeService.updateEmployee(employee);
 		employee = employeeService.getEmp(employee.getEmpId());
 		session.setAttribute("loginEmployee", employee);
