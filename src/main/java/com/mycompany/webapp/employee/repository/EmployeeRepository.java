@@ -83,4 +83,12 @@ public interface EmployeeRepository {
 	 * @return
 	 */
 	public int updateInitPassword(@Param("newPwd")String newPwd, @Param("empId")String empId);
+
+	/**
+	 * db에 저장된 해당 empId의 비밀번호 조회
+	 * @author : LEEJIHO
+	 * @param empId
+	 * @return
+	 */
+	public String selectPasswordByEmpId(String empId);
 }
