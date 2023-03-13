@@ -31,5 +31,8 @@ public interface VacationRepository {
 	
 	//휴가 결제자 정보 조회
 	public Vacation selectApprovalEmp(String empId);
+	
+	//신청자 연차 정보
+	public int selectEmpDayOff(@Param("vacationCategoryId")int vacationCategoryId, @Param("empId")String empId);
 
 }

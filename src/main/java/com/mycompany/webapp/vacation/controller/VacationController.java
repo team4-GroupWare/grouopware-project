@@ -103,7 +103,7 @@ public class VacationController {
 		}
 		log.info(vacation);
 		vacationService.writeVacation(vacation);
-		return "redirect:/vacation/list";
+		return "redirect:/vacation/list/1";
 	}
 
 	// 3. 나의 휴가
@@ -150,18 +150,13 @@ public class VacationController {
 	
 	@RequestMapping(value="/vacation/process",method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String process(@RequestParam String type,@RequestParam int vacationId,@RequestParam String vacationName, Model model) {
+	public String process(@RequestParam String type,@RequestParam int vacationId,@RequestParam int vacationCategoryId, @RequestParam String empId, Model model) {
+		log.info("실행");
+		
 		if(type.equals("y")) {
-			if(vacationName.contains("경조사")) {
-				//해당 날짜를 가져옴
-				//VacationDate ranges = vacationService.getRanges(vacationId);
-				//날짜하암 어캐
-			}else if(vacationName.contains("반차")) {
-				
-			}else {
-				
-			}
-			return "으악";
+			int dayOffCount = vacationService.getEmpDayOff(vacationCategoryId, empId);
+			log.info(dayOffCount);
+			return "성공";
 		}else {
 			return "aaaaa";
 		}
