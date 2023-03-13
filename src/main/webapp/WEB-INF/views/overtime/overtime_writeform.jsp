@@ -36,7 +36,7 @@
 	<main id="main" class="main"> <!-- PageContent -->
 	<section class="section">
 
-		<div class="row ">
+		<div class="row mt-5">
 			<div class="col-lg-8">
 
 				<div class="card profile mt-3">
@@ -50,7 +50,8 @@
 							<div class="row">
 								<div class="col">
 									<div class="row mb-4">
-										<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
+										<input type="hidden" id="empId" name="empId"
+											value="${loginEmployee.empId}">
 										<div class="col-lg-3 col-md-4 label ">이름</div>
 										<div class="col-lg-9 col-md-8">${loginEmployee.name}</div>
 									</div>
@@ -176,6 +177,7 @@
 			</div>
 
 		</div>
+		<div class="row" style="height:100px"> </div>
 	</section>
 	</main>
 	<!-- ======================================Main==================================================== -->

@@ -105,14 +105,18 @@
 	
 	
 	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
-		select  c.vacation_name as "vacationName",
+		select
+			v.vacation_category_id as "vacationCategoryId",
+			v.emp_id as "empId",  
+			c.vacation_name as "vacationName",
 	        t.team_name as "teamName",
 	        d.dept_name as "deptName",
 	        approval_emp_id as "approvalEmpId",
 	        e.name as "name",
 	        status,
 	        vacation_id as "vacationId", 
-	        to_char(write_date,'yyyy-mm-dd') as writeDate, content, 
+	        to_char(write_date,'yyyy-mm-dd') as writeDate, 
+	        content, 
 	        count_day as "countDay"
         
 
@@ -129,6 +133,13 @@
 		from vacation_date
 		where vacation_id = #{vacationId}
 		order by start_date
+	</select>
+	
+	<select id="selectEmpDayOff"  parameterType="map" resultType="int">
+		select 
+			dayoff_remain
+		from employees
+		where emp_id=#{empId}
 	</select>
 	
 </mapper>

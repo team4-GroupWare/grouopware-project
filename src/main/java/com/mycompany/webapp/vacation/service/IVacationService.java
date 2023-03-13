@@ -23,6 +23,9 @@ public interface IVacationService {
 	VacationDetail getVacationDetail(int vacationId);
 	Vacation getApprovalEmp(String empId);
 	List<VacationDate> getVacationDate(int vacationId);
+	
+	//연차 정보 가져오
+	int getEmpDayOff(int vacationCategoryId, String empId);
 
 
 }
