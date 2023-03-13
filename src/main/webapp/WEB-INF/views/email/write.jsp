@@ -4,7 +4,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="${pageContext.request.contextPath}/resources/ckeditor/build/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 	
 	<script>
@@ -297,6 +296,7 @@
 
   </main><!-- End #main -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/tinymce/tinymce.min.js"></script>
+   <script src="${pageContext.request.contextPath}/resources/assets/js/tinymce.js"></script>
   <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
