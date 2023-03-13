@@ -1,4 +1,4 @@
-package com.mycompany.webapp.email.controller;
+package com.mycompany.webapp.component;
 
 import java.util.Calendar; 
 import java.sql.Date;

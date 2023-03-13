@@ -25,26 +25,31 @@
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
 			var receivers = $("#receivers").val();
-			console.log(receivers);
-			var receiverArr = receivers.split(",");
-			console.log(receiverArr);
-			var count = 0;
-			for(var i=0; i<receiverArr.length;i++){
-				if(receiverArr[i].trim()==empId){
-					count = 1;
-				} 
+			if(receivers == ''){
+				$('#inputName').modal('show');
+			} else {
+				console.log(receivers);
+				var receiverArr = receivers.split(",");
+				console.log(receiverArr);
+				var count = 0;
+				for(var i=0; i<receiverArr.length;i++){
+					if(receiverArr[i].trim()==empId){
+						count = 1;
+					} 
+				}
+				
+				if(count != 1){
+					console.log("성공");
+					var title = $("#title").val();
+					if(title == ''){
+						$("#title").val('제목 없음');
+					}
+					submitEmailForm();
+				} else {
+					$("#notMe").modal('show');
+				}
 			}
 			
-			if(count != 1){
-				console.log("성공");
-				var title = $("#title").val();
-				if(title == ''){
-					$("#title").val('제목 없음');
-				}
-				submitEmailForm();
-			} else {
-				$("#notMe").modal('show');
-			}
 			//if(receiver==empId){
                  //console.log("실패");
                 // $("#notMe").modal('show');
@@ -264,6 +269,23 @@
 	      </div>
 	      <div class="modal-body">
 	        <p style="margin-bottom:4px">나에게 메일을 작성할 수 없습니다.</p>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 메일 영구 삭제시 Modal -->
+	<div class="modal fade" id="inputName" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 수신인
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p style="margin-bottom:4px">받는 사람의 아이디를 입력해주세요.</p>
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
