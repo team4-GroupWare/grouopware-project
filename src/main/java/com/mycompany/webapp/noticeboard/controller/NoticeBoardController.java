@@ -22,4 +22,10 @@ public class NoticeBoardController {
 		log.info("실행");
 		return "board/boarddetail";
 	}
+	
+	@GetMapping("/write")
+	public String getBoardWrite() {
+		log.info("실행");
+		return "board/write";
+	}
 }

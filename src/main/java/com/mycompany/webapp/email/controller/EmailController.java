@@ -26,7 +26,6 @@ import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
-import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
@@ -45,9 +44,6 @@ public class EmailController {
 	
 	@Autowired
 	IEmailService emailService;
-	
-	@Autowired
-	EmailScheduler emailScheduler;
 	
 	/**
 	 * @author LEEYESEUNG
@@ -68,7 +64,6 @@ public class EmailController {
 		model.addAttribute("pager", pager);
 		String type = "receive";
 		model.addAttribute("type", type);
-		emailScheduler.emailTrash();
 		return "email/emaillist";
 	}
 	
@@ -414,24 +409,6 @@ public class EmailController {
 		fileName = fileName.replaceAll("\\+", "%20");
 		headers.setContentDispositionFormData("attachment", fileName);
 		return new ResponseEntity<byte[]>(emailFile.getEmailFileData(), headers, HttpStatus.OK);
-	}
-	
-	@GetMapping("/sendEmailListMain")
-	public String emailSendListMain(HttpSession session, Model model) {
-		log.info("실행");
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		List<MainEmailList> emailList = emailService.getSendMainEmailList(employee.getEmpId());
-		model.addAttribute("emailList", emailList);
-		return "email/mainemaillist";
-	}
-	
-	@GetMapping("/receiveEmailListMain")
-	public String emailReceiveListMain(HttpSession session, Model model) {
-		log.info("실행");
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		List<MainEmailList> emailList = emailService.getReceiveMainEmailList(employee.getEmpId());
-		model.addAttribute("emailList", emailList);
-		return "email/mainreceiveemaillist";
 	}
 	
 	@GetMapping("/response")

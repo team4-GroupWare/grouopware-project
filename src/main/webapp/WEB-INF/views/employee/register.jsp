@@ -48,8 +48,6 @@
 				}
 				$("#idMessage").text(message);
 				
-				
-				
 			});
 		}
 	</script>

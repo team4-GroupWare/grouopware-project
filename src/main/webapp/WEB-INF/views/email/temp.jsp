@@ -19,11 +19,45 @@
 		    });
 		});
 		
-		function getContent(){
+		function getContent(empId){
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
+			var receivers = $("#receivers").val();
+			if(receivers == ''){
+				$('#inputName').modal('show');
+			} else {
+				console.log(receivers);
+				var receiverArr = receivers.split(",");
+				console.log(receiverArr);
+				var count = 0;
+				for(var i=0; i<receiverArr.length;i++){
+					if(receiverArr[i].trim()==empId){
+						count = 1;
+					} 
+				}
+				
+				if(count != 1){
+					console.log("성공");
+					var title = $("#title").val();
+					if(title == ''){
+						$("#title").val('제목 없음');
+					}
+					submitEmailForm();
+				} else {
+					$("#notMe").modal('show');
+				}
+			}
+			//if(receiver==empId){
+                 //console.log("실패");
+                // $("#notMe").modal('show');
+                 //break;
+              //} else {
+                //console.log("성공");
+                 //submitEmailForm();
+                 //break;
+             // }
 			//$("#writeForm").submit();
-			submitEmailForm();
+			//submitEmailForm();
 		}
 		
 		function tempSave() {
@@ -105,14 +139,20 @@
 
           <div class="card"> 
             <div class="card-body">
-              <h2 class="card-title"><b>메일 작성</b></h2>
+             <div class="row">
+              <h2 class="card-title col-7"><b>메일 작성</b></h2>
+                  <div class="col-sm-5 my-auto" style="text-align:right">
+                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
+                    <button type="button" class="btn btn-primary" onclick="getContent('${loginEmployee.empId}')">보내기</button>
+                  </div>
+             </div>
 
               <!-- General Form Elements -->
               <form id="writeForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/email/write">
                 <div class="row mb-2">
                   <label for="inputText" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="receiveId" id="receiver" value="${tempEmail.receiveId}">
+                    <input type="text" class="form-control" name="receiveId" id="receivers" value="${tempEmail.receiveId}">
                     <p style="color:grey" class="small"> ","로 받을 아이디를 구분하여 입력해주세요
                   </div>
                 </div>
@@ -156,13 +196,6 @@
               		<input id="content" type="hidden" name="content">
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-sm-12" style="text-align:center">
-                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
-                    <button type="button" class="btn btn-primary" onclick="getContent()">보내기</button>
-                  </div>
-                </div>
-                
               </form><!-- End General Form Elements -->
 
             </div>
@@ -180,6 +213,40 @@
 	      </div>
 	      <div class="modal-body">
 	        <p style="margin-bottom:4px">임시저장 되었습니다.</p>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 메일 영구 삭제시 Modal -->
+	<div class="modal fade" id="notMe" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 나에게 메일
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p style="margin-bottom:4px">나에게 메일을 작성할 수 없습니다.</p>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 메일 영구 삭제시 Modal -->
+	<div class="modal fade" id="inputName" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 수신인
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p style="margin-bottom:4px">받는 사람의 아이디를 입력해주세요.</p>
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

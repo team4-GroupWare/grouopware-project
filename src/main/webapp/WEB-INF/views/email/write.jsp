@@ -4,7 +4,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="${pageContext.request.contextPath}/resources/ckeditor/build/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 	
 	<script>
@@ -25,26 +24,31 @@
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
 			var receivers = $("#receivers").val();
-			console.log(receivers);
-			var receiverArr = receivers.split(",");
-			console.log(receiverArr);
-			var count = 0;
-			for(var i=0; i<receiverArr.length;i++){
-				if(receiverArr[i].trim()==empId){
-					count = 1;
-				} 
+			if(receivers == ''){
+				$('#inputName').modal('show');
+			} else {
+				console.log(receivers);
+				var receiverArr = receivers.split(",");
+				console.log(receiverArr);
+				var count = 0;
+				for(var i=0; i<receiverArr.length;i++){
+					if(receiverArr[i].trim()==empId){
+						count = 1;
+					} 
+				}
+				
+				if(count != 1){
+					console.log("성공");
+					var title = $("#title").val();
+					if(title == ''){
+						$("#title").val('제목 없음');
+					}
+					submitEmailForm();
+				} else {
+					$("#notMe").modal('show');
+				}
 			}
 			
-			if(count != 1){
-				console.log("성공");
-				var title = $("#title").val();
-				if(title == ''){
-					$("#title").val('제목 없음');
-				}
-				submitEmailForm();
-			} else {
-				$("#notMe").modal('show');
-			}
 			//if(receiver==empId){
                  //console.log("실패");
                 // $("#notMe").modal('show');
@@ -144,7 +148,13 @@
 
           <div class="card"> 
             <div class="card-body">
-              <h2 class="card-title"><b>메일 작성</b></h2>
+              <div class="row">
+	              <h2 class="card-title col-7"><b>메일 작성</b></h2>
+	              <div class="col-sm-5 my-auto" style="text-align:right">
+	                <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
+	                <button type="button" class="btn btn-primary" onclick="getContent('${loginEmployee.empId}')">보내기</button>
+	              </div>
+              </div>
 
               <!-- General Form Elements -->
               <form id="writeForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/email/write">
@@ -225,15 +235,7 @@
               		<input id="content" type="hidden" name="content">
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-sm-12" style="text-align:center">
-                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
-                    <button type="button" class="btn btn-primary" onclick="getContent('${loginEmployee.empId}')">보내기</button>
-                  </div>
-                </div>
-                
               </form><!-- End General Form Elements -->
-
             </div>
           </div>
         </div>
@@ -273,10 +275,28 @@
 	    </div>
 	  </div>
 	</div>
+	
+	<!-- 메일 영구 삭제시 Modal -->
+	<div class="modal fade" id="inputName" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 수신인
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p style="margin-bottom:4px">받는 사람의 아이디를 입력해주세요.</p>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     
 
   </main><!-- End #main -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/tinymce/tinymce.min.js"></script>
+   <script src="${pageContext.request.contextPath}/resources/assets/js/tinymce.js"></script>
   <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
