@@ -474,8 +474,10 @@ public class EmailService implements IEmailService {
 		log.info("실행");
 		int row = 0;
 		List<Integer> contentIdList = emailRepository.selectIsDeletedEmail();
-		for(int contentId : contentIdList) {
-			row = emailRepository.deleteEmailContent(contentId);
+		if(contentIdList.size() != 0) {
+			for(int contentId : contentIdList) {
+				row = emailRepository.deleteEmailContent(contentId);
+			}
 		}
 		return row;
 	}

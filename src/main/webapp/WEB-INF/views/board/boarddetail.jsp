@@ -14,7 +14,7 @@
 		    <ul class="sidebar-nav" id="sidebar-nav">
 		
 		      <li class="nav-item">
-		        <a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/email/write" style="width:100%">
+		        <a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/board/write" style="width:100%">
 		          <i class="bi bi-pencil-square"></i> 
 		          <span>게시글 작성</span>
 		        </a>
