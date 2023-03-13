@@ -21,22 +21,13 @@
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
 			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
-			status,count_day)
+			status,count_day, approval_emp_id)
 		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
-			null,null,null,null,
-			default,#{countDay})
+			null,null,null,null, 
+			default,#{countDay},#{approvalEmpId})
 	</insert> 
-	
-	<!-- 휴가 결제선  저장 -->
-	<insert id="insertVacationLine" parameterType="vacationLine">
-		<selectKey keyProperty="vacationId" resultType="int" order="BEFORE">
-			SELECT seq_vacation.CURRVAL FROM dual
-		</selectKey>
-		INSERT INTO vacation_line (vacation_line_id, vacation_id, emp_id, seq)
-		VALUES (seq_vacation_line.nextval, #{vacationId}, #{empId}, #{seq})
-	</insert>
 	
 	<!-- 휴가 날짜 저장 -->
 	<insert id="insertVacationDate" parameterType="vacationDate">
@@ -47,10 +38,27 @@
 		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
 	</insert>
 	
-	<!-- 휴가 리스트 조회-->
+	<!-- 리스트 개수 -->
+	<select id="selectVacationCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM vacation
+		WHERE 
+			<if test="type == 1 ">
+				emp_id = #{empId}
+			</if>
+			<if test="type == 2 ">
+				approval_emp_id = #{empId}
+			</if>
+			<if test="!status.equals('')">
+				AND status = #{status}
+			</if>
+	</select>
+	
+	<!-- 리스트 조회 -->
 	<select id="selectVacationList" parameterType="string" resultType="vacationList">
 		select v.vacation_id as "vacationId", 
 		e.name as "name", 
+		e.emp_id as "empId", 
 		c.vacation_name as "vacationName", 
 		status, 
 		count_day as "countDay",
@@ -70,7 +78,13 @@
 	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
 	
 		from vacation v, employees e, vacation_category c
-		where v.emp_id= #{empId} 
+		where 
+			<if test="type == 1 ">
+				v.emp_id = #{empId}
+			</if>
+			<if test="type == 2 ">
+				v.approval_emp_id = #{empId}
+			</if>
 		and e.emp_id = v.emp_id 
 		and c.vacation_category_id = v.vacation_category_id
 		<if test="!status.equals('')">
@@ -81,27 +95,22 @@
         FETCH FIRST 10 ROWS ONLY 
 	</select>
 	
-	<!-- 내 문서함 상태별 갯수 -->
-	<select id="selectVacationCount" parameterType="map" resultType="int">
-		SELECT count(*)
-		FROM vacation
-		WHERE emp_id = #{empId}
-			<if test="!status.equals('')">
-				AND status = #{status}
-			</if>
+	<!-- 잔여연차 -->
+	<select id="selectVacationDays" parameterType="map" resultType="employee">
+		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
+		from employees e 
+		where e.emp_id = #{empId}
 	</select>
 	
-	<select id="selectVacationDays" parameterType="string" resultType="employee">
-		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
-		from employees
-		where emp_id = #{empId}
-	</select>
+	
 	
 	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
 		select  c.vacation_name as "vacationName",
 	        t.team_name as "teamName",
 	        d.dept_name as "deptName",
+	        approval_emp_id as "approvalEmpId",
 	        e.name as "name",
+	        status,
 	        vacation_id as "vacationId", 
 	        to_char(write_date,'yyyy-mm-dd') as writeDate, content, 
 	        count_day as "countDay"
@@ -119,6 +128,7 @@
 		select to_char(start_date,'yyyy-mm-dd') as "startDateStr", to_char(end_date,'yyyy-mm-dd')as "endDateStr"
 		from vacation_date
 		where vacation_id = #{vacationId}
+		order by start_date
 	</select>
 	
 </mapper>

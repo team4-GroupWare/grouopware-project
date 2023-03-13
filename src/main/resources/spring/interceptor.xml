@@ -12,6 +12,7 @@
 			<mvc:mapping path="/approval/**"/>
 			<mvc:mapping path="/hr/*"/>
 			<mvc:mapping path="/vacation/*"/>
+			<mvc:mapping path="/overtime/*"/>
 			<mvc:mapping path="/attendance/**"/>
 			<mvc:exclude-mapping path="/employee/login"/>
 			<mvc:exclude-mapping path="/employee/change"/>

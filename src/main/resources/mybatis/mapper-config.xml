@@ -7,11 +7,13 @@
 		<typeAlias type="com.mycompany.webapp.attendance.model.Attendance" alias="attendance"/>
 		<typeAlias type="com.mycompany.webapp.group.model.Team" alias="team"/>
 		<typeAlias type="com.mycompany.webapp.employee.model.Employee" alias="employee"/>
-		<typeAlias type="com.mycompany.webapp.Pager" alias="pager"/>
+		<typeAlias type="com.mycompany.webapp.component.Pager" alias="pager"/>
 		<typeAlias type="com.mycompany.webapp.group.model.Grade" alias="grade"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalCategory" alias="approvalCategory"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.Approval" alias="approval"/>
+		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalLine" alias="approvalLine"/>
+		<typeAlias type="com.mycompany.webapp.approval.model.RefEmployee" alias="refEmployee"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailList" alias="emailList"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailContent" alias="emailContent"/>
 		<typeAlias type="com.mycompany.webapp.email.model.SendEmail" alias="sendEmail"/>
@@ -25,5 +27,7 @@
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDetail" alias="vacationDetail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
 		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
+		<typeAlias type="com.mycompany.webapp.attendance.model.AttendanceMonthStatus" alias="attendanceMonthStatus"/>
+		<typeAlias type="com.mycompany.webapp.overtime.model.Overtime" alias="overtime"/>
 	</typeAliases>
 </configuration>

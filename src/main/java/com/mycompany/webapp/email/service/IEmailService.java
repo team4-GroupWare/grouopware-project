@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;

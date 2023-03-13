@@ -1,4 +1,4 @@
-package com.mycompany.webapp.attendance.controller;
+package com.mycompany.webapp.component;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -20,7 +20,13 @@ public class Holiday {
 	public static void main(String[] args) {
 		Holiday h = new Holiday();
 		System.out.println(h.getCurMonday().toString());
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
 
+ 		Calendar c = Calendar.getInstance();
+ 		
+ 		c.set(Calendar.DAY_OF_WEEK,1);
+ 		System.out.println(formatter.format(c.getTime()));
 	}
 	
 	public List<String> getCurMonday(){
@@ -28,7 +34,9 @@ public class Holiday {
  		SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");
 
  		Calendar c = Calendar.getInstance();
+ 		c.add(Calendar.DATE, -1);
  		c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+ 		
  		list.add(formatter.format(c.getTime()));
  		
  		for(int i=1; i<7; i++) {

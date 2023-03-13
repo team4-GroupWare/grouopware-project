@@ -2,7 +2,7 @@ package com.mycompany.webapp.vacation.service;
 
 import java.util.List;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
@@ -13,17 +13,16 @@ import com.mycompany.webapp.vacation.model.VacationList;
 public interface IVacationService {
 
 	int writeVacation(Vacation vacation);
-
-	int getVacationRow(String empId, String status);
-
-	List<VacationList> getVacationList(Pager pager, String empId, String status);
-
+	
+	//나의 휴가 list
+	int getVacationRow(String empId, String status, int type);
+	List<VacationList> getVacationList(Pager pager, String empId, String status, int type);
 	Employee getVacationDays(String empId);
-
+	
+	//나의 휴가 detail
 	VacationDetail getVacationDetail(int vacationId);
-
+	Vacation getApprovalEmp(String empId);
 	List<VacationDate> getVacationDate(int vacationId);
 
-	Vacation getApprovalEmp(String empId);
 
 }

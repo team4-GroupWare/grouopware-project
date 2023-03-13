@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mycompany.webapp.Pager;
+import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
@@ -33,36 +33,13 @@ public class VacationService implements IVacationService {
 	@Transactional
 	public int writeVacation(Vacation vacation) {
 		log.info("실행");
-		vacationRepository.insertVacation(vacation);
-		
-		for(int i = 0; i < vacation.getVacationLine().size(); i++) {
-			vacationRepository.insertVacationLine(vacation.getVacationLine().get(i));
-		}
-		
+		int result = vacationRepository.insertVacation(vacation);
+		log.info(result);
 		for(int i = 0; i < vacation.getVacationDate().size(); i++) {
 			vacationRepository.insertVacationDate(vacation.getVacationDate().get(i));
 		}
 		
 		return 2;
-	}
-
-	
-	@Override
-	public int getVacationRow(String empId, String status) {
-		log.info("실행");
-		return vacationRepository.selectVacationCount(empId, status);
-	}
-	
-	@Override
-	public List<VacationList> getVacationList(Pager pager, String empId, String status) {
-		log.info("실행");
-		return vacationRepository.selectVacationList(pager, empId, status);
-	}
-
-	@Override
-	public Employee getVacationDays(String empId) {
-		log.info("실행");
-		return vacationRepository.selectVacationDays(empId);
 	}
 
 	@Override
@@ -75,6 +52,24 @@ public class VacationService implements IVacationService {
 	public List<VacationDate> getVacationDate(int vacationId) {
 		log.info("실행");
 		return vacationRepository.selectVacationDate(vacationId);
+	}
+
+	@Override
+	public int getVacationRow(String empId, String status, int type) {
+		log.info("실행");
+		return vacationRepository.selectVacationCount(empId, status, type);
+	}
+
+	@Override
+	public List<VacationList> getVacationList(Pager pager, String empId, String status, int type) {
+		log.info("실행");
+		return vacationRepository.selectVacationList(pager, empId, status, type);
+	}
+
+	@Override
+	public Employee getVacationDays(String empId) {
+		log.info("실행");
+		return vacationRepository.selectVacationDays(empId);
 	}
 
 
