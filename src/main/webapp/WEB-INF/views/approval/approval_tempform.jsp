@@ -295,7 +295,7 @@
 					        		<p>필수항목을 입력해주세요.</p>
 					      		</div>
 					      		<div class="modal-footer">
-					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reload()">확인</button>
+					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
 					      		</div>
 					    	</div>
 					  	</div>

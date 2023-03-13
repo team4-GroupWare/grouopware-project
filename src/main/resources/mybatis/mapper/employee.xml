@@ -210,4 +210,12 @@
 	
 	</update>
 	
+	<!-- db에 저장된 해당 empId의 비밀번호 조회 -->
+	<select id="selectPasswordByEmpId" parameterType="string">
+		SELECT password
+		FROM employees
+		WHERE emp_id = #{empId}
+	</select>
+	
+	
 </mapper>

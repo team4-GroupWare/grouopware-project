@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.component.MultipartFileResolver;
@@ -42,13 +44,15 @@ public class EmployeeService implements IEmployeeService {
 	public LoginResult login(Employee employee) {
 		log.info("실행");
 		//비밀번호 복호화
-		//PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		Employee dbEmployee = getEmployee(employee.getEmpId());
 		if(dbEmployee == null) {
 			return LoginResult.WRONG_ID;
 		} else if(!(employee.getPassword().equals(dbEmployee.getPassword()))) {
-			//boolean checkPass = pe.matches(member.getMpassword(), dbMember.getMpassword());
-			return LoginResult.WRONG_PASSWORD;
+			boolean checkPass = pe.matches(employee.getPassword(), dbEmployee.getPassword());
+			if(checkPass == false) {
+				return LoginResult.WRONG_PASSWORD;
+			}
 		} 
 		
 		employee.setName(dbEmployee.getName());
@@ -144,6 +148,9 @@ public class EmployeeService implements IEmployeeService {
 			}
 		}
 		
+		//패스워드 암호화
+		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		employee.setPassword(pe.encode(employee.getPassword()));
 		return employeeRepository.insertEmployee(employee);
 	}
 	
@@ -197,21 +204,36 @@ public class EmployeeService implements IEmployeeService {
 	@Override
 	public int checkPassword(String oldPwd, String empId) {
 		log.info("실행");
-		int row = employeeRepository.selectEmpPasswordCount(oldPwd, empId);
+		int row = 0;
+		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String dbPwd = employeeRepository.selectPasswordByEmpId(empId);
+		boolean checkPass = pe.matches(oldPwd, dbPwd);
+		if(checkPass == true) {
+			row = employeeRepository.selectEmpPasswordCount(oldPwd, empId);
+		}
 		return row;
 	}
 
 	@Override
 	public int updatePassword(String newPwd, String empId) {
 		log.info("실행");
-		int row = employeeRepository.updatePassword(newPwd, empId);
+		
+		//패스워드 암호화
+		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String pwd = pe.encode(newPwd);
+		
+		int row = employeeRepository.updatePassword(pwd, empId);
 		return row;
 		
 	}
 
 	@Override
 	public int grantInitialPassword(EmployeePassword employeePassword) {
-		int row = employeeRepository.updateInitPassword(employeePassword.getNewPwd(), employeePassword.getEmpId());
+		//패스워드 암호화
+		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String pwd = pe.encode(employeePassword.getNewPwd());
+		
+		int row = employeeRepository.updateInitPassword(pwd, employeePassword.getEmpId());
 		return row;
 	}
 
