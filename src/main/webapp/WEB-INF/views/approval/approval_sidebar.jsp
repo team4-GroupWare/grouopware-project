@@ -54,11 +54,11 @@
      		</ul>
    		</li><!-- End 내 문서함 -->
    		
-   		<li class="nav-item">
+   		<!-- <li class="nav-item">
      		<a class="nav-link collapsed" href="#">
        			<i class="bi bi-eye"></i><span>열람함</span>
      		</a>
-   		</li><!-- End 열람함 -->
+   		</li>End 열람함 -->
    		
    		<li class="nav-item">
      		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/approval/reflist">

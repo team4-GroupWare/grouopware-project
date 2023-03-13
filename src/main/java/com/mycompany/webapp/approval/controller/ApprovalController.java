@@ -57,6 +57,20 @@ public class ApprovalController {
 	private IApprovalService approvalService;
 	
 	/**
+	 * 전자결재 카테고리별 작성 양식 불러오기
+	 * @author : LEEJIHO
+	 * @param approvalCategoryId : 결재양식 카테고리 아이디
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value="/categoryform", produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public String getCategoryForm(@RequestParam(defaultValue="1") int approvalCategoryId, Model model) {
+		log.info("실행");
+		return approvalService.getApprovalForm(approvalCategoryId);
+	}
+	
+	/**
 	 * 전자결재 작성 폼 불러오기
 	 * @author : LEEJIHO
 	 * @param model
@@ -82,7 +96,6 @@ public class ApprovalController {
 		if(loginEmp.getManagerId() != null) {
 			//manager 정보
 			Employee manager = employeeService.getEmp(loginEmp.getManagerId());
-			log.info(manager);
 			model.addAttribute("manager", manager);
 		} else {
 			model.addAttribute("manager", null);
@@ -109,29 +122,103 @@ public class ApprovalController {
 	@ResponseBody
 	@PostMapping(value="/write", produces="application/json")
 	public Uri writeApproval(@ModelAttribute Approval approval, Model model) {
-		log.info("writeApproval실행");
-		for(int i = 0; i < approval.getApprovalLine().size(); i++) {
-			approval.getApprovalLine().get(i).setSeq(i+1);
+		log.info("실행");
+		
+		if(approval.getApprovalLine() != null) {
+			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+				approval.getApprovalLine().get(i).setSeq(i+1);
+			}
 		}
 		approvalService.writeApproval(approval);
 		
 		Uri uri = new Uri();
-		uri.setUri("/approval/mylist");
+		if(approval.getTempApproval().equals("y")) { //임시저장일 경우 임시저장 목록으로 return
+			uri.setUri("/approval/templist");
+		} else if (approval.getTempApproval().equals("n")) { //제출일 경우 내 문서함 목록으로 return
+			uri.setUri("/approval/mylist");
+		}
+		
 		return uri;
 	}
 	
 	/**
-	 * 전자결재 카테고리별 작성 양식 불러오기
+	 * 임시저장 수정 폼
 	 * @author : LEEJIHO
-	 * @param approvalCategoryId : 결재양식 카테고리 아이디
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/tempForm")
+	public String getApprovalTempForm(@RequestParam int approvalId, Model model, HttpSession session) {
+		log.info("실행");
+		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
+		
+		//전자결재 카테고리 목록
+		List<ApprovalCategory> approval_category = approvalService.getCategory();
+		
+		List<List<Team>> teams = new ArrayList<>();
+		//부서 목록
+		List<Department> departments = departmentService.getDeptList();
+		
+		//부서 별 팀목록
+		for(Department dept : departments) {
+			teams.add(teamService.getTeamListById(dept.getDeptId()));
+		}
+		
+		if(loginEmp.getManagerId() != null) {
+			//manager 정보
+			Employee manager = employeeService.getEmp(loginEmp.getManagerId());
+			model.addAttribute("manager", manager);
+		} else {
+			model.addAttribute("manager", null);
+		}
+		
+		//임시저장한 내용 불러오기
+		Approval approval = approvalService.getApprovalDetail(approvalId);
+		//카테고리 양식
+		String form = approvalService.getApprovalForm(approval.getApprovalCategoryId());
+		//전자결재 결재선 리스트
+		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approvalId);
+		
+		model.addAttribute("departments", departments);
+		model.addAttribute("teams", teams);
+		model.addAttribute("approval_category", approval_category);
+		model.addAttribute("form", form);
+		model.addAttribute("approval", approval);
+		model.addAttribute("approvalLines", approvalLines);
+		
+		return "approval/approval_tempform";
+	}
+	
+	/**
+	 * 임시저장 수정
+	 * @author : LEEJIHO
+	 * @param approval : 전자결재
 	 * @param model
 	 * @return
 	 */
-	@GetMapping(value="/categoryform", produces="application/text; charset=UTF-8")
 	@ResponseBody
-	public String getCategoryForm(@RequestParam(defaultValue="1") int approvalCategoryId, Model model) {
-		log.info("실행");
-		return approvalService.getApprovalForm(approvalCategoryId);
+	@PostMapping(value="/updateTemp", produces="application/json")
+	public Uri updateTempApproval(@ModelAttribute Approval approval, Model model) {
+		log.info("updateTempApproval실행");
+		
+		if(approval.getApprovalLine() != null) {
+			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
+				approval.getApprovalLine().get(i).setSeq(i+1);
+				approval.getApprovalLine().get(i).setApprovalId(approval.getApprovalId());
+			}
+		}
+		
+		approvalService.updateApproval(approval);
+
+		Uri uri = new Uri();	
+		if(approval.getTempApproval().equals("y")) { //임시저장일 경우 임시저장 목록으로 return
+			uri.setUri("/approval/templist");
+		} else if (approval.getTempApproval().equals("n")) { //제출일 경우 내 문서함 목록으로 return
+			uri.setUri("/approval/mylist");
+		}
+		log.info("uri : " + uri);
+		return uri;
 	}
 	
 	/**
@@ -234,11 +321,15 @@ public class ApprovalController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/templist")
-	public String getApprovalTempList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
+	@GetMapping({"/templist", "/templist/{approvalCategoryId}"})
+	public String getApprovalTempList(@PathVariable(required = false) Integer approvalCategoryId, @RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
+		
+		if(approvalCategoryId == null) {
+			approvalCategoryId = 0;
+		}
 		
 		int approvalRow = approvalService.getTempApprovalRow(empId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
@@ -273,8 +364,6 @@ public class ApprovalController {
 		Approval approval = approvalService.getApprovalDetail(approvalId);
 		//전자결재 문서 참조 사원 정보
 		RefEmployee refEmp = approvalService.getReferEmpInfo(approvalId);
-		log.info("======================refEmp==============");
-		log.info(refEmp);
 		
 		//전자결재 결재선 리스트
 		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approvalId);
@@ -283,7 +372,7 @@ public class ApprovalController {
 		
 		//해당 전자결재 문서에 대한 내 결재 순서
 		int mySeq = approvalService.getMySeq(approvalId, empId) - 1;
-		int myTurn = 0;
+		int myTurn = 0; //0: 내 결재순서, 1: 내 결재순서가 아님
 		
 		for(int i = 0; i < approvalLines.size(); i++) {
 			if(mySeq == -1) { //결재선이 아닐 때
@@ -326,14 +415,14 @@ public class ApprovalController {
 	 * @return
 	 */
 	@PostMapping("/confirm")
-	public String confirm(ApprovalLine approvalLine, HttpSession session) {
+	public String confirm(ApprovalLine approvalLine, Approval approval, HttpSession session) {
 		Employee loginEmp = (Employee) session.getAttribute("loginEmployee");
 		String empId = loginEmp.getEmpId();
 		approvalLine.setEmpId(empId);
 		
-		approvalService.confirm(approvalLine);
+		approvalService.confirm(approvalLine, approval);
 		
-		return "redirect:/approval/list";
+		return "redirect:/approval/confirmlist";
 	}
 	
 	/**
@@ -361,6 +450,14 @@ public class ApprovalController {
 		return new ResponseEntity<byte[]>(approvalFile.getApprovalFileData(), headers, HttpStatus.OK);
 	}
 	
+	/**
+	 * 전자결재 참조함 목록
+	 * @author : LEEJIHO
+	 * @param pageNo : 현재 페이지
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/reflist")
 	public String getApprovalRefList(@RequestParam(defaultValue="1") int pageNo, Model model, HttpSession session) {
 		log.info("실행");
@@ -370,6 +467,7 @@ public class ApprovalController {
 		int approvalRow = approvalService.getRefApprovalRow(empId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
+		//전자결재 참조함 목록
 		List<Approval> approvals = approvalService.getRefApprovalList(pager, empId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
@@ -379,5 +477,22 @@ public class ApprovalController {
 		model.addAttribute("approval_category", approval_category);
 		
 		return "approval/approval_reflist";
+	}
+	
+	/**
+	 * 전자결재 문서 삭제
+	 * @author : LEEJIHO
+	 * @param approvalId
+	 * @return
+	 */
+	@PostMapping("/delete")
+	public String deleteApproval(@RequestParam("approvalId") int[] approvalId) {
+		log.info("deleteApproval실행");
+		for(int i = 0; i < approvalId.length; i++) {
+			log.info("approvalId : " + approvalId[i]);
+			approvalService.deleteApproval(approvalId[i]);
+		}
+		
+		return "redirect:/approval/templist";
 	}
 }

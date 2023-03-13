@@ -93,6 +93,12 @@
               				</table>
              				<!-- End Table -->
             			</div>
+            			<c:if test="${empty approvals}">
+		              		<div style="height:200px;text-align:center;">
+		              			내용이 존재하지 않습니다.
+		              	  	</div>
+		              	</c:if>
+		              	<c:if test="${not empty approvals}">
             			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
@@ -132,6 +138,7 @@
                 				</ul>
               				</nav>
               			</div>
+              			</c:if>
           			</div>
         		</div>
       		</div>

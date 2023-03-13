@@ -159,7 +159,7 @@ input[type=radio]:checked+label{
 		    	var lineHtml = "";
 		    	for(var i in data){
 					lineHtml += '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
-							'<input type="hidden" name="approvalLine[' + i + '].empId" value="' + data[i].empId + '">' +
+							'<input type="hidden" class="approvalLines" name="approvalLine[' + i + '].empId" value="' + data[i].empId + '">' +
 							'<span style="font-size:18px; font-weight:bold;">' + data[i].empName + '</span> ' +
 							data[i].gradeName + '<br>' +
 							data[i].deptName + " / " + data[i].teamName + '</div>';
