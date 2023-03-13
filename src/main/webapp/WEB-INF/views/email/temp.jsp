@@ -105,7 +105,13 @@
 
           <div class="card"> 
             <div class="card-body">
-              <h2 class="card-title"><b>메일 작성</b></h2>
+             <div class="row">
+              <h2 class="card-title col-7"><b>메일 작성</b></h2>
+                  <div class="col-sm-5 my-auto" style="text-align:right">
+                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
+                    <button type="button" class="btn btn-primary" onclick="getContent()">보내기</button>
+                  </div>
+             </div>
 
               <!-- General Form Elements -->
               <form id="writeForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/email/write">
@@ -156,13 +162,6 @@
               		<input id="content" type="hidden" name="content">
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-sm-12" style="text-align:center">
-                    <button type="button" class="btn btn-secondary" onclick="tempSave()">임시저장</button>
-                    <button type="button" class="btn btn-primary" onclick="getContent()">보내기</button>
-                  </div>
-                </div>
-                
               </form><!-- End General Form Elements -->
 
             </div>
