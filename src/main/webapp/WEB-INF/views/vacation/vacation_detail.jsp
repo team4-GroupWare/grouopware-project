@@ -60,8 +60,8 @@
 										function confirm (e) {
 											var type = $(e).attr('value');
 											var vacationId = ${vacationDetail.vacationId};
-											var vacationName ="${vacationDetail.vacationName}";
-											
+											var vacationCategoryId =${vacationDetail.vacationCategoryId};
+											var empId = "${vacationDetail.empId}"
 											$.ajax({
 												type: "post",
 											    url: "${pageContext.request.contextPath}/vacation/process",
@@ -69,9 +69,11 @@
 											    data: {
 											    	type : type,
 											    	vacationId: vacationId,
-											    	vacationName : vacationName
+											    	vacationCategoryId : vacationCategoryId,
+											    	empId : empId
 											    },
 											    success: function (data) {
+											    	console.log("성공")
 											    	alert(data);
 												},
 												error: function(e){
@@ -91,7 +93,7 @@
 								<div class="row">
 									<div class="col">
 										<div class="row mb-4">
-											<div class="col-lg-3 col-md-4 label ">이연희</div>
+											<div class="col-lg-3 col-md-4 label ">이름</div>
 											<div class="col-lg-9 col-md-8">${vacation.empName}(${vacation.gradeName})</div>
 										</div>
 										<div class="row mb-4">

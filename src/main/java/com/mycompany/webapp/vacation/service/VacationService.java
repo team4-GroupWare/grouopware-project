@@ -72,5 +72,15 @@ public class VacationService implements IVacationService {
 		return vacationRepository.selectVacationDays(empId);
 	}
 
+	@Override
+	public int getEmpDayOff(int vacationCategoryId, String empId) {
+		log.info("실행");
+		log.info(vacationCategoryId);
+		log.info(empId);
+		int result = vacationRepository.selectEmpDayOff(vacationCategoryId,empId);
+		log.info(result);
+		return result;
+	}
+
 
 }

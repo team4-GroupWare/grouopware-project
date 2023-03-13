@@ -15,7 +15,8 @@ public class VacationDetail {
 	private String name;
 	private String approvalEmpId;
 	private String status;
-
+	private String empId;
+	private int vacationCategoryId;
 	
 	
 }

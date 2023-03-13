@@ -188,9 +188,9 @@
 										<input type="text" id="datePicker" name="dates" style="width:100%" onchange="countDate()" class="form-control" required>
 										<p id="choiceDate" class="small">선택 일수 : 0일</p>
 									</div>
-									<input type="hidden" id="countDay" name="countDay" value="0">
 								</div>
 							</div>
+							<input type="hidden" id="countDay" name="countDay" value="0">
 							<script>
 								$('#datePicker').datepicker({
 									format: "yyyy-mm-dd",
@@ -268,6 +268,7 @@
 			</div>
 		
 		</div>
+		<div class="row" style="height:100px"></div>
 	</section>
 	</main>
 	<!-- ======================================Main==================================================== -->
