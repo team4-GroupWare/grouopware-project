@@ -295,7 +295,7 @@ public class AttendanceController {
 				if (a.getStatus().equals("결근")) {
 					hash.put("backgroundColor", "#808080");
 					hash.put("borderColor", "#808080");
-				} else if (a.getStatus().contains("경조사") || a.getStatus().contains("반차")) {
+				} else if (a.getStatus().contains("경조사") || a.getStatus().contains("반차")||a.getStatus().contains("연차")) {
 					hash.put("backgroundColor", "#66BB6A");
 					hash.put("borderColor", "66BB6A");
 				}

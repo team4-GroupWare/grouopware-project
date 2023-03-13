@@ -48,7 +48,7 @@ input[type=radio]:checked+label{
 		    	console.log(data);
 		    	
 				var	lineHtml = '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
-							'<input type="hidden" name="approvalEmpId" value="' + data.empId + '">' +
+							'<input type="hidden" class="approvalEmpId" name="approvalEmpId" value="' + data.empId + '">' +
 							'<span style="font-size:18px; font-weight:bold;">' + data.empName + '</span> ' +
 							data.gradeName + '<br>' +
 							data.deptName + " / " + data.teamName + '</div>'

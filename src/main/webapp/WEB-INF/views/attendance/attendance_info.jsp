@@ -45,11 +45,8 @@
 								<canvas id="stakedBarChart" style="max-height: 250px;"></canvas>
 								<script>
 								document.addEventListener("DOMContentLoaded", () => {
-									var list = new Array(); 
 									attendanceTime = ${attendanceTime}
-									var list = new Array(); 
 									halfTime = ${halfTime}
-									var list = new Array(); 
 									overTime = ${overTime}
 									console.log(attendanceTime)
 									console.log(halfTime)

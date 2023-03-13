@@ -58,7 +58,6 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
-	  		
 		  	var today = new Date(); 						//오늘날짜
 	  		var day = today.getDay();						//요일
 	  	    var year = today.getFullYear();					//년
@@ -250,7 +249,7 @@
 					<div class="col-lg-4">
 						<!-- attendance Title -->
 						<div class="pagetitle">
-							<h1>근무확인 ${message}</h1>
+							<h1>근무확인 </h1>
 						</div>
 			          	<!-- attendance Card -->
 			          	<div class="card info-card sales-card "  style="height:330px; ">
@@ -266,7 +265,34 @@
 				                		</span>
 				                	</div> -->
 					            </div>
-					           
+					            <!-- Modal -->
+								  <div class="modal fade" id="myModal" role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">×</button>
+								          <h4 class="modal-title">Modal Header</h4>
+								        </div>
+								        <div class="modal-body">
+								          <p>${message}</p>
+								        </div>
+								        <div class="modal-footer">
+								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        </div>
+								      </div>
+								      
+								    </div>
+								  </div>
+					           <script>
+					           	
+					           	if(${message!=null}){
+					           		console.log("qkqh");
+					           	 $("#myModal").modal('show');
+					           		
+					           	}
+					           </script>
 				                
 								
 								<!-- 출퇴근 버튼 -->
@@ -294,7 +320,7 @@
 											type='image'
 											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
 											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/leave'" 
+											onClick="location.href='${pageContext.request.contextPath}/attendance/clockout'" 
 											/>
 											<div>퇴근하기</div>
 											<div id="clockOut"></div>

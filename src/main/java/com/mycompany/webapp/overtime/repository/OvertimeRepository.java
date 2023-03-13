@@ -18,6 +18,8 @@ public interface OvertimeRepository {
 	List<Overtime> selectOvertimeList(@Param("pager") Pager pager, @Param("empId") String empId, @Param("status") String status,@Param("type") int type);
 
 	Overtime selectOvertime(int overtimeId);
+
+	int selecWeekOverTime(@Param("sunday") String sunday,@Param("empId") String empId);
 	
 	
 

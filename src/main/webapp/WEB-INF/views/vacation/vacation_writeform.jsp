@@ -4,31 +4,31 @@
 <html>
 
 <head>
-	<%@ include file="/WEB-INF/views/common/head.jsp"%>
-	
-	<!-- datapicker -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
+<%@ include file="/WEB-INF/views/common/head.jsp"%>
+
+<!-- datapicker -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 
 <style>
-	.card-header {
-		background-color: #d5e0fd;
-		color: black;
-		font-style: italic ; 
-		font-weight: 500   ; 
-		font-size: 17px;
-		
-	}
-	.profile .profile-overview   {
+.card-header {
+	background-color: #d5e0fd;
+	color: black;
+	font-style: italic;
+	font-weight: 500;
+	font-size: 17px;
+}
+
+.profile .profile-overview {
 	margin-bottom: 20px;
 	font-size: 20px;
 }
@@ -41,7 +41,7 @@
 	<!-- ======================================Main==================================================== -->
 	<main id="main" class="main">
 	<section class="section">
-		<div class="row mt-5" >
+		<div class="row mt-5">
 			<!--================================================신청자 정보==================================================-->
 			<div class="col-4">
 				<div class="card profile mt-3">
@@ -51,19 +51,19 @@
 							id="profile-overview">
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label ">이름</div>
-								<div class="col-lg-9 col-md-8">이연희</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.name}</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label">직책</div>
-								<div class="col-lg-9 col-md-8">차장</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.gradeName}</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label">부서</div>
-								<div class="col-lg-9 col-md-8">공공사업관리부</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.deptName}</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label">팀</div>
-								<div class="col-lg-9 col-md-8">솔루션개발팀</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.teamName}</div>
 							</div>
 						</div>
 					</div>
@@ -76,11 +76,11 @@
 							id="profile-overview">
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
-								<div class="col-lg-9 col-md-8">20 일</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.dayoffRemain}일</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-3 col-md-4 label">경조사 연차</div>
-								<div class="col-lg-9 col-md-8">7일</div>
+								<div class="col-lg-9 col-md-8">${loginEmployee.addDayoffRemain}일</div>
 							</div>
 						</div>
 					</div>
@@ -91,8 +91,10 @@
 				<div class="card profile mt-3">
 					<div class="card-header">휴가 신청서</div>
 					<div class="card-body pt-4">
-						<form class="profile-overview " method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write">	
-							<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
+						<form class="profile-overview " method="post" id="vacation_form"
+							action="${pageContext.request.contextPath}/vacation/write">
+							<input type="hidden" id="empId" name="empId"
+								value="${loginEmployee.empId}">
 							<!-- 휴가 종류 -->
 							<script>
 							$(function (){
@@ -165,15 +167,17 @@
 							<div class="row ">
 								<label class="col-sm-2 label">휴가</label>
 								<div class="col-sm-6">
-									<input type="radio" name="vacationType" value="1" checked="checked"> 정기휴가
-									<input type="radio" name="vacationType" value="2"> 경조사 
+									<input type="radio" name="vacationType" value="1"
+										checked="checked"> 정기휴가 <input type="radio"
+										name="vacationType" value="2"> 경조사
 								</div>
 							</div>
 							<!-- 휴가 종류 -->
 							<div class="row ">
 								<label class="col-sm-2 label">휴가 종류</label>
 								<div class="col-sm-4">
-									<select id="POP" name="vacationCategoryId" class="form-select" aria-label="Default select example">
+									<select id="POP" name="vacationCategoryId" class="form-select"
+										aria-label="Default select example">
 										<option value="1" selected>연차</option>
 										<option value="2">오전 반차</option>
 										<option value="3">오후 반차</option>
@@ -185,7 +189,9 @@
 								<div class="row mb-1">
 									<label class="col-sm-2 label">날짜 선택</label>
 									<div class="col-sm-10 label">
-										<input type="text" id="datePicker" name="dates" style="width:100%" onchange="countDate()" class="form-control" required>
+										<input type="text" id="datePicker" name="dates"
+											style="width: 100%" onchange="countDate()"
+											class="form-control" required>
 										<p id="choiceDate" class="small">선택 일수 : 0일</p>
 									</div>
 								</div>
@@ -239,13 +245,12 @@
 							<!-- 결재선 선택 -->
 							<div class="row ">
 								<div class="col-sm-2 label">
-									<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-	                    					결재선 선택
-	              					</button>
+									<button type="button" class="btn btn-sm btn-secondary"
+										data-bs-toggle="modal" data-bs-target="#verticalycentered">
+										결재선 선택</button>
 								</div>
 								<div class="col-4">
-									<div id="vacation_line" class="d-flex">
-		              				</div>
+									<div id="vacation_line" class="d-flex"></div>
 								</div>
 							</div>
 							<!-- 사유 -->
@@ -255,21 +260,111 @@
 									<input name="content" class="form-control" style="height: 60px"></input>
 								</div>
 							</div>
+							<script>
+								function submitButton(){
+									console.log($('#countDay').val())
+									var chkValue = $('input[type=radio][name=vacationType]:checked').val();
+									
+									if($('#countDay').val()==0){
+										console.log("ajsep")
+							        	$('#countDayModal').modal('show');
+							        	return "";
+							        }
+									if(chkValue == 1 ){
+										console.log("머야 왜안돼ㄴㄴ")
+										if(${loginEmployee.dayoffRemain}<$('#countDay').val()){
+											$("#countModal").modal('show');	
+											return "";
+										}
+									}else if(chkValue ==2 ){
+										if(${loginEmployee.addDayoffRemain}<$('#countDay').val()){
+											$("#countModal").modal('show');	
+											return "";
+										}
+									}
+									var approval_line = $('.approvalEmpId').val();
+							        console.log(approval_line);
+							        if( approval_line == undefined){
+							        	$('#approvalModal').modal('show');
+							        	return "";
+							        	
+							        }
+							        document.getElementById('vacation_form').submit();
+									
+								}
+							</script>
+
 							<!-- 제출하기 -->
 							<div class="row ">
 								<div class="col-sm-12 d-flex justify-content-end">
-									<button type="submit" class="btn btn-primary" form="vacation_form">제출하기</button>
+									<button type="button" class="btn btn-primary"
+										onclick="submitButton()">제출하기</button>
 								</div>
 							</div>
-							<%@ include file="/WEB-INF/views/vacation/form_modal.jsp" %>
+
+							<%@ include file="/WEB-INF/views/vacation/form_modal.jsp"%>
 						</form>
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
-		<div class="row" style="height:100px"></div>
+		<div class="row" style="height: 100px"></div>
 	</section>
+	<div class="modal fade" id="countModal" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="bi bi-exclamation-circle-fill"
+						style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+					잔여 연차수
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p style="margin-bottom: 4px">신청 불가. 잔여 연차수를 확인해주세요</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="approvalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog">
+					    	<div class="modal-content">
+					      		<div class="modal-header"><b>결제선 선택</b>
+					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      		</div>
+					      		<div class="modal-body">
+					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>결재선은 필수항목입니다.</p>
+					        		<p>필수항목을 입력해주세요.</p>
+					      		</div>
+					      		<div class="modal-footer">
+					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
+	<div class="modal fade" id="countDayModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog">
+					    	<div class="modal-content">
+					      		<div class="modal-header"><b>날짜 선택</b>
+					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      		</div>
+					      		<div class="modal-body">
+					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>날짜를 선택해주세요.</p>
+					        		<p>필수항목을 입력해주세요.</p>
+					      		</div>
+					      		<div class="modal-footer">
+					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
 	</main>
 	<!-- ======================================Main==================================================== -->
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

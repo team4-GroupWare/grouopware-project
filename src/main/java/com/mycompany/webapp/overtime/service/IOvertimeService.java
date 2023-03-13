@@ -15,6 +15,8 @@ public interface IOvertimeService {
 
 	Overtime getOvertimeDetail(int overtimeId);
 
+	int getweekOverTime(String sunday, String empId);
+
 	
 
 }

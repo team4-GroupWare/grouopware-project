@@ -43,4 +43,10 @@ public class OvertimeService implements IOvertimeService {
 		return overtimeRepository.selectOvertime(overtimeId);
 	}
 
+
+	@Override
+	public int getweekOverTime(String sunday,String empId) {
+		return overtimeRepository.selecWeekOverTime(sunday,empId);
+	}
+
 }

@@ -76,19 +76,15 @@
 										</div>
 									</div>
 									<script>
-										var today = new Date();
-										var date = new Date(today.setDate(today
-												.getDate() - 1));
-										var year = date.getFullYear();
-										var month = ("0" + (1 + date.getMonth()))
-												.slice(-2);
-										var day = ("0" + date.getDate())
-												.slice(-2);
-										var yesterday = year + "-" + month
-												+ "-" + day;
-										console.log(yesterday)
+										let sunday = '${sunday}';
+										let saturday = '${saturday}';
+										console.log(sunday);
+										console.log(saturday);
 										document.getElementById("workDate")
-												.setAttribute("max", yesterday);
+										.setAttribute("min", sunday);
+										document.getElementById("workDate")
+										.setAttribute("max", saturday);
+
 									</script>
 
 									<div class="row mb-4">
@@ -159,12 +155,12 @@
 
 							<div class="row">
 								<div class="col-7 label">주 연장 근무 시간</div>
-								<div class="col-5">5시간</div>
+								<div class="col-5">${weekOverTime}시간</div>
 							</div>
 
 							<div class="row">
 								<div class="col-7 label ">주 연장 근무 가능 시간</div>
-								<div class="col-5">7시간</div>
+								<div class="col-5">${12-weekOverTime}시간</div>
 
 
 

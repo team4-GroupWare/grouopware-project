@@ -51,16 +51,42 @@
 								<div class="col mt-2">결재 정보</div>
 								<c:if test="${loginEmployee.empId == overtime.approvalEmpId && overtime.status eq '대기'}">
 									<div class="col d-flex justify-content-end">
-										<button type="submit" class="btn btn-primary" name="isApproved"
-											style="margin-right: 8px" value="y">승인</button>
-										<button type="submit" class="btn btn-danger" name="isApproved"
-											value="n">반려</button>
+										<button type="button" class="btn btn-primary" name="isApproved" style="margin-right: 8px" value="y" onclick="confirm(this)">승인</button>
+											
+										<button type="button" class="btn btn-danger" name="isApproved" value="n" onclick="confirm(this)">반려</button>
 									</div>
 								</c:if>
 								
 								
 							</div>
-
+							<script >
+										
+										function confirm (e) {
+											console.log("무슨일도....")
+											var type = $(e).attr('value');
+											var overtimeId = ${overtime.overtimeId};
+											var workDate ='${overtime.workDate}';
+											var empId = "${loginEmployee.empId}"
+											$.ajax({
+												type: "post",
+											    url: "${pageContext.request.contextPath}/overtime/process",
+											    dataType : "text",
+											    data: {
+											    	type : type,
+											    	overtimeId : overtimeId,
+											    	workDate : workDate,
+											    	empId : empId
+											    },
+											    success: function (data) {
+											    	alert("성공");
+											    	
+												},
+												error: function(e){
+													alert("값을 가져오지 못했습니다.")
+												}
+											})
+										}
+									</script>
 
 						</div>
 						<div class="card-body pt-4">
@@ -106,9 +132,6 @@
 										</div>
 									</div>
 								</div>
-								
-								
-								
 								
 							</div>
 						</div>

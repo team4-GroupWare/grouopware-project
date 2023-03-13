@@ -1,6 +1,9 @@
 package com.mycompany.webapp.overtime.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
@@ -23,11 +29,7 @@ import com.mycompany.webapp.group.service.IDepartmentService;
 import com.mycompany.webapp.group.service.ITeamService;
 import com.mycompany.webapp.overtime.model.Overtime;
 import com.mycompany.webapp.overtime.service.IOvertimeService;
-import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
-import com.mycompany.webapp.vacation.model.VacationDetail;
-import com.mycompany.webapp.vacation.model.VacationList;
-import com.mycompany.webapp.vacation.service.IVacationService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -42,18 +44,32 @@ public class OvertimeController {
 	private ITeamService teamService;
 	@Autowired
 	private IEmployeeService employeeService;
-	@Autowired
-	private IVacationService vacationService;
 
 	// 1. 근무 신청
 	@GetMapping("/overtime/write")
-	public String getDepList(Model model) {
+	public String getDepList(Model model,HttpSession session) {
 		log.info("실행");
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
 		for (Department dept : departments) {
 			teams.add(teamService.getTeamListById(dept.getDeptId()));
 		}
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		String sunday= formatter.format(c.getTime());
+		c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		String saturday= formatter.format(c.getTime());
+		
+		int weekOverTime = overtimeService.getweekOverTime(sunday,empId);
+		log.info(sunday);
+		
+		model.addAttribute("sunday", sunday);
+		model.addAttribute("saturday", saturday);
+		model.addAttribute("weekOverTime", weekOverTime);
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		return "overtime/overtime_writeform";
@@ -109,6 +125,23 @@ public class OvertimeController {
 			model.addAttribute("status", status);
 			model.addAttribute("overtime", overtime);
 			return "overtime/overtime_detail";
+		}
+		
+		@RequestMapping(value = "overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+		@ResponseBody
+		public String process(@RequestParam String type, @RequestParam int overtimeId, @RequestParam String workDate,@RequestParam String empId,
+			Model model, HttpSession session) {
+			log.info("실행");
+
+			/*List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
+			int vacationProcess = vacationService.processVacation(type, vacationId, vacationDate, vacationName, empId,vacationCategoryId);
+			
+			Employee employee = (Employee) session.getAttribute("loginEmployee");
+			String empIdorigine = employee.getEmpId();
+			Employee updateEmp = employeeService.getEmp(empIdorigine);
+			session.setAttribute("loginEmployee", updateEmp);*/
+			return "aaaaa";
+
 		}
 	
 }
