@@ -205,6 +205,7 @@ public interface IEmailService {
 	 * @return
 	 */
 	int getTrashEmail(Date sqlDate);
+	int deleteEmail();
 	
 	
 }
