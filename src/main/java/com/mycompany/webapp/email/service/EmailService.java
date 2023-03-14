@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.component.MultipartFileResolver;
@@ -203,6 +204,7 @@ public class EmailService implements IEmailService {
 	/**
 	 * @author LEEYESEUNG
 	 */
+	@Transactional
 	@Override
 	public int throwAwayEmail(int emailId, String type) {
 		log.info("실행");
@@ -218,6 +220,7 @@ public class EmailService implements IEmailService {
 	/**
 	 * @author LEEYESEUNG
 	 */
+	@Transactional
 	@Override
 	public int deleteEmail(int emailId, String type) {
 		log.info("실행");
@@ -236,6 +239,7 @@ public class EmailService implements IEmailService {
 	 * @param emailId : 복구하려는 이메일 아이디
 	 * @return int : 업데이트한 행수 반환
 	 */
+	@Transactional
 	@Override
 	public int restoreEmail(int emailId) {
 		log.info("실행");
@@ -243,7 +247,7 @@ public class EmailService implements IEmailService {
 		row += emailRepository.updateSendEmailRestore(emailId);
 		return row;
 	}
-
+	@Transactional
 	@Override
 	public EmailDetail readReceiveEmail(int receiveEmailId) {
 		log.info("실행");
@@ -266,7 +270,7 @@ public class EmailService implements IEmailService {
 		emailDetail.setEmailFiles(emailFileList);
 		return emailDetail;
 	}
-
+	@Transactional
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
 		log.info("실행");
@@ -287,7 +291,7 @@ public class EmailService implements IEmailService {
 		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}
-
+	@Transactional
 	@Override
 	public int cancelEmail(int emailId) {
 		log.info("실행");
@@ -302,7 +306,7 @@ public class EmailService implements IEmailService {
 		}
 		return row;
 	}
-
+	@Transactional
 	@Override
 	public int writeEmail(EmailDetail emailDetail) {
 		log.info("실행");
@@ -371,7 +375,7 @@ public class EmailService implements IEmailService {
 	public TempEmail getTempEmailDetail(int tempEmailId) {
 		return emailRepository.selectTempEailDetail(tempEmailId);
 	}
-
+	@Transactional
 	@Override
 	public int updateTempEmail(TempEmail tempEmail) {
 		EmailContent emailContent = new EmailContent();
@@ -450,7 +454,7 @@ public class EmailService implements IEmailService {
 		int row = emailRepository.selectSearchSendCount(keyword, empId);
 		return row;
 	}
-
+	@Transactional
 	@Override
 	public int getTrashEmail(Date sqlDate) {
 		log.info("실행");

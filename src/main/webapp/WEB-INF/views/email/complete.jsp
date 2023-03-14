@@ -53,24 +53,6 @@
 	
 	    <section class="section dashboard">
 	      <div class="row">
-	
-	        <!-- Left side columns -->
-	        <!-- 
-	        <div class="col-lg-2" style="border-right: 1px solid black;">
-	          <div class="row">
-	            
-	            <div class="col-12">
-	              <div>
-	              	
-	              </div>
-	            </div>
-	          </div>
-	        </div> 
-	        -->
-	        <!-- End Left side columns -->
-	
-	        <!-- Right side columns -->
-	        
 	        	<div class="col-lg-12" >
 		         	<div class="card">
 		            	<div class="card-body"style="padding-top:200px;padding-bottom:250px">

@@ -10,9 +10,7 @@
 		
 		  <!-- ======= Sidebar ======= -->
 		  <aside id="sidebar" class="sidebar">
-		 
 		    <ul class="sidebar-nav" id="sidebar-nav">
-		
 		      <li class="nav-item">
 		        <a class="btn btn-primary" type="button" href="${pageContext.request.contextPath}/email/write" style="width:100%">
 		          <i class="bi bi-pencil-square"></i> 
@@ -45,16 +43,13 @@
 		          <span>휴지통</span>
 		        </a>
 		      </li><!-- End Contact Page Nav -->
-		
 		    </ul>
-		
 		  </aside><!-- End Sidebar -->
 		
 		  <main id="main" class="main ">
 			<section class="section">
 		      <div class="row">
 		        <div class="col-lg-12">
-		
 		          <div class="card">
 		            <div class="card-body">
 		              <div class="d-flex mb-4">
@@ -76,20 +71,25 @@
 		                    <a type="button" class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/email/cancelEmail?emailId=${emailDetail.sendEmailId}">발신취소</a>
 		                    </c:if>
 		                    <button type="button" class="btn btn-primary btn-sm" onclick="reply(${emailDetail.sendEmailId})">전달</button>
+		                    <!-- 휴지통에 없는 메일일 때 -->
 		                    <c:if test="${emailDetail.strashDate eq null}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.sendEmailId}','trash')">삭제</button>
 		                    </c:if>
+		                    <!-- 휴지통에 있는 메일일 때 -->
 		                     <c:if test="${emailDetail.strashDate ne null}">
+		                     <!-- 영구삭제 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.sendEmailId}','delete')">영구삭제</button>
 		                  	</c:if>
 		                  	<script>
 		                  	
+		                  	//답장을 눌렀을 때
 		                  	function reply(sendEmailId){
 		                  		location.href="${pageContext.request.contextPath}/email/reply?emailId="
 	                  				+ sendEmailId;
 		                  	}
 		                  	
+		                  	//중요메일인지 확인 후 알맞은 삭제모달(휴지통, 영구삭제) 띄우기
 		                  	function checkEmail(emailId, type){
 									var data = {"emailId" : emailId};
 									$.ajax({
@@ -114,6 +114,7 @@
 									});
 								}
 		                  	
+		                  	//휴지통에 메일 넣기
 		                  	function trashEmail(emailId){
 		                  		var type = ''
 		                  		var data = {"emailId" : emailId, "type" : 'send'};
@@ -128,7 +129,6 @@
 		                  		
 		                  	}
 		                  	
-		                  	
 		                  	function reload() {
 		                  		location.reload();
 		                  	}
@@ -136,8 +136,7 @@
 		                  </div>
 		              	
 		              </div>
-		
-		              <!-- General Form Elements -->
+		              <!-- 본문 -->
 		                <div class="row ">
 			                <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">받는 사람</label>
@@ -149,7 +148,6 @@
 			                  </div>
 			                </div>
 		                </div>
-		                
 		                <div class="row mb-3">
 			                <div class="col-sm-6 row">
 			                  <label for="inputText" class="col-md-2 col-form-label">보낸 날짜</label>
@@ -170,7 +168,6 @@
 			                </div>
 			               </div>
 		               <hr/>
-		                
 		                <c:if test="${emailDetail.emailFiles.size() != 0}">
 		                <div class="row mb-3 file-list" style="margin-left:15px; margin-right:15px;background-color:#F6F6F6">
 			                <div class="filebox">
@@ -193,21 +190,18 @@
 		               		</div>
 		                </div>
 		                </c:if>
-		                
 		                <div class="row mb-3 px-4">
 		                  <div class="col-sm-12 mail-content px-3" style="height:500px">
 		             			${emailDetail.content}
 		                  </div>
 		                </div>
-		
-		
 		            </div>
 		          </div>
 		        </div>
 		      </div>
 		    </section>
 		    
-		    <!-- 중요메일 삭제시 Modal -->
+		    <!-- 받은 중요메일 삭제시 Modal -->
 			<div class="modal fade" id="importantDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -226,7 +220,7 @@
 			  </div>
 			</div>
 		    
-		   <!-- 중요메일 삭제시 Modal -->
+		   <!-- 보낸 중요메일 삭제시 Modal -->
 			<div class="modal fade" id="importantTrashModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -245,7 +239,7 @@
 			  </div>
 			</div>
 			
-			<!-- 메일 그냥 삭제시 Modal -->
+			<!-- 메일 휴지통 보내기 Modal -->
 			<div class="modal fade" id="trashModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">

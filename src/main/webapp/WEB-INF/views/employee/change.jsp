@@ -61,6 +61,7 @@
               </div>
               
               <script>
+              	  //비밀번호 정규식을 확인하고 비밀번호 재입력을 검사함. 
 	              function checkPwd(){
 	            	  var oldPwd = $("#oldpwd").val();
 	            	  var newPwd = $("#newpwd").val();
@@ -97,7 +98,6 @@
 	            	  } 
 	              }
               </script>
-
             </div>
           </div>
         </div>
