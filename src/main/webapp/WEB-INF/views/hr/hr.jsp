@@ -45,9 +45,11 @@
 						<div class="col-6 pagetitle">
 			      			<h1>주소록</h1>
 			    		</div>
+			    		<c:if test="${loginEmployee.deptName eq '경영지원실' }">
 			    		<div class="col-6" style="text-align:right">
 							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/employee/register'">+ 사원 추가</button>
 						</div>
+						</c:if>
 					</div>
 					
 				</div>
@@ -233,7 +235,9 @@
 				          			<div class="d-flex">
 				          				<h5 id="empName" style="font-weight:bold; margin-right:10px"></h5>
 				            			<span id="empGrade"></span>
-				          			<a id="updateEmployee"style="margin-left:9px"><i style="font-size:20px" class="bi bi-pencil-fill"></i></a>
+				            			<c:if test="${loginEmployee.deptName eq '경영지원실' }">
+				          				<a id="updateEmployee"style="margin-left:9px"><i style="font-size:20px" class="bi bi-pencil-fill"></i></a>
+				          				</c:if>
 				          			</div>
 				            		<div class="d-flex">
 				            			<span style="font-weight:bold; margin-right:10px">소속</span>
