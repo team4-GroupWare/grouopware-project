@@ -11,7 +11,7 @@
   	color : black;
 	}
 	table a:visited {
-	  color : black;
+	  color : #aaafb6;
 	}
 	table a:hover {
 	  color : #97ACFC;

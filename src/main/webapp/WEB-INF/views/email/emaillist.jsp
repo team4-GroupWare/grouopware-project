@@ -11,9 +11,7 @@
 	table a:link {
   	color : black;
 	}
-	table a:visited {
-	  color : black;
-	}
+	
 	table a:hover {
 	  color : #18264d;
 	}
