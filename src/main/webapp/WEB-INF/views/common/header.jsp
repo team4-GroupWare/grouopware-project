@@ -26,6 +26,16 @@
      		<option value="${pageContext.request.contextPath}/email/receivelist">메일</option>
      		<option value="${pageContext.request.contextPath}/board/list">공지사항</option>
    		</select>
+   		<!-- <div>
+   			<i class="bi bi-clock fs-5" ></i>근태관리
+   		</div>
+   		<div>
+   			<i class="bi bi-person-video fs-5" ></i>인사
+   		</div>
+   		<div>
+   			<i class="bi bi-clock fs-5" ></i>근태관리
+   		</div> -->
+   		
    	</div><!-- End Dropbar -->
 	
 	<!-- Icons Navigation -->
