@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- =========================Header=============================== -->
+<!-- ===== Header ===== -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
 	<!-- Logo -->
@@ -24,7 +24,7 @@
      		<option value="${pageContext.request.contextPath}/hr/group">인사</option>
      		<option value="${pageContext.request.contextPath}/approval/mylist">전자결재</option>
      		<option value="${pageContext.request.contextPath}/email/receivelist">메일</option>
-     		<option value="${pageContext.request.contextPath}/board/list">공지사항</option>
+     		<option value="${pageContext.request.contextPath}/board/list/1">공지사항</option>
    		</select>
    		<!-- <div>
    			<i class="bi bi-clock fs-5" ></i>근태관리
@@ -41,17 +41,8 @@
 	<!-- Icons Navigation -->
 	<nav class="header-nav ms-auto">
 		<ul class="d-flex align-items-center">
-			<!-- 프로필 사진 -->
-			
 			<!-- Profile Nav -->
 			<li class="nav-item dropdown pe-4">
-				<%-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-					
-					<span class="d-none d-md-block pe-1" style="font-size: 18px;">${loginEmployee.name}</span>
-					<span class="d-none d-md-block dropdown-toggle pe-1" >${loginEmployee.gradeName}</span>
-					<span class="d-none d-md-block">${loginEmployee.deptName} / ${loginEmployee.teamName}</span>
-					<img src="${pageContext.request.contextPath}/resources/assets/img/yeoni.png" alt="Profile" class="topprofile rounded-circle pe-0" style="width:40px;"/>
-				</a> --%>
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
 		        	<c:if test="${loginEmployee.profileData eq null}">
 		        	<img src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png" alt="Profile" class=" rounded-circle">
@@ -76,7 +67,7 @@
 					<li>
 						<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/employee/myPage">
 					    	<i class="bi bi-person"></i>
-					    	<span>My Profile</span>
+					    	<span>마이 페이지</span>
 					  	</a>
 					</li>
 					<li>
@@ -85,11 +76,11 @@
 					<li>
 						<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/employee/logout">
 					    	<i class="bi bi-box-arrow-right"></i>
-					    	<span>Sign Out</span>
+					    	<span>로그아웃</span>
 					  	</a>
 					</li>
 				</ul><!-- End dropbar -->
 			</li><!-- End Profile Nav -->
 		</ul>
 	</nav><!-- End Icons Navigation -->
-</header><!-- =========================End Header=============================== -->
+</header><!-- ==== End Header ===== -->

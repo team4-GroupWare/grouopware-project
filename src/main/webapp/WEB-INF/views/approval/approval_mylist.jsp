@@ -5,14 +5,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script>
-		$(document).ready(function () {
-			$(".docuMenu").click(function () {
-				colsole.log("실행");
-				$(".docuMenu").addClass("active");
-		  	});
-		});
-	</script>
 	<style>
 		thead tr {
 			border-bottom:2px solid #004389;
@@ -37,8 +29,8 @@
   
   	<!-- ======= Sidebar ======= -->
   	<%@ include file="/WEB-INF/views/approval/approval_sidebar.jsp" %>
+  	
 	<!-- ======= End Sidebar ======= -->
-
   	<main id="main" class="main">
     	<div class="pagetitle">
     		<h1>내 문서함</h1>

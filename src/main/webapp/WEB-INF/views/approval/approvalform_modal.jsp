@@ -66,7 +66,6 @@ input[type=radio]:checked+label{
 				selectEl.options[index].id = selectEl.options[index+1].id;
 				selectEl.options[index+1].id = selId;
 				
-				
 				selectEl.options[index+1].selected = true;
 			}
 			
@@ -124,7 +123,6 @@ input[type=radio]:checked+label{
 			var selId = selectEl.options[index].id;
 			
 			for(i =selectEl.options.length-moveCount; i<= selectEl.options.length-1; i++){
-				
 				selectEl.options[i - 1].id = selectEl.options[i].id;
 				selectEl.options[i - 1].text = selectEl.options[i].text;
 			}
@@ -137,25 +135,22 @@ input[type=radio]:checked+label{
 	}
 	
 	function listSubmit() {
+		var path = sessionStorage.getItem("contextpath");
 		var length = document.getElementById('selectEl').length;
-		//var length = $("#selectEl").length;
-		console.log("length: " + length);
+
 		var approvalLine = new Array();
 
 		for (i = 0; i < length; i++) {
 			approvalLine[i] = selectEl.options[i].id;
 		}
-		console.log(approvalLine);
 		
 		$.ajax({
 			type: "post",
-		    url: "/webapp/approval/employee",
+		    url: path+ "/approval/employee",
 		    data: {
 		    	line : approvalLine
 		    },
 		    success: function (data) {
-		    	console.log("성공");
-		    	console.log(data);
 		    	var lineHtml = "";
 		    	for(var i in data){
 					lineHtml += '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
@@ -232,7 +227,6 @@ input[type=radio]:checked+label{
 						<script>
 							$(".team").click(function(){
 								var teamId = $(this).attr("id");
-								console.log(teamId);
 								
 								$.ajax({
 									type: "GET",
@@ -243,7 +237,7 @@ input[type=radio]:checked+label{
 										for(var i in data){
 											teamHtml += '<div class="empList">'+'<input id="' + data[i].empId +'" class="emp1" type="radio" name="employee" value="'
 														+data[i].empId+'">'+'<label style="width:100%" id="'+ data[i].empId +'" for="' + data[i].empId + '">'
-											    +data[i].name+ ' (' + data[i].gradeName + ')</label>'+'</div>';
+											    + data[i].name + ' (' + data[i].gradeName + ')</label>'+'</div>';
 										}
 										$("#empByteam").html(teamHtml);
 									},

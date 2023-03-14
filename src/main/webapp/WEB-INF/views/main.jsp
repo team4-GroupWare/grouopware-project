@@ -244,7 +244,7 @@
 						</div>
 					
 						<div class="menu col-sm" >
-							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" onclick="location.href='${pageContext.request.contextPath}/board/list'" style="width:100px; height:100px; border: 2px solid #004389;">
+							<div class="card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto" onclick="location.href='${pageContext.request.contextPath}/board/list/1'" style="width:100px; height:100px; border: 2px solid #004389;">
 								<i class="bi bi-bell fs-1" ></i>
 							</div>
 							<div style="text-align:center;margin-top:10px">공지사항</div>
@@ -301,14 +301,6 @@
 								      
 								    </div>
 								  </div>
-					           <script>
-					           	
-					           	if(${message!=null}){
-					           		console.log("qkqh");
-					           	 $("#myModal").modal('show');
-					           		
-					           	}
-					           </script>
 				                
 								
 								<!-- 출퇴근 버튼 -->
@@ -485,7 +477,7 @@
 						
 									<!-- 사내 경조사 -->
 									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
-										<div class="news">
+										<div id="news" class="news">
 											<div class="post-item clearfix">
 											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]경조사 게시판 이용방법 안내</a></h4>
 											    <p>동문들의 경조사를 공유하고 알리는 게시판...</p>
