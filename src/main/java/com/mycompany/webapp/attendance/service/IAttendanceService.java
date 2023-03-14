@@ -33,13 +33,13 @@ public interface IAttendanceService {
 
 	int getabsentCountMonth(int month, String empId);
 
-	List<String> getAttStatus(String empId, int month);
-
 	int updateHalfAtt(String today, String empId);
 
 	AttendanceMonthStatus getMonthCount(String empId,String month);
 
 	int getlateTime(String today, String empId);
+
+	List<String> getAttStatus(String empId, String startDay, String endDay);
 
 
 

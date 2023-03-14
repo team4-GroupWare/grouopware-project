@@ -43,12 +43,12 @@ public interface AttendanceRepository {
 
 	public int selectAbsentCountMonth(@Param("month")int month, @Param("empId")String empId);
 
-	public List<String> selectAttStatusCal(@Param("empId")String empId,@Param("month")int month);
-
 	public int updateHalfAtt(@Param("today")String today, @Param("empId")String empId);
 
 	public AttendanceMonthStatus selectMonthCount(@Param("empId")String empId,@Param("month")String month);
 
 	public int selectLateTime(@Param("today")String today, @Param("empId")String empId);
+
+	public List<String> selectAttStatusCal(@Param("empId")String empId, @Param("startDay")String startDay, @Param("endDay")String endDay);
 
 }

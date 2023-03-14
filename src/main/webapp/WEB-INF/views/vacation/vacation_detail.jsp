@@ -22,16 +22,16 @@
 <style>
 .card-header {
 	background-color: #d5e0fd;
-	color: black;
-	font-style: bold;
-	font-weight: 700px;
-	font-size: 20px;
+	color: #004389;
+	font-weight: 700;
+	font-size: 21px;
+}
+.profile .profile-overview .label {
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(1, 41, 112, 0.6);
 }
 
-.profile .profile-overview {
-	margin-bottom: 20px;
-	font-size: 20px;
-}
 </style>
 
 </head>
@@ -43,7 +43,25 @@
 	<section class="section">
 		
 		<div class="row">
-			<div class="col-10">
+			<div class="col-lg-10">
+			<c:if test="${loginEmployee.empId == vacationDetail.approvalEmpId}">
+				<div class="pagetitle mt-3">
+					<h1>휴가 문서</h1>
+					<ol class="breadcrumb">
+		          		<li class="breadcrumb-item">결재 문서함</li>
+		          		<li class="breadcrumb-item">휴가 신청 목록</li>
+	        		</ol>
+				</div>
+			</c:if>
+			<c:if test="${loginEmployee.empId != vacationDetail.approvalEmpId}">
+				<div class="pagetitle mt-3">
+					<h1>나의 휴가 문서</h1>
+					<ol class="breadcrumb">
+		          		<li class="breadcrumb-item">내 문서함</li>
+		          		<li class="breadcrumb-item">휴가 신청 목록</li>
+	        		</ol>
+				</div>
+			</c:if>
 				<div class="card profile mt-3">
 					<div class="card-header  py-2">
 						<div class="row">
@@ -107,7 +125,18 @@
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label ">결재 상태</div>
 										<div class="col-lg-9 col-md-8">
-											<div class="col-sm-12">${vacationDetail.status}</div>
+											<c:if test="${vacationDetail.status eq '대기'}">
+						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
+						                    </c:if>
+											<c:if test="${vacationDetail.status eq '진행'}">
+						                    	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
+						                    </c:if>						                    
+						                    <c:if test="${vacationDetail.status eq '승인'}">
+						                    	<td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
+						                    </c:if>
+						                    <c:if test="${vacationDetail.status eq '반려'}">
+						                    	<td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
+						                    </c:if>
 										</div>
 									</div>
 									<div class="row mb-4">
@@ -198,7 +227,7 @@
 
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label">일수</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.countDay}</div>
+										<div class="col-lg-9 col-md-8">${vacationDetail.countDay}일</div>
 									</div>
 
 									<div class="row mb-4">

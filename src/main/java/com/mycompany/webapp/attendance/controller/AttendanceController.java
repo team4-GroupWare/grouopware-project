@@ -42,7 +42,7 @@ public class AttendanceController {
 	 */
 	@GetMapping("/attendance/today")
 	@ResponseBody
-	public Attendance attendanceInfo(HttpSession session) {
+	public Attendance attendanceToday(HttpSession session) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
@@ -64,7 +64,7 @@ public class AttendanceController {
 	 */
 
 	@GetMapping("/attendance/clockin")
-	public String attendance(Model model, HttpSession session) {
+	public String clockIn(Model model, HttpSession session) {
 		log.info("실행");
 		Date date = new Date();
 		String message = "";
@@ -79,7 +79,7 @@ public class AttendanceController {
 		// 1) 출근 상태 확인하기
 		String todayStatus = attendanceService.getThisWeekStatus(today, empId);
 		if (todayStatus != null) {
-			if (todayStatus.contains("경조사")) {
+			if (todayStatus.contains("경조사")||todayStatus.contains("연차")) {
 				message = "휴가 사용중에는 출근을 하실 수 없습니다";
 				model.addAttribute("message", message);
 				return "main";
@@ -125,7 +125,7 @@ public class AttendanceController {
 	 * @throws IOException
 	 */
 	@GetMapping("/attendance/clockout")
-	public String leave(HttpSession session, Model model) {
+	public String clockout(HttpSession session, Model model) {
 		log.info("실행");
 		// 1. 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
@@ -175,36 +175,21 @@ public class AttendanceController {
 	 * @return
 	 */
 	@GetMapping("/attendance/info")
-	public String attendanceStatusInfo(Model model, HttpSession session) {
-
+	public String attendanceInfo(Model model, HttpSession session) {
 		log.info("실행");
-
 		// 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-
-		// =========================<주 근무 현황>============================
-		// 현재시간 생성
-		Date date = new Date();
-
 		// =========================<월 근무 통계>=============================
-		// 이번달
+		Date date = new Date();
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("YY.MM");
 		String month = simpleDateFormat2.format(date);
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YY.MM.dd");
-		String today = simpleDateFormat.format(date);
-		
 		AttendanceMonthStatus attendanceMonthStatus = attendanceService.getMonthCount(empId,month);
-		log.info(attendanceMonthStatus);
 		model.addAttribute("attendanceMonthStatus",attendanceMonthStatus);
 		// =========================<주중 근무 현황>============================
-		
-		// 이번주 날짜 list
 		Holiday h = new Holiday();
 		List<String> list = h.getCurMonday();
 		String title = list.get(0) + " ~ " + list.get(6);
-
 		// 이번주 status list
 		List<Integer> attendanceTime = new ArrayList<>();
 		List<Integer> lateTime = new ArrayList<>();
@@ -218,10 +203,15 @@ public class AttendanceController {
 					overTime.add(0);
 				} else if (status.contains("지각")) {
 					int late = attendanceService.getlateTime(i, empId);
-					log.info(late);
-					attendanceTime.add(8-late);
-					lateTime.add(late);
-					overTime.add(0);
+					if(late<4) {
+						attendanceTime.add(8-late);
+						lateTime.add(late);
+						overTime.add(0);
+					}else {
+						attendanceTime.add(8-late-1);
+						lateTime.add(late-1);
+						overTime.add(0);
+					}
 				} else if (status.contains("반차")) {
 					attendanceTime.add(4);
 					lateTime.add(0);
@@ -236,19 +226,15 @@ public class AttendanceController {
 				lateTime.add(0);
 				overTime.add(0);
 			}
-
 		}
-		log.info(attendanceTime);
-		// 이번주 날짜와 이번주 status를 model에 저장
 		model.addAttribute("attendanceTime", attendanceTime);
 		model.addAttribute("halfTime", lateTime);
 		model.addAttribute("overTime", overTime);
 		model.addAttribute("title", title);
 		return "attendance/attendance_info";
 	}
-
 	/**
-	 * 월별 근무 현황(달력)
+	 * 나의 근무 현황(달력)
 	 * 
 	 * @author LEEYEONHEE
 	 * @param session
@@ -355,44 +341,16 @@ public class AttendanceController {
 
 	@GetMapping("/statuslist")
 	@ResponseBody
-	public List<String> statusList(int month, HttpSession session) {
+	public List<String> statusList(@RequestParam String startDay,@RequestParam String endDay, HttpSession session) {
 		log.info("실행");
 		// 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		List<String> list = attendanceService.getAttStatus(empId, month);
+		List<String> list = attendanceService.getAttStatus(empId, startDay,endDay);
 		log.info(list);
 		return list;
 	}
 
-	/*
-	 * @GetMapping("/attendance/dept") public String deptList() { log.info("실행");
-	 * 
-	 * return "attendance/dept_attendance_info"; }
-	 */
 
-	@GetMapping("/attendance/write")
-	public String deptList() {
-		log.info("실행");
-
-		return "attendance/attendance_writeform";
-	}
 	
-	@GetMapping("/attendance/list/{type}")
-	public String attList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
-			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
-	
-		log.info("실행");
-
-		return "attendance/attendance_list";
-	}
-	
-	@GetMapping("/attendance/datail/{type}")
-	public String attDetail(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
-			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
-	
-		log.info("실행");
-
-		return "attendance/attendance_detail";
-	}
 }

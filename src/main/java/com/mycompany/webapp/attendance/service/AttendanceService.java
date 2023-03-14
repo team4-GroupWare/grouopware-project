@@ -136,11 +136,6 @@ public class AttendanceService implements IAttendanceService {
 	}
 
 	@Override
-	public List<String> getAttStatus(String empId, int month) {
-		return attendanceRepository.selectAttStatusCal(empId,month);
-	}
-
-	@Override
 	public int updateHalfAtt(String empId, String today) {
 		return attendanceRepository.updateHalfAtt(empId,today);
 	}
@@ -155,6 +150,11 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public int getlateTime(String today, String empId) {
 		return attendanceRepository.selectLateTime(today,empId);
+	}
+
+	@Override
+	public List<String> getAttStatus(String empId, String startDay, String endDay) {
+		return attendanceRepository.selectAttStatusCal(empId,startDay,endDay);
 	}
 
 }

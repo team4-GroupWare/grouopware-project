@@ -43,27 +43,6 @@
     	<!-- 페이지 제목 -->
 		
 		<section class="section mt-3">
-		<c:if test="${loginEmployee.empId == vacationList[0].empId}">
-			<div class="row">
-      			<div class="col-lg-6">
-      				<div class="pagetitle">
-			   			<h1>휴가 현황</h1>
-					</div>
-      				<div class="card info-card sales-card mt-3" >
-	           			<div class="card-body mt-4">
-			          		
-			          		<div class="row ">
-								<div class="col border-end">잔여 연차 : ${dayoffRemain}일</div>
-								<div class="col">경조사 연차: ${addDayoffRemain}일</div>
-							</div>
-		            	
-		            	</div>
-	        		</div>
-      			</div>
-      			
-      		</div>
-		</c:if>
-      		
       		<div class="row">
         		<div class="col-lg-12">
         		<div class="pagetitle">

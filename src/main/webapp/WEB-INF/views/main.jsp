@@ -357,9 +357,9 @@
 								<div class="card-body">
 									<div class="sec_cal">
 										<div class="cal_nav">
-											<a href="javascript:;" class="nav-btn go-prev">prev</a>
-											<div class="year-month"></div>
-											<a href="javascript:;" class="nav-btn go-next">next</a>
+											
+											<div class="year-month my-3"></div>
+											
 										</div>
 									  
 										<div class="cal_wrap">

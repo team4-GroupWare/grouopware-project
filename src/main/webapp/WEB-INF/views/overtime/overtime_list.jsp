@@ -50,7 +50,7 @@ table a:active {
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="pagetitle">
-					<h1>연장근무 신청 목록</h1>
+					<h1>근무 신청 목록</h1>
 				</div>
 				<div class="card" style="height: 620px">
 					<div class="card-body px-5">
