@@ -40,7 +40,7 @@ function calendarInit() {
 
     function renderCalender(thisMonth,months) {
     	var months = months;
-    	console.log(months);5	
+    	console.log(months);	
         // 렌더링을 위한 데이터 정리
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();
@@ -73,15 +73,17 @@ function calendarInit() {
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
         	
-        	if(months[i]!=null){
-        		calendar.innerHTML = calendar.innerHTML + '<div class="day current'+ months[i] +'">' + i + '</div>'
-        	}
-        	if(months[i]==null){
-        		
+        	if(months[i]==undefined){
+        		console.log("안된다"+i)
         		calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
-        	}
+        	}else{
+        		calendar.innerHTML = calendar.innerHTML + '<div class="day current '+ months[i] +'">' + i + '</div>'
+        		
+	        }
+        	
             
-           
+           console.log(i)
+           console.log(months[12]);
         }
         // 다음달
         for (var i = 1; i <= (7 - nextDay-1 == 7 ? 0 : 7 - nextDay-1); i++) {
@@ -93,7 +95,7 @@ function calendarInit() {
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
             
-            currentMonthDate[todayDate -6].classList.add('holiday');
+           /* currentMonthDate[todayDate -6].classList.add('holiday');
             currentMonthDate[todayDate -5].classList.add('attendance');
             currentMonthDate[todayDate -4].classList.add('today');
             
@@ -101,7 +103,7 @@ function calendarInit() {
             currentMonthDate[todayDate ].classList.add('attendance');
             currentMonthDate[todayDate +1].classList.add('late');
             currentMonthDate[todayDate +2].classList.add('vacation');
-            currentMonthDate[todayDate +3].classList.add('vacation');
+            currentMonthDate[todayDate +3].classList.add('vacation');*/
             
            
            

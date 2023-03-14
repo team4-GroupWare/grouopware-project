@@ -307,11 +307,12 @@ public class AttendanceController {
 				if (a.getStatus().equals("출근")) {
 					hash.put("backgroundColor", "#4DABF7");
 					hash.put("borderColor", "#49a3f1");
-					// hash.put("textColor", "#000000");
 				} else if (a.getStatus().equals("지각")) {
 					hash.put("backgroundColor", "#ffc107");
 					hash.put("borderColor", "#ffc107");
-					// hash.put("textColor", "#000000");
+				}	else if (a.getStatus().equals("연장근무")) {
+					hash.put("backgroundColor", "#6f42c1");
+					hash.put("borderColor", "#6f42c1");
 				}
 
 			}
@@ -330,12 +331,9 @@ public class AttendanceController {
 				} else if (a.getStatus().equals("지각")) {
 					hash.put("backgroundColor", "#ffc107");
 					hash.put("borderColor", "#ffc107");
-				} else if (a.getStatus().equals("결근")) {
-					hash.put("backgroundColor", "#808080");
-					hash.put("borderColor", "#808080");
-				} else if (a.getStatus().equals("휴가")) {
-					hash.put("backgroundColor", "#66BB6A");
-					hash.put("borderColor", "66BB6A");
+				} else if (a.getStatus().equals("연장근무")) {
+					hash.put("backgroundColor", "#6f42c1");
+					hash.put("borderColor", "#6f42c1");
 				}
 				answer.add(hash);
 			}

@@ -143,9 +143,9 @@ public class OvertimeController {
 						
 			}
 			
-			workDate = workDate +" 18:00:00";
+			String workDateClock = workDate +" 18:00:00";
 			log.info(workDate);
-			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId);
+			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId, workDateClock);
 			
 			return "aaaaa";
 

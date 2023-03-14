@@ -53,12 +53,12 @@ public class OvertimeService implements IOvertimeService {
 
 	@Transactional
 	@Override
-	public int overTimeProcess(String type, int overtimeId, String workDate, String empId) {
+	public int overTimeProcess(String type, int overtimeId, String workDate, String empId, String workDateClock) {
 		log.info("실행");
 		
 		if (type.equals("y")) {
 			//attendance 행 업데이트
-			overtimeRepository.updateOvertimeAtt(workDate,empId);
+			overtimeRepository.updateOvertimeAtt(workDate,empId,workDateClock);
 			log.info("실행");
 		}
 		// overtime 행 업데이트
