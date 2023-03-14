@@ -80,7 +80,8 @@ public class VacationController {
 
 	// 2. 휴가 신청 제출
 	@PostMapping("/vacation/write")
-	public String writeApproval(@ModelAttribute Vacation vacation, Model model) throws ParseException {
+	public String writeApproval(@ModelAttribute Vacation vacation, Model model, HttpSession session)
+			throws ParseException {
 		log.info("실행");
 		log.info(vacation);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -103,6 +104,11 @@ public class VacationController {
 		}
 		log.info(vacation);
 		vacationService.writeVacation(vacation);
+
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empId = employee.getEmpId();
+		Employee updateEmp = employeeService.getEmp(empId);
+		session.setAttribute("loginEmployee", updateEmp);
 		return "redirect:/vacation/list/1";
 	}
 
@@ -133,10 +139,9 @@ public class VacationController {
 	@GetMapping("vacation/detail")
 	public String detail(@RequestParam int vacationId, @RequestParam int pageNo, @RequestParam() String status,
 			Model model, HttpSession session) {
-		log.info("실행");
 		VacationDetail vacationDetail = vacationService.getVacationDetail(vacationId);
 		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
-		log.info(vacationDetail);
+		log.info(vacationDate);
 		Vacation vacation = vacationService.getApprovalEmp(vacationDetail.getApprovalEmpId());
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
@@ -147,20 +152,21 @@ public class VacationController {
 		return "vacation/vacation_detail";
 	}
 
-	
-	@RequestMapping(value="/vacation/process",method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/vacation/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String process(@RequestParam String type,@RequestParam int vacationId,@RequestParam int vacationCategoryId, @RequestParam String empId, Model model) {
+	public String process(@RequestParam String type, @RequestParam int vacationId, @RequestParam String vacationName,@RequestParam int vacationCategoryId,
+			@RequestParam String empId, Model model, HttpSession session) {
 		log.info("실행");
+
+		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
+		int vacationProcess = vacationService.processVacation(type, vacationId, vacationDate, vacationName, empId,vacationCategoryId);
 		
-		if(type.equals("y")) {
-			int dayOffCount = vacationService.getEmpDayOff(vacationCategoryId, empId);
-			log.info(dayOffCount);
-			return "성공";
-		}else {
-			return "aaaaa";
-		}
-		
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empIdorigine = employee.getEmpId();
+		Employee updateEmp = employeeService.getEmp(empIdorigine);
+		session.setAttribute("loginEmployee", updateEmp);
+		return "aaaaa";
+
 	}
 
 }

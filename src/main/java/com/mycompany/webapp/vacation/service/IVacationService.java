@@ -27,5 +27,11 @@ public interface IVacationService {
 	//연차 정보 가져오
 	int getEmpDayOff(int vacationCategoryId, String empId);
 
+	int processVacation(String type, int vacationId, List<VacationDate> vacationDate, String vacationName,
+			String empId);
+
+	int processVacation(String type, int vacationId, List<VacationDate> vacationDate, String vacationName, String empId,
+			int vacationCategoryId);
+
 
 }

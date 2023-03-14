@@ -34,5 +34,13 @@ public interface VacationRepository {
 	
 	//신청자 연차 정보
 	public int selectEmpDayOff(@Param("vacationCategoryId")int vacationCategoryId, @Param("empId")String empId);
+	public void updateDayoffremain(@Param("empId")String empId, @Param("vacationCategoryId")int vacationCategoryId, @Param("countDay")int countDay);
+	
+	//출근 상태 업데이트
+	public int updateAttendance(@Param("date")VacationDate date, @Param("vacationName")String vacationName, @Param("empId")String empId);
+	//휴가 신청서 업데이트
+	public int updateVacation(@Param("type")String type, @Param("vacationId")int vacationId);
+	//반려시 연차 다시 돌려주기
+	public int updatedayoff(@Param("vacationId")int vacationId,@Param("empId") String empId, @Param("vacationCategoryId")int vacationCategoryId);
 
 }

@@ -147,4 +147,68 @@
 			where emp_id=#{empId}
 	</select>
 	
+	<update id="updateDayoffremain" parameterType="map">
+		update employees set
+		<if test="vacationCategoryId lt 4 ">
+			dayoff_remain = dayoff_remain - #{countDay}
+		</if>
+		<if test="vacationCategoryId gt 3 ">
+			add_dayoff_remain = add_dayoff_remain - #{countDay}
+		</if>
+		where emp_id = #{empId}
+	</update>
+	
+	<update id="updateAttendance" parameterType="map">
+		<![CDATA[
+			merge into  attendance a
+		using (
+		SELECT TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD') + (LEVEL-1) AS DT
+		   FROM DUAL
+		CONNECT BY LEVEL <= (TO_DATE(#{date.endDateStr}, 'YYYY-MM-DD') - TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD')) + 1
+		)
+		on(a.attendance_date = DT and a.emp_id = #{empId})
+		
+		when matched then
+		update set a.status = #{vacationName} ,a.clock_in =null,a.clock_out =null
+		
+		when not matched then
+		insert values (seq_attendance.NEXTVAL,#{empId}, null, null 
+		,DT, #{vacationName})
+
+		]]>
+		
+	</update>
+	<update id="updateVacation" parameterType="map">
+		update vacation 
+		set
+		vacation_approval_date = sysdate
+		
+		<if test='type == "y"'>
+			,status = '승인'
+		</if>
+		
+		<if test='type == "n"'>
+			,status = '반려'
+		</if> 
+		where vacation_id = #{vacationId}
+	</update>
+	
+	<update id="updatedayoff" parameterType="map">
+		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="int" order="BEFORE">
+            SELECT
+			count_day as "countDay"
+			FROM vacation
+			WHERE vacation_id = #{vacationId}
+        </selectKey>
+		update employees set
+		<if test="vacationCategoryId lt 4 ">
+			dayoff_remain = dayoff_remain + #{countDay}
+		</if>
+		<if test="vacationCategoryId gt 3 ">
+			add_dayoff_remain = add_dayoff_remain + #{countDay}
+		</if>
+		where emp_id = #{empId}
+	</update>
+	
+	
 </mapper>
