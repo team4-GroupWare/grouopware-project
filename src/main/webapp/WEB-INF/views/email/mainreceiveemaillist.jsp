@@ -12,12 +12,14 @@
 		<c:forEach var="emailList" items="${emailList}" varStatus="status">
 			<tr>
 				<td>
+				<!-- 받는 사람이 프로필 사진이 있다면 사진 출력 -->
 				<c:if test="${emailList.sendProfileData ne null}">
 				<img
 					src="${pageContext.request.contextPath}/employee/img?empId=${emailList.sentId}"
 					alt="Profile" class="rounded-circle" style="margin-right: 8px"
 					width="30px">
 				</c:if>
+				<!-- 받는 사람이 프로필 사진이 없다면 사진 출력 -->
 				<c:if test="${emailList.sendProfileData eq null}">
 				<img
 					src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"

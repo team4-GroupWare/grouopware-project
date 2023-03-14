@@ -87,6 +87,7 @@
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 	                    <button type="submit" class="btn btn-danger btn-sm"  onclick="checkEmail()">삭제</button>
 	                    <script>
+	                    //중요메일인지 확인 후에 휴지통에 넣거나 영구삭제 처리
 						function checkEmail(){
 							var type = 'send';
 							var checkArr = [];
@@ -113,20 +114,8 @@
 									trashEmail(type);
 								}
 							});
-							
-							/*$.ajax({
-								url : "${pageContext.request.contextPath}/email/deletecheck",
-								method : "post",
-								data : JSON.stringify(data),
-								contentType : "application/json; charset=UTF-8",
-								traditional: true
-							}).done((data)=> {
-								console.log("성공");
-								$("#importantDeleteModal").modal('show');	
-							});*/
-								
 						}
-						
+						//휴지통에 메일 넣기
 						function trashEmail(type){
 							var checkArr = [];
 							$('input[type=checkbox][name="selectone"]:checked').each(function() {
@@ -150,7 +139,7 @@
 						function reload(){
 							location.reload();
 						}
-						
+						//알맞은 키워드로 검색
 						function search(){
 							var keyword = $("#keyword").val();
 							location.href='${pageContext.request.contextPath}/email/search?keyword='+keyword+'&type=send';
@@ -158,6 +147,7 @@
 						}
 					 	</script>
 	              </div>
+	              <!-- 검색 -->
 	               <div class="input-group p-2" style="width:350px;margin-left:auto">
 		             <span class="input-group-text" id="basic-addon1">
 		              	<i class="bi bi-search"></i>
@@ -166,7 +156,7 @@
 	               	<button type="button" onclick="search()" class="btn btn-secondary btn-sm ">검색</button>
 	              </div>
                </div>
-               <!-- Bordered Tabs Justified -->
+               <!-- 본문 위의 카테고리 영역 -->
                <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
               		<li class="nav-item" role="presentation">
               			<c:if test="${kind eq 'send' }">
@@ -196,7 +186,7 @@
 	              	
 	          	<div class="tab-content pt-2" id="borderedTabContent">
 	                <div aria-labelledby="home-tab">
-			              <!-- Table with hoverable rows -->
+			              <!-- 본문 -->
 			              <table class="table table-hover">
 			                <thead>
 			                  <tr style="border-bottom:2px solid #004389;">
@@ -234,7 +224,7 @@
 		              			메일이 존재하지 않습니다.
 		              	  </div>
 		              	  </c:if>
-			              <!-- End Table with hoverable rows -->
+			              <!-- 이메일이 존재할 경우 네비게이터 표시 -->
 			              <c:if test="${not empty emailList}">
 			              <div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
