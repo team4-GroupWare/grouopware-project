@@ -15,7 +15,7 @@
 	      		<li class="nav-item">
 	        		<a class="nav-link " href="${pageContext.request.contextPath}/hr/group">
 	          			<i class="bi bi-diagram-3"></i>
-	          			<span>인사</span>
+	          			<span>조직도</span>
 	        		</a>
 	      		</li>
 	    	</ul>
