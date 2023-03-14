@@ -4,29 +4,60 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/views/common/head.jsp" %>
+	
 		<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.rwdImageMaps.js"></script>
 		<script>
 			$(function(){
 				$('img[usemap]').rwdImageMaps();
 				$("#group").width("100%");
+				$("#group").height("100%");
 			});
 		</script>
-		
 	</head>
 	<body>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	
+		
+		<!-- === Sidebar ==== -->
+	    <aside id="sidebar" class="sidebar">
+	    	<ul class="sidebar-nav" id="sidebar-nav">
+	      		<li class="nav-item">
+	        		<a class="nav-link " href="${pageContext.request.contextPath}/hr/group">
+	          			<i class="bi bi-diagram-3"></i>
+	          			<span>조직도</span>
+	        		</a>
+	      		</li>
+	    	</ul>
+	    	<ul class="sidebar-nav">
+		  		<li class="nav-item">
+	        		<a class="nav-link collapse active" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+	          			<span>엑사아이엔티</span><i class="bi bi-chevron-down ms-auto"></i>
+	        		</a>
+	        		
+	        		<ul id="hr-nav" class="nav-content" data-bs-parent="#sidebar-nav">
+	        			<c:forEach var="dept" items="${departments}">
+		          			<li class="nav-item">
+			            		<a class="nav-link collapsed" href="${pageContext.request.contextPath}/hr/list/${dept.deptId}" aria-expanded="false">
+			              			${dept.deptName}
+			            		</a>
+		          			</li>
+	          			</c:forEach>
+	        		</ul>
+		  		</li>
+			</ul>
+		</aside><!-- End Sidebar-->
+		
 	  	<main id="main" class="main">
 			<section class="section">
 	      		<div class="row">
-	        		<div class="col-lg-10">
+	        		<div class="col-lg-12">
 	          			<div class="card" style="height:730px">
 	            			<div class="card-body">
 	              				<div class="pagetitle" style="margin-top: 25px; margin-left:20px;">
 				    				<h1 style="font-size:40px;"><i class="bi bi-diagram-3" style="font-size:40px; margin-right:15px;"></i>조직도</h1>
 				    			</div>
-			    				<img id="group" src="${pageContext.request.contextPath}/resources/assets/img/hr.png" usemap="#image-map">
-
+				    			<div style="height:630px">
+			    					<img id="group" src="${pageContext.request.contextPath}/resources/assets/img/hr.png" usemap="#image-map">
+								</div>
 								<map name="image-map">
 								    <area alt="임원" title="임원" href="${pageContext.request.contextPath}/hr/list/0" coords="759,219,942,276" shape="rect">
 								    <area alt="경영지원실" title="경영지원실" href="${pageContext.request.contextPath}/hr/list/4" coords="349,309,529,365" shape="rect">
@@ -42,13 +73,7 @@
 	  	</main><!-- End main -->
 	  	
 	  	<!-- ======= Footer ======= -->
-		<footer id="footer1" class="footer">
-		 	<div class="copyright">
-		   		<strong><span>엑사아이엔티 사내그룹웨어</span></strong>
-		 	</div>
-		 	<div class="credits">
-		   		4팀 이지호 이연희 이예승
-		 	</div>
-		</footer><!-- End Footer -->
+  		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		
 	</body>
 </html>

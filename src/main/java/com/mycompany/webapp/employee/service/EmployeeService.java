@@ -199,20 +199,13 @@ public class EmployeeService implements IEmployeeService {
 	public int checkPassword(String oldPwd, String empId) {
 		log.info("실행");
 		int row = 0;
-		log.info("11111111111111111 : " + empId);
-		log.info("11111111111111111 : " + oldPwd);
+		
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		String dbPwd = employeeRepository.selectPasswordByEmpId(empId);
 		
-		log.info("22222222222222222 : " + dbPwd);
 		boolean checkPass = pe.matches(oldPwd, dbPwd);
-		log.info("oldPwd : " + oldPwd);
-		log.info("dbPwd : " + dbPwd);
 		if(checkPass == true) {
 			row = 1;
-			/*log.info("현재비밀번호 비교");
-			row = employeeRepository.selectEmpPasswordCount(oldPwd, empId);
-			log.info("row: " + row);*/
 		}
 		return row;
 	}
