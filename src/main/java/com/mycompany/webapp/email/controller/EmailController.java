@@ -174,6 +174,12 @@ public class EmailController {
 		
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param session : loginEmployee
+	 * @param model
+	 * @return String : main에 보여줄 보낸 메일 html 조각
+	 */
 	@GetMapping("/sendEmailListMain")
 	public String emailSendListMain(HttpSession session, Model model) {
 		log.info("실행");
@@ -183,6 +189,12 @@ public class EmailController {
 		return "email/mainemaillist";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param session : loginEmployee
+	 * @param model
+	 * @return String : main에 보여줄 받은 ㅁ[일 html 조각
+	 */
 	@GetMapping("/receiveEmailListMain")
 	public String emailReceiveListMain(HttpSession session, Model model) {
 		log.info("실행");
@@ -202,20 +214,56 @@ public class EmailController {
 		return "email/write";
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param empId : 받는 사람 empId
+	 * @return String : 이메일 작성 페이지
+	 */
 	@GetMapping("/writedirect")
 	public String writeDirect(@RequestParam String empId, Model model) {
 		log.info("실행");
-		log.info("empId: "+ empId);
 		model.addAttribute("empId", empId);
 		model.addAttribute("type", "modal");
 		return "email/write";
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @author LEEYESEUNG
+	 * @param session
+	 * @param receiveEmailId
+	 * @param model
+	 * @return String : 이메일 작성 페이지
 	 */
+	@GetMapping("/response")
+	public String responseEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(receiveEmailId);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "response");
+		return "email/write";
+	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param session
+	 * @param emailId
+	 * @param model
+	 * @return String : 이메일 작성 페이지
+	 */
+	@GetMapping("/reply")
+	public String replyEmail(HttpSession session, @RequestParam int emailId, Model model) {
+		log.info("실행");
+		EmailDetail emailDetail = emailService.getEmailDetail(emailId);
+		model.addAttribute("emailDetail", emailDetail);
+		model.addAttribute("type", "reply");
+		return "email/write";
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailDetail : 이메일 작성 내용을 담은 DTO
+	 * @return JSONObject : success을 담은 JSONObject 
+	 */
 	@ResponseBody
 	@PostMapping(value="/write", produces="application/json")
 	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
@@ -235,10 +283,65 @@ public class EmailController {
 		return jsonObject;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @return String : 이메일 보내기 성공한 페이지
+	 */
 	@GetMapping("/complete")
 	public String emailComplete() {
 		log.info("실행");
 		return "email/complete";
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmailId
+	 * @param model
+	 * @return String : 임시저장된 글을 수정할 수 있는 페이지
+	 */
+	@GetMapping("/writeTempEmail")
+	public String writeTempEmail(@RequestParam int tempEmailId, Model model) {
+		log.info("실행");
+		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
+		model.addAttribute("tempEmail", tempEmail);
+		return "email/temp";
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmail
+	 * @param session
+	 * @return String : 성공을 담은 String
+	 */
+	//작성하던 이메일 임시저장
+	@ResponseBody
+	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
+	public String tempSave(@RequestBody TempEmail tempEmail, HttpSession session) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.tempSaveEmail(tempEmail);
+		String result = "성공";
+		return result;
+	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmail
+	 * @param session
+	 * @return String : 성공을 담은 String
+	 */
+	//임시저장하던 글을 다시 임시저장
+	@ResponseBody
+	@PostMapping(value="/tempupdate", produces="application/text; charset=UTF-8")
+	public String tempUpdate(@RequestBody TempEmail tempEmail, HttpSession session) {
+		log.info("실행");
+		log.info(tempEmail);
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		tempEmail.setSentId(employee.getEmpId());
+		int row = emailService.updateTempEmail(tempEmail);
+		String result = "성공";
+		return result;
 	}
 	
 	/**
@@ -266,11 +369,29 @@ public class EmailController {
 	
 	/**
 	 * @author LEEYESEUNG
-	 * @param checkArr : check된 emailId 배열
-	 * @param type : 어느 메일함에서 왔는지 구별을 위함
-	 * @return String : 메일 update 결과
+	 * @param emailId : 중요도를 체크할 메일 아이디
+	 * @return String : 중요메일 판단 결과
 	 */
+	@ResponseBody
+	@PostMapping("/importantdetailcheck")
+	public String importantCheckDetail(@RequestParam("emailId") int emailId) {
+		log.info("실행");
+		String result= "";
+		int row = emailService.checkImportant(emailId);
+		if(row == 1) {
+			result="important";
+		} else {
+			result="basic";
+		}
+		return result;
+	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param checkArr : 쓰레기통에 넣을 날짜를 업데이트할 emailId 배열
+	 * @param type : 받은 메일인지 보낸 메일인지 구분
+	 * @return String : update 성공여부 판단 text
+	 */
 	@ResponseBody
 	@RequestMapping(value="/trashemail")
 	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
@@ -287,9 +408,9 @@ public class EmailController {
 	
 	/**
 	 * @author LEEYESEUNG
-	 * @param checkArr : check된 emailId 배열
-	 * @param type : 어느 메일함에서 왔는지 구별을 위함
-	 * @return String : 메일 delete 결과
+	 * @param checkArr : 영구삭제 처리할 emailId 배열
+	 * @param type : 받은 메일인지 보낸 메일인지 구분
+	 * @return String : update 성공여부 판단 text
 	 */
 	@ResponseBody
 	@PostMapping("/deleteemail")
@@ -305,6 +426,11 @@ public class EmailController {
 		return result;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param checkArr : 복구할 메일 id 배열
+	 * @return String : 복구 여부 판단 text
+	 */
 	@ResponseBody
 	@PostMapping("/restore")
 	public String restoreEmail(@RequestParam(value="checkArr") String[] checkArr) {
@@ -319,16 +445,26 @@ public class EmailController {
 		return result;
 	}
 	
-	
+	/**
+	 * @author LEEYESEUNG
+	 * @param receiveEmailId
+	 * @param model
+	 * @return String : 받은 메일 상세 조회 페에지
+	 */
 	@GetMapping("/readReceiveEmail")
 	public String readReceiveEmail(@RequestParam int receiveEmailId, Model model) {
 		log.info("실행");
 		EmailDetail emailDetail = emailService.readReceiveEmail(receiveEmailId);
 		model.addAttribute("emailDetail", emailDetail);
 		return "email/receivedetail";
-		
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendEmailId
+	 * @param model
+	 * @return String : 보낸 메일 상세 조회 페이지
+	 */
 	@GetMapping("/readSendEmail")
 	public String readSendEmail(@RequestParam int sendEmailId, Model model) {
 		log.info("실행");
@@ -337,60 +473,13 @@ public class EmailController {
 		return "email/senddetail";
 	}
 	
-	@GetMapping("/writeTempEmail")
-	public String writeTeampEmail(@RequestParam int tempEmailId, Model model) {
-		log.info("실행");
-		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
-		model.addAttribute("tempEmail", tempEmail);
-		return "email/temp";
-	}
-	
-	@ResponseBody
-	@PostMapping(value="/tempsave", produces="application/text; charset=UTF-8")
-	public String tempSave(@RequestBody TempEmail tempEmail, HttpSession session) {
-		log.info("실행");
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		tempEmail.setSentId(employee.getEmpId());
-		int row = emailService.tempSaveEmail(tempEmail);
-		String result = "성공";
-		return result;
-	}
-	
-	@ResponseBody
-	@PostMapping(value="/tempupdate", produces="application/text; charset=UTF-8")
-	public String tempUpdate(@RequestBody TempEmail tempEmail, HttpSession session) {
-		log.info("실행");
-		log.info(tempEmail);
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		tempEmail.setSentId(employee.getEmpId());
-		int row = emailService.updateTempEmail(tempEmail);
-		String result = "성공";
-		return result;
-	}
-	
-	
-	
-	@GetMapping("/restoreEmail")
-	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
-		log.info("실행");
-		int row = emailService.restoreEmail(emailId);
-		return getTrashEmail(model, session, 1);
-	}
-	
-	@ResponseBody
-	@PostMapping("/importantdetailcheck")
-	public String importantCheckDetail(@RequestParam("emailId") int emailId) {
-		log.info("실행");
-		String result= "";
-		int row = emailService.checkImportant(emailId);
-		if(row == 1) {
-			result="important";
-		} else {
-			result="basic";
-		}
-		return result;
-	}
-	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @param model
+	 * @param session
+	 * @return String : 메일 영구 삭제 처리시 쓰레기통 목록으로 이동
+	 */
 	@GetMapping("/deleteDetail")
 	public String deleteDetail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
 		log.info("실행");
@@ -399,6 +488,14 @@ public class EmailController {
 		return getTrashEmail(model, session, 1);
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @param type : 받은 메일인지 보낸 메일인지 판단
+	 * @param model
+	 * @param session
+	 * @return String : update 판단 결과 
+	 */
 	@ResponseBody
 	@PostMapping("/trashemaildetail")
 	public String trashEmail(@RequestParam("emailId") int emailId, @RequestParam("type") String type, Model model, HttpSession session) {
@@ -408,6 +505,27 @@ public class EmailController {
 		return result;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @param model
+	 * @param session
+	 * @return String : 메일을 복구하면 쓰레기통 목록 페이지로 이동
+	 */
+	@GetMapping("/restoreEmail")
+	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
+		log.info("실행");
+		int row = emailService.restoreEmail(emailId);
+		return getTrashEmail(model, session, 1);
+	}
+
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @param model
+	 * @param session
+	 * @return String : 발신취소하면 보낸 메일 목록으로 이동
+	 */
 	@GetMapping("/cancelEmail")
 	public String cancelEmail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
 		log.info("실행");
@@ -415,8 +533,14 @@ public class EmailController {
 		return getSendEmail(model, session, 1);
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailFileId
+	 * @return  ResponseEntity<byte[]>
+	 * @throws UnsupportedEncodingException
+	 */
 	@GetMapping("/filedownload")
-	public ResponseEntity<byte[]> fileDownLoad(@RequestHeader("User-Agent") String userAgent,@RequestParam("emailFileId")int emailFileId) throws UnsupportedEncodingException {
+	public ResponseEntity<byte[]> fileDownLoad(@RequestParam("emailFileId")int emailFileId) throws UnsupportedEncodingException {
 		log.info("실행");
 		EmailFile emailFile = emailService.getFile(emailFileId);
 		final HttpHeaders headers = new HttpHeaders();
@@ -430,26 +554,15 @@ public class EmailController {
 		return new ResponseEntity<byte[]>(emailFile.getEmailFileData(), headers, HttpStatus.OK);
 	}
 	
-	@GetMapping("/response")
-	public String ResponseEmail(HttpSession session, @RequestParam int receiveEmailId, Model model) {
-		log.info("실행");
-		EmailDetail emailDetail = emailService.getEmailDetail(receiveEmailId);
-		log.info("emailDetail: "+ emailDetail);
-		model.addAttribute("emailDetail", emailDetail);
-		model.addAttribute("type", "response");
-		return "email/write";
-	}
-	
-	@GetMapping("/reply")
-	public String ReplyEmail(HttpSession session, @RequestParam int emailId, Model model) {
-		log.info("실행");
-		EmailDetail emailDetail = emailService.getEmailDetail(emailId);
-		log.info("emailDetail: "+ emailDetail);
-		model.addAttribute("emailDetail", emailDetail);
-		model.addAttribute("type", "reply");
-		return "email/write";
-	}
-	
+	/**
+	 *  ResponseEntity<byte[]>
+	 * @param model
+	 * @param session
+	 * @param type : 게시판 타입
+	 * @param keyword : 검색어
+	 * @param pageNo
+	 * @return String : 각자 보여줄 페이지
+	 */
 	@GetMapping("/search")
 	public String searchEmail(Model model, HttpSession session, @RequestParam String type, @RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int pageNo) {
 		log.info("실행");

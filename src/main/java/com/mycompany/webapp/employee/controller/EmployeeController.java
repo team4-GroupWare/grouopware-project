@@ -78,7 +78,7 @@ public class EmployeeController {
 	}
 	
 	/**
-	 * 
+	 * @author : LEEYESEUNG
 	 * @param employee : 사원 정보 DTO
 	 * @param model : 화면에 로그인 에러 메세지 나타냄
 	 * @param session : loginEmployee을 담을 세션
@@ -112,6 +112,12 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session
+	 * @param model
+	 * @return String : 비밀번호 변경 페이지
+	 */
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
 		log.info("실행");
@@ -120,6 +126,13 @@ public class EmployeeController {
 		return "employee/change";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session
+	 * @param model
+	 * @param employeePassword : 현재 비밀번호, empId, 바뀐 비밀번호 담은 객체
+	 * @return 비밀번호 변경 성공 여부 
+	 */
 	@ResponseBody
 	@PostMapping(value="/initialchange", produces="application/json; charset=UTF-8")
 	public HashMap<String,String> changeInitialPwd(HttpSession session, Model model, EmployeePassword employeePassword) {
@@ -138,8 +151,14 @@ public class EmployeeController {
 		return result;
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param model
+	 * @param empId
+	 * @return String : 사원 정보 업데이트 페이지
+	 */
 	@GetMapping("/updateemployee")
-	public String updateEmployee(Model model, @RequestParam String empId) {
+	public String updateEmployee( Model model, @RequestParam String empId) {
 		log.info("실행");
 		Employee employee = employeeService.getEmp(empId);
 		model.addAttribute("employee", employee);
@@ -149,9 +168,17 @@ public class EmployeeController {
 		//직급 List
 		List<Grade> grades = gradeService.getGradeList();
 		model.addAttribute("grades", grades);
+		
 		return "employee/update_employee";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session
+	 * @param model
+	 * @param employeePassword : 현재 비밀번호, empId, 바뀐 비밀번호 담은 객체
+	 * @return String : 초기 비밀번호 부여한 결과
+	 */
 	@ResponseBody
 	@PostMapping(value="/grantinitial", produces="application/text; charset=UTF-8")
 	public String grantInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
@@ -166,7 +193,7 @@ public class EmployeeController {
 	 * 
 	 * @author : LEEYESEUNG
 	 * @param deptId
-	 * @return teamList
+	 * @return teamList : db에 저장된 teamList
 	 * @throws IOException
 	 */
 	@PostMapping(value="/teamlist")
@@ -226,7 +253,7 @@ public class EmployeeController {
 	/**
 	 * @author : LEEYESEUNG
 	 * @return 유효성 검사 실행 return : 적었던 값과 함께 다시 회원 등록 페이지
-	 * @return 유효성 검사 통과 return : home으로 리턴
+	 * @return 유효성 검사 통과 return : main으로 리턴
 	 * @param model : 화면에 부서, 팀, 직급 리스트와 작성했던 employee 객체
 	 */
 	@PostMapping(value="/register")
@@ -274,7 +301,7 @@ public class EmployeeController {
 	/**
 	 * @author : LEEYESEUNG
 	 * @param session : 만료하기 위한 session
-	 * @return home으로 리다이렉트
+	 * @return main으로 리다이렉트
 	 */
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -283,6 +310,12 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session
+	 * @param model
+	 * @return String : 마이페이지
+	 */
 	@GetMapping("/myPage")
 	public String myPage(HttpSession session, Model model) {
 		log.info("실행");
@@ -291,6 +324,10 @@ public class EmployeeController {
 		return "employee/user_profile";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @return String : 마이페이지에서 프로필 업데이트
+	 */
 	@GetMapping("/myUpdate")
 	public String update() {
 		log.info("실행");
@@ -298,20 +335,23 @@ public class EmployeeController {
 		
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param employee
+	 * @param session
+	 * @return String : mypage조회로 리다이렉트
+	 */
 	@PostMapping("/update")
-	public String updatePhone(Employee employee, HttpSession session) {
+	public String updateMyInfo(Employee employee, HttpSession session) {
 		//사진 바꾸는거 해야합니다 3월 8일에..
 		log.info("실행");
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
 		employee.setEmpId(originEmployee.getEmpId());
-		log.info("conetntType: "+employee.getProfileContentType());
 		if(employee.getProfileContentType() != null) {
 			if(employee.getProfileContentType().equals("delete")) {
 				employee.setProfileContentType(null);
 				employee.setProfileData(null);
-				log.info("사진삭제함: "+employee);
 			} else if (originEmployee.getProfileData() !=null) {
-				log.info("delete가 아니고 오리진 없음");
 				employee.setProfileContentType(originEmployee.getProfileContentType());
 				employee.setProfileData(originEmployee.getProfileData());
 			}
@@ -330,16 +370,41 @@ public class EmployeeController {
 		return "redirect:/employee/myPage";
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param employee
+	 * @param session
+	 * @return String : 조직도 페이지로 리다이렉트
+	 */
 	@PostMapping("/updateemployee")
-	public String updateEmployee(Employee employee) {
+	public String updateEmployee(Employee employee, HttpSession session) {
 		log.info("실행");
 		if(employee.getTeamId()!=0) {
+			Employee loginEmployee = (Employee) session.getAttribute("loginEmployee");
+			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
+				employee.setProfileContentType(loginEmployee.getProfileContentType());
+				employee.setProfileData(loginEmployee.getProfileData());
+			} else {
+				Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
+				employee.setProfileContentType(dbEmployee.getProfileContentType());
+				employee.setProfileData(dbEmployee.getProfileData());
+			}
+			
 			employeeService.updateEmployee(employee);
+			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
+				session.setAttribute("loginEmployee", employee);
+			}
 		}
 		return "redirect:/hr/group";
 		
 	}
 	
+	/**
+	 * @author : LEEYESEUNG
+	 * @param session
+	 * @param empId
+	 * @return ResponseEntity<byte[]>
+	 */
 	@GetMapping("/img")
 	public ResponseEntity<byte[]> getImageFile(HttpSession session, @RequestParam String empId){
 		Employee employee = employeeService.getEmp(empId);

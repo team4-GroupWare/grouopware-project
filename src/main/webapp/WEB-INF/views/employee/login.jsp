@@ -23,9 +23,7 @@
     	  	  </div><!-- End Logo -->
 
               <div class="card" style="margin-bottom: 300px">
-
                 <div class="card-body">
-
                   <div class="pt-2 pb-1">
                     <h5 class="card-title text-center pb-0 fs-4">Login</h5>
                     <p class="text-center small">아이디와 비밀번호를 입력해주세요</p>
@@ -77,20 +75,10 @@
 					</div>
                 </div>
               </div>
-
-              <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-              </div>
-
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
   </main><!-- End #main -->
 

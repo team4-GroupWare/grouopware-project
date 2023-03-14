@@ -129,6 +129,7 @@
 		                   
 		                  
 		                  <script>
+		                  //초기 비밀번호 부여
 		                  function initPassword(empId){
 		                	  var password = $("#password").val();
 		                	  if(password == ""){
@@ -148,11 +149,7 @@
 		    						});
 		                	  }
 		                  }
-		                  
-		                  
 		                  </script>
-		                  
-		                  
 		                </div>
 		              </div><!-- End Bordered Tabs -->
 		            </div>
@@ -201,10 +198,6 @@
 	</div>
 
   </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <!-- End Footer -->
-
   <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
