@@ -16,6 +16,7 @@
 			<mvc:mapping path="/attendance/**"/>
 			<mvc:exclude-mapping path="/employee/login"/>
 			<mvc:exclude-mapping path="/employee/change"/>
+			<mvc:exclude-mapping path="/employee/initialchange"/>
 			<bean id="authorizationInterceptor" class="com.mycompany.webapp.interceptor.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

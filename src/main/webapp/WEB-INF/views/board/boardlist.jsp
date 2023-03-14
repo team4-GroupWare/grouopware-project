@@ -6,21 +6,18 @@
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/emailCheck.js"></script>
 	<style>
-	
-	table a:link {
-  	color : black;
-	}
-	table a:visited {
-	  color : black;
-	}
-	table a:hover {
-	  color : #97ACFC;
-	}
-	table a:active {
-	  color : #97ACFC;
-	}
-	
-	
+		table a:link {
+	  		color : black;
+		}
+		table a:visited {
+		  	color : black;
+		}
+		table a:hover {
+		  	color : #97ACFC;
+		}
+		table a:active {
+			color : #97ACFC;
+		}
 	</style>
 </head>
 	<body>
