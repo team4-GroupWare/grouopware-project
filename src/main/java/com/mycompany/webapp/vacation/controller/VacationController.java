@@ -48,7 +48,7 @@ public class VacationController {
 
 	// 1. 휴가 신청
 	@GetMapping("/vacation/write")
-	public String getDepList(Model model) {
+	public String write(Model model) {
 		log.info("실행");
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
@@ -114,7 +114,7 @@ public class VacationController {
 
 	// 3. 나의 휴가
 	@GetMapping("/vacation/list/{type}")
-	public String getMyVacation(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
+	public String getVacationList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
@@ -159,7 +159,7 @@ public class VacationController {
 		log.info("실행");
 
 		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
-		int vacationProcess = vacationService.processVacation(type, vacationId, vacationDate, vacationName, empId,vacationCategoryId);
+		int vacationProcess = vacationService.processVacation(type, vacationId, vacationDate, vacationName, empId, vacationCategoryId);
 		
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empIdorigine = employee.getEmpId();

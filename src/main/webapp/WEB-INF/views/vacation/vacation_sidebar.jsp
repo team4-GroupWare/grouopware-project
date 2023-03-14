@@ -25,32 +25,31 @@
 		<!--근무 현황 -->
 		<li class="nav-item"
 			onclick="location.href='${pageContext.request.contextPath}/attendance/info'">
-			<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
+			<a class="nav-link collapsed" href="#"> <i class="bi-bar-chart-line-fill"></i>
 				<span>근무 현황</span>
 			</a>
 		</li>
-		<!--나의 근무 -->
-		<li class="nav-item"
-			onclick="location.href='${pageContext.request.contextPath}/overtime/list/1'">
-			<a class="nav-link collapsed" href="#"> <i class="bi bi-eye"></i>
-				<span>내 근무신청 목록</span>
-			</a>
-		<!--나의 휴가 -->
-		<li class="nav-item"
-			onclick="location.href='${pageContext.request.contextPath}/vacation/list/1'">
-			<a class="nav-link collapsed" data-bs-target="#document2-nav"
-			data-bs-toggle="collapse" href="#"> <i class="bi bi-eye"></i> 
-			<span>내 휴가신청 목록</span>
-			</a>
-		</li>
-		<!--결재 문사힘 -->
+		<!--내 문서함 -->
 		<li class="nav-item"><a class="nav-link collapsed"
 			data-bs-target="#mydocument-nav" data-bs-toggle="collapse"
 			href="${pageContext.request.contextPath}/approval/list"> <i
-				class="bi bi-file-text"></i><span>결재</span><i
+				class="bi bi-file-text"></i><span>내 문서함</span><i
 				class="bi bi-chevron-down ms-auto"></i>
 			</a>
 			<ul id="mydocument-nav" class="nav-content collapse"
+				data-bs-parent="#sidebar-nav">
+				<li><a href='${pageContext.request.contextPath}/overtime/list/1'><span>근무신청목록</span></a></li>
+				<li><a href='${pageContext.request.contextPath}/vacation/list/1''><span>휴가신청목록</span></a></li>
+			</ul>
+		</li>
+		<!--결제 문서함 -->
+		<li class="nav-item"><a class="nav-link collapsed"
+			data-bs-target="#appoval-nav" data-bs-toggle="collapse"
+			href="${pageContext.request.contextPath}/approval/list"> <i
+				class="bi-clipboard-check"></i><span>결재 문서함</span><i
+				class="bi bi-chevron-down ms-auto"></i>
+			</a>
+			<ul id="appoval-nav" class="nav-content collapse"
 				data-bs-parent="#sidebar-nav">
 				<li><a href='${pageContext.request.contextPath}/overtime/list/2'><span>근무신청목록</span></a></li>
 				<li><a href='${pageContext.request.contextPath}/vacation/list/2'><span>휴가신청목록</span></a></li>

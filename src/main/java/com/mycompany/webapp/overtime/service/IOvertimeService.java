@@ -17,7 +17,7 @@ public interface IOvertimeService {
 
 	int getweekOverTime(String sunday, String empId);
 
-	int overTimeProcess(String type, int overtimeId, String workDate, String empId);
+	int overTimeProcess(String type, int overtimeId, String workDate, String empId, String workDateClock);
 
 	
 

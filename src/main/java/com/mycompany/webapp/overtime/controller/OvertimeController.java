@@ -48,7 +48,7 @@ public class OvertimeController {
 
 	// 1. 근무 신청
 	@GetMapping("/overtime/write")
-	public String getDepList(Model model,HttpSession session) {
+	public String getWriteForm(Model model,HttpSession session) {
 		log.info("실행");
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
@@ -78,15 +78,15 @@ public class OvertimeController {
 
 	// 2. 근무 신청 제출
 	@PostMapping("/overtime/write")
-	public String writeApproval(@ModelAttribute Overtime overtime, Model model) {
+	public String submitWriteForm(@ModelAttribute Overtime overtime, Model model) {
 		log.info("실행");
 		log.info(overtime);
 		overtimeService.writeOvertime(overtime);
 		return "redirect:/overtime/list/1";
 	}
-	//3. 나의 근무
+	//3. 근무 리스트
 	@GetMapping("/overtime/list/{type}")
-	public String getMyOverTime(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
+	public String OvertimeList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
@@ -102,8 +102,8 @@ public class OvertimeController {
 	}
 	
 	// 4. 근무 신청 상세보기
-		@GetMapping("overtime/detail")
-		public String detail(@RequestParam int overtimeId, @RequestParam int pageNo, @RequestParam() String status,
+		@GetMapping("/overtime/detail")
+		public String detailOvertime(@RequestParam int overtimeId, @RequestParam int pageNo, @RequestParam() String status,
 				Model model, HttpSession session) {
 			log.info("실행");
 			Employee emp = (Employee) session.getAttribute("loginEmployee");
@@ -128,7 +128,7 @@ public class OvertimeController {
 			return "overtime/overtime_detail";
 		}
 		
-		@RequestMapping(value = "overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+		@RequestMapping(value = "/overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 		@ResponseBody
 		public String process(@RequestParam String type, @RequestParam int overtimeId, @RequestParam String workDate,@RequestParam String empId,
 			Model model, HttpSession session) {
@@ -140,13 +140,10 @@ public class OvertimeController {
 			if(status == null||!status.equals("지각")) {
 				log.info("지각이라고요");
 				return "그날 출근 기록이 없습니다.";
-						
 			}
-			
-			workDate = workDate +" 18:00:00";
+			String workDateClock = workDate +" 18:00:00";
 			log.info(workDate);
-			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId);
-			
+			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId, workDateClock);
 			return "aaaaa";
 
 		}

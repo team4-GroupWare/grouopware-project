@@ -82,8 +82,8 @@
 	
 	<update id="updateOvertimeAtt" parameterType="map">
 		update attendance set
-		status = '승인', clock_out = to_date(#{workDate},'YY.MM.DD HH24:MI:SS')	
-		where emp_id=#{empId} and to_char(attendance_date,'YY.MM.DD HH24:MI:SS')=#{workDate}
+		status = '연장근무', clock_out = to_date(#{workDateClock},'YY.MM.DD HH24:MI:SS')	
+		where emp_id=#{empId} and to_char(attendance_date,'YY.MM.DD')=#{workDate}
 	</update>
 	
 	<update id="updateOvertime" parameterType="map">

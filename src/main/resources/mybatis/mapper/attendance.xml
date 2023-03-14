@@ -111,9 +111,15 @@
 	 </select>
 	 
 	 <select id="selectAttStatusCal" parameterType="map" resultType="string">
-	  	select status
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month}
+	 <![CDATA[
+	 	select status
+		from attendance a right outer join (
+		SELECT TO_DATE(#{startDay}, 'YYYY-MM-DD') + (LEVEL-1) AS DT
+		   FROM DUAL
+		CONNECT BY LEVEL <= (TO_DATE(#{endDay}, 'YYYY-MM-DD') - TO_DATE(#{startDay}, 'YYYY-MM-DD')) + 1
+		) on a.attendance_date = DT and a.emp_id = #{empId}
+		order by DT asc
+	 ]]>
 	 </select>
 	 
 	  <update id="updateHalfAtt" parameterType="map">
