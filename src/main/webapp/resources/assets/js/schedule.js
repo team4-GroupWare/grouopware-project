@@ -10,7 +10,6 @@ $(document).ready(function() {
 */
 
 function calendarInit() {
-
     // 날짜 정보 가져오기
     var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
     var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
@@ -73,7 +72,15 @@ function calendarInit() {
         }
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
-            calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
+        	
+        	if(months[i]!=null){
+        		calendar.innerHTML = calendar.innerHTML + '<div class="day current'+ months[i] +'">' + i + '</div>'
+        	}
+        	if(months[i]==null){
+        		
+        		calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
+        	}
+            
            
         }
         // 다음달
