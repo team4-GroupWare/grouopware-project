@@ -140,13 +140,10 @@ public class OvertimeController {
 			if(status == null||!status.equals("지각")) {
 				log.info("지각이라고요");
 				return "그날 출근 기록이 없습니다.";
-						
 			}
-			
 			String workDateClock = workDate +" 18:00:00";
 			log.info(workDate);
 			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId, workDateClock);
-			
 			return "aaaaa";
 
 		}

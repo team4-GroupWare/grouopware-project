@@ -347,7 +347,6 @@ public class AttendanceController {
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
 		List<String> list = attendanceService.getAttStatus(empId, startDay,endDay);
-		log.info(list);
 		return list;
 	}
 
