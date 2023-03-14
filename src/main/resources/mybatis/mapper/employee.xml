@@ -126,7 +126,7 @@
 				AND e.dept_id = #{deptId}
 			</when>
 		</choose>
-		ORDER BY e.grade_id
+		ORDER BY e.team_id, e.grade_id
          	OFFSET #{pager.startRowNo}-1 ROWS
          	FETCH FIRST 10 ROWS ONLY
 	</select>

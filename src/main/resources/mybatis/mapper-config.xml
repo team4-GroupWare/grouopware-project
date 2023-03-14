@@ -2,32 +2,49 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.mycompany.webapp.noticeboard.model.NoticeBoard" alias="board"/>
-		<typeAlias type="com.mycompany.webapp.group.model.Department" alias="department"/>
+		<!-- 공지사항 -->
+		<typeAlias type="com.mycompany.webapp.noticeboard.model.NoticeBoard" alias="noticeBoard"/>
+		<typeAlias type="com.mycompany.webapp.noticeboard.model.NoticeFile" alias="noticeFile"/>
+		<typeAlias type="com.mycompany.webapp.noticeboard.model.BoardCategory" alias="boardCategory"/>
+		
+		<!-- 출근 -->
 		<typeAlias type="com.mycompany.webapp.attendance.model.Attendance" alias="attendance"/>
-		<typeAlias type="com.mycompany.webapp.group.model.Team" alias="team"/>
+		<typeAlias type="com.mycompany.webapp.attendance.model.AttendanceMonthStatus" alias="attendanceMonthStatus"/>
+		
+		<!-- 사원, 부서, 팀, 직급 -->
 		<typeAlias type="com.mycompany.webapp.employee.model.Employee" alias="employee"/>
-		<typeAlias type="com.mycompany.webapp.component.Pager" alias="pager"/>
+		<typeAlias type="com.mycompany.webapp.group.model.Department" alias="department"/>
+		<typeAlias type="com.mycompany.webapp.group.model.Team" alias="team"/>
 		<typeAlias type="com.mycompany.webapp.group.model.Grade" alias="grade"/>
+		
+		<!-- 페이저 -->
+		<typeAlias type="com.mycompany.webapp.component.Pager" alias="pager"/>
+		
+		<!-- 전자결재 -->
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalCategory" alias="approvalCategory"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.Approval" alias="approval"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.ApprovalLine" alias="approvalLine"/>
 		<typeAlias type="com.mycompany.webapp.approval.model.RefEmployee" alias="refEmployee"/>
+		
+		<!-- 이메일 -->
 		<typeAlias type="com.mycompany.webapp.email.model.EmailList" alias="emailList"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailContent" alias="emailContent"/>
 		<typeAlias type="com.mycompany.webapp.email.model.SendEmail" alias="sendEmail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.ReceiveEmail" alias="receiveEmail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailDetail" alias="emailDetail"/>
 		<typeAlias type="com.mycompany.webapp.email.model.EmailFile" alias="emailFile"/>
+		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
+		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
+		
+		<!-- 휴가, 근태 -->
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationLine" alias="vacationLine"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.Vacation" alias="vacation"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDate" alias="vacationDate"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationList" alias="vacationList"/>
 		<typeAlias type="com.mycompany.webapp.vacation.model.VacationDetail" alias="vacationDetail"/>
-		<typeAlias type="com.mycompany.webapp.email.model.MainEmailList" alias="mainEmailList"/>
-		<typeAlias type="com.mycompany.webapp.email.model.TempEmail" alias="tempEmail"/>
-		<typeAlias type="com.mycompany.webapp.attendance.model.AttendanceMonthStatus" alias="attendanceMonthStatus"/>
+		
+		<!-- 연장 근무 -->
 		<typeAlias type="com.mycompany.webapp.overtime.model.Overtime" alias="overtime"/>
 	</typeAliases>
 </configuration>

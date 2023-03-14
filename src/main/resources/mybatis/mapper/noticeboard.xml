@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.noticeboard.repositiorty.NoticeBoardRepository">
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard" parameterType="noticeBoard">
+		<![CDATA[
+			INSERT INTO notice_board (
+				notice_id, 
+				notice_title, 
+				notice_content, 
+				write_date, 
+				writer, 
+				board_cate_id, 
+				read_count) 
+    		VALUES (
+    			seq_notice_board.nextval,
+    			#{noticeTitle}, 
+    			#{noticeContent}, 
+    			sysdate, 
+    			#{writer}, 
+    			#{boardCateId}, 
+    			default)
+		]]>
+		<selectKey keyColumn="notice_id" keyProperty="noticeId" resultType="int" order="AFTER">
+			SELECT seq_notice_board.CURRVAL as "notice_id"
+			FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 파일 저장 -->
+	<insert id="insertFileData" parameterType="noticeFile" >
+		<![CDATA[
+			INSERT INTO notice_file (
+				notice_file_id, 
+				notice_id, 
+				notice_file_name, 
+				notice_file_size, 
+				notice_file_content_type, 
+				notice_file_data) 
+			VALUES (
+				#{noticeFileId}, 
+				#{noticeId}, 
+				#{noticeFileName}, 
+				#{noticeFileSize}, 
+				#{noticeFileContentType}, 
+				#{noticeFileData})
+		]]>
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="noticeBoard">
+		<![CDATA[
+			UPDATE BOARD
+			SET
+				BOARD_TITLE=#{boardTitle},
+				BOARD_CONTENT=#{boardContent},
+				BOARD_DATE=SYSDATE
+			WHERE BOARD_ID=#{boardId}
+		]]>
+	</update>
+	
+	<update id="updateFileData" parameterType="noticeFile">
+		<![CDATA[
+			UPDATE BOARD_FILE
+			SET
+				BOARD_FILE_NAME=#{boardFileName},
+				BOARD_FILE_SIZE=#{boardFileSize},
+				BOARD_FILE_CONTENT_TYPE=#{boardFileContentType},
+				BOARD_FILE_DATA=#{boardFileData}
+			WHERE BOARD_FILE_ID=#{boardFileId}
+		]]>
+		
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			DELETE FROM BOARD
+			WHERE BOARD_ID=#{boardId}
+		]]>
+	</delete>
+	
+	<!-- 공지사항 목록 -->
+	<select id="selectBoardListByCategory" parameterType="map" resultType="noticeBoard">
+		<![CDATA[ 
+			SELECT
+				notice_id AS "noticeId",
+				notice_title AS "noticeTitle",
+				n.board_cate_id AS "boardCateId",
+				c.board_cate_name AS "boardCateName",
+				writer AS "writer",
+				write_date AS "writeDate",
+				read_count AS "readCount"
+			FROM notice_board n, board_category c
+			WHERE n.board_cate_id = c.board_cate_id
+                and n.board_cate_id = #{boardCateId}
+			ORDER BY write_date DESC
+            OFFSET #{pager.startRowNo}-1 ROWS
+            FETCH FIRST 10 ROWS ONLY
+		]]>
+	</select>
+	
+	<!-- 공지사항 목록 행 갯수 -->
+	<select id="selectTotalBoardPageByCategoryId" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT COUNT(notice_id) AS "count"
+			FROM notice_board
+			WHERE board_cate_id = #{boardCateId}
+		]]>
+	</select>
+	
+	<!-- 게시글 상세 조회 -->
+	<select id="selectBoard" parameterType="int" resultType="noticeBoard">
+		<![CDATA[
+			SELECT
+				n.notice_id as "noticeId",
+				board_cate_id as "boardCateId",
+				notice_title as "noticeTitle",
+				notice_content as "noticeContent",
+				write_date as "writeDate",
+				writer as "writer",
+				read_count as "readCount",
+				notice_file_id as "noticeFileId",
+				notice_file_Name as "noticeFileName",
+				notice_file_size as "noticeFileSize",
+				notice_file_content_type as "noticeFileContentType",
+                notice_file_data as "noticeFileData"
+			FROM notice_board n left outer join notice_file f
+				on n.notice_id = f.notice_id 
+			WHERE n.notice_id = #{noticeId}
+		]]>	
+	</select>
+	
+	<select id="selectNoticeFile" parameterType="int" resultType="noticeFile">
+		<![CDATA[
+			select
+				board_file_id as "boardFileId",
+				board_file_name as "boardFileName",
+				board_file_size as "boardFileSize",
+				board_file_content_type as "boardFileContentType",
+				board_file_data as "boardFileData",
+				board_id as "boardId"
+			from board_file
+			where board_file_id=#{boardFileId}
+		]]>	
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateReadCount" parameterType="int">
+		<![CDATA[
+			UPDATE notice_board
+			SET read_count = read_count+1
+			WHERE notice_id = #{noticeId}
+		]]>	
+	</update>
+	
+	<!-- 공지사항 가져오기 -->
+   	<!-- <select id="selectBoardListByRole" parameterType="map" resultType="com.team5.myapp.board.model.Board">
+    	<![CDATA[
+        	SELECT
+	            BOARD_ID AS "boardId",
+	            BOARD_CATEGORY_ID AS "boardCategoryId",
+	            USER_ID AS "userId",
+	            BOARD_TITLE AS "boardTitle",
+	            BOARD_DATE AS "boardDate",
+	            READ_COUNT AS "readCount",
+	            RNUM+1 AS "seq"
+	         FROM (
+	            SELECT
+	               BOARD_ID,
+	               BOARD_CATEGORY_ID,
+	               USER_ID,
+	               BOARD_TITLE,
+	               BOARD_DATE,
+	               READ_COUNT,
+	               ROWNUM AS RNUM
+	            FROM (
+	               SELECT 
+	                  BOARD_ID,
+	                  BOARD_CATEGORY_ID,
+	                  m.USER_ID,
+	                  BOARD_TITLE,
+	                  BOARD_DATE,
+	                  READ_COUNT
+	               FROM BOARD b, members m
+	               WHERE m.user_id=b.user_id and m.role=1
+	               ORDER BY BOARD_ID DESC
+	            )
+	         )
+	         WHERE RNUM BETWEEN #{start} AND #{end}
+      	]]>
+   	</select> -->
+</mapper>
