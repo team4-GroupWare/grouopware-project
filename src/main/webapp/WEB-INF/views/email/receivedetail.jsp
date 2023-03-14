@@ -57,6 +57,7 @@
 		          <div class="card">
 		            <div class="card-body">
 		              <div class="d-flex mb-4">
+		              	<!-- 중요메일 표시 -->
 		              	<c:if test="${not emailDetail.important}">
 		              	<i class="bi bi-star" style="margin-top:28px;margin-right:8px;font-size:23px;color:#F0D14A"></i>
 		              	</c:if>
@@ -74,6 +75,7 @@
 		              		</c:if>
 		                    <button type="button" class="btn btn-secondary btn-sm" onclick="response(${emailDetail.receiveEmailId})">답장</button>
 		                    <button type="button" class="btn btn-primary btn-sm" onclick="reply(${emailDetail.receiveEmailId})">전달</button>
+		                    <!-- 휴지통에서 조회한 것이 아님 -->
 		                    <c:if test="${emailDetail.rtrashDate eq null}">
 		                    <!-- 휴지통으로 들어갔다는 모달창 띄움 -->
 		                    <button type="button" class="btn btn-danger btn-sm" onclick="checkEmail('${emailDetail.receiveEmailId}','trash')">삭제</button>
@@ -84,16 +86,17 @@
 		                  	</c:if>
 		                  </div>
 		                  <script>
+		                  	//답장하기
 		                  	function response(receiveEmailId){
 		                  		location.href="${pageContext.request.contextPath}/email/response?receiveEmailId="
 		                  				+ receiveEmailId;
 		                  	}
-		                  	
+		                  	//전달하기
 		                  	function reply(receiveEmailId){
 		                  		location.href="${pageContext.request.contextPath}/email/reply?emailId="
 	                  				+ receiveEmailId;
 		                  	}
-		                  
+		                    //중요메일인지 판단하고 휴지통이나 영구삭제 진행
 		                  	function checkEmail(emailId, type){
 									var data = {"emailId" : emailId};
 									$.ajax({
@@ -117,7 +120,7 @@
 										} 
 									});
 								}
-		                  	
+		                  	//휴지통 넣기
 		                  	function trashEmail(emailId){
 		                  		var type = 'receive'
 		                  		var data = {"emailId" : emailId, "type" : type};
@@ -132,7 +135,6 @@
 		                  		
 		                  	}
 		                  	
-		                  	
 		                  	function reload() {
 		                  		location.reload();
 		                  	}
@@ -140,7 +142,7 @@
 		              	
 		              </div>
 		
-		              <!-- General Form Elements -->
+		              <!-- 본문 -->
 		                <div class="row ">
 		                  <label for="inputText" class="col-sm-2 col-form-label">보낸 사람</label>
 		                  <div class="col-sm-10 my-auto d-flex">
@@ -267,8 +269,6 @@
 			    </div>
 			  </div>
 			</div>
-			    
-		
 		  </main><!-- End #main -->
 		
 		  <%@ include file="/WEB-INF/views/common/footer.jsp" %>

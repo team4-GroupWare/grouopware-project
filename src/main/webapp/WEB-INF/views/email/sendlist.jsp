@@ -11,7 +11,7 @@
   	color : black;
 	}
 	table a:visited {
-	  color : black;
+	  color : #aaafb6;
 	}
 	table a:hover {
 	  color : #97ACFC;
@@ -87,6 +87,7 @@
 	              		<!-- 중요메일일 때 modal로 삭제 여부 확인 -->
 	                    <button type="submit" class="btn btn-danger btn-sm"  onclick="checkEmail()">삭제</button>
 	                    <script>
+	                    //중요메일 여부인지 확인하고 휴지통이나 삭제처리
 						function checkEmail(){
 							var type = 'send';
 							var checkArr = [];
@@ -113,20 +114,8 @@
 									trashEmail(type);
 								}
 							});
-							
-							/*$.ajax({
-								url : "${pageContext.request.contextPath}/email/deletecheck",
-								method : "post",
-								data : JSON.stringify(data),
-								contentType : "application/json; charset=UTF-8",
-								traditional: true
-							}).done((data)=> {
-								console.log("성공");
-								$("#importantDeleteModal").modal('show');	
-							});*/
-								
 						}
-						
+						//휴지통에 메일 넣기
 						function trashEmail(type){
 							var checkArr = [];
 							$('input[type=checkbox][name="selectone"]:checked').each(function() {
@@ -150,7 +139,7 @@
 						function reload(){
 							location.reload();
 						}
-						
+						//검색할 경우 알맞은 키워드의 페이지를 가지고 이동
 						function search(){
 							var keyword = $("#keyword").val();
 							location.href='${pageContext.request.contextPath}/email/search?keyword='+keyword+'&type=send';
@@ -158,6 +147,7 @@
 						}
 					 	</script>
 	              </div>
+	              <!-- 검색 -->
 	               <div class="input-group p-2" style="width:350px;margin-left:auto">
 		             <span class="input-group-text" id="basic-addon1">
 		              	<i class="bi bi-search"></i>
@@ -166,7 +156,7 @@
 	               	<button type="button" onclick="search()" class="btn btn-secondary btn-sm ">검색</button>
 	              </div>
                </div>
-               <!-- Bordered Tabs Justified -->
+			   <!-- 본문 위에 카테고리 영역 -->
                <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
               		<li class="nav-item" role="presentation">
               			<c:if test="${kind eq 'send' }">
@@ -177,6 +167,7 @@
               			</c:if>
               		</li>
                		<li class="nav-item" role="presentation">
+               			<!-- 읽은 메일에는 수신 -->
                			<c:if test="${kind eq 'read' }">
                  		<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/email/readlist">수신</a>
                			</c:if>
@@ -185,6 +176,7 @@
                			</c:if>
                		</li>
                		<li class="nav-item" role="presentation">
+               			<!-- 읽지 않은 메일에는 미수신 -->
                			<c:if test="${kind eq 'unread' }">
                  		<a class="nav-link w-100 active" href="${pageContext.request.contextPath}/email/unreadlist">미수신</a>
                			</c:if>
@@ -196,7 +188,7 @@
 	              	
 	          	<div class="tab-content pt-2" id="borderedTabContent">
 	                <div aria-labelledby="home-tab">
-			              <!-- Table with hoverable rows -->
+			              <!-- 본문 -->
 			              <table class="table table-hover">
 			                <thead>
 			                  <tr style="border-bottom:2px solid #004389;">
@@ -234,7 +226,7 @@
 		              			메일이 존재하지 않습니다.
 		              	  </div>
 		              	  </c:if>
-			              <!-- End Table with hoverable rows -->
+			              <!-- 메일이 존재하면 네비게이터를 보여줌, 각 카테고리마다 페이지 이동이 다름 -->
 			              <c:if test="${not empty emailList}">
 			              <div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">

@@ -34,27 +34,23 @@ input[type=radio]:checked+label{
 <!-- modal -->
 <script>
 	function listSubmit() {
+		var path = sessionStorage.getItem("contextpath");
 		
 		let empId = $("input[name=employee]:checked").attr("value");
-		console.log(empId);
+		
 		$.ajax({
 			type: "post",
-		    url: "/webapp/vacation/employee",
+		    url: path + "/vacation/employee",
 		    data: {
 		    	empId : empId
 		    },
 		    success: function (data) {
-		    	console.log("성공");
-		    	console.log(data);
-		    	
 				var	lineHtml = '<div style="background-color:#EDEEF0; width:250px; padding:15px">' + 
 							'<input type="hidden" class="approvalEmpId" name="approvalEmpId" value="' + data.empId + '">' +
 							'<span style="font-size:18px; font-weight:bold;">' + data.empName + '</span> ' +
 							data.gradeName + '<br>' +
 							data.deptName + " / " + data.teamName + '</div>'
 							
-							
-				
 				$("#vacation_line").html(lineHtml);
 				$("#verticalycentered").modal("hide"); 
 			}
@@ -140,7 +136,7 @@ input[type=radio]:checked+label{
 										for(var i in data){
 											teamHtml += '<div class="empList">'+'<input id="' + data[i].empId +'" class="emp1" type="radio" name="employee" value="'
 														+data[i].empId+'">'+'<label style="width:100%" id="'+ data[i].empId +'" for="' + data[i].empId + '">'
-											    +data[i].name+'</label>'+'</div>';
+											    + data[i].name + ' (' + data[i].gradeName + ')</label>'+'</div>';
 										}
 										$("#empByteam").html(teamHtml);
 									},
