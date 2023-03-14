@@ -379,6 +379,7 @@ public class EmployeeController {
 	@PostMapping("/updateemployee")
 	public String updateEmployee(Employee employee, HttpSession session) {
 		log.info("실행");
+		String employeeId = employee.getEmpId();
 		if(employee.getTeamId()!=0) {
 			Employee loginEmployee = (Employee) session.getAttribute("loginEmployee");
 			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
@@ -391,7 +392,9 @@ public class EmployeeController {
 			}
 			
 			employeeService.updateEmployee(employee);
-			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
+			log.info(employeeId);
+			if(loginEmployee.getEmpId().equals(employeeId)) {
+				employee = employeeService.getEmp(employeeId);
 				session.setAttribute("loginEmployee", employee);
 			}
 		}
