@@ -103,7 +103,7 @@ table a:active {
 											</a></li>
 
 										</ul></th>
-									<th scope="col" width="20%">신청날짜</th>
+									<th scope="col" width="20%">작성날짜</th>
 								</tr>
 
 							</thead>

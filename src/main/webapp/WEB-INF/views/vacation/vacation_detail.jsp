@@ -60,21 +60,23 @@
 										function confirm (e) {
 											var type = $(e).attr('value');
 											var vacationId = ${vacationDetail.vacationId};
-											var vacationCategoryId =${vacationDetail.vacationCategoryId};
+											var vacationName ='${vacationDetail.vacationName}';
 											var empId = "${vacationDetail.empId}"
+											var vacationCategoryId = ${vacationDetail.vacationCategoryId};
 											$.ajax({
 												type: "post",
 											    url: "${pageContext.request.contextPath}/vacation/process",
 											    dataType : "text",
 											    data: {
 											    	type : type,
-											    	vacationId: vacationId,
-											    	vacationCategoryId : vacationCategoryId,
-											    	empId : empId
+											    	vacationName: vacationName,
+											    	vacationId : vacationId,
+											    	empId : empId,
+											    	vacationCategoryId:vacationCategoryId
 											    },
 											    success: function (data) {
-											    	console.log("성공")
-											    	alert(data);
+											    	location.reload();											    	
+											    	
 												},
 												error: function(e){
 													alert("값을 가져오지 못했습니다.")
@@ -105,12 +107,12 @@
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label ">결재 상태</div>
 											<div class="col-lg-9 col-md-8">
-												<div class="col-sm-12">대기</div>
+												<div class="col-sm-12">${vacationDetail.status}</div>
 											</div>
 										</div>
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label ">승인 날짜</div>
-											<div class="col-lg-9 col-md-8"></div>
+											<div class="col-lg-9 col-md-8">${vacationDetail.writeDate}</div>
 										</div>
 									</div>
 								</div>
@@ -146,7 +148,6 @@
 										<div class="col-lg-3 col-md-4 label">휴가종류</div>
 										<div class="col-lg-9 col-md-8">${vacationDetail.vacationName}</div>
 									</div>
-
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label">날짜</div>
 										<div class="col-lg-6 col-md-8">
