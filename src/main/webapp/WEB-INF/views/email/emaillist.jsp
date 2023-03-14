@@ -15,10 +15,14 @@
 	  color : black;
 	}
 	table a:hover {
-	  color : #97ACFC;
+	  color : #18264d;
 	}
 	table a:active {
 	  color : #97ACFC;
+	}
+	
+	table a:visited {
+	  color : #aaafb6;
 	}
 	
 	

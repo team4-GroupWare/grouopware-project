@@ -26,6 +26,7 @@ import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.email.model.EmailDetail;
 import com.mycompany.webapp.email.model.EmailFile;
 import com.mycompany.webapp.email.model.EmailList;
+import com.mycompany.webapp.email.model.MainEmailList;
 import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.service.IEmailService;
 import com.mycompany.webapp.employee.model.Employee;
@@ -171,6 +172,24 @@ public class EmailController {
 		model.addAttribute("type", type);
 		return "email/emaillist";
 		
+	}
+	
+	@GetMapping("/sendEmailListMain")
+	public String emailSendListMain(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		List<MainEmailList> emailList = emailService.getSendMainEmailList(employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		return "email/mainemaillist";
+	}
+	
+	@GetMapping("/receiveEmailListMain")
+	public String emailReceiveListMain(HttpSession session, Model model) {
+		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		List<MainEmailList> emailList = emailService.getReceiveMainEmailList(employee.getEmpId());
+		model.addAttribute("emailList", emailList);
+		return "email/mainreceiveemaillist";
 	}
 	
 	/**

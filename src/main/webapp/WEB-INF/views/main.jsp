@@ -65,8 +65,23 @@
 	  	    var date = modifyNumber(today.getDate());		//일
 	  	  	var isHoli = false;								//공휴일 판별
 	  	   
-	  	    //페이지 로드될 때마다 -> 사원의 출근 정보를 조회, 해당 사원에 대한 메일 리스트를 조회
+	  	    //페이지 로드될 때마다 -> 메일 다섯개씩 리스트로 가져옴 (html조각)
 	  		$(document).ready(function() {
+	  			 $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/sendEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-send").empty();
+	                 $("#mail-send").html(data);
+	              }); 
+	              
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-receive").empty();
+	                 $("#mail-receive").html(data);
+	              }); 
 	  			
 	  			//현재 시간, 날짜 
 	  			nowClock();
@@ -401,90 +416,10 @@
 									
 									<!-- 받은 메일함 -->
 									<div class="tab-pane fade show active" id="mail-receive" role="tabpanel" aria-labelledby="receive-tab">
-									<table class="table table-borderless datatable">
-										<thead style="border-bottom: 2px solid #EBEEF4;">
-											<tr>
-												<th scope="col">보낸사람</th>
-												<th scope="col">제목</th>
-												<th scope="col">날짜</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="receiveEmailList" items="${receiveEmailList}" varStatus="status">
-												<tr>
-													<td>
-													<c:if test="${receiveEmailList.sendProfileData ne null}">
-													<img
-														src="${pageContext.request.contextPath}/employee/img?empId=${receiveEmailList.sentId}"
-														alt="Profile" class="rounded-circle" style="margin-right: 8px"
-														width="30px">
-													</c:if>
-													<c:if test="${receiveEmailList.sendProfileData eq null}">
-													<img
-														src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"
-														alt="Profile" class="rounded-circle" style="margin-right: 8px"
-														width="30px">
-													</c:if>
-													
-													 
-													 ${receiveEmailList.sentName}</td>
-													<td>
-													<c:if test="${receiveEmailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-													<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${receiveEmailList.receiveEmailId}" class="mail-title">${receiveEmailList.title}</a></td>
-													<td>${receiveEmailList.sentDate}</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-									<c:if test="${empty receiveEmailList}">
-									    <div style="height:130px;text-align:center;margin-top:110px">
-									             메일이 존재하지 않습니다.
-									    </div>
-									</c:if>
-									
 									</div><!-- End 받은 메일함 -->
 									
 									<!-- 보낸 메일함 -->
 									<div class="tab-pane fade" id="mail-send" role="tabpanel" aria-labelledby="send-tab">
-										<table class="table table-borderless datatable">
-											<thead style="border-bottom: 2px solid #EBEEF4;">
-												<tr>
-													<th scope="col">보낸사람</th>
-													<th scope="col">제목</th>
-													<th scope="col">날짜</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="sendEmailList" items="${sendEmailList}" varStatus="status">
-													<tr>
-														<td>
-														<c:if test="${sendEmailList.receiveProfileData ne null}">
-														<img
-															src="${pageContext.request.contextPath}/employee/img?empId=${sendEmailList.receiveId}"
-															alt="Profile" class="rounded-circle" style="margin-right: 8px"
-															width="30px">
-														</c:if>
-														<c:if test="${sendEmailList.receiveProfileData eq null}">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/img/basic-user.png"
-															alt="Profile" class="rounded-circle" style="margin-right: 8px"
-															width="30px">
-														</c:if>
-														
-														
-														 ${sendEmailList.receiveName}</td>
-														<td><c:if test="${sendEmailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-														<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${sendEmailList.sendEmailId}" class="mail-title">${sendEmailList.title}</a></td>
-														<td>${sendEmailList.sentDate}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-										<c:if test="${empty sendEmailList}">
-										    <div style="height:130px;text-align:center;margin-top:110px">
-										             메일이 존재하지 않습니다.
-										    </div>
-										</c:if>									
 									</div><!--End 보낸 메일함 -->
 									
 								</div><!--End mail content -->
