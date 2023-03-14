@@ -139,7 +139,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/updateemployee")
-	public String updateEmployee(Model model, @RequestParam String empId) {
+	public String updateEmployee( Model model, @RequestParam String empId) {
 		log.info("실행");
 		Employee employee = employeeService.getEmp(empId);
 		model.addAttribute("employee", employee);
@@ -149,6 +149,7 @@ public class EmployeeController {
 		//직급 List
 		List<Grade> grades = gradeService.getGradeList();
 		model.addAttribute("grades", grades);
+		
 		return "employee/update_employee";
 	}
 	
@@ -304,14 +305,11 @@ public class EmployeeController {
 		log.info("실행");
 		Employee originEmployee = (Employee) session.getAttribute("loginEmployee");
 		employee.setEmpId(originEmployee.getEmpId());
-		log.info("conetntType: "+employee.getProfileContentType());
 		if(employee.getProfileContentType() != null) {
 			if(employee.getProfileContentType().equals("delete")) {
 				employee.setProfileContentType(null);
 				employee.setProfileData(null);
-				log.info("사진삭제함: "+employee);
 			} else if (originEmployee.getProfileData() !=null) {
-				log.info("delete가 아니고 오리진 없음");
 				employee.setProfileContentType(originEmployee.getProfileContentType());
 				employee.setProfileData(originEmployee.getProfileData());
 			}
@@ -331,10 +329,23 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/updateemployee")
-	public String updateEmployee(Employee employee) {
+	public String updateEmployee(Employee employee, HttpSession session) {
 		log.info("실행");
 		if(employee.getTeamId()!=0) {
+			Employee loginEmployee = (Employee) session.getAttribute("loginEmployee");
+			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
+				employee.setProfileContentType(loginEmployee.getProfileContentType());
+				employee.setProfileData(loginEmployee.getProfileData());
+			} else {
+				Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
+				employee.setProfileContentType(dbEmployee.getProfileContentType());
+				employee.setProfileData(dbEmployee.getProfileData());
+			}
+			
 			employeeService.updateEmployee(employee);
+			if(loginEmployee.getEmpId().equals(employee.getEmpId())) {
+				session.setAttribute("loginEmployee", employee);
+			}
 		}
 		return "redirect:/hr/group";
 		
