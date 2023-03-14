@@ -129,6 +129,7 @@ public class EmployeeController {
 		int count = employeeService.checkPassword(employeePassword.getOldPwd(), employeePassword.getEmpId());
 		
 		if(count == 1) {
+			employeeService.updatePassword(employeePassword.getNewPwd(), employeePassword.getEmpId());
 			result.put("result", "success");
 			return result;
 		}
