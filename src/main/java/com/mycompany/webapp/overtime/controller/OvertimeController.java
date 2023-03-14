@@ -3,6 +3,7 @@ package com.mycompany.webapp.overtime.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +48,7 @@ public class OvertimeController {
 
 	// 1. 근무 신청
 	@GetMapping("/overtime/write")
-	public String getWriteForm(Model model,HttpSession session) {
+	public String getWriteForm(Model model, HttpSession session) {
 		log.info("실행");
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
@@ -57,19 +57,15 @@ public class OvertimeController {
 		}
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-		String sunday= formatter.format(c.getTime());
-		c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-		String saturday= formatter.format(c.getTime());
-		
-		int weekOverTime = overtimeService.getweekOverTime(sunday,empId);
-		log.info(sunday);
-		
-		model.addAttribute("sunday", sunday);
-		model.addAttribute("saturday", saturday);
+		String sunday = formatter.format(c.getTime());
+
+		int weekOverTime = overtimeService.getweekOverTime(sunday, empId);
+		log.info(weekOverTime);
+
 		model.addAttribute("weekOverTime", weekOverTime);
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
@@ -77,75 +73,97 @@ public class OvertimeController {
 	}
 
 	// 2. 근무 신청 제출
-	@PostMapping("/overtime/write")
+	@RequestMapping(value = "/overtime/write", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
 	public String submitWriteForm(@ModelAttribute Overtime overtime, Model model) {
 		log.info("실행");
 		log.info(overtime);
-		overtimeService.writeOvertime(overtime);
-		return "redirect:/overtime/list/1";
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yy.MM.dd");
+		String workDate = transFormat.format(overtime.getWorkDate());
+		String status = attendanceService.getThisWeekStatus(workDate, overtime.getEmpId());
+		if (status == null || status.equals("결근")) {
+			return "해당 날짜에 출근기록이 있어야 신청가능합니다.";
+		} else if (status.equals("연장근무")) {
+			return "해당 날짜에 이미 연장근무 신청이 되어있습니다.";
+		} else if (status.equals("출근") || status.equals("지각")) {
+			int writeForm = overtimeService.writeOvertime(overtime);
+			return "success";
+		} else {
+			return "휴가사용날짜에 연장근무신청이 불가합니다.";
+		}
 	}
-	//3. 근무 리스트
+
+	// 3. 근무 리스트
 	@GetMapping("/overtime/list/{type}")
 	public String OvertimeList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
-		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		int overtimeRow = overtimeService.getOvertimeRow(empId, status ,type);
+		int overtimeRow = overtimeService.getOvertimeRow(empId, status, type);
 		Pager pager = new Pager(10, 5, overtimeRow, pageNo);
-		List<Overtime> overtimeList = overtimeService.getOvertimeList(pager, empId, status ,type);
-		
+		List<Overtime> overtimeList = overtimeService.getOvertimeList(pager, empId, status, type);
+
 		model.addAttribute("overtimeList", overtimeList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		return "overtime/overtime_list";
 	}
-	
+
 	// 4. 근무 신청 상세보기
-		@GetMapping("/overtime/detail")
-		public String detailOvertime(@RequestParam int overtimeId, @RequestParam int pageNo, @RequestParam() String status,
-				Model model, HttpSession session) {
-			log.info("실행");
-			Employee emp = (Employee) session.getAttribute("loginEmployee");
-			String empId = emp.getEmpId();
-			
-			Overtime overtime = overtimeService.getOvertimeDetail(overtimeId);
-			
-			Employee employee;
-			if(empId.equals(overtime.getEmpId())) {
-				
-				 employee = employeeService.getEmp(overtime.getApprovalEmpId());
-					
-			}else {
-				 employee = employeeService.getEmp(overtime.getEmpId());
-			}
-			log.info(overtime);
-			log.info("dork sjgdjwla"+ employee);
-			model.addAttribute("employee", employee);
-			model.addAttribute("pageNo", pageNo);
-			model.addAttribute("status", status);
-			model.addAttribute("overtime", overtime);
-			return "overtime/overtime_detail";
-		}
-		
-		@RequestMapping(value = "/overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-		@ResponseBody
-		public String process(@RequestParam String type, @RequestParam int overtimeId, @RequestParam String workDate,@RequestParam String empId,
+	@GetMapping("/overtime/detail")
+	public String detailOvertime(@RequestParam int overtimeId, @RequestParam int pageNo, @RequestParam() String status,
 			Model model, HttpSession session) {
-			log.info(workDate);
-			log.info(empId);
-			String status = attendanceService.getThisWeekStatus(workDate, empId);
-			log.info(status);
-			
-			if(status == null||!status.equals("지각")) {
-				log.info("지각이라고요");
-				return "그날 출근 기록이 없습니다.";
+		log.info("실행");
+		Employee emp = (Employee) session.getAttribute("loginEmployee");
+		String empId = emp.getEmpId();
+
+		Overtime overtime = overtimeService.getOvertimeDetail(overtimeId);
+
+		Employee employee;
+		if (empId.equals(overtime.getEmpId())) {
+
+			employee = employeeService.getEmp(overtime.getApprovalEmpId());
+
+		} else {
+			employee = employeeService.getEmp(overtime.getEmpId());
+		}
+		log.info(overtime);
+		log.info("dork sjgdjwla" + employee);
+		model.addAttribute("employee", employee);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("status", status);
+		model.addAttribute("overtime", overtime);
+		return "overtime/overtime_detail";
+	}
+
+	@RequestMapping(value = "/overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String process(@ModelAttribute Overtime overtime, Model model) {
+		log.info("실행");
+		String status = attendanceService.getThisWeekStatus(overtime.getWorkDateDetail(), overtime.getEmpId());
+		int clockOut = 18 + overtime.getWorkTime();
+		String workDateClock = overtime.getWorkDateDetail() + " " + clockOut + ":00:00";
+		if (overtime.getType().equals("y")) {
+			if (status == null || status.equals("결근")) {
+				return "해당 날짜에 출근기록이 있어야 신청가능합니다.";
+			} else if (status.equals("연장근무")) {
+				return "해당 날짜에 이미 연장근무 신청이 되어있습니다.";
+			} else if (status.equals("출근") || status.equals("지각")) {
+				overtime.setWorkDateClock(workDateClock);
+				log.info(overtime);
+				int result = overtimeService.overTimeProcess(overtime);
+				return "success";
+			} else {
+				return "휴가사용날짜에 연장근무신청이 불가합니다.";
 			}
-			String workDateClock = workDate +" 18:00:00";
-			log.info(workDate);
-			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId, workDateClock);
-			return "aaaaa";
+		} else {
+			log.info(overtime);
+			int result = overtimeService.overTimeProcess(overtime);
+			return "success";
 
 		}
-	
+
+	}
+
 }

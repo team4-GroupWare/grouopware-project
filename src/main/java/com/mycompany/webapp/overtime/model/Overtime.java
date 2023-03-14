@@ -20,4 +20,7 @@ public class Overtime {
 	private Date approvalDate;
 	private String empName;
 	
+	private String type;
+	private String workDateDetail;
+	private String workDateClock;
 }

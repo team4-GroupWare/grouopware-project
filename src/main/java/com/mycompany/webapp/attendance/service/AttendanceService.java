@@ -142,8 +142,6 @@ public class AttendanceService implements IAttendanceService {
 
 	@Override
 	public AttendanceMonthStatus getMonthCount(String empId,String month) {
-		log.info(empId);
-		log.info(month);
 		return attendanceRepository.selectMonthCount(empId,month);
 	}
 

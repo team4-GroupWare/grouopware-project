@@ -78,30 +78,32 @@
 						</div>
 						<script >
 									function confirm (e) {
-										console.log("무슨일도....")
+										
 										var type = $(e).attr('value');
 										var overtimeId = ${overtime.overtimeId};
-										var workDate ='${workDate}';
-										console.log(workDate);
+										var workDateDetail ='${workDate}';
+										console.log(workDateDetail);
 										var empId = "${overtime.empId}"
 										$.ajax({
 											type: "post",
 										    url: "${pageContext.request.contextPath}/overtime/process",
-										    dataType : "text",
 										    data: {
 										    	type : type,
 										    	overtimeId : overtimeId,
-										    	workDate : workDate,
+										    	workDateDetail : workDateDetail,
 										    	empId : empId
 										    },
-										    success: function (data) {
-										    	alert("data");
-										    	
-										    	location.reload();
-											},
-											error: function(e){
-												alert("값을 가져오지 못했습니다.")
-											}
+										    success: function(data) {
+								    	    	const data1 = $.trim(data);
+								    	    	if(data1 == 'success'){
+								    	    		location.reload();
+								    	    	}else{
+								    	    		alert(data);
+								    	    	}
+								    	    },
+								    	    error: function(err) {
+								    	    	alert("실패");
+								    	    }
 										})
 									}
 								</script>
@@ -178,8 +180,8 @@
 							<div class="row">
 								<div class="col">
 									<div class="row mb-4">
-										<div class="col-lg-3 col-md-4 label ">문서번호</div>
-										<div class="col-lg-9 col-md-8">${overtime.overtimeId}</div>
+										<div class="col-lg-3 col-md-4 label ">문서종류</div>
+										<div class="col-lg-9 col-md-8">연장근무</div>
 									</div>
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label ">이름</div>

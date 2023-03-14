@@ -6,34 +6,26 @@
 <head>
 <%@ include file="/WEB-INF/views/common/head.jsp"%>
 
-<!-- datapicker -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
-
-<style>
-.card-header {
-	background-color: #d5e0fd;
-	color: black;
-	font-style: italic;
-	font-weight: 500;
-	font-size: 17px;
-}
-
-.profile .profile-overview {
-	margin-bottom: 20px;
-	font-size: 20px;
-}
-</style>
-
+	<!-- datapicker -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
+	<style>
+		.card-header {
+			background-color: #d5e0fd;
+			color: black;
+			font-style: italic;
+			font-weight: 500;
+			font-size: 17px;
+		}
+		.profile .profile-overview {
+			margin-bottom: 20px;
+			font-size: 20px;
+		}
+	</style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -42,7 +34,7 @@
 	<main id="main" class="main">
 	<section class="section">
 		<div class="row mt-5">
-			<!--================================================신청자 정보==================================================-->
+			<!--================================================신청자 정보================================-->
 			<div class="col-4">
 				<div class="card profile mt-3">
 					<div class="card-header">신청자 정보</div>
@@ -311,28 +303,7 @@
 		</div>
 		<div class="row" style="height: 100px"></div>
 	</section>
-	<div class="modal fade" id="countModal" data-bs-backdrop="static"
-		data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<i class="bi bi-exclamation-circle-fill"
-						style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-					잔여 연차수
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p style="margin-bottom: 4px">신청 불가. 잔여 연차수를 확인해주세요</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<div class="modal fade" id="approvalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog">
 					    	<div class="modal-content">
