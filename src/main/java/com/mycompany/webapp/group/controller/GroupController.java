@@ -76,7 +76,11 @@ public class GroupController {
 	 * @return
 	 */
 	@GetMapping("/hr/group")
-	public String getHrMain() {
+	public String getHrMain(Model model) {
+		//부서 목록
+		List<Department> departments = departmentService.getDeptList();
+		
+		model.addAttribute("departments", departments);
 		return "hr/hrmain";
 	}
 }
