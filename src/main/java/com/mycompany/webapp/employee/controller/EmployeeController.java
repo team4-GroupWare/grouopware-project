@@ -2,12 +2,14 @@ package com.mycompany.webapp.employee.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -118,17 +120,20 @@ public class EmployeeController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/changeinitial", produces="application/text; charset=UTF-8")
-	public String changeInitialPwd(HttpSession session, Model model, @RequestBody EmployeePassword employeePassword) {
+	@PostMapping(value="/initialchange", produces="application/json; charset=UTF-8")
+	public HashMap<String,String> changeInitialPwd(HttpSession session, Model model, EmployeePassword employeePassword) {
 		log.info("실행");
-		int count = employeeService.checkPassword(employeePassword.getOldPwd(), employeePassword.getEmpId());
-		if(count == 0) {
-			return "false";
-		} else {
-			employeeService.updatePassword(employeePassword.getNewPwd(),employeePassword.getEmpId());
-			return "success";
-		}
+		HashMap<String,String> result = new HashMap<>();
 		
+		int count = employeeService.checkPassword(employeePassword.getOldPwd(), employeePassword.getEmpId());
+		
+		if(count == 1) {
+			result.put("result", "success");
+			return result;
+		}
+		result.put("result", "false");
+		
+		return result;
 	}
 	
 	@GetMapping("/updateemployee")
