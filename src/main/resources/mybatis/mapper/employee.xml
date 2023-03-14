@@ -169,6 +169,7 @@
 		]]>
 	</insert>
 	
+	
 	<!-- 팀별 사원 목록  -->
 	<select id="selectEmpListByTeamId" parameterType="int" resultType="employee">
 		<![CDATA[
@@ -214,7 +215,6 @@
 		update employees
 		set password = #{newPwd}, INITIAL_PASSWORD = 1
 		where emp_id = #{empId}
-	
 	</update>
 	
 	<!-- db에 저장된 해당 empId의 비밀번호 조회 -->

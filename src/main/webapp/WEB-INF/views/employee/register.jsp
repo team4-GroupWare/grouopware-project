@@ -157,12 +157,6 @@
                       	</div>
                     </div>
                     
-                    <div class="col-12 form-floating mb-3">
-		                 <input type="text" class="form-control" value="${employee.managerId}" name="managerId" id="managerId" placeholder="매니저사번" >
-		                 <label for="floatingName">매니저 아이디</label>
-	                 	 <form:errors path="employee.managerId" class="errors"/>
-	                 </div>
-
                   
                     <div class="col-12 mx-auto" style="width:250px;">
                       <button class="btn btn-primary w-100" type="submit" style="display:inline-block">회원등록</button>

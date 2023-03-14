@@ -33,7 +33,6 @@ import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.service.EmployeeService;
 import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.exception.AlreadyExistingIdException;
-import com.mycompany.webapp.exception.NotExistingManagerException;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.model.Grade;
 import com.mycompany.webapp.group.model.Team;
@@ -86,6 +85,7 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public String login(Employee employee, Model model, HttpSession session) {
 		log.info("실행");
+		log.info(employee);
 		EmployeeService.LoginResult loginResult = employeeService.login(employee);
 		if(loginResult == EmployeeService.LoginResult.WRONG_ID) {
 			//사용자의 아이디가 없는 경우
@@ -104,6 +104,7 @@ public class EmployeeController {
 			return "redirect:/employee/change";
 		}
 		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
+		log.info(dbEmployee);
 		session.setAttribute("loginEmployee", dbEmployee);
 		
 		return "redirect:/";
@@ -260,19 +261,8 @@ public class EmployeeController {
 			List<Grade> grades = gradeService.getGradeList();
 			model.addAttribute("grades", grades);
 			return "employee/register";
-			
-			//매니저 아이디가 없으면 삽입할 수 없다
-		} catch (NotExistingManagerException e) {
-			errors.rejectValue("managerId",null, "없는 매니저 아이디 입니다.");
-			//부서 List
-			List<Department> departments = departmentService.getDeptList();
-			model.addAttribute("departments", departments);
-			//직급 List 
-			List<Grade> grades = gradeService.getGradeList();
-			model.addAttribute("grades", grades);
-			return "employee/register";
 		}
-		
+			
 		return "redirect:/";
 	}
 	/**

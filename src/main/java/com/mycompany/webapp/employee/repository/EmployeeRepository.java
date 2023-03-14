@@ -49,7 +49,6 @@ public interface EmployeeRepository {
 	public int selectSearchEmpCount(@Param("employee") Employee employee, @Param("deptId") int deptId);
 	public int selectEmpId(String empId);
 	public int insertEmployee(Employee employee);
-	public int selectManagerNo(int empNo);
 	
 	/**
 	 * 팀별 사원 목록
