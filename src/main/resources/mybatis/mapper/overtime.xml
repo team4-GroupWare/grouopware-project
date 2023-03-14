@@ -68,14 +68,38 @@
 	</select>
 	
 
-	<select id="selecWeekOverTime" parameterType="map"
-		resultType="int">
-		select sum(work_time)
-		from overtime
-		where emp_id = #{empId}
-		and work_date >TO_DATE(#{sunday}, 'YYYY-MM-DD') and status
-		in('대기','승인')
+	<select id="selecWeekOverTime" parameterType="map" resultType="int">
+		SELECT NVL(workTime, 0)
+		FROM (
+		    select
+		    sum(work_time) as workTime
+		    from overtime
+		    where emp_id = #{empId}
+		    and work_date >TO_DATE(#{sunday}, 'YYYY-MM-DD') and status
+		    in('대기','승인')
+		)
 	</select>
-
+	
+	<update id="updateOvertimeAtt" parameterType="map">
+		update attendance set
+		status = '승인', clock_out = to_date(#{workDate},'YY.MM.DD HH24:MI:SS')	
+		where emp_id=#{empId} and to_char(attendance_date,'YY.MM.DD HH24:MI:SS')=#{workDate}
+	</update>
+	
+	<update id="updateOvertime" parameterType="map">
+		update overtime 
+		set
+		approval_date = sysdate
+		
+		<if test='type == "y"'>
+			,status = '승인'
+		</if>
+		
+		<if test='type == "n"'>
+			,status = '반려'
+		</if> 
+		where overtime_id = #{overtimeId}
+	
+	</update>
 
 </mapper>

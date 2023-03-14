@@ -50,6 +50,7 @@ public class AttendanceController {
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
 		String attDate = simpleDateFormat1.format(date);
 		Attendance attendance = attendanceService.getAttendance(attDate, empId);
+		log.info(attendance);
 		return attendance;
 	}
 

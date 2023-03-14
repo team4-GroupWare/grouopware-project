@@ -56,17 +56,18 @@
 										<button type="button" class="btn btn-danger" name="isApproved" value="n" onclick="confirm(this)">반려</button>
 									</div>
 								</c:if>
-								
+								<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yy.MM.dd"/>
+										
 								
 							</div>
 							<script >
-										
 										function confirm (e) {
 											console.log("무슨일도....")
 											var type = $(e).attr('value');
 											var overtimeId = ${overtime.overtimeId};
-											var workDate ='${overtime.workDate}';
-											var empId = "${loginEmployee.empId}"
+											var workDate ='${workDate}';
+											console.log(workDate);
+											var empId = "${overtime.empId}"
 											$.ajax({
 												type: "post",
 											    url: "${pageContext.request.contextPath}/overtime/process",
@@ -78,8 +79,9 @@
 											    	empId : empId
 											    },
 											    success: function (data) {
-											    	alert("성공");
+											    	alert("data");
 											    	
+											    	location.reload();
 												},
 												error: function(e){
 													alert("값을 가져오지 못했습니다.")

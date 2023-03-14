@@ -75,7 +75,7 @@
 											    	vacationCategoryId:vacationCategoryId
 											    },
 											    success: function (data) {
-											    	alert("성공");
+											    	location.reload();											    	
 											    	
 												},
 												error: function(e){

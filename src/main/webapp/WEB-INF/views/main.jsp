@@ -116,6 +116,7 @@
 		  				let status; 
 		  				let clockIn;
 		  				let clockOut;
+		  				console.log(data.status)
 		  				
 		  				if(data.status == null){
 		  					status = "미출근";
@@ -145,7 +146,7 @@
 		  				}
 		  				//비활성화
 		  				//반차가 아닌 조건도 넣어주기
-	  					else if(data.clockIn != null && data.clockOut != null){
+	  					else if(data.clockIn != null && data.clockOut != null || data.status != null){
 		  				btnNotActive();
 		  				}
 		  				

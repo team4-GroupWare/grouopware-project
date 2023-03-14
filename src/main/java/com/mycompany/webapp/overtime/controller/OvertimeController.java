@@ -3,7 +3,6 @@ package com.mycompany.webapp.overtime.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.attendance.service.IAttendanceService;
 import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.service.IEmployeeService;
@@ -29,7 +29,6 @@ import com.mycompany.webapp.group.service.IDepartmentService;
 import com.mycompany.webapp.group.service.ITeamService;
 import com.mycompany.webapp.overtime.model.Overtime;
 import com.mycompany.webapp.overtime.service.IOvertimeService;
-import com.mycompany.webapp.vacation.model.VacationDate;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -42,6 +41,8 @@ public class OvertimeController {
 	private IDepartmentService departmentService;
 	@Autowired
 	private ITeamService teamService;
+	@Autowired
+	private IAttendanceService attendanceService;
 	@Autowired
 	private IEmployeeService employeeService;
 
@@ -131,15 +132,21 @@ public class OvertimeController {
 		@ResponseBody
 		public String process(@RequestParam String type, @RequestParam int overtimeId, @RequestParam String workDate,@RequestParam String empId,
 			Model model, HttpSession session) {
-			log.info("실행");
-
-			/*List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
-			int vacationProcess = vacationService.processVacation(type, vacationId, vacationDate, vacationName, empId,vacationCategoryId);
+			log.info(workDate);
+			log.info(empId);
+			String status = attendanceService.getThisWeekStatus(workDate, empId);
+			log.info(status);
 			
-			Employee employee = (Employee) session.getAttribute("loginEmployee");
-			String empIdorigine = employee.getEmpId();
-			Employee updateEmp = employeeService.getEmp(empIdorigine);
-			session.setAttribute("loginEmployee", updateEmp);*/
+			if(status == null||!status.equals("지각")) {
+				log.info("지각이라고요");
+				return "그날 출근 기록이 없습니다.";
+						
+			}
+			
+			workDate = workDate +" 18:00:00";
+			log.info(workDate);
+			int result = overtimeService.overTimeProcess(type,overtimeId,workDate,empId);
+			
 			return "aaaaa";
 
 		}
