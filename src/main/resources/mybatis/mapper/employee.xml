@@ -169,6 +169,7 @@
 		]]>
 	</insert>
 	
+	
 	<!-- 팀별 사원 목록  -->
 	<select id="selectEmpListByTeamId" parameterType="int" resultType="employee">
 		<![CDATA[
@@ -188,14 +189,21 @@
 	
 	<update id="updateEmployee" parameterType="employee">
 		update employees
-		set 
-				dept_id = #{deptId},
-				grade_id = #{gradeId}
+		set 	emp_id = #{empId}
+			<if test="deptId != 0">
+				,dept_id = #{deptId}
+				,grade_id = #{gradeId}
 				,team_id = #{teamId}
+			</if>
 			
-			<if test="profileContentType != null">
+			<if test="profileData != null">
 				 ,PROFILE_CONTENT_TYPE = #{profileContentType}
 				,PROFILE_DATA = #{profileData}
+			</if>
+			
+			<if test="profileData == null">
+				 ,PROFILE_CONTENT_TYPE = null
+				,PROFILE_DATA = null
 			</if>
 			<if test="phone != null">
 				,phone = #{phone}
@@ -207,7 +215,6 @@
 		update employees
 		set password = #{newPwd}, INITIAL_PASSWORD = 1
 		where emp_id = #{empId}
-	
 	</update>
 	
 	<!-- db에 저장된 해당 empId의 비밀번호 조회 -->

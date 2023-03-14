@@ -4,7 +4,6 @@
 
 <head>
 	<%@ include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="${pageContext.request.contextPath}/resources/ckeditor/build/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/file.js"></script>
 	
 	<script>

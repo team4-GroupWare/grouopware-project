@@ -14,7 +14,6 @@ import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 import com.mycompany.webapp.exception.AlreadyExistingIdException;
-import com.mycompany.webapp.exception.NotExistingManagerException;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -45,6 +44,7 @@ public class EmployeeService implements IEmployeeService {
 		log.info("실행");
 		//비밀번호 복호화
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		log.info(employee.getEmpId());
 		Employee dbEmployee = getEmployee(employee.getEmpId());
 		if(dbEmployee == null) {
 			return LoginResult.WRONG_ID;
@@ -140,14 +140,6 @@ public class EmployeeService implements IEmployeeService {
 			throw new AlreadyExistingIdException("duplicate ID");
 		}
 		
-		//없는 매니저 아이디를 입력하면 예외를 발생시킴
-		if(!employee.getManagerId().isEmpty()) {
-			int checkManager = employeeRepository.selectEmpId(employee.getManagerId());
-			if(checkManager==0) {
-				throw new NotExistingManagerException("No exist manager");
-			}
-		}
-		
 		//패스워드 암호화
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		employee.setPassword(pe.encode(employee.getPassword()));
@@ -187,13 +179,15 @@ public class EmployeeService implements IEmployeeService {
 	public int updateEmployee(Employee employee) {
 		log.info("실행");
 		//업데이트한 파일이 존재하면 파일을 VO에 다시 저장함
-		if(employee.getAttachFiles() != null) {
+		if(employee.getAttachFiles() != null && employee.getAttachFiles().getSize() != 0) {
+			log.info("파일 첨부: "+ employee.getAttachFiles());
 			try {
 				employee = multipartFileResolver.getEmployeeFile(employee);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		} 
+		log.info("employee: "+ employee);
 		log.info(employee.getEmpId());
 		log.info(employee.getDeptId());
 		log.info(employee.getTeamId());
