@@ -22,16 +22,16 @@ public class NoticeBoardService implements INoticeBoardService {
 	
 	//공지사항 카테고리별 행 갯수
 	@Override
-	public int selectTotalBoardPageByCategoryId(int boardCategoryId) {
+	public int selectTotalBoardPageByCategoryId(int boardCateId) {
 		log.info("실행");
-		return noticeBoardRepository.selectTotalBoardPageByCategoryId(boardCategoryId);
+		return noticeBoardRepository.selectTotalBoardPageByCategoryId(boardCateId);
 	}
 
 	//공지사항 카테고리 별 목록
 	@Override
-	public List<NoticeBoard> selectBoardListByCategory(Pager pager, int boardCategoryId) {
+	public List<NoticeBoard> selectBoardListByCategory(Pager pager, int boardCateId) {
 		log.info("실행");
-		return noticeBoardRepository.selectBoardListByCategory(pager, boardCategoryId);
+		return noticeBoardRepository.selectBoardListByCategory(pager, boardCateId);
 	}
 
 	//공지사항 작성(파일 없을 경우)
@@ -62,6 +62,13 @@ public class NoticeBoardService implements INoticeBoardService {
 		log.info("실행");
 		noticeBoardRepository.updateReadCount(noticeId);
 		return noticeBoardRepository.selectBoard(noticeId);
+	}
+
+	//메인 페이지에 보여줄 최신 공지사항 5개 목록
+	@Override
+	public List<NoticeBoard> selectMainBoardListByCategory(int boardCateId) {
+		log.info("실행");
+		return noticeBoardRepository.selectMainBoardListByCategory(boardCateId);
 	}
 	
 }

@@ -110,6 +110,26 @@
 		]]>
 	</select>
 	
+	<!-- 메인 페이지 공지사항 최신 5개 목록 -->
+	<select id="selectMainBoardListByCategory" parameterType="int" resultType="noticeBoard">
+		<![CDATA[ 
+			SELECT
+				notice_id AS "noticeId",
+				notice_title AS "noticeTitle",
+				n.board_cate_id AS "boardCateId",
+				c.board_cate_name AS "boardCateName",
+				writer AS "writer",
+				write_date AS "writeDate",
+				read_count AS "readCount"
+			FROM notice_board n, board_category c
+			WHERE n.board_cate_id = c.board_cate_id
+                and n.board_cate_id = #{boardCateId}
+			ORDER BY write_date DESC
+            OFFSET 0 ROWS
+            FETCH FIRST 5 ROWS ONLY
+		]]>
+	</select>
+	
 	<!-- 게시글 상세 조회 -->
 	<select id="selectBoard" parameterType="int" resultType="noticeBoard">
 		<![CDATA[

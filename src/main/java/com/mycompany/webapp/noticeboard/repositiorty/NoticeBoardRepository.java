@@ -11,40 +11,72 @@ import com.mycompany.webapp.noticeboard.model.NoticeFile;
 
 @Repository
 public interface NoticeBoardRepository {
-	int selectMaxArticleNo();
-	int selectMaxFileId();
-	
-	//공지사항 작성
+	/**
+	 * 공지사항 작성 
+	 * @author : LEEJIHO
+	 * @param board
+	 * @return
+	 */
 	public int insertBoard(NoticeBoard board);
+	
+	/**
+	 * 공지사항 작성 시 파일 첨부
+	 * @author : LEEJIHO
+	 * @param file
+	 * @return
+	 */
 	public int insertFileData(NoticeFile file);
 	
 	//공지사항 수정
-	public int updateBoard(NoticeBoard board);
-	public int updateFileData(NoticeFile file);
+	/*public int updateBoard(NoticeBoard board);
+	public int updateFileData(NoticeFile file);*/
 	
 	//공지사항 삭제
 	public int  deleteFileData(int boardId);
 	public int deleteBoard(int boardId);
 	
-	//공지사항 목록
+	/**
+	 * 카테고리별 공지사항 갯수
+	 * @author : LEEJIHO
+	 * @param boardCateId
+	 * @return
+	 */
 	public int selectTotalBoardPageByCategoryId(int boardCateId);
+	
+	/**
+	 * 공지사항 목록
+	 * @author : LEEJIHO
+	 * @param pager
+	 * @param boardCateId
+	 * @return
+	 */
 	public List<NoticeBoard> selectBoardListByCategory(@Param("pager") Pager pager, @Param("boardCateId") int boardCateId);
 	
-	//게시글 상세보기
-	NoticeBoard selectBoard(int boardId);
-	NoticeFile selectNoticeFile(int fileId);
+	/**
+	 * 메인 페이지 공지사항 최신 5개 목록
+	 * @author : LEEJIHO
+	 * @param boardCateId
+	 * @return
+	 */
+	public List<NoticeBoard> selectMainBoardListByCategory(int boardCateId);
 	
-	//조회수 증가
-	void updateReadCount(int boardId);
-
-	//댓글 작성, 수정, 삭제
-//	void insertComment(Comments comment);
-//	void updateComment(Comments comment);
-//	void deleteComment(int commentId);
+	/**
+	 * 게시글 상세보기
+	 * @author : LEEJIHO
+	 * @param boardId
+	 * @return
+	 */
+	public NoticeBoard selectBoard(int boardId);
+	public NoticeFile selectNoticeFile(int fileId);
 	
-    //댓글 조회
-//    int selectTotalCommentsPageByCommentId(int boardId);
-//    List<Comments> selectCommentsListByCommentId(@Param("boardId") int commentId, @Param("start") int start, @Param("end") int end);
+	/**
+	 * 조회수 증가
+	 * @author : LEEJIHO
+	 * @param boardId
+	 * @return
+	 */
+	public int updateReadCount(int boardId);
+	
 
 	//검색
 	/*int selectTotalBoardPageByKeyword(String keyword);
