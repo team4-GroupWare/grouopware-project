@@ -28,9 +28,17 @@ public class NoticeBoardController {
 	@Autowired
 	INoticeBoardService noticeBoardService;
 	
-	//게시글 목록
+	/**
+	 * 공지사항 목록
+	 * @author : LEEJIHO
+	 * @param boardCateId : 공지사항 카테고리 아이디 (1:공지사항, 2:상내경조사)
+	 * @param pageNo : 현재 페이지
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping({"/list", "/list/{boardCateId}"})
-	public String getBoardList(@PathVariable Integer boardCateId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model ) {
+	public String getBoardList(@PathVariable Integer boardCateId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		log.info("실행");
 		if(boardCateId == null) {
 			boardCateId = 1;
@@ -49,6 +57,13 @@ public class NoticeBoardController {
 		return "board/boardlist";
 	}
 	
+	/**
+	 * 공지사항 상세조회
+	 * @author : LEEJIHO
+	 * @param noticeId : 공지사항 게시글 아이디
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/detail/{noticeId}")
 	public String getBoardDetail(@PathVariable int noticeId, Model model) {
 		log.info("실행");
@@ -60,12 +75,23 @@ public class NoticeBoardController {
 		return "board/boarddetail";
 	}
 	
+	/**
+	 * 공지사항 작성 폼 불러오기
+	 * @author : LEEJIHO
+	 * @return
+	 */
 	@GetMapping("/write")
 	public String getBoardWrite() {
 		log.info("실행");
 		return "board/write";
 	}
 	
+	/**
+	 * 공지사항 작성
+	 * @author : LEEJIHO
+	 * @param noticeBoard : 작상한 내용을 담은 NoticeBoard DTO
+	 * @return
+	 */
 	@PostMapping("/write")
 	public String writeBoard(NoticeBoard noticeBoard) {
 		log.info("=실행");
@@ -73,20 +99,51 @@ public class NoticeBoardController {
 		try{
 			noticeBoard.setNoticeContent(noticeBoard.getNoticeContent().replace("\r\n", "<br>"));
 			MultipartFile mfile = noticeBoard.getFile();
-			if(mfile!=null && !mfile.isEmpty()) {
+			if(mfile!=null && !mfile.isEmpty()) { //파일이 존재할 경우
 				NoticeFile file = new NoticeFile();
 				file.setNoticeFileName(mfile.getOriginalFilename());
 				file.setNoticeFileSize(mfile.getSize());
 				file.setNoticeFileContentType(mfile.getContentType());
 				file.setNoticeFileData(mfile.getBytes());
+				
 				noticeBoardService.insertBoard(noticeBoard, file);
-			} else {
+			} else { //파일이 존재하지 않을 경우
 				noticeBoardService.insertBoard(noticeBoard);
 			}
 		} catch(Exception e){
 			e.printStackTrace();
-			
 		}
 		return "redirect:/board/list/" + noticeBoard.getBoardCateId();
+	}
+	
+	/**
+	 * 메인 화면 공지사항 목록
+	 * @author : LEEJIHO
+	 * @param boardCateId : 공지사항 카테고리 아이디
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/mainboardlist/{boardCateId}")
+	public String getMainBoardList(@PathVariable Integer boardCateId, HttpSession session, Model model) {
+		log.info("실행");
+		if(boardCateId == null) {
+			boardCateId = 1;
+		}
+		
+		//공지사항 목록
+		List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
+		
+		//사내경조사 목록
+		//List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
+		
+		model.addAttribute("boardCateId", boardCateId);
+		model.addAttribute("boardList", boardList);
+		
+		/*if(boardCateId == 1) {
+			return "board/main_boardlist";
+		}*/
+		
+		return "board/main_boardlist";
 	}
 }
