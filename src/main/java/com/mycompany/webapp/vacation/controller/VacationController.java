@@ -129,7 +129,6 @@ public class VacationController {
 			model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
 		}
 		model.addAttribute("vacationList", vacationList);
-		log.info(vacationList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		return "vacation/vacation_list";
@@ -141,14 +140,12 @@ public class VacationController {
 			Model model, HttpSession session) {
 		VacationDetail vacationDetail = vacationService.getVacationDetail(vacationId);
 		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
-		log.info(vacationDate);
 		Vacation vacation = vacationService.getApprovalEmp(vacationDetail.getApprovalEmpId());
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
 		model.addAttribute("vacationDetail", vacationDetail);
 		model.addAttribute("vacationDate", vacationDate);
 		model.addAttribute("vacation", vacation);
-		log.info(vacationDetail);
 		return "vacation/vacation_detail";
 	}
 

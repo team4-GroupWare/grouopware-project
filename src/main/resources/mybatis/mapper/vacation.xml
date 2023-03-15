@@ -20,12 +20,10 @@
 	<insert id="insertVacation" parameterType="vacation">
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
-			vacation_file_name, vacation_file_content_type, vacation_file_data, vacation_file_size,
 			status,count_day, approval_emp_id)
 		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
-			null,null,null,null, 
 			default,#{countDay},#{approvalEmpId})
 	</insert> 
 	

@@ -1,13 +1,10 @@
 package com.mycompany.webapp.vacation.model;
 
-import java.sql.Blob;
 import java.util.List;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
-@ToString(exclude="vacationFileData")
 public class Vacation {
 	private int vacationType;
 	private int vacationId;
@@ -18,12 +15,7 @@ public class Vacation {
 	private String dates;
 	private int vacationCategoryId;
 	private String empId;
-	private int countDay;
-	
-	private String vacationFileName;
-	private String vacationFileContentType;
-	private Blob vacationFileData;
-	private String vacationFileSize;
+	private double countDay;
 
 	private String approvalEmpId; 
 	

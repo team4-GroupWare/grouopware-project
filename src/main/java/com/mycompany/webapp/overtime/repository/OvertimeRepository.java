@@ -21,9 +21,9 @@ public interface OvertimeRepository {
 
 	int selecWeekOverTime(@Param("sunday") String sunday,@Param("empId") String empId);
 
-	int updateOvertimeAtt(@Param("workDate")String workDate, @Param("empId")String empId, @Param("workDateClock")String workDateClock);
+	int updateOvertimeAtt(Overtime overtime);
 
-	int updateOvertime(@Param("type")String type, @Param("overtimeId")int overtimeId);
+	void updateOvertime(Overtime overtime);
 	
 	
 

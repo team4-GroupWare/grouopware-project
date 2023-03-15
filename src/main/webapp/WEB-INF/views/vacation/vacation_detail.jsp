@@ -99,7 +99,7 @@
 											error: function(e){
 												alert("값을 가져오지 못했습니다.")
 											}
-										})
+										});
 									}
 								</script>
 							</c:if>
