@@ -2,6 +2,8 @@ package com.mycompany.webapp.attendance.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,6 +51,7 @@ public class AttendanceController {
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
 		String attDate = simpleDateFormat1.format(date);
 		Attendance attendance = attendanceService.getAttendance(attDate, empId);
+		log.info(attendance);
 		return attendance;
 	}
 
@@ -64,12 +66,11 @@ public class AttendanceController {
 
 	@GetMapping("/attendance/clockin")
 	public String clockIn(Model model, HttpSession session) {
-		log.info("실행");
-		Date date = new Date();
-		String message = "";
+		/*log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-
+		
+		Date date = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.mm.ss");
 		String today = simpleDateFormat.format(date);
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH");
@@ -111,7 +112,7 @@ public class AttendanceController {
 		}
 
 		int result = attendanceService.insertAttendance(empId, status);
-		log.info(message);
+		log.info(message);*/
 		return "main";
 	}
 

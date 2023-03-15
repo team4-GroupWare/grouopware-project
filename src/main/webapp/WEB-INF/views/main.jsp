@@ -58,148 +58,64 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
-		  	var today = new Date(); 						//오늘날짜
-	  		var day = today.getDay();						//요일
-	  	    var year = today.getFullYear();					//년
-	  	    var month = modifyNumber(today.getMonth()+1);	//월
-	  	    var date = modifyNumber(today.getDate());		//일
-	  	  	var isHoli = false;								//공휴일 판별
-	  	   
 	  	    //페이지 로드될 때마다 -> 메일 다섯개씩 리스트로 가져옴 (html조각)
 	  		$(document).ready(function() {
-	  			$.ajax({
-	  				url:"${pageContext.request.contextPath}/email/sendEmailListMain",
-	                type: "GET"
-	       		}).done(function(data){
-	       			$("#mail-send").empty();
-	                $("#mail-send").html(data);
-	            }); 
-	              
-	            $.ajax({
-	            	url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
-	               	type: "GET"
-	            }).done(function(data){
-	            	$("#mail-receive").empty();
-	                $("#mail-receive").html(data);
-	            }); 
-	            
-	            //공지사항
-	            $.ajax({
-	  				url:"${pageContext.request.contextPath}/board/mainboardlist/1",
-	                type: "GET"
-	       		}).done(function(data){
-	       			$("#notice").empty();
-	                $("#notice").html(data);
-	            });
-	            
-	            //사내 경조사
-	            $.ajax({
-	  				url:"${pageContext.request.contextPath}/board/mainboardlist/2",
-	                type: "GET"
-	       		}).done(function(data){
-	       		 	$("#happy").empty();
-	                $("#happy").html(data);
-	            }); 
-	  			
-	  			//현재 시간, 날짜 
-	  			nowClock();
+				nowClock();
         	    setInterval(nowClock,1000); 
-	  			
-        	    //오늘이 공휴일인지 판단 후 -> 해당사원의 출근 가져옴
-        	    
-        	    //1. 오늘 날짜 - > String으로 변환
-        	    var yearToStr = year.toString();
-        	    var monthToStr = month.toString();
-        	    var dateToStr = date.toString();
-	  			var today = yearToStr+monthToStr+dateToStr;
-	  			
-	  			//2. 공휴일 판단
 	  			$.ajax({
-	  				url:"${pageContext.request.contextPath}/holiday",
-	  				data:{"today":today}
-	  			}).done(function(data){
-	  				isHoli = data;
-	  				todayAtt();
-	  			}); 
+	                 url:"${pageContext.request.contextPath}/email/sendEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-send").empty();
+	                 $("#mail-send").html(data);
+	              }); 
+	              
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-receive").empty();
+	                 $("#mail-receive").html(data);
+	              }); 
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/attendance/today",
+	                 type: "GET",
+	              }).done(function(data){
+	            	  if(data==''){
+	            		alert("내꺼");
+						let clockIn = "-- : -- : --";
+						let clockOut = "-- : -- : --";
+						$("#clockIn").html(clockIn);
+						$("#clockOut").html(clockOut);
+	            	  }
+	            	  if(data.clockOut == null){
+	            		  let clockOut = "-- : -- : --";
+	            		  $("#clockOut").html(clockOut);
+	            	  }
+	            	  if(data.clockIn == null){
+	            		  let clockIn = "-- : -- : --";
+	            		  $("#clockIn").html(clockIn);
+	            	  }
+	            	  if(data.status != null){
+	            		  let clockIn = "-- : -- : --";
+	            		  $("#clockIn").html(clockIn);
+	            		  btnNotActive();
+	            	  }
+	            	  
+	            	  
+	              }); 
 	  		});
-  			
-	  	    
-	  	    //해당사원의 오늘날짜 출근 정보 가져옴
-  			function todayAtt(){
-  				//휴일일 경우
-		  		if(day == 6 || day == 0 || isHoli) {
-		  			//출근 상태 표시
-		  			let status = "휴일"
-		  			let clockIn = "-- : -- : --";
-	  				let clockOut = "-- : -- : --";
-	  				$("#status").html(status);
-	  				$("#clockIn").html(clockIn);
-	  				$("#clockOut").html(clockOut);
-	  				
-	  				//버튼 비활성화
-	  				btnNotActive();
-		  		
-	  			//휴일이 아닐 경우	
-		  		} else{
-		  			$.ajax({
-		  				url : "${pageContext.request.contextPath}/attendance/today"
-		  				
-		  			}).done(function(data){
-		  				
-		  				let status; 
-		  				let clockIn;
-		  				let clockOut;
-		  				console.log(data.status)
-		  				
-		  				if(data.status == null){
-		  					status = "미출근";
-		  				} else{
-		  					status = data.status;
-		  				}
-		  				
-		  				if(data.clockIn == null){
-		  					clockIn = "-- : -- : --";
-		  				} else{
-		  					clockIn = data.clockIn;
-		  				}
-		  				
-		  				if(data.clockOut == null){
-		  					clockOut = "-- : -- : --";
-		  				} else{
-		  					clockOut = data.clockOut;
-		  				}
-		  				 
-		  				$("#status").html(status);
-		  				$("#clockIn").html(clockIn);
-		  				$("#clockOut").html(clockOut);
-		  				
-		  				//퇴근버튼만 활성화
-		  				if(data.clockIn != null && data.clockOut == null){
-			  				onlyBtnleave();
-		  				}
-		  				//비활성화
-		  				//반차가 아닌 조건도 넣어주기
-	  					else if(data.clockIn != null && data.clockOut != null || data.status != null){
-		  				btnNotActive();
-		  				}
-		  				
-		  			});
-		  		}
-  			}
-	  		
-	  	    //01~09시는 앞에 0이 붙도록 해주는 함수
+	  		//0~9시를 00~09시로 나타내주는 함수
 			function modifyNumber(time){
-				if(parseInt(time)<10){
-				    return "0"+ time;
-				}
-				else  {
-					return time;	
-				}
+				if(parseInt(time)<10){return "0"+ time;}
+				else {return time;}
 			}
-		  	
 	  		//현재 시간, 날짜 함수
 	  	    function nowClock(){
-	  	    	var now = new Date(); 
+	  	    	var now = new Date();
+	  	    	var year = now.getFullYear();					//년
+	 	  	    var month = modifyNumber(now.getMonth()+1);	//월
+	 	  	    var date = modifyNumber(now.getDate());
 	  			var hour = modifyNumber(now.getHours()); 	//시
 		  	    var min = modifyNumber(now.getMinutes()); 	//분
 		  	    var sec = modifyNumber(now.getSeconds()); //초
@@ -207,7 +123,6 @@
 		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
           	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
 	  		}
-	  	    
 	  		//퇴근버튼만 활성화 함수
 	  		function onlyBtnleave() {
 	  			var target1 = document.getElementById('btn-attendance');
@@ -292,116 +207,70 @@
 			                	<div class=""><h2 id="time"></h2></div>
 					            <div class="row">
 					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
-									<!-- 출근 상태 -->
-				                	<!-- <div class="col">
-				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
-				                			출근
-				                		</span>
-				                	</div> -->
 					            </div>
-					            <!-- Modal -->
-								  <div class="modal fade" id="myModal" role="dialog">
-								    <div class="modal-dialog">
-								    
-								      <!-- Modal content-->
-								      <div class="modal-content">
-								        <div class="modal-header">
-								          <button type="button" class="close" data-dismiss="modal">×</button>
-								          <h4 class="modal-title">Modal Header</h4>
-								        </div>
-								        <div class="modal-body">
-								          <p>${message}</p>
-								        </div>
-								        <div class="modal-footer">
-								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								        </div>
-								      </div>
-								      
-								    </div>
-								  </div>
-				                
-								
 								<!-- 출퇴근 버튼 -->
 								<div>
 									<div class="row">
 										<!-- 출근하기 버튼 -->
 										<div class="col-6 border-end" style="text-align:center" >
-											<input 
-											id="btn-attendance"
-											type='image'
+											<input id="btn-attendance" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
-											width="100"
 											onClick="location.href='${pageContext.request.contextPath}/attendance/clockin'"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
 										</div><!-- End 출근하기 버튼 -->
-										
 										<!-- 퇴근하기 버튼 -->
 										<div class="col-6 " style="text-align:center">
-											<input 
-											id="btn-leave"
-											disabled 
-											style="opacity: 0.1"
-											type='image'
+											<input id="btn-leave" disabled style="opacity: 0.1" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
-											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance/clockout'" 
-											/>
+											onClick="location.href='${pageContext.request.contextPath}/attendance/clockout'" />
 											<div>퇴근하기</div>
 											<div id="clockOut"></div>
 										</div><!-- End퇴근하기 버튼 -->
 									</div>
-								
 								</div><!-- End 출퇴근 버튼 -->
-			            	
 			            	</div>
 		        		</div><!-- End attendance Card -->
-					
-							<!-- schedule Title -->
-							<div class="pagetitle">
-								<h1>캘린더</h1>
-							</div>
-							<!-- schedule Card -->
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<div class="sec_cal">
-										<div class="cal_nav">
-											
-											<div class="year-month my-3"></div>
-											
+						<!-- schedule Title -->
+						<div class="pagetitle">
+							<h1>캘린더</h1>
+						</div>
+						<!-- schedule Card -->
+						<div class="card recent-sales overflow-auto">
+							<div class="card-body">
+								<div class="sec_cal">
+									<div class="cal_nav">
+										<div class="year-month my-3"></div>
+									</div>
+									<div class="cal_wrap">
+										<div class="days">
+											<div class="day">SUN</div>
+											<div class="day">MON</div>
+											<div class="day">TUE</div>
+											<div class="day">WED</div>
+											<div class="day">THU</div>
+											<div class="day">FRI</div>
+											<div class="day">SAT</div>
 										</div>
-									  
-										<div class="cal_wrap">
-											<div class="days">
-												<div class="day">SUN</div>
-												<div class="day">MON</div>
-												<div class="day">TUE</div>
-												<div class="day">WED</div>
-												<div class="day">THU</div>
-												<div class="day">FRI</div>
-												<div class="day">SAT</div>
-											</div>
-											<div class="dates"></div>
-											<div class="tool_bar tool_absolute wrap_tb_box">
-										        <div class="critical">
-										            <section class="marker2">
-										                <ul>
-										                    <li class="attendanceMark"><span></span>출근</li>
-										                    <li class="lateMark"><span></span>지각</li>
-										                    <li class="holidayMark"><span></span>휴일</li>
-										                    <li class="vacationMark"><span></span>휴가</li>
-										                </ul>
-										            </section>
-										        </div>
-										    </div>
-										</div>
+										<div class="dates"></div>
+										<div class="tool_bar tool_absolute wrap_tb_box">
+									        <div class="critical">
+									            <section class="marker2">
+									                <ul>
+									                    <li class="attendanceMark"><span></span>출근</li>
+									                    <li class="lateMark"><span></span>지각</li>
+									                    <li class="holidayMark"><span></span>휴일</li>
+									                    <li class="vacationMark"><span></span>휴가</li>
+									                </ul>
+									            </section>
+									        </div>
+									    </div>
 									</div>
 								</div>
 							</div>
-						<!-- End attendance Card -->
+						</div><!-- End attendance Card -->
 					</div><!-- End Left side columns -->
-					
 					<!-- Right side columns -->
 					<div class="col-lg-8">
 						<!-- mail Title -->
@@ -459,12 +328,74 @@
 							
 									<!-- 공지사항 -->
 									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+										<div class="news">
+											<div class="post-item ">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 출결(전자출결,휴가,지하철 연착 등)관련 안내</a></h4>
+											    <p>출결(전자출결,휴가,지하철 연착 등)관련 안내</p>
+											</div>
 										
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 그룹웨어 사진 변경 안내</a></h4>
+											    <p>그룹웨어 사진 변경 안내드립니다.</p>
+											</div>
+										
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지]사내 건강검진 안내</a></h4>
+											    <p>2023년도 건강검진 안내드립니다.</p>
+											</div>
+										
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 개인정보처리방침 개정안내</a></h4>
+											    <p>개인정보처리방침 개정안내</p>
+											</div>
+											
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
+											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
+											</div>
+											
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
+											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
+											</div>
+										
+										</div>
 									</div><!-- End 공지사항 -->
 						
 									<!-- 사내 경조사 -->
 									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
+										<div id="news" class="news">
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]경조사 게시판 이용방법 안내</a></h4>
+											    <p>동문들의 경조사를 공유하고 알리는 게시판...</p>
+											</div>
+											
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]공공사업1div 이지호 차장 결혼 안내</a></h4>
+											    <p>2023년 3월 4일 삼성 00에 이지호 차장의 결혼....</p>
+											</div>
 										
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내] 야유회 관련</a></h4>
+											    <p>부서별 야유회 관련 안내입니다.</p>
+											</div>
+										
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]대표이사 취임식</a></h4>
+											    <p>취임식 참석 안내입니다.</p>
+											</div>
+											
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
+											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
+											</div>
+											
+											<div class="post-item clearfix">
+											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
+											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
+											</div>
+										
+										</div>
 									</div><!--End 사내 경조사  -->
 								</div><!--End notice content -->
 							</div>
