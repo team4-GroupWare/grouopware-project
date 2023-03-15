@@ -120,6 +120,11 @@ public class EmployeeService implements IEmployeeService {
 		return employeeRepository.selectSearchEmpCount(employee, deptId);
 	}
 
+	/**
+	 * @author : LEEYESEUNG
+	 * @param empId : 아이디 중복체크를 위한 작성된 empId
+	 * @return boolean : 결과 반영
+	 */
 	@Override
 	public boolean checkId(String empId) {
 		boolean result = false;
@@ -131,6 +136,7 @@ public class EmployeeService implements IEmployeeService {
 	/**
 	 * @author : LEEYESEUNG
 	 * @param employee : 등록할 Employee 객체
+	 * @return int : 반영된 행수
 	 */
 	public int register(Employee employee) throws Exception{
 		log.info("실행");
@@ -174,27 +180,28 @@ public class EmployeeService implements IEmployeeService {
 	/**
 	 * @author : LEEYESEUNG
 	 * @param employee : 업데이트할 Employee 객체
+	 * @return int : 반영된 행수
 	 */
 	@Override
 	public int updateEmployee(Employee employee) {
 		log.info("실행");
 		//업데이트한 파일이 존재하면 파일을 VO에 다시 저장함
 		if(employee.getAttachFiles() != null && employee.getAttachFiles().getSize() != 0) {
-			log.info("파일 첨부: "+ employee.getAttachFiles());
 			try {
 				employee = multipartFileResolver.getEmployeeFile(employee);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} 
-		log.info("employee: "+ employee);
-		log.info(employee.getEmpId());
-		log.info(employee.getDeptId());
-		log.info(employee.getTeamId());
-		log.info(employee.getGradeId());
 		return employeeRepository.updateEmployee(employee);
 	}
 
+	/**
+	 * @author :LEEJIHO
+	 * @param oldPwd : 작성했던 원래 비밀번호
+	 * @param empId 
+	 * @return int : 작성한 비밀번호가 db비밀번호와 일치하는지 결과
+	 */
 	@Override
 	public int checkPassword(String oldPwd, String empId) {
 		log.info("실행");
@@ -210,6 +217,12 @@ public class EmployeeService implements IEmployeeService {
 		return row;
 	}
 
+	/**
+	 *  @author :LEEJIHO
+	 *  @param newPwd : 새로 입력한 비밀번호
+	 *  @param empId
+	 *  @return int : 반영된 행수
+	 */
 	@Override
 	public int updatePassword(String newPwd, String empId) {
 		log.info("실행");
@@ -223,6 +236,11 @@ public class EmployeeService implements IEmployeeService {
 		
 	}
 
+	/**
+	 * @author :LEEYESEUNG
+	 * @param employeePassword : 현재 비밀번호, 원래 비밀번호, 사원 아이디 VO
+	 * @return int : 업데이트 반영된 행수
+	 */
 	@Override
 	public int grantInitialPassword(EmployeePassword employeePassword) {
 		//패스워드 암호화
