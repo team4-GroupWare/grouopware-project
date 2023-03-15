@@ -169,7 +169,7 @@
 								<label class="col-sm-2 label">휴가 종류</label>
 								<div class="col-sm-4">
 									<select id="POP" name="vacationCategoryId" class="form-select"
-										aria-label="Default select example">
+										aria-label="Default select example" onchange="vtype()">
 										<option value="1" selected>연차</option>
 										<option value="2">오전 반차</option>
 										<option value="3">오후 반차</option>
@@ -221,7 +221,31 @@
 									console.log($('#countDay').val());
 								};
 								
+								  function vtype(){
+									 var vacationType = $("#pop option:checked").val();
+										console.log(vacationType);
+										var vacationType = $("#pop option:checked").val();
+										console.log(vacationType);
+										
+										if(vacationType == 1){
+											countDate();
+											return"";
+										}
+										var dateString = document.getElementById('datePicker').value;
+										console.log(dateString);
+										var count = dateString.split(',').length;
+										if(dateString == ""){
+											count = 0;
+										}
+										$('#choiceDate').text('선택 일수 : '+count*0.5+'일');
+										$('#countDay').val(count*0.5);
+										
+										
+							        } 
+								
 								function countDate(){
+									var vacationType = $("#pop option:checked").val();
+									console.log(vacationType);
 									var dateString = document.getElementById('datePicker').value;
 									console.log(dateString);
 									var count = dateString.split(',').length;
@@ -230,7 +254,6 @@
 									}
 									$('#choiceDate').text('선택 일수 : '+count+'일');
 									$('#countDay').val(count);
-									console.log("????"+$('#countDay').val());
 								}
 								
 							</script>
