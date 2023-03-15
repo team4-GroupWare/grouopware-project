@@ -203,6 +203,9 @@ public class EmailService implements IEmailService {
 	
 	/**
 	 * @author LEEYESEUNG
+	 * @param emailId 
+	 * @param type : 받는 메일인지 보낸 메일인지 구분
+	 * @return int : update 반영된 행수
 	 */
 	@Transactional
 	@Override
@@ -219,6 +222,9 @@ public class EmailService implements IEmailService {
 	
 	/**
 	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @param type : 보낸메일인지 받는 메일인지 구분
+	 * @return int : trashDate 반영된 행수
 	 */
 	@Transactional
 	@Override
@@ -237,7 +243,7 @@ public class EmailService implements IEmailService {
 	/**
 	 * @author LEEYESEUNG
 	 * @param emailId : 복구하려는 이메일 아이디
-	 * @return int : 업데이트한 행수 반환
+	 * @return int : 업데이트한 행수 반환(복구된)
 	 */
 	@Transactional
 	@Override
@@ -247,6 +253,12 @@ public class EmailService implements IEmailService {
 		row += emailRepository.updateSendEmailRestore(emailId);
 		return row;
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param receiveEmailId : 받는 메일 아이디
+	 * @return EmailDetail : Email 상세 페이제에서 필요한 VO 
+	 */
 	@Transactional
 	@Override
 	public EmailDetail readReceiveEmail(int receiveEmailId) {
@@ -261,6 +273,11 @@ public class EmailService implements IEmailService {
 		return emailDetail;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param sendEmailId : 보낸 메일 아이디
+	 * @return EmailDetail : Email 상세 페이제에서 필요한 VO 
+	 */
 	@Override
 	public EmailDetail readSendEmail(int sendEmailId) {
 		log.info("실행");
@@ -270,6 +287,12 @@ public class EmailService implements IEmailService {
 		emailDetail.setEmailFiles(emailFileList);
 		return emailDetail;
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmail : 임시저장 VO
+	 * @return int : 반영된 행수
+	 */
 	@Transactional
 	@Override
 	public int tempSaveEmail(TempEmail tempEmail) {
@@ -291,6 +314,12 @@ public class EmailService implements IEmailService {
 		row = emailRepository.insertTempEmail(tempEmail);
 		return row;
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId : 발신 취소할 메일
+	 * @return int : 반영된 행수
+	 */
 	@Transactional
 	@Override
 	public int cancelEmail(int emailId) {
@@ -306,6 +335,12 @@ public class EmailService implements IEmailService {
 		}
 		return row;
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailDetail : 작성한 emailDetail VO
+	 * @return int : 반영된 행수
+	 */
 	@Transactional
 	@Override
 	public int writeEmail(EmailDetail emailDetail) {
@@ -355,26 +390,52 @@ public class EmailService implements IEmailService {
 		}
 		return row;
 	}
-
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailFileId
+	 * @return EmailFile
+	 */
 	@Override
 	public EmailFile getFile(int emailFileId) {
 		return emailFileRepository.selectEmailFileByFileId(emailFileId);
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param empId : 세션에 저장된 empId
+	 * @return List<MainEmailList> : 메인에 나타낼 최근 5개의 메일 리스트
+	 */
 	@Override
 	public List<MainEmailList> getSendMainEmailList(String empId) {
 		return emailRepository.selectMainSendEmail(empId);
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param empId : 세션에 저장된 empId
+	 * @return List<MainEmailList> : 메인에 나타낼 최근 5개의 메일 리스트
+	 */
 	@Override
 	public List<MainEmailList> getReceiveMainEmailList(String empId) {
 		return emailRepository.selectMainReceiveEmail(empId);
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmailId : tempEmail 객체를 가져오기 위한 ID
+	 * @return TempEmail
+	 */
 	@Override
 	public TempEmail getTempEmailDetail(int tempEmailId) {
 		return emailRepository.selectTempEailDetail(tempEmailId);
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param tempEmail : update진행할 tempEmail VO
+	 * @return int : 반영된 행수
+	 */
 	@Transactional
 	@Override
 	public int updateTempEmail(TempEmail tempEmail) {
@@ -387,6 +448,11 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param emailId
+	 * @return EmailDetail
+	 */
 	@Override
 	public EmailDetail getEmailDetail(int emailId) {
 		EmailDetail emailDetail = new EmailDetail();
@@ -399,6 +465,12 @@ public class EmailService implements IEmailService {
 		return emailDetail;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param keyword : 검색어
+	 * @param empId 
+	 * @return int : pager 객체를 만들기 위한 행수
+	 */
 	@Override
 	public int getSearchTempCount(String keyword, String empId) {
 		log.info("실행");
@@ -406,6 +478,13 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager : 검색 결과에 대한 페이지 객체
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return List<EmailList> : 검색 결과 리스트
+	 */
 	@Override
 	public List<EmailList> getSearchTempList(Pager pager, String keyword, String empId) {
 		log.info("실행");
@@ -413,6 +492,12 @@ public class EmailService implements IEmailService {
 		return emailList;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return int : pager 객체를 만들기 위한 행수
+	 */
 	@Override
 	public int getSearchTrashCount(String keyword, String empId) {
 		log.info("실행");
@@ -420,6 +505,13 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager : 검색 결과에 대한 페이지 객체
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return List<EmailList> : 검색 결과 리스트
+	 */
 	@Override
 	public List<EmailList> getSearchTrashList(Pager pager, String keyword, String empId) {
 		log.info("실행");
@@ -427,12 +519,25 @@ public class EmailService implements IEmailService {
 		return emailList;
 	}
 	
+	/**
+	 * @author LEEYESEUNG
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return int : pager 객체를 만들기 위한 행수
+	 */
 	@Override
 	public int getSearchReceiveCount(String keyword, String empId) {
 		int row = emailRepository.selectSearchReceiveCount(keyword, empId);
 		return row;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager : 검색 결과에 대한 페이지 객체
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return List<EmailList> : 검색 결과 리스트
+	 */
 	@Override
 	public List<EmailList> getSearchReceiveList(Pager pager, String keyword, String empId) {
 		log.info("실행");
@@ -440,6 +545,13 @@ public class EmailService implements IEmailService {
 		return emailList;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @param pager : 검색 결과에 대한 페이지 객체
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return List<EmailList> : 검색 결과 리스트
+	 */
 	@Override
 	public List<EmailList> getSearchSendList(Pager pager, String keyword, String empId) {
 		log.info("실행");
@@ -447,13 +559,23 @@ public class EmailService implements IEmailService {
 		return emailList;
 	}
 	
-	
-
+	/**
+	 * @author LEEYESEUNG
+	 * @param keyword : 검색어
+	 * @param empId
+	 * @return int : pager 객체를 만들기 위한 행수
+	 */
 	@Override
 	public int getSearchSendCount(String keyword, String empId) {
 		int row = emailRepository.selectSearchSendCount(keyword, empId);
 		return row;
 	}
+	
+	/**
+	 * @author LEEYESEUNG
+	 * @param sqlDate : 오늘 날짜로부터 10일 이전
+	 * @return int : 10일 이전인 메일이 쓰레기통에 존재하면 영구삭제 -> 반영된 행수
+	 */
 	@Transactional
 	@Override
 	public int getTrashEmail(Date sqlDate) {
@@ -473,6 +595,10 @@ public class EmailService implements IEmailService {
 		return row;
 	}
 
+	/**
+	 * @author LEEYESEUNG
+	 * @return int : 삭제된 행수
+	 */
 	@Override
 	public int deleteEmail() {
 		log.info("실행");
