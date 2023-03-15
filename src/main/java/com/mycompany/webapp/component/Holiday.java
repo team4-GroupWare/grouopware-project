@@ -28,8 +28,8 @@ public class Holiday {
 		String a= formatter.format(c.getTime());
 		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		String b= formatter.format(c.getTime());
-		System.out.println(a);
-		System.out.println(b);
+		//System.out.println(a);
+		//System.out.println(b);
 
 	}
 
@@ -47,7 +47,7 @@ public class Holiday {
 			c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			c.add(Calendar.DATE, i);
 			list.add(formatter.format(c.getTime()));
-			System.out.println(list.toString());
+			//System.out.println(list.toString());
 		}
 
 		return list;
