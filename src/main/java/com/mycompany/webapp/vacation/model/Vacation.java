@@ -15,7 +15,7 @@ public class Vacation {
 	private String dates;
 	private int vacationCategoryId;
 	private String empId;
-	private int countDay;
+	private double countDay;
 
 	private String approvalEmpId; 
 	
