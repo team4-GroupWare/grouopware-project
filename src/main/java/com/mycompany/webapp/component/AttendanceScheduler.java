@@ -22,7 +22,6 @@ public class AttendanceScheduler {
 	//18시에 퇴근/결근 넣어주기
 	//@Scheduled(cron = "0 51 18 * * 1-5")
 	public void addAtt18() {
-		System.out.println("돌아가낭?");
 		Date date = new Date();
 		
 		/*Calendar c1 = new GregorianCalendar();
@@ -41,7 +40,6 @@ public class AttendanceScheduler {
 	//@Scheduled(cron = "25 37 23 * * *")
 	public void addThisWeek() {
 		Date date = new Date();
-		System.out.println("돌아가낭?");
 		for(int i = -11; i>-12; i--) {
 			Calendar c1 = new GregorianCalendar();
 		

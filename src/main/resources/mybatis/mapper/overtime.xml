@@ -80,13 +80,13 @@
 		)
 	</select>
 	
-	<update id="updateOvertimeAtt" parameterType="map">
+	<update id="updateOvertimeAtt" parameterType="overtime">
 		update attendance set
 		status = '연장근무', clock_out = to_date(#{workDateClock},'YY.MM.DD HH24:MI:SS')	
-		where emp_id=#{empId} and to_char(attendance_date,'YY.MM.DD')=#{workDate}
+		where emp_id=#{empId} and to_char(attendance_date,'YY.MM.DD')=#{workDateDetail}
 	</update>
 	
-	<update id="updateOvertime" parameterType="map">
+	<update id="updateOvertime" parameterType="overtime">
 		update overtime 
 		set
 		approval_date = sysdate

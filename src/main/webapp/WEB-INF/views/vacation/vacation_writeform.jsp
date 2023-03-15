@@ -18,7 +18,6 @@
 	src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-datepicker.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
-
 <style>
 .card-header {
 	background-color: #d5e0fd;
@@ -33,7 +32,6 @@
 	font-size: 20px;
 }
 </style>
-
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -42,7 +40,7 @@
 	<main id="main" class="main">
 	<section class="section">
 		<div class="row mt-5">
-			<!--================================================신청자 정보==================================================-->
+			<!--================================================신청자 정보================================-->
 			<div class="col-4">
 				<div class="card profile mt-3">
 					<div class="card-header">신청자 정보</div>
@@ -110,13 +108,15 @@
 										$("#datePicker1").datepicker('destroy');
 										
 										$('#dateplace').empty();
-										let element2 = '<div class="row mb-3">'+
-											'<label for="text" class="col-sm-2 col-form-label"><b>날짜 선택</b></label>'+
-											'<div class="col-sm-10">'+
-												'<input type="text" id="datePicker" name="dates" style="width:100%" onchange="countDate()" class="form-control" required>'+
-												'<p id="choiceDate" class="small">선택 일수 : 0일</p>'
-											'</div>'+
-										'</div>';
+										let element2 = 
+											'<div class="row mb-1">'+
+												'<label class="label col-sm-2">날짜 선택</label>'+
+													'<div class="col-sm-10">'+
+													'<input type="text" id="datePicker" name="dates" style="width:100%"'+ 
+														'onchange="countDate()" class="form-control" required>'+
+													'<p id="choiceDate" class="small">선택 일수 : 0일</p>'
+													'</div>'+
+												'</div>';
 										$('#dateplace').append(element2);
 										
 										$('#datePicker').datepicker({
@@ -135,17 +135,17 @@
 										'<option value="6">사망</option>';
 										$('#POP').append(element);
 										$("#datePicker").datepicker('destroy');
-										console.log("이게 안돼")
-										$('#dateplace').empty();
-										let element2 = '<div class="row mb-3">'+
-											'<label for="text" class="col-sm-2 col-form-label"><b>시작날짜</b></label>'+
-											'<div class="col-sm-4">'+
-												'<input type="text" id="datePicker1" name="startDate" style="width:100%" onchange="plusDate()" class="form-control" required>'+
-											'</div>'+
-										'</div>'+
 										
-										'<div class="row mb-3">'+
-											'<label for="text" class="col-sm-2 col-form-label"><b>종료날짜</b></label>'+
+										$('#dateplace').empty();
+										let element2 = 
+											'<div class="row mb-1">'+
+												'<label class="col-sm-2 label">시작날짜</label>'+
+												'<div class="col-sm-4">'+
+													'<input type="text" id="datePicker1" name="startDate" style="width:100%" onchange="plusDate()" class="form-control" required>'+
+												'</div>'+
+											'</div>'+
+											'<div class="row mb-3">'+
+												'<label for="text" class="col-sm-2 label"><b>종료날짜</b></label>'+
 											'<div class="col-sm-4">'+
 												'<input type="text" id="endDate" name="endDate" style="width:100%" class="form-control">'+
 												'<p id="choiceDate" class="small">선택 일수 : 0일</p>'
@@ -177,7 +177,7 @@
 								<label class="col-sm-2 label">휴가 종류</label>
 								<div class="col-sm-4">
 									<select id="POP" name="vacationCategoryId" class="form-select"
-										aria-label="Default select example">
+										aria-label="Default select example" onchange="vtype()">
 										<option value="1" selected>연차</option>
 										<option value="2">오전 반차</option>
 										<option value="3">오후 반차</option>
@@ -229,16 +229,54 @@
 									console.log($('#countDay').val());
 								};
 								
+								function vtype(){
+									var vacationType = $("#pop option:checked").val();
+									if(vacationType == 1||vacationType == 2||vacationType == 3){
+										$('#dateplace').empty();
+										$("#datePicker1").datepicker('destroy');
+										
+										$('#dateplace').empty();
+										let element2 = '<div class="row mb-3">'+
+											'<label for="text" class="label col-sm-2 "><b>날짜 선택</b></label>'+
+											'<div class="col-sm-10">'+
+												'<input type="text" id="datePicker" name="dates" style="width:100%" onchange="countDate()" class="form-control" required>'+
+												'<p id="choiceDate" class="small">선택 일수 : 0일</p>'
+											'</div>'+
+										'</div>';
+										$('#dateplace').append(element2);
+										
+										$('#datePicker').datepicker({
+											format: "yyyy-mm-dd",
+										    multidate: true,
+										    multidateSeparator: " ,",
+										    datesDisabled: ['2023/03/01'],
+										    daysOfWeekDisabled: "0,6",
+										    todayHighlight: true
+										});
+									}
+									
+									
+									
+								}
+								
 								function countDate(){
+					        		var vacationType = $("#pop option:checked").val();
+									
 									var dateString = document.getElementById('datePicker').value;
-									console.log(dateString);
+									
 									var count = dateString.split(',').length;
 									if(dateString == ""){
 										count = 0;
 									}
-									$('#choiceDate').text('선택 일수 : '+count+'일');
-									$('#countDay').val(count);
-									console.log("????"+$('#countDay').val());
+									
+									if(vacationType == 1){
+										$('#choiceDate').text('선택 일수 : '+count+'일');
+										$('#countDay').val(count);
+									}else if(vacationType == 2 ||vacationType == 3){
+										$('#choiceDate').text('선택 일수 : '+count*0.5+'일');
+										$('#countDay').val(count*0.5);
+									}
+									console.log($('#countDay').val());
 								}
 								
 							</script>
@@ -311,60 +349,55 @@
 		</div>
 		<div class="row" style="height: 100px"></div>
 	</section>
-	<div class="modal fade" id="countModal" data-bs-backdrop="static"
+
+	<div class="modal fade" id="approvalModal" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<i class="bi bi-exclamation-circle-fill"
-						style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-					잔여 연차수
+					<b>결제선 선택</b>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p style="margin-bottom: 4px">신청 불가. 잔여 연차수를 확인해주세요</p>
+					<p style="margin-bottom: 4px">
+						<i class="bi bi-exclamation-triangle"
+							style="margin-right: 10px; color: red;"></i>결재선은 필수항목입니다.
+					</p>
+					<p>필수항목을 입력해주세요.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
+						data-bs-dismiss="modal">확인</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="approvalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog">
-					    	<div class="modal-content">
-					      		<div class="modal-header"><b>결제선 선택</b>
-					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					      		</div>
-					      		<div class="modal-body">
-					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>결재선은 필수항목입니다.</p>
-					        		<p>필수항목을 입력해주세요.</p>
-					      		</div>
-					      		<div class="modal-footer">
-					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-					      		</div>
-					    	</div>
-					  	</div>
-					</div>
-	<div class="modal fade" id="countDayModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog">
-					    	<div class="modal-content">
-					      		<div class="modal-header"><b>날짜 선택</b>
-					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					      		</div>
-					      		<div class="modal-body">
-					        		<p style="margin-bottom:4px"><i class="bi bi-exclamation-triangle" style="margin-right:10px; color:red;"></i>날짜를 선택해주세요.</p>
-					        		<p>필수항목을 입력해주세요.</p>
-					      		</div>
-					      		<div class="modal-footer">
-					        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-					      		</div>
-					    	</div>
-					  	</div>
-					</div>
+	<div class="modal fade" id="countDayModal" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<b>날짜 선택</b>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p style="margin-bottom: 4px">
+						<i class="bi bi-exclamation-triangle"
+							style="margin-right: 10px; color: red;"></i>날짜를 선택해주세요.
+					</p>
+					<p>필수항목을 입력해주세요.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	</main>
 	<!-- ======================================Main==================================================== -->
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

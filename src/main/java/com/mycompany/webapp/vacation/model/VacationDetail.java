@@ -7,7 +7,7 @@ public class VacationDetail {
 	private int vacationId;
 	private String content;
 	private String writeDate;
-	private int countDay;
+	private double countDay;
 	private String deptName;
 	private String teamName;
 	private String gradeName;

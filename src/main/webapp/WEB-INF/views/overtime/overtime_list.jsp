@@ -63,46 +63,9 @@ table a:active {
 									<!-- <th scope="col" width="10%">#</th> -->
 									<th scope="col" width="10%">번호</th>
 									<th scope="col" width="20%">기안자</th>
-									<th scope="col" width="20%">근무시간</th>
-									<th scope="col" width="20%">근무날짜</th>
-									<th scope="col" width="10%"><a class="nav-link" href="#"
-										data-bs-toggle="dropdown"> <span
-											class="d-none d-md-block dropdown-toggle ps-2">상태</span>
-									</a>
-										<ul class="dropdown-menu ">
-											<li><a class="dropdown-item d-flex align-items-center"
-												href="${pageContext.request.contextPath}/vacation/my"> <span>전체</span>
-											</a></li>
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a class="dropdown-item d-flex align-items-center"
-												href="${pageContext.request.contextPath}/vacation/my?status=대기">
-													<span>대기</span>
-											</a></li>
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a class="dropdown-item d-flex align-items-center"
-												href="${pageContext.request.contextPath}/vacation/my?status=진행">
-													<span>진행</span>
-											</a></li>
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a class="dropdown-item d-flex align-items-center"
-												href="${pageContext.request.contextPath}/vacation/my?status=승인">
-													<span>승인</span>
-											</a></li>
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a class="dropdown-item d-flex align-items-center"
-												href="${pageContext.request.contextPath}/vacation/my?status=반려">
-													<span>반려</span>
-											</a></li>
-
-										</ul></th>
+									<th scope="col" width="20%">연장 근무 시간</th>
+									<th scope="col" width="20%">연장 근무 날짜</th>
+									<th scope="col" width="10%">상태</th>
 									<th scope="col" width="20%">작성날짜</th>
 								</tr>
 
@@ -149,12 +112,12 @@ table a:active {
 						<nav aria-label="Page navigation example">
 							<ul class="pagination">
 								<li class="page-item"><a class="page-link"
-									href="my?pageNo=1&status=${status}" aria-label="Previous">
+									href="?pageNo=1&status=${status}" aria-label="Previous">
 										<span aria-hidden="true">처음</span>
 								</a></li>
 								<c:if test="${pager.groupNo>1}">
 									<li class="page-item"><a class="page-link"
-										href="my?pageNo=${pager.startPageNo-1}&status=${status}"
+										href="?pageNo=${pager.startPageNo-1}&status=${status}"
 										aria-label="Previous"> <span aria-hidden="true">이전</span>
 									</a></li>
 								</c:if>
@@ -162,22 +125,22 @@ table a:active {
 									end="${pager.endPageNo}">
 									<c:if test="${pager.pageNo != i}">
 										<li class="page-item"><a class="page-link"
-											href="my?pageNo=${i}&status=${status}">${i}</a></li>
+											href="?pageNo=${i}&status=${status}">${i}</a></li>
 									</c:if>
 									<c:if test="${pager.pageNo == i}">
 										<li class="page-item active"><a class="page-link"
-											href="my?pageNo=${i}&status=${status}">${i}</a></li>
+											href="?pageNo=${i}&status=${status}">${i}</a></li>
 									</c:if>
 								</c:forEach>
 
 								<c:if test="${pager.groupNo<pager.totalGroupNo}">
 									<li class="page-item"><a class="page-link"
-										href="list?pageNo=${pager.endPageNo+1}&status=${status}"
+										href="?pageNo=${pager.endPageNo+1}&status=${status}"
 										aria-label="Next"> <span aria-hidden="true">다음</span>
 									</a></li>
 								</c:if>
 								<li class="page-item"><a class="page-link"
-									href="list?pageNo=${pager.totalPageNo}&status=${status}"
+									href="?pageNo=${pager.totalPageNo}&status=${status}"
 									aria-label="Previous"> <span aria-hidden="true">맨끝</span>
 								</a></li>
 							</ul>
