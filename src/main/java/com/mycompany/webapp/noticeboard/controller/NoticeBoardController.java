@@ -134,6 +134,8 @@ public class NoticeBoardController {
 		//공지사항 목록
 		List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
 		
+		log.info("===========boardList===================");
+		log.info(boardList);
 		//사내경조사 목록
 		//List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
 		

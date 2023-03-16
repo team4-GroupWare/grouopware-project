@@ -31,7 +31,7 @@
   	<%@ include file="/WEB-INF/views/approval/approval_sidebar.jsp" %>
 	<!-- ======= End Sidebar ======= -->
 	
-  	<main id="main" class="main">
+  	<main id="main" class="main" style="height: 800px;">
     	<div class="pagetitle">
     		<h1>참조 문서함</h1>
     	</div><!-- End Page Title -->

@@ -44,7 +44,7 @@ public class GroupController {
 		log.info("실행");
 		
 		if(deptId == null) {
-			deptId = 0;
+			deptId = 1;
 		}
 		
 		//부서 목록
