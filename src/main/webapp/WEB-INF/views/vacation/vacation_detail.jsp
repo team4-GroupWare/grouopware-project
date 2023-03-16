@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <html>
 
 <head>
@@ -141,7 +142,8 @@
 									</div>
 									<div class="row mb-4">
 										<div class="col-lg-3 col-md-4 label ">승인 날짜</div>
-										<div class="col-lg-9 col-md-8">${vacationDetail.writeDate}</div>
+										<fmt:formatDate var="workDate" value="${vacationDetail.vacationApprovalDate}" pattern="yyyy-MM-dd"/>
+										<div class="col-lg-9 col-md-8">${workDate}</div>
 									</div>
 								</div>
 							</div>

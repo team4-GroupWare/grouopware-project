@@ -1,170 +1,217 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycompany.webapp.attendance.repository.AttendanceRepository">
+<mapper
+	namespace="com.mycompany.webapp.attendance.repository.AttendanceRepository">
 
-	<select id="selectAttendance" parameterType="map" resultType="attendance">
-		select TO_char(clock_in, 'HH24:MI:SS') as clockIn ,TO_char(clock_out, 'HH24:MI:SS') as clockOut, attendance_date as attendanceDate, status
+	<select id="selectAttendance" parameterType="map"
+		resultType="attendance">
+		select attendance_id as "attendanceId", TO_char(clock_in,
+		'HH24:MI:SS') as clockIn ,TO_char(clock_out, 'HH24:MI:SS') as
+		clockOut, attendance_date as attendanceDate, status
 		from attendance
-		where emp_id= #{empId} 
-		and TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate} 	
+		where emp_id= #{empId}
+		and TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate}
 	</select>
-	
+
 	<insert id="insertAttendance" parameterType="map">
 		INSERT INTO
 		attendance
-			(attendance_id, emp_id, clock_in, clock_out, attendance_date, status)
+		(attendance_id, emp_id, clock_in, clock_out, attendance_date, status)
 		VALUES
-			(seq_attendance.NEXTVAL,#{empId}, sysdate, null ,sysdate, #{status})
+		(seq_attendance.NEXTVAL,#{empId}, sysdate, null ,sysdate, #{status})
 	</insert>
-	
+
 	<update id="updateLeave" parameterType="map">
 		UPDATE ATTENDANCE
-		SET CLOCK_OUT = SYSDATE
-		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{attDate}
+		SET
+		CLOCK_OUT = SYSDATE
+		WHERE EMP_ID = #{empId} AND
+		TO_CHAR(attendance_date, 'YYYYMMdd') = #{attDate}
 	</update>
-	
+
 	<select id="selectTotalEmpId" resultType="string">
 		select emp_id as empId
 		from employees
 	</select>
-	
-	 <select id="selectTodayEmpId" parameterType="string" resultType="string" >
-	 	select emp_id as empId
+
+	<select id="selectTodayEmpId" parameterType="string"
+		resultType="string">
+		select emp_id as empId
 		from attendance
-		where to_char(attendance_date,'YYYYMMdd') = #{today}
-	 </select>
-	 
-	 <insert id="insertEmpAbsent" parameterType="map">
-	 	INSERT INTO
-	 	ATTENDANCE
-	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
-	 	VALUES
-	 		(seq_attendance.NEXTVAL,#{empAbsent},null,null,#{today},'결근')
-	 </insert>
-	 
-	 <select id="selectNotOutEmp" parameterType="string" resultType="string">
-	 	select emp_id
+		where
+		to_char(attendance_date,'YYYYMMdd') = #{today}
+	</select>
+
+	<insert id="insertEmpAbsent" parameterType="map">
+		INSERT INTO
+		ATTENDANCE
+		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
+		VALUES
+		(seq_attendance.NEXTVAL,#{empAbsent},null,null,#{today},'결근')
+	</insert>
+
+	<select id="selectNotOutEmp" parameterType="string"
+		resultType="string">
+		select emp_id
 		from attendance
-		where clock_in is not null and clock_out is null and to_char(attendance_date,'YYYYMMdd')=#{today}
-	 </select>
-	 
-	 <update id="updateEmpOut" parameterType="map">
-	 	UPDATE ATTENDANCE
+		where clock_in is not null and clock_out is null
+		and to_char(attendance_date,'YYYYMMdd')=#{today}
+	</select>
+
+	<update id="updateEmpOut" parameterType="map">
+		UPDATE ATTENDANCE
 		SET CLOCK_OUT = #{clock_out}
-		WHERE EMP_ID = #{empNotOut} AND TO_CHAR(attendance_date, 'YYYYMMdd') = #{today}
-	 </update>
-	 
-	 <insert id="insertThisWeek" parameterType="string">
-	 	INSERT INTO
-	 	ATTENDANCE
-	 		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
-	 	VALUES
-	 		(seq_attendance.NEXTVAL,#{empId},#{clock_in},#{clock_out},#{date},'출근')
-	 </insert>
-	 
-	 <select id="selectTotalAtt" parameterType="string" resultType="attendance">
-	 	select TO_char(clock_in, 'HH24:MI') as clockIn ,TO_char(clock_out, 'HH24:MI') as clockOut, attendance_date as attendanceDate, status
+		WHERE EMP_ID = #{empNotOut} AND
+		TO_CHAR(attendance_date, 'YYYYMMdd') = #{today}
+	</update>
+
+	<insert id="insertThisWeek" parameterType="string">
+		INSERT INTO
+		ATTENDANCE
+		(attendance_id,emp_id,clock_in,clock_out,attendance_date,status)
+		VALUES
+		(seq_attendance.NEXTVAL,#{empId},#{clock_in},#{clock_out},#{date},'지각')
+	</insert>
+
+	<select id="selectTotalAtt" parameterType="string"
+		resultType="attendance">
+		select TO_char(clock_in, 'HH24:MI') as clockIn ,TO_char(clock_out,
+		'HH24:MI') as clockOut, attendance_date as attendanceDate, status
+		from
+		attendance
+		where emp_id= #{empId}
+	</select>
+
+	<select id="selectStatus" parameterType="map"
+		resultType="string">
+		select status
 		from attendance
-		where emp_id= #{empId} 
-	 </select>
-	 
-	 <select id="selectStatus" parameterType="map" resultType="string">
-	 	select status
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{i}
-	 </select>
-	 
-	 <select id="selectAttCountYear" parameterType="map" resultType="int">
-	 	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '출근'
-	 </select>
-	 
-	  <select id="selectLateCountYear" parameterType="map" resultType="int">
-	  	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '지각'
-	 </select>
-	 
-	  <select id="selectAbsentCountYear" parameterType="map" resultType="int">
-	  	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and status = '결근'
-	 </select>
-	 
-	 <select id="selectAttCountMonth" parameterType="map" resultType="int">
-	 	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '출근'
-	 </select>
-	 
-	  <select id="selectLateCountMonth" parameterType="map" resultType="int">
-	  	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '지각'
-	 </select>
-	 
-	  <select id="selectAbsentCountMonth" parameterType="map" resultType="int">
-	  	select count (*)
-	 	from attendance
-	 	WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and status = '결근'
-	 </select>
-	 
-	 <select id="selectAttStatusCal" parameterType="map" resultType="string">
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{i}
+	</select>
+
+	<select id="selectAttCountYear" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and
+		status = '출근'
+	</select>
+
+	<select id="selectLateCountYear" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and
+		status = '지각'
+	</select>
+
+	<select id="selectAbsentCountYear" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YYYY') = #{year} and
+		status = '결근'
+	</select>
+
+	<select id="selectAttCountMonth" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and
+		status = '출근'
+	</select>
+
+	<select id="selectLateCountMonth" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and
+		status = '지각'
+	</select>
+
+	<select id="selectAbsentCountMonth" parameterType="map"
+		resultType="int">
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'MM') = #{month} and
+		status = '결근'
+	</select>
+
+	<select id="selectAttStatusCal" parameterType="map"
+		resultType="string">
 	 <![CDATA[
 	 	select status
 		from attendance a right outer join (
 		SELECT TO_DATE(#{startDay}, 'YYYY-MM-DD') + (LEVEL-1) AS DT
 		   FROM DUAL
 		CONNECT BY LEVEL <= (TO_DATE(#{endDay}, 'YYYY-MM-DD') - TO_DATE(#{startDay}, 'YYYY-MM-DD')) + 1
-		) on a.attendance_date = DT and a.emp_id = #{empId}
+		) on  to_char(a.attendance_date,'yy-mm-dd') = to_char(DT,'yy-mm-dd') and a.emp_id = #{empId}
 		order by DT asc
 	 ]]>
-	 </select>
-	 
-	  <update id="updateHalfAtt" parameterType="map">
-	 	UPDATE ATTENDANCE
+	</select>
+
+	<update id="updateHalfAtt" parameterType="map">
+		UPDATE ATTENDANCE
 		SET CLOCK_IN = sysdate
-		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
-	 </update>
-	 
-	  <select id="selectMonthCount" parameterType="map" resultType="attendanceMonthStatus">
+		WHERE EMP_ID = #{empId} AND
+		TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
+	</update>
+
+	<select id="selectMonthCount" parameterType="map"
+		resultType="attendanceMonthStatus">
 		select (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status = '출근'
-		    ) as "attCount",
-		    (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status = '지각'
-		    ) as "lateCount",
-		    (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status = '결근'
-		    ) as "absentCoutn",
-		    (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status in('오후반차' ,'오전반차')
-		    ) as "halfCount",
-		    (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status in('경조사(결혼)' ,'경조사(출산)','경조사(사망)','연차')
-		    ) as "EventCount",
-		     (
-		    select count (*) 
-		    from attendance
-		    WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month} and status = '연장근무'
-		    ) as "overTime"
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status = '출근'
+		) as "attCount",
+		(
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status = '지각'
+		) as "lateCount",
+		(
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status = '결근'
+		) as "absentCoutn",
+		(
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status in('오후반차' ,'오전반차')
+		) as "halfCount",
+		(
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status in('경조사(결혼)' ,'경조사(출산)','경조사(사망)','연차')
+		) as "EventCount",
+		(
+		select count (*)
+		from attendance
+		WHERE EMP_ID = #{empId} AND TO_CHAR(attendance_date, 'YY.MM') = #{month}
+		and status = '연장근무'
+		) as "overTime"
 		from attendance
 		where rownum=1
-	 </select>
-	 <select id="selectLateTime" parameterType="map" resultType="Integer">
-	 	 	select TO_NUMBER(to_char(clock_in,'HH24')) -  TO_NUMBER(9) + 1
-			from attendance
-			where emp_id =#{empId} and TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
-	 </select> 
+	</select>
+	<select id="selectLateTime" parameterType="map"
+		resultType="Integer">
+		select TO_NUMBER(to_char(clock_in,'HH24')) - TO_NUMBER(9) + 1
+		from attendance
+		where emp_id =#{empId} and TO_CHAR(attendance_date, 'YY.MM.dd') = #{today}
+	</select>
+	<update id="updateAttClockIn" parameterType="int">
+		update attendance
+		set clock_in = sysdate
+		where attendance_id = #{attendanceId}
+	</update>
+	<update id="updateAttClockOut" parameterType="int">
+		update attendance
+		set clock_out = sysdate
+		where attendance_id = #{attendanceId}
+	</update>
 </mapper>

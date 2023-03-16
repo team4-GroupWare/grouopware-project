@@ -39,15 +39,31 @@
   	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp" %>	
 
   	<main id="main" class="main">
+    	<c:if test="${loginEmployee.empId == vacationList[0].empId}">
+			<div class="pagetitle mt-3">
+				<h1>내 문서함</h1>
+				<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">휴가</li>
+	          		<li class="breadcrumb-item">휴가 신청 목록</li>
+        		</ol>
+			</div>
+		</c:if>
+		<c:if test="${loginEmployee.empId != vacationList[0].empId}">
+			<div class="pagetitle mt-3">
+				<h1>결재 문서함</h1>
+				<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">휴가</li>
+	          		<li class="breadcrumb-item">휴가 신청 목록</li>
+        		</ol>
+			</div>
+		</c:if>
     	
     	<!-- 페이지 제목 -->
 		
 		<section class="section mt-3">
       		<div class="row">
         		<div class="col-lg-12">
-        		<div class="pagetitle">
-			   			<h1>휴가 신청 목록</h1>
-					</div>
+        		
           			<div class="card" style="height:620px">
             			<div class="card-body px-5">
               				<h5 class="card-title"></h5>
@@ -94,6 +110,12 @@
               				</table>
              				<!-- End Table -->
             			</div>
+            			<c:if test="${empty vacationList}">
+		              		<div class="d-flex align-items-center justify-content-center" style="height:400px;">
+		              			내용이 존재하지 않습니다.
+		              	  	</div>
+		              	</c:if>
+		              	<c:if test="${not empty vacationList}">
             			<div class="d-flex justify-content-center" style="vertical-align:bottom">
 			  				<nav aria-label="Page navigation example">
                 				<ul class="pagination">
@@ -133,6 +155,7 @@
                 				</ul>
               				</nav>
               			</div>
+              			</c:if>
           			</div>
         		</div>
       		</div>

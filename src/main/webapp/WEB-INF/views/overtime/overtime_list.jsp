@@ -44,14 +44,29 @@ table a:active {
 	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp"%>
 
 	<main id="main" class="main"> <!-- 페이지 제목 -->
-
+	<c:if test="${loginEmployee.empId == overtimeList[0].empId}">
+			<div class="pagetitle mt-3">
+				<h1>내 문서함</h1>
+				<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">근무</li>
+	          		<li class="breadcrumb-item">근무 신청 목록</li>
+        		</ol>
+			</div>
+		</c:if>
+		<c:if test="${loginEmployee.empId != overtimeList[0].empId}">
+			<div class="pagetitle mt-3">
+				<h1>결재 문서함</h1>
+				<ol class="breadcrumb">
+	          		<li class="breadcrumb-item">근무</li>
+	          		<li class="breadcrumb-item">근무 신청 목록</li>
+        		</ol>
+			</div>
+		</c:if>
 	<section class="section mt-3">
 
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="pagetitle">
-					<h1>근무 신청 목록</h1>
-				</div>
+				
 				<div class="card" style="height: 620px">
 					<div class="card-body px-5">
 						<h5 class="card-title"></h5>
@@ -106,7 +121,13 @@ table a:active {
 							</tbody>
 						</table>
 						<!-- End Table -->
+						<c:if test="${empty overtimeList}">
+		              		<div class="d-flex align-items-center justify-content-center" style="height:400px;">
+		              			내용이 존재하지 않습니다.
+		              	  	</div>
+		              	</c:if>
 					</div>
+					<c:if test="${not empty overtimeList}">
 					<div class="d-flex justify-content-center"
 						style="vertical-align: bottom">
 						<nav aria-label="Page navigation example">
@@ -146,6 +167,7 @@ table a:active {
 							</ul>
 						</nav>
 					</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

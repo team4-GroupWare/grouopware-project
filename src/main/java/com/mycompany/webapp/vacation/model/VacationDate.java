@@ -1,5 +1,7 @@
 package com.mycompany.webapp.vacation.model;
 
+
+
 import java.util.Date;
 
 import lombok.Data;

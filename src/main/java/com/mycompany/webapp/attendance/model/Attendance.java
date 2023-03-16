@@ -13,4 +13,6 @@ public class Attendance {
 	private String clockOut;
 	private Date attendanceDate;
 	private String status;
+	private String isIn;
+	private String isOut;
 }

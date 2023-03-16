@@ -56,7 +56,7 @@
 	<select id="selectVacationList" parameterType="string" resultType="vacationList">
 		select v.vacation_id as "vacationId", 
 		e.name as "name", 
-		e.emp_id as "empId", 
+		v.emp_id as "empId", 
 		c.vacation_name as "vacationName", 
 		status, 
 		count_day as "countDay",
@@ -115,9 +115,8 @@
 	        vacation_id as "vacationId", 
 	        to_char(write_date,'yyyy-mm-dd') as writeDate, 
 	        content, 
-	        count_day as "countDay"
-        
-
+	        count_day as "countDay",
+	        vacation_approval_date as "vacationApprovalDate"
 		from vacation v , employees e, departments d, teams t,vacation_category c
 		where vacation_id = #{vacationId}
 	        and e.emp_id = v.emp_id 

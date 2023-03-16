@@ -19,7 +19,6 @@ function calendarInit() {
     var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     
     // 달력에서 표기하는 날짜 객체
-    console.log(thisMonth);
     var month = (date.getMonth()+1);
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
@@ -42,10 +41,6 @@ function calendarInit() {
     var day2 = lastDay.getDate();
     var format2 = year2+"-"+(("00"+month2.toString()).slice(-2))+"-"+(("00"+day2.toString()).slice(-2));
     
-    console.log(format1)
-    console.log(format2)
-    
-    
     $.ajax({
     	url: path+"/statuslist",
     	data:{
@@ -57,12 +52,8 @@ function calendarInit() {
     	 // 캘린더 렌더링
         renderCalender(thisMonth,data);
     });
-
-   
-
     function renderCalender(thisMonth,months) {
     	var months = months;
-    	console.log(months);	
         // 렌더링을 위한 데이터 정리
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();

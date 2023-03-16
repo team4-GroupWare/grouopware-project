@@ -43,8 +43,8 @@
 		.marker2 ul li.attendanceMark {
 		    color: #3C97E1;
 		}
-		.marker2 ul li.holidayMark {
-		    color: #FF8787;
+		.marker2 ul li.overtimeMark {
+		    color: #6f42c1;
 		}
 		.marker2 ul li.lateMark {
 		    color: #FFDF6C; 
@@ -82,26 +82,23 @@
 	                 type: "GET",
 	              }).done(function(data){
 	            	  if(data==''){
-	            		alert("내꺼");
 						let clockIn = "-- : -- : --";
 						let clockOut = "-- : -- : --";
 						$("#clockIn").html(clockIn);
 						$("#clockOut").html(clockOut);
+	            	  }else{
+	            		let clockIn = data.clockIn;
+						let clockOut = data.clockOut;
+						let status = data.status
+						$("#clockIn").html(clockIn);
+						$("#clockOut").html(clockOut);
+						$("#status").val(status);
+						if(data.isIn == 'y'){
+							onlyBtnleave();
+						}if(data.isOut == 'y'){
+							btnNotActive();
+						}
 	            	  }
-	            	  if(data.clockOut == null){
-	            		  let clockOut = "-- : -- : --";
-	            		  $("#clockOut").html(clockOut);
-	            	  }
-	            	  if(data.clockIn == null){
-	            		  let clockIn = "-- : -- : --";
-	            		  $("#clockIn").html(clockIn);
-	            	  }
-	            	  if(data.status != null){
-	            		  let clockIn = "-- : -- : --";
-	            		  $("#clockIn").html(clockIn);
-	            		  btnNotActive();
-	            	  }
-	            	  
 	            	  
 	              }); 
 	  		});
@@ -113,12 +110,12 @@
 	  		//현재 시간, 날짜 함수
 	  	    function nowClock(){
 	  	    	var now = new Date();
-	  	    	var year = now.getFullYear();					//년
-	 	  	    var month = modifyNumber(now.getMonth()+1);	//월
+	  	    	var year = now.getFullYear();					
+	 	  	    var month = modifyNumber(now.getMonth()+1);	
 	 	  	    var date = modifyNumber(now.getDate());
-	  			var hour = modifyNumber(now.getHours()); 	//시
-		  	    var min = modifyNumber(now.getMinutes()); 	//분
-		  	    var sec = modifyNumber(now.getSeconds()); //초
+	  			var hour = modifyNumber(now.getHours()); 	
+		  	    var min = modifyNumber(now.getMinutes()); 	
+		  	    var sec = modifyNumber(now.getSeconds()); 
 	  			
 		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
           	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
@@ -139,6 +136,66 @@
 				target1.disabled = true;
 				target1.setAttribute( 'style', 'opacity: 0.1' )
 	  		}
+	  		function clockIn(){
+	  			var now = new Date();
+	  			var hour = modifyNumber(now.getHours());
+	  			var status = "";
+	  			if(hour < 6 ||hour > 17){
+	  				$('#notTimeModal').modal('show');
+	  				return"";
+	  			}else if(hour<9){
+	  				status = "출근";
+	  			}else{
+	  				status = "지각";
+	  			}
+	  			$.ajax({
+	  				 url:"${pageContext.request.contextPath}/attendance/clockin",
+	                 type: "post",
+	                 data: {status:status},
+	              		success: function(data) {
+		    	    	const data1 = $.trim(data);
+		    	    	if(data1 == 'success'){
+		    	    		location.reload();
+		    	    	}else{
+		    	    		alert(data);
+		    	    	}
+		    	    },
+		    	    error: function(err) {
+		    	    	alert("실패");
+		    	}})	    	
+	  		}
+			function clockOut(){
+				var status = $('#status').val();
+				var now = new Date();
+	  			var hour = modifyNumber(now.getHours());
+	  			
+	  			if(status != '오후반차'){
+		  			if(hour<18){
+		  				$('#notTimeModal').modal('show');
+		  				return"";
+		  			}
+	  			}else{
+	  				if(hour<14){
+		  				$('#notTimeModal').modal('show');
+		  				return"";
+		  			}
+	  			} 
+				$.ajax({
+	  				 url:"${pageContext.request.contextPath}/attendance/clockout",
+	                 type: "get",
+	              		success: function(data) {
+		    	    	const data1 = $.trim(data);
+		    	    	if(data1 == 'success'){
+		    	    		location.reload();
+		    	    	}else{
+		    	    		alert(data);
+		    	    	}
+		    	    },
+		    	    error: function(err) {
+		    	    	alert("실패");
+		    	}})	    	
+	  		}
+	  		
 	  	</script>
 	  	
 	  	<!-- menubar background -->
@@ -215,16 +272,17 @@
 										<div class="col-6 border-end" style="text-align:center" >
 											<input id="btn-attendance" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
-											onClick="location.href='${pageContext.request.contextPath}/attendance/clockin'"
+											onClick="clockIn()"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
+										    <input type="hidden" id="status"/>
 										</div><!-- End 출근하기 버튼 -->
 										<!-- 퇴근하기 버튼 -->
 										<div class="col-6 " style="text-align:center">
 											<input id="btn-leave" disabled style="opacity: 0.1" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
-											onClick="location.href='${pageContext.request.contextPath}/attendance/clockout'" />
+											onClick="clockOut()" />
 											<div>퇴근하기</div>
 											<div id="clockOut"></div>
 										</div><!-- End퇴근하기 버튼 -->
@@ -260,7 +318,7 @@
 									                <ul>
 									                    <li class="attendanceMark"><span></span>출근</li>
 									                    <li class="lateMark"><span></span>지각</li>
-									                    <li class="holidayMark"><span></span>휴일</li>
+									                    <li class="overtimeMark"><span></span>휴일</li>
 									                    <li class="vacationMark"><span></span>휴가</li>
 									                </ul>
 									            </section>
@@ -403,6 +461,24 @@
 					</div><!-- End Right side columns -->
 				</div>
 			</section>
+			<!-- 근무내용 실패 모달 -->
+			<div class="modal fade" id="notTimeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							메시지
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-bottom: 4px">근무 시간이 아닙니다.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div><!-- End #main -->
 	  	<!-- ======= Footer ======= -->
 		<footer id="footer1" class="footer">

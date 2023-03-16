@@ -51,4 +51,8 @@ public interface AttendanceRepository {
 
 	public List<String> selectAttStatusCal(@Param("empId")String empId, @Param("startDay")String startDay, @Param("endDay")String endDay);
 
+	public int updateAttClockIn(int attendanceId);
+
+	public int updateAttClockOut(int attendanceId);
+
 }

@@ -41,6 +41,10 @@ public interface IAttendanceService {
 
 	List<String> getAttStatus(String empId, String startDay, String endDay);
 
+	int attClockInUpdate(int attendanceId);
+
+	int attClockOutUpdate(int attendanceId);
+
 
 
 }
