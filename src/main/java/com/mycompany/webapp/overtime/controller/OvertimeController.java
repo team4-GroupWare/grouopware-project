@@ -77,7 +77,6 @@ public class OvertimeController {
 	@ResponseBody
 	public String submitWriteForm(@ModelAttribute Overtime overtime, Model model) {
 		log.info("실행");
-		log.info(overtime);
 		Date from = new Date();
 		SimpleDateFormat transFormat = new SimpleDateFormat("yy.MM.dd");
 		String workDate = transFormat.format(overtime.getWorkDate());
@@ -98,6 +97,7 @@ public class OvertimeController {
 	@GetMapping("/overtime/list/{type}")
 	public String OvertimeList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
+		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
 		int overtimeRow = overtimeService.getOvertimeRow(empId, status, type);
@@ -129,7 +129,6 @@ public class OvertimeController {
 			employee = employeeService.getEmp(overtime.getEmpId());
 		}
 		log.info(overtime);
-		log.info("dork sjgdjwla" + employee);
 		model.addAttribute("employee", employee);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("status", status);
@@ -140,10 +139,11 @@ public class OvertimeController {
 	@RequestMapping(value = "/overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String process(@ModelAttribute Overtime overtime, Model model) {
-		log.info("실행");
+		log.info("실행"+overtime);
 		String status = attendanceService.getThisWeekStatus(overtime.getWorkDateDetail(), overtime.getEmpId());
 		int clockOut = 18 + overtime.getWorkTime();
 		String workDateClock = overtime.getWorkDateDetail() + " " + clockOut + ":00:00";
+		log.info(status);
 		if (overtime.getType().equals("y")) {
 			if (status == null || status.equals("결근")) {
 				return "해당 날짜에 출근기록이 있어야 신청가능합니다.";

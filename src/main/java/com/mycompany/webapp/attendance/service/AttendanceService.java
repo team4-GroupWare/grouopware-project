@@ -86,7 +86,7 @@ public class AttendanceService implements IAttendanceService {
 		// 1-1 전체 사원의 아이디 조회
 		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
 		log.info(totalEmpId);
-		String clock_in = date+" 08:43:00";
+		String clock_in = date+" 09:43:00";
 		String clock_out = date+" 18:47:00";
 		for(String empId : totalEmpId ) {
 			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
@@ -153,6 +153,16 @@ public class AttendanceService implements IAttendanceService {
 	@Override
 	public List<String> getAttStatus(String empId, String startDay, String endDay) {
 		return attendanceRepository.selectAttStatusCal(empId,startDay,endDay);
+	}
+
+	@Override
+	public int attClockInUpdate(int attendanceId) {
+		return attendanceRepository.updateAttClockIn(attendanceId);
+	}
+	
+	@Override
+	public int attClockOutUpdate(int attendanceId) {
+		return attendanceRepository.updateAttClockOut(attendanceId);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.mycompany.webapp.vacation.model;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,7 @@ public class VacationDetail {
 	private String status;
 	private String empId;
 	private int vacationCategoryId;
+	private Date vacationApprovalDate;
 	
 	
 }

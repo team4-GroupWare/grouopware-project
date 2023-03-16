@@ -1,6 +1,6 @@
 package com.mycompany.webapp.vacation.controller;
 
-import java.text.ParseException;
+import java.text.ParseException; 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +120,6 @@ public class VacationController {
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
 		int vacationRow = vacationService.getVacationRow(empId, status, type);
-		log.info(vacationRow);
 		Pager pager = new Pager(10, 5, vacationRow, pageNo);
 		List<VacationList> vacationList = vacationService.getVacationList(pager, empId, status, type);
 		if (type == 1) {
@@ -138,6 +137,7 @@ public class VacationController {
 	@GetMapping("vacation/detail")
 	public String detail(@RequestParam int vacationId, @RequestParam int pageNo, @RequestParam() String status,
 			Model model, HttpSession session) {
+		log.info("실행");
 		VacationDetail vacationDetail = vacationService.getVacationDetail(vacationId);
 		List<VacationDate> vacationDate = vacationService.getVacationDate(vacationId);
 		Vacation vacation = vacationService.getApprovalEmp(vacationDetail.getApprovalEmpId());
@@ -146,6 +146,7 @@ public class VacationController {
 		model.addAttribute("vacationDetail", vacationDetail);
 		model.addAttribute("vacationDate", vacationDate);
 		model.addAttribute("vacation", vacation);
+		log.info(vacationDetail);
 		return "vacation/vacation_detail";
 	}
 

@@ -37,10 +37,11 @@ public class AttendanceScheduler {
 	
 	//오늘을 기준으로 attendance 행 넣어주는 것
 	//플젝 끝나고 지울것
-	//@Scheduled(cron = "25 37 23 * * *")
+	@Scheduled(cron = "00 43 02 * * *")
 	public void addThisWeek() {
+		
 		Date date = new Date();
-		for(int i = -11; i>-12; i--) {
+		for(int i = -16; i>-18; i--) {
 			Calendar c1 = new GregorianCalendar();
 		
 			c1.add(Calendar.DATE, i); 

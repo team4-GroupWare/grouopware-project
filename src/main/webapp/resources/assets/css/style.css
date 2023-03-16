@@ -1424,7 +1424,7 @@ h6 {
 }
 .current.연장근무 {
 	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#FF8787 20%);
+	background:linear-gradient(#fff 80%, #6f42c1 20%);
 }
 
 .sec_cal .cal_wrap .dates {

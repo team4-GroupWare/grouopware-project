@@ -6,9 +6,16 @@
 <%@ include file="/WEB-INF/views/common/head.jsp"%>
 	<style>
 	.card-header {
-		background-color: #d5e0fd;
-		color: black;
-	}
+	background-color: #d5e0fd;
+	color: #004389;
+	font-weight: 700;
+	font-size: 21px;
+}
+.profile .profile-overview .label {
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(1, 41, 112, 0.6);
+}
 	</style>
 </head>
 	<script>

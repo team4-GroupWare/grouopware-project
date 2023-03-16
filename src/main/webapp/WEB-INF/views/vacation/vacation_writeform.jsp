@@ -21,16 +21,16 @@
 <style>
 .card-header {
 	background-color: #d5e0fd;
-	color: black;
-	font-style: italic;
-	font-weight: 500;
-	font-size: 17px;
+	color: #004389;
+	font-weight: 700;
+	font-size: 21px;
+}
+.profile .profile-overview .label {
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(1, 41, 112, 0.6);
 }
 
-.profile .profile-overview {
-	margin-bottom: 20px;
-	font-size: 20px;
-}
 </style>
 </head>
 <body>
@@ -189,7 +189,7 @@
 								<div class="row mb-1">
 									<label class="col-sm-2 label">날짜 선택</label>
 									<div class="col-sm-10 label">
-										<input type="text" id="datePicker" name="dates"
+										<input id="datePicker" type="text" name="dates"
 											style="width: 100%" onchange="countDate()"
 											class="form-control" required>
 										<p id="choiceDate" class="small">선택 일수 : 0일</p>
@@ -205,6 +205,7 @@
 								    datesDisabled: ['2023/03/01'],
 								    daysOfWeekDisabled: "0,6",
 								    todayHighlight: true
+								    
 								});
 								
 								function plusDate(){
@@ -253,6 +254,33 @@
 										    daysOfWeekDisabled: "0,6",
 										    todayHighlight: true
 										});
+									}else{$("#datePicker").datepicker('destroy');
+									
+									$('#dateplace').empty();
+									let element2 = 
+										'<div class="row mb-1">'+
+											'<label class="col-sm-2 label">시작날짜</label>'+
+											'<div class="col-sm-4">'+
+												'<input type="text" id="datePicker1" name="startDate" style="width:100%" onchange="plusDate()" class="form-control" required>'+
+											'</div>'+
+										'</div>'+
+										'<div class="row mb-3">'+
+											'<label for="text" class="col-sm-2 label"><b>종료날짜</b></label>'+
+										'<div class="col-sm-4">'+
+											'<input type="text" id="endDate" name="endDate" style="width:100%" class="form-control">'+
+											'<p id="choiceDate" class="small">선택 일수 : 0일</p>'
+										'</div>'+
+									'</div>';
+									$('#dateplace').append(element2);
+									
+									$('#datePicker1').datepicker({
+										format: "yyyy-mm-dd",
+									    
+									    datesDisabled: ['2023/03/02'],
+									    daysOfWeekDisabled: "0,6",
+									    todayHighlight: true
+									});
+										
 									}
 									
 									
@@ -295,38 +323,46 @@
 							<div class="row ">
 								<label class="col-sm-2 label">사유</label>
 								<div class="col-sm-10">
-									<input name="content" class="form-control" style="height: 60px"></input>
+									<input name="content" id="content" class="form-control" style="height: 60px"></input>
 								</div>
 							</div>
 							<script>
 								function submitButton(){
-									console.log($('#countDay').val())
 									var chkValue = $('input[type=radio][name=vacationType]:checked').val();
+									var countDay=$('#countDay').val();
+									var dayoffRemain = ${loginEmployee.dayoffRemain};
+									var addDayoffRemain =${loginEmployee.addDayoffRemain};
 									
-									if($('#countDay').val()==0){
-										console.log("ajsep")
+									if(countDay==0){
 							        	$('#countDayModal').modal('show');
 							        	return "";
 							        }
 									if(chkValue == 1 ){
-										console.log("머야 왜안돼ㄴㄴ")
-										if(${loginEmployee.dayoffRemain}<$('#countDay').val()){
+										
+										if(dayoffRemain<countDay){
 											$("#countModal").modal('show');	
 											return "";
 										}
+										
+										
 									}else if(chkValue ==2 ){
-										if(${loginEmployee.addDayoffRemain}<$('#countDay').val()){
+										if(addDayoffRemain<countDay){
 											$("#countModal").modal('show');	
 											return "";
 										}
+										
 									}
 									var approval_line = $('.approvalEmpId').val();
-							        console.log(approval_line);
 							        if( approval_line == undefined){
 							        	$('#approvalModal').modal('show');
 							        	return "";
 							        	
 							        }
+							        var content = $('#content').val();
+						       		if( content == ""){
+							       		$('#contentModal').modal('show');
+							       		return "";
+									}
 							        document.getElementById('vacation_form').submit();
 									
 								}
@@ -349,7 +385,24 @@
 		</div>
 		<div class="row" style="height: 100px"></div>
 	</section>
-
+	<!-- 근무내용 실패 모달 -->
+	<div class="modal fade" id="contentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+					신청 불가
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p style="margin-bottom: 4px">근무 내용을 입력해 주세요.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="approvalModal" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -390,6 +443,30 @@
 							style="margin-right: 10px; color: red;"></i>날짜를 선택해주세요.
 					</p>
 					<p>필수항목을 입력해주세요.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="countModal" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<b>연차 부족</b>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p style="margin-bottom: 4px">
+						<i class="bi bi-exclamation-triangle"
+							style="margin-right: 10px; color: red;"></i>
+					</p>
+					<p>연차 보유현황을 확인해주세요</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"

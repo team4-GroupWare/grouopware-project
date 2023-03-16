@@ -3,6 +3,7 @@ package com.mycompany.webapp.attendance.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,6 +52,30 @@ public class AttendanceController {
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
 		String attDate = simpleDateFormat1.format(date);
 		Attendance attendance = attendanceService.getAttendance(attDate, empId);
+		if(attendance != null) {
+			if(attendance.getClockIn() == null) {
+				if(attendance.getStatus().contains("반차")) {
+					attendance.setClockIn("-- : -- : --");
+					attendance.setClockOut("-- : -- : --");
+					attendance.setIsIn("n");
+					attendance.setIsOut("n");
+				}else {
+					attendance.setClockIn("-- : -- : --");
+					attendance.setClockOut("-- : -- : --");
+					attendance.setIsIn("y");
+					attendance.setIsOut("y");
+				}
+			}else {
+				if(attendance.getClockOut() == null) {
+					attendance.setClockOut("-- : -- : --");
+					attendance.setIsIn("y");
+					attendance.setIsOut("n");
+				}else {
+					attendance.setIsIn("y");
+					attendance.setIsOut("y");
+				}
+			}
+		}
 		return attendance;
 	}
 
@@ -62,57 +88,33 @@ public class AttendanceController {
 	 * @throws IOException
 	 */
 
-	@GetMapping("/attendance/clockin")
-	public String clockIn(Model model, HttpSession session) {
+	@RequestMapping(value = "/attendance/clockin", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String clockIn(@RequestParam String status, Model model, HttpSession session) {
 		log.info("실행");
 		Date date = new Date();
-		String message = "";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMdd");
+		String attDate = simpleDateFormat.format(date);
+		Calendar cal = Calendar.getInstance();
+		int day =  cal.get(Calendar.DAY_OF_WEEK);
+		Holiday holiday = new Holiday();
+		boolean type = holiday.isHoliday(attDate);
+		 if(day == 1 || day == 7 || type) {
+			 return "휴무일입니다.";
+		 }
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.mm.ss");
-		String today = simpleDateFormat.format(date);
-		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH");
-		int time = Integer.parseInt(simpleDateFormat2.format(date));
-
-		// 1) 출근 상태 확인하기
-		String todayStatus = attendanceService.getThisWeekStatus(today, empId);
-		if (todayStatus != null) {
-			if (todayStatus.contains("경조사")||todayStatus.contains("연차")) {
-				message = "휴가 사용중에는 출근을 하실 수 없습니다";
-				model.addAttribute("message", message);
-				return "main";
-			} else if (todayStatus.equals("출근") && todayStatus.equals("지각")) {
-				message = "출근 상태입니다.";
-				model.addAttribute("message", message);
-				return "main";
-			} else if (todayStatus.contains("반차")) {
-				if (6 <= time && time < 18) {
-					int updateHalfRerult = attendanceService.updateHalfAtt(today, empId);
-					return "main";
-				}
+		Attendance attendance = attendanceService.getAttendance(attDate, empId);
+		if(attendance != null) {
+			if(attendance.getStatus().contains("반차")) {
+				attendanceService.attClockInUpdate(attendance.getAttendanceId());
+				return "success";
+			}else {
+				return "이미 출근하셨거나 휴가상태입니다.";
 			}
 		}
-
-		// 2) 시간에 따라 insert가능
-		String status = "";
-		if (time < 6) {
-			message = "6시 이후부터 출근이 가능합니다";
-			model.addAttribute("message", message);
-			return "main";
-		} else if (time < 9) {
-			status = "출근";
-		} else if (9 <= time && time < 18) {
-			status = "지각";
-		} else if (time > 18) {
-			message = "근무시간이 지났습니다.";
-			model.addAttribute("message", message);
-			return "main";
-		}
-
-		int result = attendanceService.insertAttendance(empId, status);
-		log.info(message);
-		return "main";
+		attendanceService.insertAttendance(empId, status);
+		return "success";
 	}
 
 	/**
@@ -123,46 +125,24 @@ public class AttendanceController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@GetMapping("/attendance/clockout")
+	@RequestMapping(value = "/attendance/clockout", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
 	public String clockout(HttpSession session, Model model) {
 		log.info("실행");
-		// 1. 로그인한 사원의 ID
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-		String message = "";
-		// 2. 오늘날짜 생성
 		Date date = new Date();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
-		int time = Integer.parseInt(simpleDateFormat.format(date));
-		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YY.MM.dd");
-		String today = simpleDateFormat1.format(date);
+		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
+		String attDate = simpleDateFormat1.format(date);
+		Attendance attendance = attendanceService.getAttendance(attDate, empId);
 
-		// 1) 출근 상태 확인하기
-		String todayStatus = attendanceService.getThisWeekStatus(today, empId);
-		if (todayStatus == null) {
-			message = "출근하지 않았습니다.";
-			model.addAttribute("message", message);
-			return "main";
-		} else if (todayStatus.contains("오후반차")) {
-			if (time > 13) {
-				int result = attendanceService.updateLeave(today, empId);
-				return "main";
-			} else {
-				message = "14시 이후부터 퇴근이 가능합니다.";
-				model.addAttribute("message", message);
-				return "main";
-			}
+		if(attendance == null) {
+			return "출근하지 않으셨습니다.";
+		}else {
+			attendanceService.attClockOutUpdate(attendance.getAttendanceId());
 		}
-		if (time < 18) {
-			message = "18시 이후부터 퇴근이 가능합니다.";
-			model.addAttribute("message", message);
-			return "main";
-		}
-
-		// 3. 퇴근 시간 update
-		int result = attendanceService.updateLeave(today, empId);
-
-		return "main";
+		
+		return "success";
 	}
 
 	/**
@@ -274,7 +254,7 @@ public class AttendanceController {
 		// 1번째 줄에 출근 시간과 status
 		for (Attendance a : attendance) {
 			HashMap<String, String> hash = new HashMap<String, String>();
-
+			
 			if (a.getClockIn() == null) {
 				hash.put("title", a.getStatus());
 				hash.put("start", format.format(a.getAttendanceDate()));
@@ -298,6 +278,9 @@ public class AttendanceController {
 				}	else if (a.getStatus().equals("연장근무")) {
 					hash.put("backgroundColor", "#6f42c1");
 					hash.put("borderColor", "#6f42c1");
+				}	else if (a.getStatus().contains("반차")) {
+					hash.put("backgroundColor", "#66BB6A");
+					hash.put("borderColor", "#66BB6A");
 				}
 
 			}

@@ -43,8 +43,8 @@
 		.marker2 ul li.attendanceMark {
 		    color: #3C97E1;
 		}
-		.marker2 ul li.holidayMark {
-		    color: #FF8787;
+		.marker2 ul li.overtimeMark {
+		    color: #6f42c1;
 		}
 		.marker2 ul li.lateMark {
 		    color: #FFDF6C; 
@@ -58,156 +58,84 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	  	
 	  	<script>
-		  	var today = new Date(); 						//오늘날짜
-	  		var day = today.getDay();						//요일
-	  	    var year = today.getFullYear();					//년
-	  	    var month = modifyNumber(today.getMonth()+1);	//월
-	  	    var date = modifyNumber(today.getDate());		//일
-	  	  	var isHoli = false;								//공휴일 판별
-	  	   
 	  	    //페이지 로드될 때마다 -> 메일 다섯개씩 리스트로 가져옴 (html조각)
 	  		$(document).ready(function() {
-	  			$.ajax({
-	  				url:"${pageContext.request.contextPath}/email/sendEmailListMain",
-	                type: "GET"
-	       		}).done(function(data){
-	       			$("#mail-send").empty();
-	                $("#mail-send").html(data);
-	            }); 
-	              
-	            $.ajax({
-	            	url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
-	               	type: "GET"
-	            }).done(function(data){
-	            	$("#mail-receive").empty();
-	                $("#mail-receive").html(data);
-	            }); 
-	            
-	            //공지사항
-	            $.ajax({
-	  				url:"${pageContext.request.contextPath}/board/mainboardlist/1",
-	                type: "GET"
-	       		}).done(function(data){
-	       			$("#notice").empty();
-	                $("#notice").html(data);
-	            });
-	            
-	            //사내 경조사
-	            $.ajax({
-	  				url:"${pageContext.request.contextPath}/board/mainboardlist/2",
-	                type: "GET"
-	       		}).done(function(data){
-	       		 	$("#happy").empty();
-	                $("#happy").html(data);
-	            }); 
-	  			
-	  			//현재 시간, 날짜 
-	  			nowClock();
+				nowClock();
         	    setInterval(nowClock,1000); 
-	  			
-        	    //오늘이 공휴일인지 판단 후 -> 해당사원의 출근 가져옴
-        	    
-        	    //1. 오늘 날짜 - > String으로 변환
-        	    var yearToStr = year.toString();
-        	    var monthToStr = month.toString();
-        	    var dateToStr = date.toString();
-	  			var today = yearToStr+monthToStr+dateToStr;
-	  			
-	  			//2. 공휴일 판단
 	  			$.ajax({
-	  				url:"${pageContext.request.contextPath}/holiday",
-	  				data:{"today":today}
-	  			}).done(function(data){
-	  				isHoli = data;
-	  				todayAtt();
-	  			}); 
+	                 url:"${pageContext.request.contextPath}/email/sendEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-send").empty();
+	                 $("#mail-send").html(data);
+	              }); 
+	              
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/email/receiveEmailListMain",
+	                 type: "GET",
+	              }).done(function(data){
+	                 $("#mail-receive").empty();
+	                 $("#mail-receive").html(data);
+	              }); 
+	              $.ajax({
+	                 url:"${pageContext.request.contextPath}/attendance/today",
+	                 type: "GET",
+	              }).done(function(data){
+	            	  if(data==''){
+						let clockIn = "-- : -- : --";
+						let clockOut = "-- : -- : --";
+						$("#clockIn").html(clockIn);
+						$("#clockOut").html(clockOut);
+	            	  }else{
+	            		let clockIn = data.clockIn;
+						let clockOut = data.clockOut;
+						let status = data.status
+						$("#clockIn").html(clockIn);
+						$("#clockOut").html(clockOut);
+						$("#status").val(status);
+						if(data.isIn == 'y'){
+							onlyBtnleave();
+						}if(data.isOut == 'y'){
+							btnNotActive();
+						}
+	            	  }
+	            	  
+	              });
+	              $.ajax({
+	                  url:"${pageContext.request.contextPath}/board/mainboardlist/1",
+	                    type: "GET"
+	                 }).done(function(data){
+	                    $("#notice").empty();
+	                    $("#notice").html(data);
+	                });
+	                
+	                //사내 경조사
+	                $.ajax({
+	                  url:"${pageContext.request.contextPath}/board/mainboardlist/2",
+	                    type: "GET"
+	                 }).done(function(data){
+	                     $("#happy").empty();
+	                    $("#happy").html(data);
+	                }); 
 	  		});
-  			
-	  	    
-	  	    //해당사원의 오늘날짜 출근 정보 가져옴
-  			function todayAtt(){
-  				//휴일일 경우
-		  		if(day == 6 || day == 0 || isHoli) {
-		  			//출근 상태 표시
-		  			let status = "휴일"
-		  			let clockIn = "-- : -- : --";
-	  				let clockOut = "-- : -- : --";
-	  				$("#status").html(status);
-	  				$("#clockIn").html(clockIn);
-	  				$("#clockOut").html(clockOut);
-	  				
-	  				//버튼 비활성화
-	  				btnNotActive();
-		  		
-	  			//휴일이 아닐 경우	
-		  		} else{
-		  			$.ajax({
-		  				url : "${pageContext.request.contextPath}/attendance/today"
-		  				
-		  			}).done(function(data){
-		  				
-		  				let status; 
-		  				let clockIn;
-		  				let clockOut;
-		  				console.log(data.status)
-		  				
-		  				if(data.status == null){
-		  					status = "미출근";
-		  				} else{
-		  					status = data.status;
-		  				}
-		  				
-		  				if(data.clockIn == null){
-		  					clockIn = "-- : -- : --";
-		  				} else{
-		  					clockIn = data.clockIn;
-		  				}
-		  				
-		  				if(data.clockOut == null){
-		  					clockOut = "-- : -- : --";
-		  				} else{
-		  					clockOut = data.clockOut;
-		  				}
-		  				 
-		  				$("#status").html(status);
-		  				$("#clockIn").html(clockIn);
-		  				$("#clockOut").html(clockOut);
-		  				
-		  				//퇴근버튼만 활성화
-		  				if(data.clockIn != null && data.clockOut == null){
-			  				onlyBtnleave();
-		  				}
-		  				//비활성화
-		  				//반차가 아닌 조건도 넣어주기
-	  					else if(data.clockIn != null && data.clockOut != null || data.status != null){
-		  				btnNotActive();
-		  				}
-		  				
-		  			});
-		  		}
-  			}
-	  		
-	  	    //01~09시는 앞에 0이 붙도록 해주는 함수
+	  		//0~9시를 00~09시로 나타내주는 함수
 			function modifyNumber(time){
-				if(parseInt(time)<10){
-				    return "0"+ time;
-				}
-				else  {
-					return time;	
-				}
+				if(parseInt(time)<10){return "0"+ time;}
+				else {return time;}
 			}
-		  	
 	  		//현재 시간, 날짜 함수
 	  	    function nowClock(){
-	  	    	var now = new Date(); 
-	  			var hour = modifyNumber(now.getHours()); 	//시
-		  	    var min = modifyNumber(now.getMinutes()); 	//분
-		  	    var sec = modifyNumber(now.getSeconds()); //초
+	  	    	var now = new Date();
+	  	    	var year = now.getFullYear();					
+	 	  	    var month = modifyNumber(now.getMonth()+1);	
+	 	  	    var date = modifyNumber(now.getDate());
+	  			var hour = modifyNumber(now.getHours()); 	
+		  	    var min = modifyNumber(now.getMinutes()); 	
+		  	    var sec = modifyNumber(now.getSeconds()); 
 	  			
 		  	    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
           	    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
 	  		}
-	  	    
 	  		//퇴근버튼만 활성화 함수
 	  		function onlyBtnleave() {
 	  			var target1 = document.getElementById('btn-attendance');
@@ -224,6 +152,66 @@
 				target1.disabled = true;
 				target1.setAttribute( 'style', 'opacity: 0.1' )
 	  		}
+	  		function clockIn(){
+	  			var now = new Date();
+	  			var hour = modifyNumber(now.getHours());
+	  			var status = "";
+	  			if(hour < 6 ||hour > 17){
+	  				$('#notTimeModal').modal('show');
+	  				return"";
+	  			}else if(hour<9){
+	  				status = "출근";
+	  			}else{
+	  				status = "지각";
+	  			}
+	  			$.ajax({
+	  				 url:"${pageContext.request.contextPath}/attendance/clockin",
+	                 type: "post",
+	                 data: {status:status},
+	              		success: function(data) {
+		    	    	const data1 = $.trim(data);
+		    	    	if(data1 == 'success'){
+		    	    		location.reload();
+		    	    	}else{
+		    	    		alert(data);
+		    	    	}
+		    	    },
+		    	    error: function(err) {
+		    	    	alert("실패");
+		    	}})	    	
+	  		}
+			function clockOut(){
+				var status = $('#status').val();
+				var now = new Date();
+	  			var hour = modifyNumber(now.getHours());
+	  			
+	  			if(status != '오후반차'){
+		  			if(hour<18){
+		  				$('#notTimeModal').modal('show');
+		  				return"";
+		  			}
+	  			}else{
+	  				if(hour<14){
+		  				$('#notTimeModal').modal('show');
+		  				return"";
+		  			}
+	  			} 
+				$.ajax({
+	  				 url:"${pageContext.request.contextPath}/attendance/clockout",
+	                 type: "get",
+	              		success: function(data) {
+		    	    	const data1 = $.trim(data);
+		    	    	if(data1 == 'success'){
+		    	    		location.reload();
+		    	    	}else{
+		    	    		alert(data);
+		    	    	}
+		    	    },
+		    	    error: function(err) {
+		    	    	alert("실패");
+		    	}})	    	
+	  		}
+	  		
 	  	</script>
 	  	
 	  	<!-- menubar background -->
@@ -292,116 +280,71 @@
 			                	<div class=""><h2 id="time"></h2></div>
 					            <div class="row">
 					            	<div class="col" style="padding:7px 14px;"><h5 style="font-weight:bold" id="date"></h5></div>
-									<!-- 출근 상태 -->
-				                	<!-- <div class="col">
-				                		<span style="width:80px;height:34px;padding:7px 0px;font-size:20;" id="status1" class="badge bg-primary">
-				                			출근
-				                		</span>
-				                	</div> -->
 					            </div>
-					            <!-- Modal -->
-								  <div class="modal fade" id="myModal" role="dialog">
-								    <div class="modal-dialog">
-								    
-								      <!-- Modal content-->
-								      <div class="modal-content">
-								        <div class="modal-header">
-								          <button type="button" class="close" data-dismiss="modal">×</button>
-								          <h4 class="modal-title">Modal Header</h4>
-								        </div>
-								        <div class="modal-body">
-								          <p>${message}</p>
-								        </div>
-								        <div class="modal-footer">
-								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								        </div>
-								      </div>
-								      
-								    </div>
-								  </div>
-				                
-								
 								<!-- 출퇴근 버튼 -->
 								<div>
 									<div class="row">
 										<!-- 출근하기 버튼 -->
 										<div class="col-6 border-end" style="text-align:center" >
-											<input 
-											id="btn-attendance"
-											type='image'
+											<input id="btn-attendance" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/attbtn.png" 
-											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance/clockin'"
+											onClick="clockIn()"
 											/>
 										    <div>출근하기</div> 
 										    <div id="clockIn"></div>
+										    <input type="hidden" id="status"/>
 										</div><!-- End 출근하기 버튼 -->
-										
 										<!-- 퇴근하기 버튼 -->
 										<div class="col-6 " style="text-align:center">
-											<input 
-											id="btn-leave"
-											disabled 
-											style="opacity: 0.1"
-											type='image'
+											<input id="btn-leave" disabled style="opacity: 0.1" type='image' width="100"
 											src="${pageContext.request.contextPath}/resources/assets/img/leavebtn.png" 
-											width="100"
-											onClick="location.href='${pageContext.request.contextPath}/attendance/clockout'" 
-											/>
+											onClick="clockOut()" />
 											<div>퇴근하기</div>
 											<div id="clockOut"></div>
 										</div><!-- End퇴근하기 버튼 -->
 									</div>
-								
 								</div><!-- End 출퇴근 버튼 -->
-			            	
 			            	</div>
 		        		</div><!-- End attendance Card -->
-					
-							<!-- schedule Title -->
-							<div class="pagetitle">
-								<h1>캘린더</h1>
-							</div>
-							<!-- schedule Card -->
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<div class="sec_cal">
-										<div class="cal_nav">
-											
-											<div class="year-month my-3"></div>
-											
+						<!-- schedule Title -->
+						<div class="pagetitle">
+							<h1>캘린더</h1>
+						</div>
+						<!-- schedule Card -->
+						<div class="card recent-sales overflow-auto">
+							<div class="card-body">
+								<div class="sec_cal">
+									<div class="cal_nav">
+										<div class="year-month my-3"></div>
+									</div>
+									<div class="cal_wrap">
+										<div class="days">
+											<div class="day">SUN</div>
+											<div class="day">MON</div>
+											<div class="day">TUE</div>
+											<div class="day">WED</div>
+											<div class="day">THU</div>
+											<div class="day">FRI</div>
+											<div class="day">SAT</div>
 										</div>
-									  
-										<div class="cal_wrap">
-											<div class="days">
-												<div class="day">SUN</div>
-												<div class="day">MON</div>
-												<div class="day">TUE</div>
-												<div class="day">WED</div>
-												<div class="day">THU</div>
-												<div class="day">FRI</div>
-												<div class="day">SAT</div>
-											</div>
-											<div class="dates"></div>
-											<div class="tool_bar tool_absolute wrap_tb_box">
-										        <div class="critical">
-										            <section class="marker2">
-										                <ul>
-										                    <li class="attendanceMark"><span></span>출근</li>
-										                    <li class="lateMark"><span></span>지각</li>
-										                    <li class="holidayMark"><span></span>휴일</li>
-										                    <li class="vacationMark"><span></span>휴가</li>
-										                </ul>
-										            </section>
-										        </div>
-										    </div>
-										</div>
+										<div class="dates"></div>
+										<div class="tool_bar tool_absolute wrap_tb_box">
+									        <div class="critical">
+									            <section class="marker2">
+									                <ul>
+									                    <li class="attendanceMark"><span></span>출근</li>
+									                    <li class="lateMark"><span></span>지각</li>
+									                    <li class="overtimeMark"><span></span>휴일</li>
+									                    <li class="vacationMark"><span></span>휴가</li>
+									                </ul>
+									            </section>
+									        </div>
+									    </div>
 									</div>
 								</div>
 							</div>
-						<!-- End attendance Card -->
+						</div><!-- End attendance Card -->
 					</div><!-- End Left side columns -->
-					
 					<!-- Right side columns -->
 					<div class="col-lg-8">
 						<!-- mail Title -->
@@ -438,40 +381,58 @@
 					
 					
 						<!-- notice Title -->
-						<div class="pagetitle">
-							<h1>알림마당</h1>
-						</div>
-						<!-- notice card -->
-						<div class="card" style="height:498px">
-							<div class="card-body pb-0">
-								<!-- notice Tabs -->
-								<ul class="nav nav-tabs nav-tabs-bordered mt-4" id="noticeTab" role="tablist">
-									<li class="nav-item" role="presentation">
-										<button class="nav-link active" id="notice-tab" data-bs-toggle="tab" data-bs-target="#notice" type="button" role="tab" aria-controls="home" aria-selected="true">공지사항</button>
-									</li>
-									<li class="nav-item" role="presentation">
-										<button class="nav-link" id="happy-tab" data-bs-toggle="tab" data-bs-target="#happy" type="button" role="tab" aria-controls="profile" aria-selected="false">사내 경조사</button>
-									</li>
-								</ul>
-						
-								<!-- notice content -->
-								<div class="tab-content mt-4" id="noticeTabContent">
-							
-									<!-- 공지사항 -->
-									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-										
-									</div><!-- End 공지사항 -->
-						
-									<!-- 사내 경조사 -->
-									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
-										
-									</div><!--End 사내 경조사  -->
-								</div><!--End notice content -->
-							</div>
-						</div><!--End notice Card --> 
+                  <div class="pagetitle">
+                     <h1>알림마당</h1>
+                  </div>
+                  <!-- notice card -->
+                  <div class="card" style="height:498px">
+                     <div class="card-body pb-0">
+                        <!-- notice Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered mt-4" id="noticeTab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="notice-tab" data-bs-toggle="tab" data-bs-target="#notice" type="button" role="tab" aria-controls="home" aria-selected="true">공지사항</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="happy-tab" data-bs-toggle="tab" data-bs-target="#happy" type="button" role="tab" aria-controls="profile" aria-selected="false">사내 경조사</button>
+                           </li>
+                        </ul>
+                  
+                        <!-- notice content -->
+                        <div class="tab-content mt-4" id="noticeTabContent">
+                     
+                           <!-- 공지사항 -->
+                           <div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+                              
+                           </div><!-- End 공지사항 -->
+                  
+                           <!-- 사내 경조사 -->
+                           <div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
+                              
+                           </div><!--End 사내 경조사  -->
+                        </div><!--End notice content -->
+                     </div>
+                  </div><!--End notice Card --> 
 					</div><!-- End Right side columns -->
 				</div>
 			</section>
+			<!-- 근무내용 실패 모달 -->
+			<div class="modal fade" id="notTimeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							메시지
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-bottom: 4px">근무 시간이 아닙니다.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div><!-- End #main -->
 	  	<!-- ======= Footer ======= -->
 		<footer id="footer1" class="footer">

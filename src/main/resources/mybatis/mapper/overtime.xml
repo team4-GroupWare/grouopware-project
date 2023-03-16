@@ -30,7 +30,8 @@
 	</select>
 	<select id="selectOvertimeList" parameterType="map"
 		resultType="overtime">
-		select overtime_id as "overtimeId",
+		select o.emp_id as "empId", 
+		overtime_id as "overtimeId",
 		e.name as "empName",
 		write_date as "writeDate",
 		work_date as "workDate" ,
@@ -58,9 +59,11 @@
 		o.emp_id as "empId",
 		e.name as "empName",
 		approval_emp_id as "approvalEmpId",
+		approval_date as "approvalDate",
 		write_date as "writeDate",
 		work_date as "workDate" ,
 		status ,
+		content,
 		work_time as "workTime"
 		from overtime o, employees e
 		where overtime_id = #{overtimeId} and e.emp_id
