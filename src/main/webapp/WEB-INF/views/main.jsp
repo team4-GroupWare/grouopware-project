@@ -442,7 +442,7 @@
 							<h1>알림마당</h1>
 						</div>
 						<!-- notice card -->
-						<div class="card" style="height:485px">
+						<div class="card" style="height:498px">
 							<div class="card-body pb-0">
 								<!-- notice Tabs -->
 								<ul class="nav nav-tabs nav-tabs-bordered mt-4" id="noticeTab" role="tablist">

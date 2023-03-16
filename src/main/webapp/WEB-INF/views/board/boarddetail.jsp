@@ -21,13 +21,13 @@
 	
 	      		<li class="nav-item">
 	        		<a class="nav-link collapsed"  href="${pageContext.request.contextPath}/board/list/1">
-	          			<i class="bi bi-envelope-paper"></i><span>공지사항</span><i></i>
+	          			<i class="bi bi-bell"></i><span>공지사항</span><i></i>
 	        		</a>
 	      		</li><!-- End 공지사항 -->
 	
 	      		<li class="nav-item">
 	        		<a class="nav-link collapsed " href="${pageContext.request.contextPath}/board/list/2">
-	          			<i class="bi bi-envelope"></i><span>사내 경조사</span>
+	          			<i class="bi bi-emoji-laughing"></i><span>사내 경조사</span>
 	        		</a>
 	      		</li><!-- End 사내 경조사 -->
 	

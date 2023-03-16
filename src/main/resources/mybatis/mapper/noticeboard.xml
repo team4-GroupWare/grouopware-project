@@ -126,7 +126,7 @@
                 and n.board_cate_id = #{boardCateId}
 			ORDER BY write_date DESC
             OFFSET 0 ROWS
-            FETCH FIRST 5 ROWS ONLY
+            FETCH FIRST 10 ROWS ONLY
 		]]>
 	</select>
 	

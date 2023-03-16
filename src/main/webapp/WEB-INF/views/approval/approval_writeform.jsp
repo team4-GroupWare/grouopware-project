@@ -200,7 +200,7 @@
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>참조</b></label>
 	                  				<div class="col-sm-10 d-flex">
 	                  					<c:if test="${manager != null}">
-	                  						<input id = "reference" type="text" style="width:260px;" class="form-control" value="${manager.name} (${manager.gradeName})" readonly>
+	                  						<input id = "reference" type="text" style="width:260px;" class="form-control" value="[경영지원실] ${manager.name} (${manager.gradeName})" readonly>
 	                  						<input id = "refEmpId" type="hidden" name="refEmpId" style="width:260px;" class="form-control" value="${manager.empId}">
 	                  						<input id= "checkBoxId" class="form-check-input my-auto" type="checkbox" style="margin-left: 10px;" checked>
 	                  					</c:if>
