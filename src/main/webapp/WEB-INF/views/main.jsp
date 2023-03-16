@@ -99,7 +99,6 @@
 							btnNotActive();
 						}
 	            	  }
-	            	  
 	              });
 	              $.ajax({
 	                  url:"${pageContext.request.contextPath}/board/mainboardlist/1",
@@ -164,7 +163,7 @@
 	  				status = "출근";
 	  			}else{
 	  				status = "지각";
-	  			}
+	  			}  
 	  			$.ajax({
 	  				 url:"${pageContext.request.contextPath}/attendance/clockin",
 	                 type: "post",
@@ -174,7 +173,7 @@
 		    	    	if(data1 == 'success'){
 		    	    		location.reload();
 		    	    	}else{
-		    	    		alert(data);
+		    	    		$('#holidayModal').modal('show');
 		    	    	}
 		    	    },
 		    	    error: function(err) {
@@ -421,7 +420,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
 							Error message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
@@ -439,12 +438,30 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
 							Error message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<p style="margin-bottom: 4px">퇴근 시간이 아닙니다.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 퇴근 실패 모달 -->
+			<div class="modal fade" id="holidayModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							Error message
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-bottom: 4px">휴무입니다.</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
