@@ -409,7 +409,7 @@
 							<h1>메일함</h1>
 						</div>
 						<!-- mail card -->
-						<div class="card">
+						<div class="card" style="height:330px;">
 							<div class="card-body pb-0">
 						        <!-- mail Tabs -->
 							    <ul class="nav nav-tabs nav-tabs-bordered" id="mailTab" role="tablist">
