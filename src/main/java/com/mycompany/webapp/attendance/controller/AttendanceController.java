@@ -108,6 +108,7 @@ public class AttendanceController {
 		if(attendance != null) {
 			if(attendance.getStatus().contains("반차")) {
 				attendanceService.attClockInUpdate(attendance.getAttendanceId());
+				return "success";
 			}else {
 				return "이미 출근하셨거나 휴가상태입니다.";
 			}
@@ -253,7 +254,7 @@ public class AttendanceController {
 		// 1번째 줄에 출근 시간과 status
 		for (Attendance a : attendance) {
 			HashMap<String, String> hash = new HashMap<String, String>();
-
+			
 			if (a.getClockIn() == null) {
 				hash.put("title", a.getStatus());
 				hash.put("start", format.format(a.getAttendanceDate()));
@@ -261,6 +262,7 @@ public class AttendanceController {
 					hash.put("backgroundColor", "#808080");
 					hash.put("borderColor", "#808080");
 				} else if (a.getStatus().contains("경조사") || a.getStatus().contains("반차")||a.getStatus().contains("연차")) {
+					
 					hash.put("backgroundColor", "#66BB6A");
 					hash.put("borderColor", "66BB6A");
 				}
