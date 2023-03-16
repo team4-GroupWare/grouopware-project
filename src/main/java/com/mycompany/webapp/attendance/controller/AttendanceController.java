@@ -262,7 +262,6 @@ public class AttendanceController {
 					hash.put("backgroundColor", "#808080");
 					hash.put("borderColor", "#808080");
 				} else if (a.getStatus().contains("경조사") || a.getStatus().contains("반차")||a.getStatus().contains("연차")) {
-					
 					hash.put("backgroundColor", "#66BB6A");
 					hash.put("borderColor", "66BB6A");
 				}
@@ -279,6 +278,9 @@ public class AttendanceController {
 				}	else if (a.getStatus().equals("연장근무")) {
 					hash.put("backgroundColor", "#6f42c1");
 					hash.put("borderColor", "#6f42c1");
+				}	else if (a.getStatus().contains("반차")) {
+					hash.put("backgroundColor", "#66BB6A");
+					hash.put("borderColor", "#66BB6A");
 				}
 
 			}
