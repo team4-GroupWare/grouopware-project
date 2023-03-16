@@ -59,11 +59,11 @@
 			    					<img id="group" src="${pageContext.request.contextPath}/resources/assets/img/hr.png" usemap="#image-map">
 								</div>
 								<map name="image-map">
-								    <area alt="임원" title="임원" href="${pageContext.request.contextPath}/hr/list/0" coords="759,219,942,276" shape="rect">
-								    <area alt="경영지원실" title="경영지원실" href="${pageContext.request.contextPath}/hr/list/4" coords="349,309,529,365" shape="rect">
-								    <area alt="공공사업1" title="공공사업1" href="${pageContext.request.contextPath}/hr/list/1" coords="238,513,419,570" shape="rect">
-								    <area alt="공공사업2" title="공공사업2" href="${pageContext.request.contextPath}/hr/list/2" coords="736,571,553,514" shape="rect">
-								    <area alt="전략사업" title="전략사업" href="${pageContext.request.contextPath}/hr/list/3" coords="872,513,1052,570" shape="rect">
+								    <area alt="임원" title="임원" href="${pageContext.request.contextPath}/hr/list/1" coords="759,219,942,276" shape="rect">
+								    <area alt="경영지원실" title="경영지원실" href="${pageContext.request.contextPath}/hr/list/5" coords="349,309,529,365" shape="rect">
+								    <area alt="공공사업1" title="공공사업1" href="${pageContext.request.contextPath}/hr/list/2" coords="238,513,419,570" shape="rect">
+								    <area alt="공공사업2" title="공공사업2" href="${pageContext.request.contextPath}/hr/list/3" coords="736,571,553,514" shape="rect">
+								    <area alt="전략사업" title="전략사업" href="${pageContext.request.contextPath}/hr/list/4" coords="872,513,1052,570" shape="rect">
 								</map>
 	            			</div>
 	          			</div>

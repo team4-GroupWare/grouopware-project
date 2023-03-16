@@ -34,7 +34,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">아이디</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="empId" class="form-control" id="yourUsername" placeholder="test1" value="test1" required>
+                        <input type="text" name="empId" class="form-control" id="yourUsername" placeholder="emp1" value="emp1" required>
                         <div class="invalid-feedback">아이디를 입력해주세요.</div>
                       </div>
                     </div>
