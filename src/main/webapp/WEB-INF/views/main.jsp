@@ -100,7 +100,23 @@
 						}
 	            	  }
 	            	  
-	              }); 
+	              });
+	              $.ajax({
+	                  url:"${pageContext.request.contextPath}/board/mainboardlist/1",
+	                    type: "GET"
+	                 }).done(function(data){
+	                    $("#notice").empty();
+	                    $("#notice").html(data);
+	                });
+	                
+	                //사내 경조사
+	                $.ajax({
+	                  url:"${pageContext.request.contextPath}/board/mainboardlist/2",
+	                    type: "GET"
+	                 }).done(function(data){
+	                     $("#happy").empty();
+	                    $("#happy").html(data);
+	                }); 
 	  		});
 	  		//0~9시를 00~09시로 나타내주는 함수
 			function modifyNumber(time){
@@ -365,99 +381,37 @@
 					
 					
 						<!-- notice Title -->
-						<div class="pagetitle">
-							<h1>알림마당</h1>
-						</div>
-						<!-- notice card -->
-						<div class="card" style="height:498px">
-							<div class="card-body pb-0">
-								<!-- notice Tabs -->
-								<ul class="nav nav-tabs nav-tabs-bordered mt-4" id="noticeTab" role="tablist">
-									<li class="nav-item" role="presentation">
-										<button class="nav-link active" id="notice-tab" data-bs-toggle="tab" data-bs-target="#notice" type="button" role="tab" aria-controls="home" aria-selected="true">공지사항</button>
-									</li>
-									<li class="nav-item" role="presentation">
-										<button class="nav-link" id="happy-tab" data-bs-toggle="tab" data-bs-target="#happy" type="button" role="tab" aria-controls="profile" aria-selected="false">사내 경조사</button>
-									</li>
-								</ul>
-						
-								<!-- notice content -->
-								<div class="tab-content mt-4" id="noticeTabContent">
-							
-									<!-- 공지사항 -->
-									<div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-										<div class="news">
-											<div class="post-item ">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 출결(전자출결,휴가,지하철 연착 등)관련 안내</a></h4>
-											    <p>출결(전자출결,휴가,지하철 연착 등)관련 안내</p>
-											</div>
-										
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 그룹웨어 사진 변경 안내</a></h4>
-											    <p>그룹웨어 사진 변경 안내드립니다.</p>
-											</div>
-										
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지]사내 건강검진 안내</a></h4>
-											    <p>2023년도 건강검진 안내드립니다.</p>
-											</div>
-										
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 개인정보처리방침 개정안내</a></h4>
-											    <p>개인정보처리방침 개정안내</p>
-											</div>
-											
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
-											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
-											</div>
-											
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[공지] 계량기 공사 관련 안내</a></h4>
-											    <p>3월 7일 사내 건물에 공사가 진행될 예정입니다.</p>
-											</div>
-										
-										</div>
-									</div><!-- End 공지사항 -->
-						
-									<!-- 사내 경조사 -->
-									<div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
-										<div id="news" class="news">
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]경조사 게시판 이용방법 안내</a></h4>
-											    <p>동문들의 경조사를 공유하고 알리는 게시판...</p>
-											</div>
-											
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]공공사업1div 이지호 차장 결혼 안내</a></h4>
-											    <p>2023년 3월 4일 삼성 00에 이지호 차장의 결혼....</p>
-											</div>
-										
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내] 야유회 관련</a></h4>
-											    <p>부서별 야유회 관련 안내입니다.</p>
-											</div>
-										
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]대표이사 취임식</a></h4>
-											    <p>취임식 참석 안내입니다.</p>
-											</div>
-											
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
-											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
-											</div>
-											
-											<div class="post-item clearfix">
-											    <h4><a href="${pageContext.request.contextPath}/board/list">[안내]000부장 부친상 안내</a></h4>
-											    <p>000부장의 부친께서 영면하시어 부고 하오니, 많은 위로 부탁 드립니다.</p>
-											</div>
-										
-										</div>
-									</div><!--End 사내 경조사  -->
-								</div><!--End notice content -->
-							</div>
-						</div><!--End notice Card --> 
+                  <div class="pagetitle">
+                     <h1>알림마당</h1>
+                  </div>
+                  <!-- notice card -->
+                  <div class="card" style="height:498px">
+                     <div class="card-body pb-0">
+                        <!-- notice Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered mt-4" id="noticeTab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="notice-tab" data-bs-toggle="tab" data-bs-target="#notice" type="button" role="tab" aria-controls="home" aria-selected="true">공지사항</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="happy-tab" data-bs-toggle="tab" data-bs-target="#happy" type="button" role="tab" aria-controls="profile" aria-selected="false">사내 경조사</button>
+                           </li>
+                        </ul>
+                  
+                        <!-- notice content -->
+                        <div class="tab-content mt-4" id="noticeTabContent">
+                     
+                           <!-- 공지사항 -->
+                           <div class="tab-pane fade show active" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+                              
+                           </div><!-- End 공지사항 -->
+                  
+                           <!-- 사내 경조사 -->
+                           <div class="tab-pane fade" id="happy" role="tabpanel" aria-labelledby="happy-tab">
+                              
+                           </div><!--End 사내 경조사  -->
+                        </div><!--End notice content -->
+                     </div>
+                  </div><!--End notice Card --> 
 					</div><!-- End Right side columns -->
 				</div>
 			</section>
