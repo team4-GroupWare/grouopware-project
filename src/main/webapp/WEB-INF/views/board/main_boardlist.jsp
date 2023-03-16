@@ -13,7 +13,7 @@
 		<c:forEach var="board" items="${boardList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
-				<td><a href="${pageContext.request.contextPath}/board/detail/${board.noticeId}">${board.noticeTitle}</a></h4></td>
+				<td><a href="${pageContext.request.contextPath}/board/detail/${board.noticeId}">${board.noticeTitle}</a></td>
 				<td>${board.writeDate}</td>
 				<td>${board.readCount}</td>
 			</tr>
