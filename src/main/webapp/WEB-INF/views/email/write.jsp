@@ -56,7 +56,8 @@
 		function tempSave() {
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
-			var receiveId = $("#receiver").val();
+			var receiveId = $("#receivers").val();
+			console.log(receiveId);
 			var title = $("#title").val();
 			if(title == ''){
 				title = '제목 없음';

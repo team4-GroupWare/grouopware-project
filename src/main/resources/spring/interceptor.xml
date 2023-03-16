@@ -10,7 +10,7 @@
 			<mvc:mapping path="/email/*"/>
 			<mvc:mapping path="/employee/*"/>
 			<mvc:mapping path="/approval/**"/>
-			<mvc:mapping path="/hr/*"/>
+			<mvc:mapping path="/hr/**"/>
 			<mvc:mapping path="/vacation/**"/>
 			<mvc:mapping path="/overtime/**"/>
 			<mvc:mapping path="/attendance/**"/>

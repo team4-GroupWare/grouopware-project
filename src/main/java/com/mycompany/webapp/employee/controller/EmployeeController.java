@@ -296,7 +296,7 @@ public class EmployeeController {
 			return "employee/register";
 		}
 			
-		return "redirect:/";
+		return "redirect:/hr/list/1";
 	}
 	/**
 	 * @author : LEEYESEUNG
