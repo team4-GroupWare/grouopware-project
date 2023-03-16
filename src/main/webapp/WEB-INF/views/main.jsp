@@ -94,7 +94,7 @@
 						$("#clockOut").html(clockOut);
 						$("#status").val(status);
 						if(data.isIn == 'y'){
-							onlyBtnleave();
+							onlyBtnleave()
 						}if(data.isOut == 'y'){
 							btnNotActive();
 						}
@@ -148,16 +148,17 @@
 	  		}
 	  		//출근,퇴근 비활성화 함수
 	  		function btnNotActive(){
-	  			var target1 = document.getElementById('btn-attendance');
+	  			var target1 = document.getElementById('btn-leave');
 				target1.disabled = true;
 				target1.setAttribute( 'style', 'opacity: 0.1' )
+				
 	  		}
 	  		function clockIn(){
 	  			var now = new Date();
 	  			var hour = modifyNumber(now.getHours());
 	  			var status = "";
 	  			if(hour < 6 ||hour > 17){
-	  				$('#notTimeModal').modal('show');
+	  				$('#notTimeInModal').modal('show');
 	  				return"";
 	  			}else if(hour<9){
 	  				status = "출근";
@@ -187,12 +188,12 @@
 	  			
 	  			if(status != '오후반차'){
 		  			if(hour<18){
-		  				$('#notTimeModal').modal('show');
+		  				$('#notTimeOutModal').modal('show');
 		  				return"";
 		  			}
 	  			}else{
 	  				if(hour<14){
-		  				$('#notTimeModal').modal('show');
+		  				$('#notTimeOutModal').modal('show');
 		  				return"";
 		  			}
 	  			} 
@@ -334,7 +335,7 @@
 									                <ul>
 									                    <li class="attendanceMark"><span></span>출근</li>
 									                    <li class="lateMark"><span></span>지각</li>
-									                    <li class="overtimeMark"><span></span>휴일</li>
+									                    <li class="overtimeMark"><span></span>연장</li>
 									                    <li class="vacationMark"><span></span>휴가</li>
 									                </ul>
 									            </section>
@@ -415,17 +416,35 @@
 					</div><!-- End Right side columns -->
 				</div>
 			</section>
-			<!-- 근무내용 실패 모달 -->
-			<div class="modal fade" id="notTimeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<!-- 출근 실패 모달 -->
+			<div class="modal fade" id="notTimeInModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-							메시지
+							Error message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<p style="margin-bottom: 4px">근무 시간이 아닙니다.</p>
+							<p style="margin-bottom: 4px">출근 시간이 아닙니다.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 퇴근 실패 모달 -->
+			<div class="modal fade" id="notTimeOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+							Error message
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-bottom: 4px">퇴근 시간이 아닙니다.</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
