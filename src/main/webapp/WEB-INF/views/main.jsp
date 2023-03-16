@@ -361,7 +361,7 @@
 									
 								</div><!--End mail content -->
 							</div>
-						</div><!--End mail Card --> 
+						</div><!--End mail Card -->  
 					
 					
 						<!-- notice Title -->
