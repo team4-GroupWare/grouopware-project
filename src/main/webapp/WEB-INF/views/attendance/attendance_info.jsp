@@ -7,10 +7,31 @@
 	<!-- 달력  -->
 	<link href="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main.css" rel="stylesheet">
 	<script src="${pageContext.request.contextPath}/resources/fullcalendar-5.6.0/lib/main1.js"></script>
+	<style>
+	
+	.nav-link{
+	font-size: 20px;
+    margin-bottom: 0;
+    font-weight: 600;
+	color:#012970;
+	}
+	
+	button:(:disabled) {
+    font-size: 20px;
+    margin-bottom: 0;
+    font-weight: 600;
+	color:#2879cb;
+	}
+	.profile .profile-overview .label {
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(1, 41, 112, 0.6);
+}
+	</style>
 </head>
 <script>
 	/* 주 근무 현황 */
-	document.addEventListener("DOMContentLoaded", () => {
+	document.addEventListener("DOMContentLoaded", function(){
 		attendanceTime = ${attendanceTime}
 		halfTime = ${halfTime}
 		overTime = ${overTime}
@@ -47,7 +68,7 @@
 		});
 	});
 	/* 월 근무 통계 */
-	document.addEventListener("DOMContentLoaded", () => {
+	document.addEventListener("DOMContentLoaded", function(){
 		var attCountMonth = ${attendanceMonthStatus.attCount}
 		var lateCountMonth = ${attendanceMonthStatus.lateCount}
 		var absentCountMonth = ${attendanceMonthStatus.absentCoutn}
@@ -113,16 +134,82 @@
 						</div>
 					</div>
 					<!-- ======================================월 근무 통계====================================== -->
-					<div class="pagetitle">
-						<h1>월 근무 통계</h1>
-					</div>
-					<div class="card">
+					
+					<!-- <div class="card">
 						<div class="card-body">
 						<h5 class="card-title"></h5>
-							<!-- Pie Chart -->
+							Pie Chart
 							<div id="pieChart"></div>
 						</div>
+					</div> -->
+					
+					<div class="card">
+		            <div class="card-body mt-4">
+		              
+		
+		              <!-- Default Tabs -->
+		              <ul class="nav nav-tabs" id="myTab" role="tablist">
+		                <li class="nav-item" role="presentation">
+		                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">월 근무 통계</button>
+		                </li>
+		                <li class="nav-item" role="presentation">
+		                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">휴가 현황</button>
+		                </li>
+		                <li class="nav-item" role="presentation">
+		                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">연장근무 현황</button>
+		                </li>
+		              </ul>
+		              <div class="tab-content pt-2" id="myTabContent">
+		                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+		                  <div id="pieChart"></div>
+		                </div>
+		                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						<div class="card profile my-4">
+						<div class="card-header"></div>
+						<div class="card-body pt-4 m-0">
+							<div class="tab-pane fade show active  profile-overview" id="profile-overview">
+								<div class="row">
+									<div class="col-7 label">총 잔여연차</div>
+									<div class="col-5">${loginEmployee.dayoffRemain+loginEmployee.addDayoffRemain}일</div>
+								</div>
+								<div class="row">
+									<div class="col-7 label">잔여연차</div>
+									<div class="col-5">${loginEmployee.dayoffRemain}일</div>
+								</div>
+								<div class="row">
+									<div class="col-7 label">경조연차</div>
+									<div class="col-5">${loginEmployee.addDayoffRemain}일</div>
+								</div>
+								
+							</div>
+						</div>
 					</div>
+		                </div>
+		                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+							<div class="card profile my-4">
+						<div class="card-header"></div>
+						<div class="card-body pt-4 m-0">
+							<div class="tab-pane fade show active  profile-overview" id="profile-overview">
+								<div class="row">
+									<div class="col-7 label">주 연장 근무 가능 시간</div>
+									<div class="col-5">12시간</div>
+								</div>
+								<div class="row">
+									<div class="col-7 label">주 연장 근무 시간</div>
+									<div class="col-5">${weekOverTime}시간</div>
+								</div>
+								<div class="row">
+									<div class="col-7 label ">주 연장 근무 가능 시간</div>
+									<div class="col-5">${12-weekOverTime}시간</div>
+								</div>
+							</div>
+						</div>
+					</div>
+		                </div>
+		              </div><!-- End Default Tabs -->
+		
+		            </div>
+		          </div>
 				</div>
 				<!-- ====================================== Right Side ====================================== -->
 				<div class="col-lg-7">

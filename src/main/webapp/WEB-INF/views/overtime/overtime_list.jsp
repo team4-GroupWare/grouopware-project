@@ -80,7 +80,49 @@ table a:active {
 									<th scope="col" width="20%">기안자</th>
 									<th scope="col" width="20%">연장 근무 시간</th>
 									<th scope="col" width="20%">연장 근무 날짜</th>
-									<th scope="col" width="10%">상태</th>
+									 <th scope="col" width="10%">
+						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+						                    <c:if test="${not empty status}">
+						                    <span class="d-none d-md-block dropdown-toggle ps-2">${status}</span>
+						                    </c:if>
+						                    <c:if test="${empty status}">
+						                    <span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
+						                    </c:if>
+	            								
+	          								</a>
+		          							<ul class="dropdown-menu ">
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}">
+		                								<span>전체</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=대기">
+		                								<span>대기</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+									            <li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=승인">
+		                								<span>승인</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/overtime/list/${type}?status=반려">
+		                								<span>반려</span>
+		              								</a>
+		            							</li>
+		            							
+									    	</ul>
+          								</th>
 									<th scope="col" width="20%">작성날짜</th>
 								</tr>
 
