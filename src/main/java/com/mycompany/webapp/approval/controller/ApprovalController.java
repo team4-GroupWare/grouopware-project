@@ -265,6 +265,7 @@ public class ApprovalController {
 		int approvalRow = approvalService.getApprovalRow(empId, status, approvalCategoryId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
+		//전자결재 목록
 		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status, approvalCategoryId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
