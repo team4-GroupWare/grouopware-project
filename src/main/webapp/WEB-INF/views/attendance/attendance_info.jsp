@@ -155,9 +155,7 @@
 		                <li class="nav-item" role="presentation">
 		                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">휴가 현황</button>
 		                </li>
-		                <li class="nav-item" role="presentation">
-		                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">연장근무 현황</button>
-		                </li>
+		                
 		              </ul>
 		              <div class="tab-content pt-2" id="myTabContent">
 		                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -185,27 +183,7 @@
 						</div>
 					</div>
 		                </div>
-		                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-							<div class="card profile my-4">
-						<div class="card-header"></div>
-						<div class="card-body pt-4 m-0">
-							<div class="tab-pane fade show active  profile-overview" id="profile-overview">
-								<div class="row">
-									<div class="col-7 label">주 연장 근무 가능 시간</div>
-									<div class="col-5">12시간</div>
-								</div>
-								<div class="row">
-									<div class="col-7 label">주 연장 근무 시간</div>
-									<div class="col-5">${weekOverTime}시간</div>
-								</div>
-								<div class="row">
-									<div class="col-7 label ">주 연장 근무 가능 시간</div>
-									<div class="col-5">${12-weekOverTime}시간</div>
-								</div>
-							</div>
-						</div>
-					</div>
-		                </div>
+		               
 		              </div><!-- End Default Tabs -->
 		
 		            </div>
