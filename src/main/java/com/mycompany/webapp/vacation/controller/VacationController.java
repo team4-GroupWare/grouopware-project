@@ -127,6 +127,7 @@ public class VacationController {
 			model.addAttribute("dayoffRemain", vacationDays.getDayoffRemain());
 			model.addAttribute("addDayoffRemain", vacationDays.getAddDayoffRemain());
 		}
+		model.addAttribute("type",type);
 		model.addAttribute("vacationList", vacationList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
