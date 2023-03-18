@@ -76,14 +76,20 @@ function submitEmailForm() {
     $.ajax({
         method: 'POST',
         url: path+'/email/write',
-        dataType: 'json',
         data: formData,
         contentType: false,			
 	    processData: false,
 		cache: false,
         success: function (data) {
-        	let url = path + '/email/complete';
-        	location.replace(url);
+        	if(data == 'fail'){
+        		console.log(data);
+        		$("#noID").modal('show');
+        	} else {
+        		console.log(data);
+            	let url = path + '/email/complete';
+            	location.replace(url);
+        	}
+        	
         },
         error: function (xhr, desc, err) {
             console.log('에러');
