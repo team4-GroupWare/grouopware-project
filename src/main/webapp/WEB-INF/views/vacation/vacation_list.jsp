@@ -39,7 +39,7 @@
   	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp" %>	
 
   	<main id="main" class="main">
-    	<c:if test="${loginEmployee.empId == vacationList[0].empId}">
+    	<c:if test="${type==1}">
 			<div class="pagetitle mt-3">
 				<h1>내 문서함</h1>
 				<ol class="breadcrumb">
@@ -48,7 +48,7 @@
         		</ol>
 			</div>
 		</c:if>
-		<c:if test="${loginEmployee.empId != vacationList[0].empId}">
+		<c:if test="${type==2}">
 			<div class="pagetitle mt-3">
 				<h1>결재 문서함</h1>
 				<ol class="breadcrumb">
@@ -77,7 +77,49 @@
 					                    <th scope="col" width="20%">휴가종류</th>
 					                    <th scope="col" width="30%">기간</th>
 					                    <th scope="col" width="15%">일수</th>
-					                    <th scope="col" width="15%">상태</th>
+					                    <th scope="col" width="15%">
+						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+						                    <c:if test="${not empty status}">
+						                    <span class="d-none d-md-block dropdown-toggle ps-2">${status}</span>
+						                    </c:if>
+						                    <c:if test="${empty status}">
+						                    <span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
+						                    </c:if>
+	            								
+	          								</a>
+		          							<ul class="dropdown-menu ">
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/list/${type}">
+		                								<span>전체</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/list/${type}?status=대기">
+		                								<span>대기</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+									            <li>
+		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/vacation/list/${type}?status=승인">
+		                								<span>승인</span>
+		              								</a>
+		            							</li>
+		            							<li>
+		              								<hr class="dropdown-divider">
+		            							</li>
+		            							<li>
+		              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/vacation/list/${type}?status=반려">
+		                								<span>반려</span>
+		              								</a>
+		            							</li>
+		            							
+									    	</ul>
+          								</th>
 						                   
           								
                   					</tr>
@@ -94,9 +136,6 @@
 						                    <c:if test="${vacation.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
 						                    </c:if>
-											<c:if test="${vacation.status eq '진행'}">
-						                    	<td><span class="badge bg-warning text-dark"><i class="bi bi-clock-history me-1"></i> 진행</span></td>
-						                    </c:if>						                    
 						                    <c:if test="${vacation.status eq '승인'}">
 						                    	<td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> 승인</span></td>
 						                    </c:if>

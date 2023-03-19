@@ -204,10 +204,10 @@
 								    multidateSeparator: " ,",
 								    datesDisabled: ['2023/03/01'],
 								    daysOfWeekDisabled: "0,6",
-								    todayHighlight: true
+								    todayHighlight: true,
+								    orientation: 'right bottom'
 								    
 								});
-								
 								function plusDate(){
 									var type = $("select[name=vacationCategoryId] option:selected").val();
 									var day;
