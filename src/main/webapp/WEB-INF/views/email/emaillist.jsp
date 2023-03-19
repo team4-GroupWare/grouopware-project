@@ -269,10 +269,10 @@
 					            <table class="table table-hover">
 						            <thead>
 							            <tr style="border-bottom:2px solid #004389;">
-						                  	<th scope="col" ><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
-						                    <th scope="col">이름</th>
-						                    <th scope="col">제목</th>
-						                    <th scope="col">날짜</th>
+						                  	<th scope="col" width="5%"><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
+						                    <th scope="col"width="10%">이름</th>
+						                    <th scope="col"width="65%">제목</th>
+						                    <th scope="col"width="20%">날짜</th>
 					                  	</tr>
 				                	</thead>
 					                <tbody>

@@ -359,9 +359,7 @@ public class EmailService implements IEmailService {
 		}
 		
 		int row = emailRepository.selectReceiver(emailDetail.getReceiveId());
-		log.info("수신인 존재 여부: "+ row);
 		if(row == 0) {
-			log.info("수신인 존재 여부: "+ row);
 			throw new NoReceiverException("No Receiver");
 		}
 		//이메일 컨텐트 테이블 insert
