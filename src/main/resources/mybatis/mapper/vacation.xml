@@ -2,32 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.vacation.repository.VacationRepository">
 
-	<!-- 휴가 결재선 선택 사원정보-->
-	<select id="selectApprovalEmp" parameterType="string" resultType="vacation">
-		<![CDATA[
-			SELECT e.emp_id as "empId", 
-				name as "empName",
-                team_name as "teamName",
-                dept_name as "deptName",
-                grade_name as "gradeName"
-      		FROM EMPLOYEES e, departments d, teams t, grade g
-            WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
-            	and g.grade_id= e.grade_id
-                and e.emp_id=#{empId}
-		]]>
-	</select>
-	 
+	<!-- 휴가 작성하기 --> 
 	<insert id="insertVacation" parameterType="vacation">
 		INSERT INTO vacation (
 			vacation_id, content, write_date, vacation_category_id, emp_id, 
 			status,count_day, approval_emp_id)
-		
 		VALUES (
 			seq_vacation.nextval, #{content}, sysdate,  #{vacationCategoryId}, #{empId}, 
 			default,#{countDay},#{approvalEmpId})
 	</insert> 
 	
-	<!-- 휴가 날짜 저장 -->
+	<!-- 휴가 작성하기 -->
 	<insert id="insertVacationDate" parameterType="vacationDate">
 		<selectKey keyProperty="vacationId" resultType="int" order="BEFORE">
 			SELECT seq_vacation.CURRVAL FROM dual
@@ -36,23 +21,23 @@
 		VALUES (seq_vacation_date.nextval, #{vacationId}, #{startDate}, #{endDate})
 	</insert>
 	
-	<!-- 리스트 개수 -->
+	<!-- 휴가 리스트 조회하기 -->
 	<select id="selectVacationCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM vacation
 		WHERE 
-			<if test="type == 1 ">
-				emp_id = #{empId}
-			</if>
-			<if test="type == 2 ">
-				approval_emp_id = #{empId}
-			</if>
-			<if test="!status.equals('')">
-				AND status = #{status}
-			</if>
+		<if test="type == 1 ">
+			emp_id = #{empId}
+		</if>
+		<if test="type == 2 ">
+			approval_emp_id = #{empId}
+		</if>
+		<if test="!status.equals('')">
+			AND status = #{status}
+		</if>
 	</select>
 	
-	<!-- 리스트 조회 -->
+	<!-- 휴가 리스트 조회하기 -->
 	<select id="selectVacationList" parameterType="string" resultType="vacationList">
 		select v.vacation_id as "vacationId", 
 		e.name as "name", 
@@ -74,7 +59,6 @@
 	            order by start_date desc
 	    )
 	    WHERE ROWNUM = 1),'yyyy-mm-dd') "endDate"
-	
 		from vacation v, employees e, vacation_category c
 		where 
 			<if test="type == 1 ">
@@ -92,16 +76,14 @@
 		OFFSET #{pager.startRowNo}-1 ROWS
         FETCH FIRST 10 ROWS ONLY 
 	</select>
-	
-	<!-- 잔여연차 -->
+	<!-- 휴가 리스트 조회 -->
 	<select id="selectVacationDays" parameterType="map" resultType="employee">
 		select dayoff_remain as dayoffRemain , add_dayoff_remain as addDayoffRemain
 		from employees e 
 		where e.emp_id = #{empId}
 	</select>
 	
-	
-	
+	<!-- 휴가 상세 문서 -->
 	<select id="selectVacationDetail" parameterType="int" resultType="vacationDetail">
 		select
 			v.vacation_category_id as "vacationCategoryId",
@@ -125,6 +107,7 @@
 	        and c.vacation_category_id= v.vacation_category_id
 	</select>
 	
+	<!-- 휴가 상세 문서 -->
 	<select id="selectVacationDate" parameterType="int" resultType="vacationDate">
 		select to_char(start_date,'yyyy-mm-dd') as "startDateStr", to_char(end_date,'yyyy-mm-dd')as "endDateStr"
 		from vacation_date
@@ -132,6 +115,22 @@
 		order by start_date
 	</select>
 	
+	<!-- 휴가 결제자 정보 조회-->
+	<select id="selectApprovalEmp" parameterType="string" resultType="vacation">
+	<![CDATA[
+		SELECT e.emp_id as "empId", 
+				name as "empName",
+				team_name as "teamName",
+				dept_name as "deptName",
+				grade_name as "gradeName"
+	   	FROM EMPLOYEES e, departments d, teams t, grade g
+	    WHERE e.dept_id=d.dept_id and e.team_id=t.team_id 
+				and g.grade_id= e.grade_id
+				and e.emp_id=#{empId}
+	]]>
+	</select>
+	
+	<!-- 신청자 연차 정보 -->
 	<select id="selectEmpDayOff"  parameterType="map" resultType="int">
 		select 
 		<if test="vacationCategoryId lt 4 ">
@@ -143,7 +142,7 @@
 			from employees
 			where emp_id=#{empId}
 	</select>
-	
+	<!-- 신청자 연차 정보 -->
 	<update id="updateDayoffremain" parameterType="map">
 		update employees set
 		<if test="vacationCategoryId lt 4 ">
@@ -155,26 +154,29 @@
 		where emp_id = #{empId}
 	</update>
 	
+	<!-- 출근 상태 업데이트 -->
 	<update id="updateAttendance" parameterType="map">
-		<![CDATA[
-			merge into  attendance a
+		merge into  attendance a
 		using (
 		SELECT TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD') + (LEVEL-1) AS DT
 		   FROM DUAL
-		CONNECT BY LEVEL <= (TO_DATE(#{date.endDateStr}, 'YYYY-MM-DD') - TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD')) + 1
+		CONNECT BY LEVEL <![CDATA[<]]>= (TO_DATE(#{date.endDateStr}, 'YYYY-MM-DD') - TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD')) + 1
 		)
 		on(a.attendance_date = DT and a.emp_id = #{empId})
 		
 		when matched then
-		update set a.status = #{vacationName} ,a.clock_in =null,a.clock_out =null
-		
+		<if test="vacationCategoryId == 2  or vacationCategoryId == 3">
+			update set a.status = #{vacationName} 
+		</if>
+		<if test="vacationCategoryId != 2 and vacationCategoryId != 3">
+			update set a.status = #{vacationName} ,a.clock_in =null,a.clock_out =null
+		</if>		
 		when not matched then
 		insert values (seq_attendance.NEXTVAL,#{empId}, null, null 
 		,DT, #{vacationName})
-
-		]]>
-		
 	</update>
+	
+	<!-- 휴가 신청서 업데이트 -->
 	<update id="updateVacation" parameterType="map">
 		update vacation 
 		set
@@ -190,6 +192,7 @@
 		where vacation_id = #{vacationId}
 	</update>
 	
+	<!-- 반려시 연차 다시 돌려주기 -->
 	<update id="updatedayoff" parameterType="map">
 		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="int" order="BEFORE">
             SELECT
@@ -207,5 +210,11 @@
 		where emp_id = #{empId}
 	</update>
 	
+	<!-- 휴가 삭제 -->
+	<delete id="deleteVacation" parameterType="vacation">
+		<![CDATA[
+			DELETE FROM vacation WHERE vacation_id = #{vacationId}
+		]]>
+	</delete>
 	
 </mapper>
