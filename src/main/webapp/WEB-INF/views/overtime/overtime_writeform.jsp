@@ -164,16 +164,16 @@
 						<div class="card-body pt-3 m-0">
 							<div class="tab-pane fade show active profile-overview" id="profile-overview">
 								<div class="row">
-									<div class="col-7 label">최대 연장 근무 가능시간</div>
-									<div class="col-5">12시간</div>
+									<div class="col-8 label">최대 연장 근무 가능시간</div>
+									<div class="col-4">12시간</div>
 								</div>
 								<div class="row">
-									<div class="col-7 label">주 연장 근무 시간</div>
-									<div class="col-5">${weekOverTime}시간</div>
+									<div class="col-8 label">주 연장 근무 시간</div>
+									<div class="col-4">${weekOverTime}시간</div>
 								</div>
 								<div class="row">
-									<div class="col-7 label ">연장 근무 신청 가능 시간</div>
-									<div class="col-5">${12-weekOverTime}시간</div>
+									<div class="col-8 label ">연장 근무 신청 가능 시간</div>
+									<div class="col-4">${12-weekOverTime}시간</div>
 								</div>
 							</div>
 						</div>
