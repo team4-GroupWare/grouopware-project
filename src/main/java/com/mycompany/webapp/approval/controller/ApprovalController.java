@@ -123,6 +123,9 @@ public class ApprovalController {
 	@PostMapping(value="/write", produces="application/json")
 	public Uri writeApproval(@ModelAttribute Approval approval, Model model) {
 		log.info("실행");
+		if(approval.getTitle() == null) {
+			approval.setTitle("(제목없음)");
+		}
 		
 		if(approval.getApprovalLine() != null) {
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
@@ -217,7 +220,7 @@ public class ApprovalController {
 		} else if (approval.getTempApproval().equals("n")) { //제출일 경우 내 문서함 목록으로 return
 			uri.setUri("/approval/mylist");
 		}
-		log.info("uri : " + uri);
+		//log.info("uri : " + uri);
 		return uri;
 	}
 	
@@ -265,6 +268,7 @@ public class ApprovalController {
 		int approvalRow = approvalService.getApprovalRow(empId, status, approvalCategoryId);
 		Pager pager = new Pager(10, 5, approvalRow, pageNo);
 		
+		//전자결재 목록
 		List<Approval> approvals = approvalService.getApprovalList(pager, empId, status, approvalCategoryId);
 		//전자결재 카테고리 목록
 		List<ApprovalCategory> approval_category = approvalService.getCategory();

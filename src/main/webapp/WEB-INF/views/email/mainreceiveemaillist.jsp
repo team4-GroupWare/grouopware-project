@@ -1,6 +1,6 @@
 <%@page contentType="text/jsp; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table class="table table-borderless datatable">
+<table class="table table-borderless datatable" style="table-layout:fixed">
 	<thead style="border-bottom: 2px solid #EBEEF4;">
 		<tr>
 			<th scope="col" width="20%">보낸사람</th>
@@ -29,7 +29,7 @@
 				
 				 
 				 ${emailList.sentName}</td>
-				<td>
+				<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
 				<c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
 				<a href="${pageContext.request.contextPath}/email/readReceiveEmail?receiveEmailId=${emailList.receiveEmailId}" class="mail-title">${emailList.title}</a></td>
 				<td>${emailList.sentDate}</td>

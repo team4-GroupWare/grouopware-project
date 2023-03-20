@@ -95,7 +95,7 @@
 				           	    </ul>
 							</div>
               				<!-- Table with hoverable rows -->
-              				<table class="table table-hover">
+              				<table class="table table-hover" style="table-layout:fixed">
                 				<thead>
                   					<tr>
 					                    <th scope="col" width="15%">
@@ -121,7 +121,7 @@
                 					<c:forEach var="approval" items="${approvals}" varStatus="index">
                 						<tr>
 						                    <td>${approval.categoryName}</td>
-						                    <td><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
+						                    <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><a href="${pageContext.request.contextPath}/approval/detail?approvalId=${approval.approvalId}&pageNo=${pager.pageNo}&status=${status}">${approval.title}</a></td>
 						                    <td>${approval.empName} / ${approval.deptName}</td>
 						                    <c:if test="${approval.status eq '대기'}">
 						                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>
