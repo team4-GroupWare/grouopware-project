@@ -4,7 +4,7 @@
 	<thead style="border-bottom: 2px solid #EBEEF4;">
 		<tr>
 			<th scope="col" width="20%">보낸사람</th>
-			<th scope="col  width="60%">제목</th>
+			<th scope="col"  width="60%">제목</th>
 			<th scope="col"  width="20%">날짜</th>
 		</tr>
 	</thead>
