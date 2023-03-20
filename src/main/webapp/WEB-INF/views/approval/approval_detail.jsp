@@ -178,8 +178,9 @@
                				</div>
                				<div class="row mb-3">
                					<label><b>첨부 파일</b></label>
-               					<div class="file-list" style="background-color:#F6F6F6; height:35px;">
-               					</div>
+               					<c:if test="${approvalFiles.size() == 0}">
+               						<div class="file-list" style="background-color:#F6F6F6; height:35px;"></div>
+	               				</c:if>
 	               				<c:if test="${approvalFiles.size() != 0}">
 					                <div class="file-list" style="background-color:#F6F6F6">
 						            	<div class="filebox">

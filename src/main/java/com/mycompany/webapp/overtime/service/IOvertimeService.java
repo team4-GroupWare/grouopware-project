@@ -19,6 +19,10 @@ public interface IOvertimeService {
 
 	int overTimeProcess(Overtime overtime);
 
+	int getworktime(String i, String empId);
+
+	int deleteOvertime(Overtime overtime);
+
 	
 
 }

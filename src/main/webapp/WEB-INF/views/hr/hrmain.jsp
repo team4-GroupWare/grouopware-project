@@ -56,7 +56,7 @@
 				    				<h1 style="font-size:40px;"><i class="bi bi-diagram-3" style="font-size:40px; margin-right:15px;"></i>조직도</h1>
 				    			</div>
 				    			<div style="height:630px">
-			    					<img id="group" src="${pageContext.request.contextPath}/resources/assets/img/hr.png" usemap="#image-map">
+			    					<img usemap="#image-map" id="group" src="${pageContext.request.contextPath}/resources/assets/img/hr.png">
 								</div>
 								<map name="image-map">
 								    <area alt="임원" title="임원" href="${pageContext.request.contextPath}/hr/list/1" coords="759,219,942,276" shape="rect">

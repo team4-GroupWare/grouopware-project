@@ -23,6 +23,10 @@
 		table a:active {
 		 	color : #97ACFC;
 		}
+		
+		/* .title {
+			text-overflow: ellipsis;
+		} */
 	</style>
 </head>
 
@@ -50,7 +54,7 @@
 		              		</div>
               				<!-- Table with hoverable rows -->
               				<form method="post" id="delete" action="${pageContext.request.contextPath}/approval/delete">
-	              				<table class="table table-hover">
+	              				<table class="table table-hover" style="table-layout:fixed">
 	                				<thead>
 	                  					<tr>
 						                    <th scope="col" width="5%"><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
@@ -76,7 +80,7 @@
 	                					<c:forEach var="approval" items="${approvals}" varStatus="index">
 	                						<tr>
 												<td><input name="approvalId" class="form-check-input" value="${approval.approvalId}" onclick='checkSelectAll()' type="checkbox"></td>						                    <td>${approval.categoryName}</td>
-							                    <td><a href="${pageContext.request.contextPath}/approval/tempForm?approvalId=${approval.approvalId}">${approval.title}</a></td>
+							                    <td class="title" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><a href="${pageContext.request.contextPath}/approval/tempForm?approvalId=${approval.approvalId}">${approval.title}</a></td>
 							                    <td>${approval.empName} / ${approval.deptName}</td>
 							                    <c:if test="${approval.status eq '대기'}">
 							                    	<td><span class="badge bg-secondary"><i class="bi bi-hourglass me-1"></i> 대기</span></td>

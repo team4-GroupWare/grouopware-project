@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.overtime.model.Overtime;
 import com.mycompany.webapp.overtime.repository.OvertimeRepository;
-import com.mycompany.webapp.vacation.model.VacationDate;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,12 +18,10 @@ public class OvertimeService implements IOvertimeService {
 	@Autowired
 	private OvertimeRepository overtimeRepository;
 	
-	
 	@Override
 	public int writeOvertime(Overtime overtime) {
 		return overtimeRepository.insertOvertime(overtime);
 	}
-
 
 	@Override
 	public int getOvertimeRow(String empId, String status, int type) {
@@ -32,19 +29,16 @@ public class OvertimeService implements IOvertimeService {
 		return overtimeRepository.selectOvertimeRow(empId, status, type);
 	}
 
-
 	@Override
 	public List<Overtime> getOvertimeList(Pager pager, String empId, String status, int type) {
 		log.info("실행");
 		return overtimeRepository.selectOvertimeList(pager, empId, status, type);
 	}
 
-
 	@Override
 	public Overtime getOvertimeDetail(int overtimeId) {
 		return overtimeRepository.selectOvertime(overtimeId);
 	}
-
 
 	@Override
 	public int getweekOverTime(String sunday,String empId) {
@@ -66,6 +60,18 @@ public class OvertimeService implements IOvertimeService {
 		log.info("실행");
 
 		return 2;
+	}
+
+	@Override
+	public int getworktime(String day, String empId) {
+		return overtimeRepository.selectworktime(day,empId);
+	}
+
+	@Override
+	public int deleteOvertime(Overtime overtime) {
+		log.info("실행");
+		int delete = overtimeRepository.deleteOvertime(overtime);
+		return 1;
 	}
 
 }

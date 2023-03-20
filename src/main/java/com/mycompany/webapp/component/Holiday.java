@@ -18,21 +18,19 @@ import com.ibm.icu.util.ChineseCalendar;
 @Component
 public class Holiday {
 	public static void main(String[] args) {
-		/*Holiday h = new Holiday();
-		System.out.println(h.getCurMonday().toString());*/
-
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-		String a= formatter.format(c.getTime());
-		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-		String b= formatter.format(c.getTime());
-		//System.out.println(a);
-		//System.out.println(b);
-
+		
 	}
-
+	
+	public List<String> holidaysFomat(String yyyy){
+		Holiday holiday = new Holiday();
+		List<String> holifomat = new ArrayList<>();
+		List<String> holi = holiday.holidayArray(yyyy);
+		for(String day : holi) {
+			holifomat.add("'"+day.substring(0,4)+"/"+day.substring(4,6)+"/"+day.substring(6)+"'");
+		}
+		return holifomat;
+	}
+	
 	public List<String> getCurMonday() {
 		List<String> list = new ArrayList<String>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yy.MM.dd");

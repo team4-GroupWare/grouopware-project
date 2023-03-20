@@ -85,13 +85,21 @@ function calendarInit() {
         }
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
-        	
-        	if(months[i-1]==undefined){
-        		
+        	if(months[i-1] == undefined){
         		calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
+        	}
+        	else if(months[i-1]=='결근'||months[i-1]=='퇴근미처리'){
+        		calendar.innerHTML = calendar.innerHTML + '<div class="day current empty">' + i + '</div>'
         	}else{
-        		calendar.innerHTML = calendar.innerHTML + '<div class="day current '+ months[i-1] +'">' + i + '</div>'
-        		
+        		if(months[i-1]=='출근'){
+        			calendar.innerHTML = calendar.innerHTML + '<div class="day current attendance">' + i + '</div>'
+        		}else if(months[i-1]=='지각'){
+        			calendar.innerHTML = calendar.innerHTML + '<div class="day current late">' + i + '</div>'
+        		}else if(months[i-1]=='연장근무'){
+        			calendar.innerHTML = calendar.innerHTML + '<div class="day current overtime">' + i + '</div>'
+        		}else {
+        			calendar.innerHTML = calendar.innerHTML + '<div class="day current holiday">' + i + '</div>'
+        		}
 	        }
         	
         }
@@ -105,19 +113,6 @@ function calendarInit() {
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
             
-           /* currentMonthDate[todayDate -6].classList.add('holiday');
-            currentMonthDate[todayDate -5].classList.add('attendance');
-            currentMonthDate[todayDate -4].classList.add('today');
-            
-            currentMonthDate[todayDate -1].classList.add('attendance');
-            currentMonthDate[todayDate ].classList.add('attendance');
-            currentMonthDate[todayDate +1].classList.add('late');
-            currentMonthDate[todayDate +2].classList.add('vacation');
-            currentMonthDate[todayDate +3].classList.add('vacation');*/
-            
-           
-           
-           
            
         }
     }
