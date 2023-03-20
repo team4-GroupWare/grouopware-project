@@ -34,13 +34,11 @@ input[type=radio]:checked+label{
 <!-- modal -->
 <script>
 	function listSubmit() {
-		var path = sessionStorage.getItem("contextpath");
-		
 		let empId = $("input[name=employee]:checked").attr("value");
 		
 		$.ajax({
 			type: "post",
-		    url: path + "/vacation/employee",
+		    url: "${pageContext.request.contextPath}/vacation/employee",
 		    data: {
 		    	empId : empId
 		    },
