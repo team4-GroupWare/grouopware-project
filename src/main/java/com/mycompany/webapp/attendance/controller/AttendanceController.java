@@ -66,10 +66,14 @@ public class AttendanceController {
 					attendance.setIsOut("y");
 				}
 			}else {
-				if(attendance.getClockOut() == null) {
+				if(attendance.getClockOut() == null && !attendance.getStatus().equals("퇴근미처리")) {
 					attendance.setClockOut("-- : -- : --");
 					attendance.setIsIn("y");
 					attendance.setIsOut("n");
+				}else if(attendance.getClockOut() == null && attendance.getStatus().equals("퇴근미처리")) {
+					attendance.setClockOut("-- : -- : --");
+					attendance.setIsIn("y");
+					attendance.setIsOut("y");
 				}else {
 					attendance.setIsIn("y");
 					attendance.setIsOut("y");
