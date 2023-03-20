@@ -33,7 +33,7 @@
 				<div class="col-lg-4">
 					<div class="card profile mt-3">
 						<div class="card-header">신청자 정보</div>
-						<div class="card-body pt-2">
+						<div class="card-body pt-3">
 							<div class="tab-pane fade show active profile-overview" id="profile-overview">
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label ">이름</div>
@@ -57,7 +57,7 @@
 					<!-- 연차 보유현황   -->
 					<div class="card profile">
 						<div class="card-header">연차 보유현황</div>
-						<div class="card-body pt-2">
+						<div class="card-body pt-3">
 							<div class="tab-pane fade show active profile-overview" id="profile-overview">
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label ">잔여 연차</div>
@@ -343,7 +343,7 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<p style="margin-bottom: 4px">근무 내용을 입력해 주세요.</p>
+						<p style="margin-bottom: 4px">사유를 입력해 주세요.</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
