@@ -192,11 +192,11 @@
 			              <table class="table table-hover">
 			                <thead>
 			                  <tr style="border-bottom:2px solid #004389;">
-			                  	<th scope="col" ><input name="selectall" onclick='selectAll(this)' class="form-check-input" type="checkbox"></input></th>
-			                    <th scope="col">이름</th>
-			                    <th scope="col">제목</th>
-			                    <th scope="col">날짜</th>
-			                    <th scope="col">수신</th>
+			                  	<th scope="col" width="5%" ><input name="selectall" onclick='selectAll(this)' class="form-check-input" type="checkbox"></input></th>
+			                    <th scope="col"width="10%">이름</th>
+			                    <th scope="col" width="60%">제목</th>
+			                    <th scope="col" width="10%">날짜</th>
+			                    <th scope="col" width="15%">수신</th>
 			                  </tr>
 			                </thead>
 			                <tbody>
@@ -207,7 +207,7 @@
 		                    		<td>${emailList.receiveName}</td>
 		                    		<td>
 		                    			<c:if test="${emailList.important}"><i style="color:red" class="bi bi-exclamation-circle"></i>[중요]</c:if>
-		                    			<a href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
+		                    			<a id="title" href="${pageContext.request.contextPath}/email/readSendEmail?sendEmailId=${emailList.sendEmailId}">${emailList.title}</a>
 		                    		</td>
 		                    		<td>${emailList.sentDate}</td>
 		                    		<c:if test="${empty emailList.readDate}">

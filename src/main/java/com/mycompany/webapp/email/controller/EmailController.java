@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -265,22 +266,28 @@ public class EmailController {
 	 * @return JSONObject : success을 담은 JSONObject 
 	 */
 	@ResponseBody
-	@PostMapping(value="/write", produces="application/json")
-	public JSONObject writeEmail(HttpSession session, EmailDetail emailDetail) {
+	@PostMapping(value="/write", produces="application/text")
+	public String writeEmail(HttpSession session, EmailDetail emailDetail) {
 		log.info("실행");
+		String result = "success";
+		JSONObject jsonObject = new JSONObject();
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
+		log.info(emailDetail);
 		String[] receiverArr = emailDetail.getReceiveId().split(",");
 		for(String receiveEmpId : receiverArr) {
 			String receiver = receiveEmpId.trim();
 			emailDetail.setReceiveId(receiver);
-			int row = emailService.writeEmail(emailDetail);
+			try {
+				int row = emailService.writeEmail(emailDetail);
+			} catch (Exception e) {
+				jsonObject.put("result", "fail");
+				return "fail";
+			}
 		}
 		
-		String result = "success";
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("uri", result);
-		return jsonObject;
+		jsonObject.put("result", result);
+		return "success";
 	}
 	
 	/**
