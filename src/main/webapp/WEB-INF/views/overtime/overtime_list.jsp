@@ -3,47 +3,34 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-<%@ include file="/WEB-INF/views/common/head.jsp"%>
-<script>
-	$(document).ready(function() {
-		$(".docuMenu").click(function() {
-			colsole.log("실행");
-			$(".docuMenu").addClass("active");
-		});
-	});
-</script>
-<style>
-thead tr {
-	border-bottom: 2px solid #004389;
-}
-
-table a:link {
-	color: black;
-}
-
-table a:visited {
-	color: black;
-}
-
-table a:hover {
-	color: #97ACFC;
-}
-
-table a:active {
-	color: #97ACFC;
-}
-</style>
+	<%@ include file="/WEB-INF/views/common/head.jsp"%>
+	<style>
+	thead tr {
+		border-bottom: 2px solid #004389;
+	}
+	
+	table a:link {
+		color: black;
+	}
+	
+	table a:visited {
+		color: black;
+	}
+	
+	table a:hover {
+		color: #97ACFC;
+	}
+	
+	table a:active {
+		color: #97ACFC;
+	}
+	</style>
 </head>
-
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-
-
 	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp"%>
-
-	<main id="main" class="main"> <!-- 페이지 제목 -->
+	<main id="main" class="main"> 
 	<c:if test="${loginEmployee.empId == overtimeList[0].empId}">
 			<div class="pagetitle mt-3">
 				<h1>내 문서함</h1>
@@ -63,79 +50,68 @@ table a:active {
 			</div>
 		</c:if>
 	<section class="section mt-3">
-
 		<div class="row">
 			<div class="col-lg-12">
-				
 				<div class="card" style="height: 620px">
 					<div class="card-body px-5">
 						<h5 class="card-title"></h5>
-
-						<!-- Table with hoverable rows -->
 						<table class="table table-hover" style="text-align: center">
 							<thead>
 								<tr>
-									<!-- <th scope="col" width="10%">#</th> -->
 									<th scope="col" width="10%">번호</th>
 									<th scope="col" width="20%">기안자</th>
-									<th scope="col" width="20%">연장 근무 시간</th>
-									<th scope="col" width="20%">연장 근무 날짜</th>
-									 <th scope="col" width="10%">
-						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+									<th scope="col" width="20%">근무신청 시간</th>
+									<th scope="col" width="20%">근무신청 날짜</th>
+									<th scope="col" width="10%">
+										<a class="nav-link" href="#" data-bs-toggle="dropdown">
 						                    <c:if test="${not empty status}">
-						                    <span class="d-none d-md-block dropdown-toggle ps-2">${status}</span>
+						                    	<span class="d-none d-md-block dropdown-toggle ps-2">${status}</span>
 						                    </c:if>
 						                    <c:if test="${empty status}">
-						                    <span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
+						                    	<span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
 						                    </c:if>
-	            								
-	          								</a>
-		          							<ul class="dropdown-menu ">
-		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}">
-		                								<span>전체</span>
-		              								</a>
-		            							</li>
-		            							<li>
-		              								<hr class="dropdown-divider">
-		            							</li>
-		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=대기">
-		                								<span>대기</span>
-		              								</a>
-		            							</li>
-		            							<li>
-		              								<hr class="dropdown-divider">
-		            							</li>
-									            <li>
-		              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=승인">
-		                								<span>승인</span>
-		              								</a>
-		            							</li>
-		            							<li>
-		              								<hr class="dropdown-divider">
-		            							</li>
-		            							<li>
-		              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/overtime/list/${type}?status=반려">
-		                								<span>반려</span>
-		              								</a>
-		            							</li>
-		            							
-									    	</ul>
-          								</th>
+	         							</a>
+	          							<ul class="dropdown-menu ">
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}">
+	                								<span>전체</span>
+	              								</a>
+	            							</li>
+	            							<li>
+	              								<hr class="dropdown-divider">
+	            							</li>
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=대기">
+	                								<span>대기</span>
+	              								</a>
+	            							</li>
+	            							<li>
+	              								<hr class="dropdown-divider">
+	            							</li>
+								            <li>
+	              								<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/overtime/list/${type}?status=승인">
+	                								<span>승인</span>
+	              								</a>
+	            							</li>
+	            							<li>
+	              								<hr class="dropdown-divider">
+	            							</li>
+	            							<li>
+	              								<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/overtime/list/${type}?status=반려">
+	                								<span>반려</span>
+	              								</a>
+	            							</li>
+								    	</ul>
+          							</th>
 									<th scope="col" width="20%">작성날짜</th>
 								</tr>
-
 							</thead>
 							<tbody>
-								<c:forEach var="overtime" items="${overtimeList}"
-									varStatus="index">
-									<tr
-										onClick='location.href="${pageContext.request.contextPath}/overtime/detail?overtimeId=${overtime.overtimeId}&pageNo=${pager.pageNo}&status=${status}"'>
-										<%-- <th scope="row">${index.count}</th> --%>
+								<c:forEach var="overtime" items="${overtimeList}" varStatus="index">
+									<tr onClick='location.href="${pageContext.request.contextPath}/overtime/detail?overtimeId=${overtime.overtimeId}&pageNo=${pager.pageNo}&status=${status}"'>
 										<td>${overtime.overtimeId}</td>
 										<td>${overtime.empName}</td>
-										<td>${overtime.workTime}</td>
+										<td>${overtime.workTime}시간</td>
 										<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yyyy.MM.dd"/>
 										<td>${workDate}</td>
 										<c:if test="${overtime.status eq '대기'}">
@@ -156,13 +132,10 @@ table a:active {
 										</c:if>
 										<fmt:formatDate var="writeDate" value="${overtime.writeDate}" pattern="yyyy.MM.dd"/>
 										<td>${writeDate}</td>
-										
-										
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<!-- End Table -->
 						<c:if test="${empty overtimeList}">
 		              		<div class="d-flex align-items-center justify-content-center" style="height:400px;">
 		              			내용이 존재하지 않습니다.
@@ -195,7 +168,6 @@ table a:active {
 											href="?pageNo=${i}&status=${status}">${i}</a></li>
 									</c:if>
 								</c:forEach>
-
 								<c:if test="${pager.groupNo<pager.totalGroupNo}">
 									<li class="page-item"><a class="page-link"
 										href="?pageNo=${pager.endPageNo+1}&status=${status}"
@@ -216,7 +188,6 @@ table a:active {
 	</section>
 	</main>
 	<!-- End #main -->
-
 	<!-- ======= Footer ======= -->
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>

@@ -10,7 +10,6 @@ import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
 import com.mycompany.webapp.vacation.model.VacationDetail;
-import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
 
 @Repository
@@ -37,10 +36,16 @@ public interface VacationRepository {
 	public void updateDayoffremain(@Param("empId")String empId, @Param("vacationCategoryId")int vacationCategoryId, @Param("countDay")double countDay);
 	
 	//출근 상태 업데이트
-	public int updateAttendance(@Param("date")VacationDate date, @Param("vacationName")String vacationName, @Param("empId")String empId);
+	public int updateAttendance(@Param("date")VacationDate date, @Param("vacationName")String vacationName, @Param("empId")String empId,@Param("vacationCategoryId")int vacationCategoryId);
+	
 	//휴가 신청서 업데이트
-	public int updateVacation(@Param("type")String type, @Param("vacationId")int vacationId);
+	public int updateVacation(Vacation vacation);
+	
 	//반려시 연차 다시 돌려주기
-	public int updatedayoff(@Param("vacationId")int vacationId,@Param("empId") String empId, @Param("vacationCategoryId")int vacationCategoryId);
+	public int updatedayoff(Vacation vacation);
+	
+	//휴가 삭제
+	public int deleteVacation(Vacation vacation);
+	
 
 }

@@ -104,5 +104,18 @@
 		where overtime_id = #{overtimeId}
 	
 	</update>
+	
+	<select id="selectworktime" parameterType="map" resultType="int">
+		select work_time
+		from overtime
+		where TO_CHAR(work_date, 'YY.MM.dd') = #{day} and emp_id = #{empId} and status ='승인'
+	</select>
+	
+	<!-- 연장근무 삭제 -->
+	<delete id="deleteOvertime" parameterType="overtime">
+		<![CDATA[
+			DELETE FROM overtime WHERE overtime_id = #{overtimeId}
+		]]>
+	</delete>
 
 </mapper>

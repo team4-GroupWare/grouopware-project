@@ -11,7 +11,6 @@ import com.mycompany.webapp.employee.model.Employee;
 import com.mycompany.webapp.vacation.model.Vacation;
 import com.mycompany.webapp.vacation.model.VacationDate;
 import com.mycompany.webapp.vacation.model.VacationDetail;
-import com.mycompany.webapp.vacation.model.VacationLine;
 import com.mycompany.webapp.vacation.model.VacationList;
 import com.mycompany.webapp.vacation.repository.VacationRepository;
 
@@ -23,12 +22,7 @@ public class VacationService implements IVacationService {
 	@Autowired
 	private VacationRepository vacationRepository;
 
-	@Override
-	public Vacation getApprovalEmp(String empId) {
-		log.info("실행");
-		return vacationRepository.selectApprovalEmp(empId);
-	}
-
+	/* 휴가 신청서 제출 */
 	@Override
 	@Transactional
 	public int writeVacation(Vacation vacation) {
@@ -44,18 +38,7 @@ public class VacationService implements IVacationService {
 		return 2;
 	}
 
-	@Override
-	public VacationDetail getVacationDetail(int vacationId) {
-		log.info("실행");
-		return vacationRepository.selectVacationDetail(vacationId);
-	}
-
-	@Override
-	public List<VacationDate> getVacationDate(int vacationId) {
-		log.info("실행");
-		return vacationRepository.selectVacationDate(vacationId);
-	}
-
+	/* 휴가 list */
 	@Override
 	public int getVacationRow(String empId, String status, int type) {
 		log.info("실행");
@@ -74,6 +57,26 @@ public class VacationService implements IVacationService {
 		return vacationRepository.selectVacationDays(empId);
 	}
 
+	/* 휴가 상세보기 */
+	@Override
+	public VacationDetail getVacationDetail(int vacationId) {
+		log.info("실행");
+		return vacationRepository.selectVacationDetail(vacationId);
+	}
+
+	@Override
+	public Vacation getApprovalEmp(String empId) {
+		log.info("실행");
+		return vacationRepository.selectApprovalEmp(empId);
+	}
+
+	@Override
+	public List<VacationDate> getVacationDate(int vacationId) {
+		log.info("실행");
+		return vacationRepository.selectVacationDate(vacationId);
+	}
+	
+	/* 연차정보 가져오기 */
 	@Override
 	public int getEmpDayOff(int vacationCategoryId, String empId) {
 		log.info("실행");
@@ -83,36 +86,35 @@ public class VacationService implements IVacationService {
 		log.info(result);
 		return result;
 	}
-
+	
+	/* 승인/반려 */
 	@Transactional
 	@Override
-	public int processVacation(String type, int vacationId, List<VacationDate> vacationDate, String vacationName, String empId,
-			int vacationCategoryId) {
+	public int processVacation(Vacation vacation) {
 		log.info("실행");
-		if (type.equals("y")) {
-			// 1. attendance 행 업데이트
-			for (VacationDate date : vacationDate) {
+		if (vacation.getType().equals("y")) {
+			for (VacationDate date : vacation.getVacationDate()) {
 				log.info(date);
-				int attUpdate = vacationRepository.updateAttendance(date, vacationName, empId);
+				int attUpdate = vacationRepository.updateAttendance(date, vacation.getVacationName(),
+						vacation.getEmpId(), vacation.getVacationCategoryId());
 			}
-		}else if (type.equals("n")) {
+		} else if (vacation.getType().equals("n")) {
 			log.info("실행");
-			int dayoffBack = vacationRepository.updatedayoff(vacationId,empId,vacationCategoryId);
+			int dayoffBack = vacationRepository.updatedayoff(vacation);
 		}
 		log.info("실행");
 		// vacation 행 업데이트
-		int vacationUpdate = vacationRepository.updateVacation(type, vacationId);
+		int vacationUpdate = vacationRepository.updateVacation(vacation);
 
-
-		return 0;
+		return 3;
 	}
-
 	@Override
-	public int processVacation(String type, int vacationId, List<VacationDate> vacationDate, String vacationName,
-			String empId) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public int deleteVacation(Vacation vacation) {
+		log.info("실행");
+		int dayoffBack = vacationRepository.updatedayoff(vacation);
+		int delete = vacationRepository.deleteVacation(vacation);
+		return 2;
 	}
-
 
 }

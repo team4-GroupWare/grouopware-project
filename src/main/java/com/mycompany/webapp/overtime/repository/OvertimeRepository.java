@@ -24,6 +24,10 @@ public interface OvertimeRepository {
 	int updateOvertimeAtt(Overtime overtime);
 
 	void updateOvertime(Overtime overtime);
+
+	int selectworktime(@Param("day")String day, @Param("empId")String empId);
+
+	int deleteOvertime(Overtime overtime);
 	
 	
 

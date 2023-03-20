@@ -61,7 +61,6 @@
 			}
        		var path = sessionStorage.getItem("contextpath");
        		var formData = $("#overtime_form").serialize();
-       		console.log(formData);
        		$.ajax({
 	    	    method: 'POST',
 	    	    url: path+'/overtime/write',
@@ -71,7 +70,9 @@
 	    	    	if(data1 == 'success'){
 	    	    		location.replace(path+"/overtime/list/1");
 	    	    	}else{
-	    	    		alert(data);
+	    	    		$('#modalContent').empty();
+	    	    		$('#modalContent').html(data);
+	    	    		$('#failContent').modal('show');
 	    	    	}
 	    	    },
 	    	    error: function(err) {
@@ -144,8 +145,8 @@
 										</div>
 										<!-- 사유 -->
 										<div class="row mb-3">
-											<label class="col-sm-4 col-form-label">근무내용</label>
-											<div class="col-sm-9">
+											<label class="col-lg-3 col-md-4 label">근무내용</label>
+											<div class="col-sm-12">
 												<input id="content" name="content" class="form-control" style="height: 100px" required></input>
 											</div>
 										</div>
@@ -163,7 +164,7 @@
 						<div class="card-body pt-3 m-0">
 							<div class="tab-pane fade show active profile-overview" id="profile-overview">
 								<div class="row">
-									<div class="col-7 label">주 연장 근무 가능 시간</div>
+									<div class="col-7 label">최대 연장 근무 가능시간</div>
 									<div class="col-5">12시간</div>
 								</div>
 								<div class="row">
@@ -171,7 +172,7 @@
 									<div class="col-5">${weekOverTime}시간</div>
 								</div>
 								<div class="row">
-									<div class="col-7 label ">주 연장 근무 가능 시간</div>
+									<div class="col-7 label ">연장 근무 신청 가능 시간</div>
 									<div class="col-5">${12-weekOverTime}시간</div>
 								</div>
 							</div>
@@ -264,6 +265,24 @@
 				</div>
 				<div class="modal-body">
 					<p style="margin-bottom: 4px">신청가능 시간을 초과하였습니다. </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 안됐을 경우 모달 -->
+	<div class="modal fade" id="failContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="bi bi-exclamation-circle-fill" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
+					신청 불가
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modalContent" style="margin-bottom: 4px"></p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

@@ -1383,48 +1383,21 @@ h6 {
 	background-color: #EBEDEF;
 	/* border: 4px #EBEDEF; */
 }
-.current.today.attendance{
-	background:linear-gradient(#EBEDEF 80%,#3C97E1 20%);
-}	
-.current.출근 {
-	/* background-color: ##3C97E1; */
+
+.current.attendance {
 	background:linear-gradient(#fff 80%,#3C97E1 20%);
 }
-.current.지각 {
-	/* background-color: ##FFDF6C; */
+.current.late {
 	background:linear-gradient(#fff 80%,#FFDF6C 20%);
 }
-.current.연차 {
-	/* background-color: ##FFDF6C; */
+.current.holiday {
 	background:linear-gradient(#fff 80%,#57C66A 20%);
 }
-.current.오전연차 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.오후연차 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.반차 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.경조사 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.경조사 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.경조사 {
-	/* background-color: ##FFDF6C; */
-	background:linear-gradient(#fff 80%,#57C66A 20%);
-}
-.current.연장근무 {
-	/* background-color: ##FFDF6C; */
+.current.overtime {
 	background:linear-gradient(#fff 80%, #6f42c1 20%);
+}
+.current.empty {
+	background:linear-gradient(#fff 80%, #6c757d 20%);
 }
 
 .sec_cal .cal_wrap .dates {
