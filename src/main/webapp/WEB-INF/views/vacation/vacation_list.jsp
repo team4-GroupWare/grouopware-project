@@ -34,10 +34,7 @@
 
 <body>
   	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-  
-  		
   	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp" %>	
-
   	<main id="main" class="main">
     	<c:if test="${type==1}">
 			<div class="pagetitle mt-3">
@@ -57,22 +54,15 @@
         		</ol>
 			</div>
 		</c:if>
-    	
-    	<!-- 페이지 제목 -->
-		
 		<section class="section mt-3">
       		<div class="row">
         		<div class="col-lg-12">
-        		
           			<div class="card" style="height:620px">
             			<div class="card-body px-5">
               				<h5 class="card-title"></h5>
-
-              				<!-- Table with hoverable rows -->
               				<table class="table table-hover">
                 				<thead>
                   					<tr>
-					                    <!-- <th scope="col" width="10%">#</th> -->
 					                    <th scope="col" width="20%">번호</th>
 					                    <th scope="col" width="20%">휴가종류</th>
 					                    <th scope="col" width="30%">기간</th>
@@ -85,7 +75,6 @@
 						                    <c:if test="${empty status}">
 						                    <span class="d-none d-md-block dropdown-toggle ps-2">상태</span>
 						                    </c:if>
-	            								
 	          								</a>
 		          							<ul class="dropdown-menu ">
 		            							<li>
@@ -117,13 +106,9 @@
 		                								<span>반려</span>
 		              								</a>
 		            							</li>
-		            							
 									    	</ul>
           								</th>
-						                   
-          								
                   					</tr>
-
                 				</thead>
                 				<tbody>
                 					<c:forEach var="vacation" items="${vacationList}" varStatus="index">
@@ -142,15 +127,13 @@
 						                    <c:if test="${vacation.status eq '반려'}">
 						                    	<td><span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> 반려</span></td>
 						                    </c:if>
-						                    
                   						</tr>
                 					</c:forEach>
                 				</tbody>
               				</table>
-             				<!-- End Table -->
             			</div>
             			<c:if test="${empty vacationList}">
-		              		<div class="d-flex align-items-center justify-content-center" style="height:400px;">
+		              		<div class="d-flex align-items-center justify-content-center" style="height:500px;">
 		              			내용이 존재하지 않습니다.
 		              	  	</div>
 		              	</c:if>
@@ -200,7 +183,6 @@
       		</div>
     	</section>
   	</main><!-- End #main -->
-
   	<!-- ======= Footer ======= -->
   	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

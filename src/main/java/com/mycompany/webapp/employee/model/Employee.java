@@ -24,7 +24,7 @@ public class Employee {
 	private Date resignDate;
 	private String profileContentType;
 	private byte[] profileData;
-	private int dayoffRemain;
+	private double dayoffRemain;
 	private int addDayoffRemain;
 	private boolean initialPassword;
 	private MultipartFile attachFiles;

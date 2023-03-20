@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.attendance.model.Attendance;
 import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
@@ -14,10 +15,24 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 public class AttendanceService implements IAttendanceService {
-
 	@Autowired
 	AttendanceRepository attendanceRepository;
-
+	
+	/*	스케쥴러 테스트 */
+	@Override
+	public void ThisWeek(String date) {
+		log.info("실행");
+		// 1-1 전체 사원의 아이디 조회
+		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
+		log.info(totalEmpId);
+		String clock_in = date+" 08:43:00";
+		String clock_out = date+" 18:47:00";
+		for(String empId : totalEmpId ) {
+			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
+		}
+	}
+	
+	/*사원의 오늘날짜 출근기록 조회*/
 	@Override
 	public Attendance getAttendance(String attDate, String empId) {
 		log.info("실행");
@@ -25,144 +40,72 @@ public class AttendanceService implements IAttendanceService {
 
 		return attendance;
 	}
-
+	
+	/*사원의 이번달 출근 상태 달력 조회*/
+	@Override
+	public List<String> getAttStatus(String empId, String startDay, String endDay) {
+		return attendanceRepository.selectAttStatusCal(empId,startDay,endDay);
+	}
+	
+	/*출근버튼 클릭*/
 	@Override
 	public int insertAttendance(String empId, String status) {
 		log.info("실행");
 		int result = attendanceRepository.insertAttendance(empId,status);
 		return result;
 	}
-
-	@Override
-	public int updateLeave(String attDate, String empId) {
-		log.info("실행");
-		int result = attendanceRepository.updateLeave(attDate, empId);
-		return 0;
-	}
-
-	@Override
-	public void addEmpAtt(String today) {
-		log.info("실행");
-		// 1.오늘날짜에 행이 없는 경우
-		
-		// 1-1 전체 사원의 아이디 조회
-		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
-		log.info(totalEmpId);
-		
-		// 1-2 오늘날짜에 attendance 행의 아이디 조회
-		List<String> todayEmpId = attendanceRepository.selectTodayEmpId(today);
-		log.info(todayEmpId);
-		
-		// 1-3 오늘날짜에 없는 아이디 list
-		for (String todayEmp : todayEmpId) {
-			for (String totalEmp : totalEmpId) {
-				if (totalEmp.equals(todayEmp)) {
-					totalEmpId.remove(todayEmp);
-					break;
-				}
-			}
-		}
-		log.info(totalEmpId);
-
-		// 1-4 결근으로 insert
-		for (String empAbsent : totalEmpId) {
-			attendanceRepository.insertEmpAbsent(empAbsent, today);
-		}
-
-		// 2.오늘날짜에 출근은 있으나, 퇴근이 없는 경우
-		List<String> outEmp = attendanceRepository.selectNotOutEmp(today);
-		log.info(outEmp);
-		String clock_out = today + " 18:00:00";
-		
-		// 2-1 오늘날짜에 attendance 행중에서 퇴근이 null이면 퇴근으로 update
-		for (String empNotOut : outEmp) {
-			attendanceRepository.updateEmpOut(empNotOut, clock_out, today);
-		}
-
-	}
-
-	@Override
-	public void ThisWeek(String date) {
-		// 1-1 전체 사원의 아이디 조회
-		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
-		log.info(totalEmpId);
-		String clock_in = date+" 09:43:00";
-		String clock_out = date+" 18:47:00";
-		for(String empId : totalEmpId ) {
-			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
-		}
-	}
-
-	@Override
-	public List<Attendance> getTotalAtt(String empId) {
-		List<Attendance> attendance = attendanceRepository.selectTotalAtt(empId);
-		return attendance;
-	}
-
-	@Override
-	public String getThisWeekStatus(String i, String empId) {
-		String status = attendanceRepository.selectStatus(i,empId);
-		return status;
-	}
-
-	@Override
-	public int getattCountYear(int year, String empId) {
-		return attendanceRepository.selectAttCountYear(year,empId);
-	}
-
-	@Override
-	public int getlateCountYear(int year, String empId) {
-		return attendanceRepository.selectLateCountYear(year,empId);
-	}
-
-	@Override
-	public int getabsentCountYear(int year, String empId) {
-		return attendanceRepository.selectAbsentCountYear(year,empId);
-	}
-
-	@Override
-	public int getattCountMonth(int month, String empId) {
-		return attendanceRepository.selectAttCountMonth(month,empId);
-	}
-
-	@Override
-	public int getlateCountMonth(int month, String empId) {
-		return attendanceRepository.selectLateCountMonth(month,empId);
-	}
-
-	@Override
-	public int getabsentCountMonth(int month, String empId) {
-		return attendanceRepository.selectAbsentCountMonth(month,empId);
-	}
-
-	@Override
-	public int updateHalfAtt(String empId, String today) {
-		return attendanceRepository.updateHalfAtt(empId,today);
-	}
-
-	@Override
-	public AttendanceMonthStatus getMonthCount(String empId,String month) {
-		return attendanceRepository.selectMonthCount(empId,month);
-	}
-
-	@Override
-	public int getlateTime(String today, String empId) {
-		return attendanceRepository.selectLateTime(today,empId);
-	}
-
-	@Override
-	public List<String> getAttStatus(String empId, String startDay, String endDay) {
-		return attendanceRepository.selectAttStatusCal(empId,startDay,endDay);
-	}
-
+	
+	/*출근 눌렀을 때 -> 반차일 경우*/
 	@Override
 	public int attClockInUpdate(int attendanceId) {
 		return attendanceRepository.updateAttClockIn(attendanceId);
 	}
 	
+	/*퇴근 눌렀을 때*/
 	@Override
 	public int attClockOutUpdate(int attendanceId) {
 		return attendanceRepository.updateAttClockOut(attendanceId);
 	}
-
+	
+	/*퇴근 없는 사원들 처리*/
+	@Transactional
+	@Override
+	public void addEmpAtt(String today) {
+		//결근
+		List<String> empAbsent = attendanceRepository.selectEmpAbsent(today);
+		log.info(empAbsent);
+		for (String absentEmp : empAbsent) {
+			attendanceRepository.insertEmpAbsent(absentEmp, today);
+		}
+		//퇴근미처리
+		List<Integer> outEmp = attendanceRepository.selectNotOutEmp(today);
+		log.info(outEmp);
+		for (int empNotOut : outEmp) {
+			attendanceRepository.updateEmpOut(empNotOut);
+		}
+	}
+	
+	/*주 근무 현황*/
+	@Override
+	public String getThisWeekStatus(String i, String empId) {
+		String status = attendanceRepository.selectStatus(i,empId);
+		return status;
+	}
+	/*주 근무 현황*/
+	@Override
+	public int getlateTime(String today, String empId) {
+		return attendanceRepository.selectLateTime(today,empId);
+	}
+	
+	/*월 근무 통계*/
+	@Override
+	public AttendanceMonthStatus getMonthCount(String empId,String month) {
+		return attendanceRepository.selectMonthCount(empId,month);
+	}
+	
+	/*나의 근무 현황*/
+	public List<Attendance> getTotalAtt(String empId) {
+		List<Attendance> attendance = attendanceRepository.selectTotalAtt(empId);
+		return attendance;
+	}
 }

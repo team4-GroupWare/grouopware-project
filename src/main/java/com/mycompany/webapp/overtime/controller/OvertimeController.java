@@ -29,6 +29,7 @@ import com.mycompany.webapp.group.service.IDepartmentService;
 import com.mycompany.webapp.group.service.ITeamService;
 import com.mycompany.webapp.overtime.model.Overtime;
 import com.mycompany.webapp.overtime.service.IOvertimeService;
+import com.mycompany.webapp.vacation.model.Vacation;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -46,7 +47,11 @@ public class OvertimeController {
 	@Autowired
 	private IEmployeeService employeeService;
 
-	// 1. 근무 신청
+	/**
+	 * 근무신청서 조회
+	 * @author : LEEYENOHEE
+	 * @return : 근무신청 폼 
+	 */
 	@GetMapping("/overtime/write")
 	public String getWriteForm(Model model, HttpSession session) {
 		log.info("실행");
@@ -57,22 +62,22 @@ public class OvertimeController {
 		}
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
-
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		String sunday = formatter.format(c.getTime());
-
 		int weekOverTime = overtimeService.getweekOverTime(sunday, empId);
-		log.info(weekOverTime);
-
 		model.addAttribute("weekOverTime", weekOverTime);
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		return "overtime/overtime_writeform";
 	}
 
-	// 2. 근무 신청 제출
+	/**
+	 * 근무신청서 제출
+	 * @author : LEEYENOHEE
+	 * @return : 조건에 맞지 않으면 에러 메세지, 조건에 맞으면 success 
+	 */
 	@RequestMapping(value = "/overtime/write", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String submitWriteForm(@ModelAttribute Overtime overtime, Model model) {
@@ -93,7 +98,11 @@ public class OvertimeController {
 		}
 	}
 
-	// 3. 근무 리스트
+	/**
+	 * 근무신청목록 List
+	 * @author : LEEYENOHEE
+	 * @return : 근무신청목록 list.jsp
+	 */
 	@GetMapping("/overtime/list/{type}")
 	public String OvertimeList(@PathVariable int type, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(value = "status", defaultValue = "") String status, Model model, HttpSession session) {
@@ -103,28 +112,27 @@ public class OvertimeController {
 		int overtimeRow = overtimeService.getOvertimeRow(empId, status, type);
 		Pager pager = new Pager(10, 5, overtimeRow, pageNo);
 		List<Overtime> overtimeList = overtimeService.getOvertimeList(pager, empId, status, type);
-
 		model.addAttribute("overtimeList", overtimeList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("status", status);
 		return "overtime/overtime_list";
 	}
 
-	// 4. 근무 신청 상세보기
+	/**
+	 * 근무신청서 상세보기
+	 * @author : LEEYENOHEE
+	 * @return : 근무신청 상세보기
+	 */
 	@GetMapping("/overtime/detail")
 	public String detailOvertime(@RequestParam int overtimeId, @RequestParam int pageNo, @RequestParam() String status,
 			Model model, HttpSession session) {
 		log.info("실행");
 		Employee emp = (Employee) session.getAttribute("loginEmployee");
 		String empId = emp.getEmpId();
-
 		Overtime overtime = overtimeService.getOvertimeDetail(overtimeId);
-
 		Employee employee;
 		if (empId.equals(overtime.getEmpId())) {
-
 			employee = employeeService.getEmp(overtime.getApprovalEmpId());
-
 		} else {
 			employee = employeeService.getEmp(overtime.getEmpId());
 		}
@@ -136,12 +144,18 @@ public class OvertimeController {
 		return "overtime/overtime_detail";
 	}
 
+	/**
+	 * 근무신청 승인반려
+	 * @author : LEEYENOHEE
+	 * @return : 조건별 message 리턴
+	 */
 	@RequestMapping(value = "/overtime/process", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String process(@ModelAttribute Overtime overtime, Model model) {
 		log.info("실행"+overtime);
 		String status = attendanceService.getThisWeekStatus(overtime.getWorkDateDetail(), overtime.getEmpId());
 		int clockOut = 18 + overtime.getWorkTime();
+		log.info("clockOut"+clockOut);
 		String workDateClock = overtime.getWorkDateDetail() + " " + clockOut + ":00:00";
 		log.info(status);
 		if (overtime.getType().equals("y")) {
@@ -163,7 +177,18 @@ public class OvertimeController {
 			return "success";
 
 		}
-
+	}
+	/**
+	 * 연장근무 삭제
+	 * @author : LEEYENOHEE
+	 * @return : 성공 메세지
+	 */
+	@RequestMapping(value = "/overtime/delete", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String delete(@ModelAttribute Overtime overtime) {
+		log.info("실행");
+		int vacationDelete = overtimeService.deleteOvertime(overtime);
+		return "success";
 	}
 
 }

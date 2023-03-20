@@ -10,4 +10,5 @@ public class AttendanceMonthStatus {
 	private int halfCount;
 	private int eventCount;
 	private int overTime;
+	private int notClockOut;
 }

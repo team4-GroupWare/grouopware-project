@@ -16,15 +16,14 @@ public class Vacation {
 	private int vacationCategoryId;
 	private String empId;
 	private double countDay;
-
+	private String type;
 	private String approvalEmpId; 
-	
+	private String vacationName;
 	private String empName;
 	private String gradeName;
 	private String teamName;
 	private String deptName;
 	
 	private List<VacationDate> vacationDate;
-	private List<VacationLine> vacationLine;
 	
 }

@@ -78,7 +78,7 @@
 	                 $("#mail-receive").html(data);
 	              }); 
 	              $.ajax({
-	                 url:"${pageContext.request.contextPath}/attendance/today",
+	                 url:"${pageContext.request.contextPath}/attendance/main",
 	                 type: "GET",
 	              }).done(function(data){
 	            	  if(data==''){
@@ -173,7 +173,9 @@
 		    	    	if(data1 == 'success'){
 		    	    		location.reload();
 		    	    	}else{
-		    	    		$('#holidayModal').modal('show');
+		    	    		$('#modalContent').empty();
+		    	    		$('#modalContent').html(data);
+		    	    		$('#failContent').modal('show');
 		    	    	}
 		    	    },
 		    	    error: function(err) {
@@ -204,7 +206,9 @@
 		    	    	if(data1 == 'success'){
 		    	    		location.reload();
 		    	    	}else{
-		    	    		alert(data);
+		    	    		$('#modalContent').empty();
+		    	    		$('#modalContent').html(data);
+		    	    		$('#failContent').modal('show');
 		    	    	}
 		    	    },
 		    	    error: function(err) {
@@ -421,7 +425,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-							Error message
+							message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -439,7 +443,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-							Error message
+							message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -451,17 +455,17 @@
 					</div>
 				</div>
 			</div>
-			<!-- 퇴근 실패 모달 -->
-			<div class="modal fade" id="holidayModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<!-- 안됐을 경우 모달 -->
+			<div class="modal fade" id="failContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<i class="bi bi-exclamation-triangle" style="color: tomato; font-size: 25px; margin-right: 8px"></i>
-							Error message
+							message
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<p style="margin-bottom: 4px">휴무입니다.</p>
+							<p id="modalContent" style="margin-bottom: 4px"></p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
