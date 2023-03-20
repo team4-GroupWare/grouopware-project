@@ -344,8 +344,9 @@ public class EmailService implements IEmailService {
 	 */
 	@Transactional
 	@Override
-	public int writeEmail(EmailDetail emailDetail)throws Exception{
+	public int writeEmail(EmailDetail emailDetail)throws NoReceiverException{
 		log.info("실행");
+		int emailContentId = emailDetail.getEmailContentId();
 		EmailContent emailContent = new EmailContent();
 		ReceiveEmail receiveEmail = new ReceiveEmail();
 		SendEmail sendEmail = new SendEmail();
@@ -362,6 +363,8 @@ public class EmailService implements IEmailService {
 		if(row == 0) {
 			throw new NoReceiverException("No Receiver");
 		}
+		
+		
 		//이메일 컨텐트 테이블 insert
 		emailContent.setContent(emailDetail.getContent());
 		emailContent.setImportant(emailDetail.isImportant());
@@ -394,6 +397,13 @@ public class EmailService implements IEmailService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+		}
+		
+		if(emailContentId != 0) {
+			log.info(emailContentId+":  처리로직 필요!");
+			emailRepository.deleteTempEmailByContentId(emailContentId);
+			
 		}
 		return row;
 	}
@@ -451,6 +461,8 @@ public class EmailService implements IEmailService {
 		emailContent.setEmailContentId(tempEmail.getEmailContentId());
 		emailContent.setTitle(tempEmail.getTitle());
 		int row =emailRepository.updateEmailContent(emailContent);
+		log.info(row);
+		log.info(tempEmail);
 		row = emailRepository.updateTempEmail(tempEmail);
 		return row;
 	}
