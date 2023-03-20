@@ -1,6 +1,6 @@
 <%@page contentType="text/jsp; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table class="table table-borderless datatable">
+<table class="table table-borderless datatable" style="table-layout:fixed">
 	<thead style="border-bottom: 2px solid #EBEEF4;">
 		<tr>
 			<th scope="col" width="10%">No.</th>
@@ -13,7 +13,7 @@
 		<c:forEach var="board" items="${boardList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
-				<td><a href="${pageContext.request.contextPath}/board/detail/${board.noticeId}">${board.noticeTitle}</a></td>
+				<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><a href="${pageContext.request.contextPath}/board/detail/${board.noticeId}">${board.noticeTitle}</a></td>
 				<td>${board.writeDate}</td>
 				<td>${board.readCount}</td>
 			</tr>

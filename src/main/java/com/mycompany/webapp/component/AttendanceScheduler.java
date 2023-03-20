@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.webapp.attendance.service.IAttendanceService;
@@ -21,15 +20,10 @@ public class AttendanceScheduler {
 	public void addAtt18() {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		String today = format.format(date); // c1.getTime()
-		
-		Holiday holiday = new Holiday();
-		boolean day = holiday.isHoliday(today);
-		if(day ==  false ) {
-			attendanceService.addEmpAtt(today);
-		}
+		String today = format.format(date); 
+		attendanceService.addEmpAtt(today);
 	}
-
+	
 	// 오늘을 기준으로 attendance 행 넣어주는 것
 	// 플젝 끝나고 지울것
 	//@Scheduled(cron = "40 12 16 * * *")
