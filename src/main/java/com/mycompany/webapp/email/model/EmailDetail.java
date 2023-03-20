@@ -25,6 +25,7 @@ public class EmailDetail {
 	private Date readDate;
 	private Date rtrashDate;
 	private Date strashDate;
+	private int emailContentId;
 	private List<EmailFile> emailFiles;
 	private MultipartFile[] attachFiles;
 	

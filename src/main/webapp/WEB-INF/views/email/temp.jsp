@@ -54,12 +54,19 @@
 		function tempSave() {
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
-			var receiveId = $("#receiver").val();
+			var receiveId = $("#receivers").val();
 			var title = $("#title").val();
+			if(title == ''){
+				title = '제목 없음';
+			}
+			var contentId = $("#emailContentId").val();
+			var tempId = $("#tempEmailId").val();
 			
 			var data = {receiveId : receiveId, 
 						title : title, 
-						content : content
+						content : content,
+						emailContentId : contentId,
+						tempEmailId : tempId
 			}
 			console.log(data);
 			
@@ -155,6 +162,10 @@
 		                  </div>
 		                </div>
 		                
+		                 <input type="hidden" id="tempEmailId" name="tempEmailId" value="${tempEmail.tempEmailId}">
+		                
+		                <input type="hidden" id="emailContentId" name="emailContentId" value="${tempEmail.emailContentId}">
+		                
 		                <fieldset class="row mb-3">
 		                  <legend class="col-form-label col-sm-2 pt-0">중요 메일</legend>
 		                  <div class="col-sm-10">
@@ -182,7 +193,6 @@
 		                     <textarea id="tinymce-editor">
 		                		${tempEmail.content}
 		              		</textarea><!-- End TinyMCE Editor -->
-		              		<input id="content" type="hidden" name="content">
 		                  </div>
 		                </div>
 		              </form><!-- End General Form Elements -->
@@ -219,6 +229,23 @@
 			      </div>
 			      <div class="modal-body">
 			        <p style="margin-bottom:4px">나에게 메일을 작성할 수 없습니다.</p>
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+				<!-- 아이디가 존재하지 않음 -->
+			<div class="modal fade" id="noID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 수신인
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <p style="margin-bottom:4px">해당하는 아이디가 존재하지 않습니다.</p>
 			      </div>
 			      <div class="modal-footer">
 			      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

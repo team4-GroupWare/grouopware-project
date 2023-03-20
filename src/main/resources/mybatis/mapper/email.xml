@@ -529,7 +529,8 @@
 			   t.writer as sentId,
 			   c.title,
 			   c.content,
-			   t.received_emp_id as receiveId
+			   t.received_emp_id as receiveId,
+			   c.email_content_id as emailContentId
 		from temp_email t, email_content c
 		where t.email_content_id = c.email_content_id
 			  and temp_email_id = #{tempEmailId}
@@ -784,6 +785,18 @@
 		]]>
 	
 	</select>
+	
+	<delete id="deleteTempEmailByContentId" parameterType="int">
+		<![CDATA[
+			delete temp_email
+			where email_content_id = #{contentId}
+		
+		
+		
+		]]>
+	
+	</delete>
+	
 
 
 </mapper>
