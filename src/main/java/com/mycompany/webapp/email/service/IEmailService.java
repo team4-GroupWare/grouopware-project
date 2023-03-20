@@ -124,7 +124,7 @@ public interface IEmailService {
 	 * @param emailDetail : 받아온 emailDetail 객체 
 	 * @return int : 반영된 행 수
 	 */
-	int writeEmail(EmailDetail emailDetail);
+	int writeEmail(EmailDetail emailDetail)throws Exception;
 	/**
 	 * @author LEEYESEUNG
 	 * @param receiveEmailId

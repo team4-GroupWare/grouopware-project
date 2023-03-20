@@ -40,33 +40,63 @@
 		          <span>메일 작성</span>
 		        </a>
 		      </li><!-- End Dashboard Nav -->
-		
+			  <c:if test="${type eq 'receive'}">
+		      <li class="nav-item">
+		        <a class="nav-link"  href="${pageContext.request.contextPath}/email/receivelist">
+		          <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
+		        </a>
+		      </li><!-- End Charts Nav -->
+		      </c:if> 
+		      
+		      <c:if test="${type ne 'receive'}">
 		      <li class="nav-item">
 		        <a class="nav-link collapsed"  href="${pageContext.request.contextPath}/email/receivelist">
 		          <i class="bi bi-envelope-paper"></i><span>받은 메일함</span><i></i>
 		        </a>
 		      </li><!-- End Charts Nav -->
-		
-		      <li class="nav-item">
+		      </c:if> 
+		      
+			  <li class="nav-item">
 		        <a class="nav-link collapsed " href="${pageContext.request.contextPath}/email/sendlist">
 		          <i class="bi bi-envelope"></i><span>보낸 메일함</span>
 		        </a>
 		      </li><!-- End Icons Nav -->
-		
+			  
+			  <c:if test="${type eq 'temp'}">
+		      <li class="nav-item">
+		        <a class="nav-link" href="${pageContext.request.contextPath}/email/templist">
+		          <i class="bi bi-envelope-exclamation"></i>
+		          <span>임시저장함</span>
+		        </a>
+		      </li><!-- End Contact Page Nav -->
+		      </c:if>
+		      
+		      <c:if test="${type ne 'temp'}">
 		      <li class="nav-item">
 		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/templist">
 		          <i class="bi bi-envelope-exclamation"></i>
 		          <span>임시저장함</span>
 		        </a>
 		      </li><!-- End Contact Page Nav -->
+		      </c:if>
 		      
+		      <c:if test="${type eq 'trash'}">
+		      <li class="nav-item">
+		        <a class="nav-link" href="${pageContext.request.contextPath}/email/trashlist">
+		          <i class="bi bi-trash3-fill"></i>
+		          <span>휴지통</span>
+		        </a>
+		      </li><!-- End Contact Page Nav -->
+			  </c:if>
+			  
+			  <c:if test="${type ne 'trash'}">
 		      <li class="nav-item">
 		        <a class="nav-link collapsed" href="${pageContext.request.contextPath}/email/trashlist">
 		          <i class="bi bi-trash3-fill"></i>
 		          <span>휴지통</span>
 		        </a>
 		      </li><!-- End Contact Page Nav -->
-		
+			  </c:if>
 		    </ul>
 		
 		  </aside><!-- End Sidebar -->
@@ -239,10 +269,10 @@
 					            <table class="table table-hover">
 						            <thead>
 							            <tr style="border-bottom:2px solid #004389;">
-						                  	<th scope="col" ><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
-						                    <th scope="col">이름</th>
-						                    <th scope="col">제목</th>
-						                    <th scope="col">날짜</th>
+						                  	<th scope="col" width="5%"><input name="selectall" class="form-check-input" onclick='selectAll(this)' type="checkbox"></input></th>
+						                    <th scope="col"width="10%">이름</th>
+						                    <th scope="col"width="65%">제목</th>
+						                    <th scope="col"width="20%">날짜</th>
 					                  	</tr>
 				                	</thead>
 					                <tbody>

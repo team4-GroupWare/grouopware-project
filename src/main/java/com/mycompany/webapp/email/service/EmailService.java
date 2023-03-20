@@ -21,6 +21,7 @@ import com.mycompany.webapp.email.model.SendEmail;
 import com.mycompany.webapp.email.model.TempEmail;
 import com.mycompany.webapp.email.repository.EmailFileRepository;
 import com.mycompany.webapp.email.repository.EmailRepository;
+import com.mycompany.webapp.exception.NoReceiverException;
 
 import lombok.extern.log4j.Log4j2;
 @Log4j2
@@ -343,7 +344,7 @@ public class EmailService implements IEmailService {
 	 */
 	@Transactional
 	@Override
-	public int writeEmail(EmailDetail emailDetail) {
+	public int writeEmail(EmailDetail emailDetail)throws Exception{
 		log.info("실행");
 		EmailContent emailContent = new EmailContent();
 		ReceiveEmail receiveEmail = new ReceiveEmail();
@@ -356,11 +357,16 @@ public class EmailService implements IEmailService {
 		if(emailDetail.getContent() == null) {
 			emailDetail.setContent(" ");
 		}
+		
+		int row = emailRepository.selectReceiver(emailDetail.getReceiveId());
+		if(row == 0) {
+			throw new NoReceiverException("No Receiver");
+		}
 		//이메일 컨텐트 테이블 insert
 		emailContent.setContent(emailDetail.getContent());
 		emailContent.setImportant(emailDetail.isImportant());
 		emailContent.setTitle(emailDetail.getTitle());
-		int row = emailRepository.insertEmailContent(emailContent);
+		row = emailRepository.insertEmailContent(emailContent);
 		//넣었던 emailContentId로 send_email 테이블 insert
 		sendEmail.setReceiveEmpId(emailDetail.getReceiveId());
 		sendEmail.setEmailContentId(emailContent.getEmailContentId());
@@ -368,6 +374,7 @@ public class EmailService implements IEmailService {
 		//넣었던 emailContentId로 receive_email 테이블 insert
 		receiveEmail.setSentEmpId(emailDetail.getSendId());
 		receiveEmail.setEmailContentId(emailContent.getEmailContentId());
+		
 		row += emailRepository.insertReceiveEmail(receiveEmail);
 		
 		//emailDetail에 파일이 존재한다면 MultipartFile배열에 담긴 파일들을 파일VO에 담아 DB에 저장한다

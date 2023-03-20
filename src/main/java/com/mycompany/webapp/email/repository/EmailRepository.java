@@ -281,5 +281,11 @@ public interface EmailRepository {
 	int updateReceiveDelete(int emailId);
 	int updateSendDelete(int emailId);
 	List<Integer> selectIsDeletedEmail();
+	/**
+	 * 수신자기 있는지 없는지 확인
+	 * @param receiveId
+	 * @return
+	 */
+	int selectReceiver(String receiveId);
 
 }
