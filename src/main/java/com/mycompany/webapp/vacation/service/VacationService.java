@@ -113,7 +113,9 @@ public class VacationService implements IVacationService {
 	public int deleteVacation(Vacation vacation) {
 		log.info("실행");
 		int dayoffBack = vacationRepository.updatedayoff(vacation);
-		int delete = vacationRepository.deleteVacation(vacation);
+		if(dayoffBack == 1) {
+			int delete = vacationRepository.deleteVacation(vacation);
+		}
 		return 2;
 	}
 

@@ -156,7 +156,7 @@
 											traditional: true
 										}).done((data)=> {
 											console.log("성공: "+data);
-											reload();
+											location.href='${pageContext.request.contextPath}/email/trashlist';
 										});
 			                    	}
 			                    	
