@@ -310,6 +310,7 @@ public class EmailController {
 	public String writeTempEmail(@RequestParam int tempEmailId, Model model) {
 		log.info("실행");
 		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
+		log.info(tempEmail);
 		model.addAttribute("tempEmail", tempEmail);
 		return "email/temp";
 	}

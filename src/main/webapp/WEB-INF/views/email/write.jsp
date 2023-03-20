@@ -195,6 +195,8 @@
 					        	<div class="file-list"></div>
 							</div>
 	                	</div>
+	                	
+	                	<input type="hidden" id="emailContentId" value="0">
                 
 		                <div class="row mb-3">
 		                  <div class="col-sm-12">

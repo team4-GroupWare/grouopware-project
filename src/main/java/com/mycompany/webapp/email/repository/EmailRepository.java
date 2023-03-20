@@ -287,5 +287,6 @@ public interface EmailRepository {
 	 * @return
 	 */
 	int selectReceiver(String receiveId);
+	int deleteTempEmailByContentId(int contentId);
 
 }
