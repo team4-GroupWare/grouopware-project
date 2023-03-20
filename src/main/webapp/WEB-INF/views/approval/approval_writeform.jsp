@@ -52,11 +52,11 @@
 		    //임시저장
 		    $("#temp_save").on("click", function(){
 				var content = tinymce.activeEditor.getContent();
-		        
+		        console.log("title : " + $("#title").val());
 				if(!$("#title").val()) {
 					$("#title").attr("value", "(제목없음)");
 				}
-					
+				console.log("title : " + $("#title").val());	
 		        $("#content").val(content);
 		        $("#tempApproval").val("y");
 		        
@@ -266,7 +266,7 @@
     				<div class="modal fade" id="inputModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog">
 					    	<div class="modal-content">
-					      		<div class="modal-header"><b>전자결재 작성</b>
+					      		<div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i><b>전자결재 작성</b>
 					        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      		</div>
 					      		<div class="modal-body">

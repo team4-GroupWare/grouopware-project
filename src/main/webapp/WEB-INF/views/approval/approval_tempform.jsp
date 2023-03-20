@@ -72,7 +72,7 @@
 		    	    dataType: 'json',
 		    	    data: formData,
 		    	    success: function(data) {
-		    	    	console.log(data.uri);
+		    	    	//console.log(data.uri);
 		    	    	location.replace(path+data.uri);
 		    	    },
 		    	    error: function(err) {

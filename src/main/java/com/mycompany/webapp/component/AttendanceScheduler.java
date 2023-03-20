@@ -37,7 +37,7 @@ public class AttendanceScheduler {
 	
 	//오늘을 기준으로 attendance 행 넣어주는 것
 	//플젝 끝나고 지울것
-	@Scheduled(cron = "00 43 02 * * *")
+	//@Scheduled(cron = "00 43 02 * * *")
 	public void addThisWeek() {
 		
 		Date date = new Date();
