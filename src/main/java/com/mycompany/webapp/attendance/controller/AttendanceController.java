@@ -95,13 +95,15 @@ public class AttendanceController {
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMdd");
 		String attDate = simpleDateFormat.format(date);
+		
 		Calendar cal = Calendar.getInstance();
 		int day =  cal.get(Calendar.DAY_OF_WEEK);
 		Holiday holiday = new Holiday();
 		boolean type = holiday.isHoliday(attDate);
 		 if(day == 1 || day == 7 || type) {
-			 return "휴무일입니다.";
+			 return "휴무입니다.";
 		 }
+		
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empId = employee.getEmpId();
 		Attendance attendance = attendanceService.getAttendance(attDate, empId);

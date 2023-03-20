@@ -29,7 +29,6 @@
 			if(receivers == ''){
 				$('#inputName').modal('show');
 			} else {
-				console.log(receivers);
 				var receiverArr = receivers.split(",");
 				console.log(receiverArr);
 				var count = 0;
@@ -269,6 +268,23 @@
 		      </div>
 		      <div class="modal-body">
 		        <p style="margin-bottom:4px">받는 사람의 아이디를 입력해주세요.</p>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- 아이디가 존재하지 않음 -->
+		<div class="modal fade" id="noID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header"><i class="bi bi-exclamation-circle-fill" style="color:tomato;font-size:25px;margin-right:8px"></i> 수신인
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <p style="margin-bottom:4px">해당하는 아이디가 존재하지 않습니다.</p>
 		      </div>
 		      <div class="modal-footer">
 		      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

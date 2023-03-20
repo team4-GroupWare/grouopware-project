@@ -20,16 +20,16 @@ public class AttendanceScheduler {
 	// 23시 59분에 결근으로 학생 추가
 	
 	//18시에 퇴근/결근 넣어주기
-	//@Scheduled(cron = "0 51 18 * * 1-5")
+	//@Scheduled(cron = "59 59 23 * * 1-5")
 	public void addAtt18() {
-		Date date = new Date();
+		//Date date = new Date();
 		
-		/*Calendar c1 = new GregorianCalendar();
-		c1.add(Calendar.DATE, -1); */
+		Calendar c1 = new GregorianCalendar();
+		c1.add(Calendar.DATE, -1); 
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 
-		String today = format.format(date); //c1.getTime()
+		String today = format.format(c1.getTime()); //c1.getTime()
 
 		attendanceService.addEmpAtt(today);
 	}

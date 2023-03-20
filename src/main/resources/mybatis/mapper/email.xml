@@ -773,6 +773,17 @@
                 and (r.is_deleted = 1 and s.is_deleted = 1)
 	
 	</select>
+	
+	<select id="selectReceiver" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from employees
+			where emp_id = #{receiveId}
+		
+		
+		]]>
+	
+	</select>
 
 
 </mapper>
