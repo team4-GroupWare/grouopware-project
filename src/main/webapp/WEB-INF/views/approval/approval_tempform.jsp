@@ -250,7 +250,7 @@
 	              							<div id="approval_line" class="d-flex">
 	              								<c:forEach var="approvalLine" items="${approvalLines}" varStatus="status">
 		              								<div style="background-color:#EDEEF0; width:250px; padding:15px">
-		              									<input type="hidden" name="approvalLine[${status.index}].empId" value="${approvalLine.empId}">
+		              									<input type="hidden" class="approvalLines" name="approvalLine[${status.index}].empId" value="${approvalLine.empId}">
 		              									<span style="font-size:18px; font-weight:bold;">${approvalLine.empName}</span>
 		              									${approvalLine.gradeName}<br>
 														${approvalLine.deptName} / ${approvalLine.teamName}
