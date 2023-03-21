@@ -165,7 +165,7 @@
 											</div>
 										</div>
 										<div class="row mb-4">
-											<div class="col-lg-3 col-md-4 label ">승인 날짜</div>
+											<div class="col-lg-3 col-md-4 label ">결재 날짜</div>
 											<div class="col-lg-9 col-md-8">${approvalDate}</div>
 										</div>
 									</div>
