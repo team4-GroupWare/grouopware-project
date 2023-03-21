@@ -1,6 +1,7 @@
 package com.mycompany.webapp.employee.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -248,6 +249,15 @@ public class EmployeeController {
 		List<Grade> grades = gradeService.getGradeList();
 		model.addAttribute("grades", grades);
 		
+		//시연용 default value
+		Employee employee = new Employee();
+		employee.setEmpId("emp2");
+		employee.setPassword("qwer123!");
+		employee.setName("이예승");
+		employee.setPhone("010-1111-1111");
+		Date sqlDate = Date.valueOf("2000-02-13");
+		employee.setBirth(sqlDate);
+		model.addAttribute("employee", employee);
 		return "employee/register";
 	}
 	/**
