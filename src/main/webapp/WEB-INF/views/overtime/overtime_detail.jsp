@@ -23,12 +23,14 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<%@ include file="/WEB-INF/views/vacation/vacation_sidebar.jsp"%>
 	<!-- Main -->
+	<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yy.MM.dd"/>
 	<script >
 		function confirm (e) {
 			var workTime = ${overtime.workTime};
 			var type = $(e).attr('value');
 			var overtimeId = ${overtime.overtimeId};
 			var workDateDetail ='${workDate}';
+			console.log('${workDate}');
 			var empId = "${overtime.empId}"
 			$.ajax({
 				type: "post",
@@ -197,7 +199,7 @@
 										<div class="row mb-4">
 											<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yyyy.MM.dd"/>
 											<div class="col-lg-3 col-md-4 label">근무날짜</div>
-											<div class="col-lg-9 col-md-8">${workDate}</div>
+											<div id="workDate" class="col-lg-9 col-md-8">${workDate}</div>
 										</div>
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label">근무시간</div>

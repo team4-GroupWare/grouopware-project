@@ -65,7 +65,6 @@ public class AttendanceController {
 					attendance.setIsIn("y");
 					attendance.setIsOut("y");
 				}      
-			
 			}else {
 				if(attendance.getClockOut() == null && !attendance.getStatus().equals("퇴근미처리")) {
 					attendance.setClockOut("-- : -- : --");

@@ -44,7 +44,7 @@
 							data: data[1],
 							backgroundColor: 'rgb(255, 205, 86)',
 							},{
-							  label: '출근',
+							  label: '정상근무',
 							  data: data[0],
 							  backgroundColor: '#4DABF7',
 							},{
