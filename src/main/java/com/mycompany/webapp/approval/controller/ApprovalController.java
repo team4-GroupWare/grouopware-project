@@ -123,7 +123,7 @@ public class ApprovalController {
 	@PostMapping(value="/write", produces="application/json")
 	public Uri writeApproval(@ModelAttribute Approval approval, Model model) {
 		log.info("실행");
-		if(approval.getTitle() == null) {
+		if(approval.getTitle() == null || approval.getTitle().equals("")) {
 			approval.setTitle("(제목없음)");
 		}
 		
@@ -204,6 +204,9 @@ public class ApprovalController {
 	@PostMapping(value="/updateTemp", produces="application/json")
 	public Uri updateTempApproval(@ModelAttribute Approval approval, Model model) {
 		log.info("updateTempApproval실행");
+		if(approval.getTitle() == null || approval.getTitle().equals("")) {
+			approval.setTitle("(제목없음)");
+		}
 		
 		if(approval.getApprovalLine() != null) {
 			for(int i = 0; i < approval.getApprovalLine().size(); i++) {
