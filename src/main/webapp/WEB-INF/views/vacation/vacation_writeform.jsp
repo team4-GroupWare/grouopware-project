@@ -272,7 +272,7 @@
 								<!-- 결재선 선택 -->
 								<div class="row">
 									<div class="col-sm-2 label">
-										<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">결재선 선택</button>
+										<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">결재선선택</button>
 									</div>
 									<div class="col-4">
 										<div id="vacation_line" class="d-flex"></div>
