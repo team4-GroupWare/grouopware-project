@@ -61,13 +61,11 @@
 			}
 			var contentId = $("#emailContentId").val();
 			var tempId = $("#tempEmailId").val();
-			var important = $("#important").val();
-         	if(important == 'on'){
+			var important = false;
+         	if($("#important").is(':checked')){
             	important = true;
-         	} else {
-            	important = false;
-         	}
-         	
+         	} 
+			console.log(important);
          	if(title == '') {
             	title = '제목 없음';
         	}
@@ -76,7 +74,8 @@
 						title : title, 
 						content : content,
 						emailContentId : contentId,
-						tempEmailId : tempId
+						tempEmailId : tempId,
+						important : important
 			}
 			console.log(data);
 			

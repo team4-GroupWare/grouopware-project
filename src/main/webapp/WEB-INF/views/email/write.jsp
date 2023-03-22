@@ -58,11 +58,11 @@
 			var receiveId = $("#receivers").val();
 			console.log(receiveId);
 			var title = $("#title").val();
-			var important = $("#important").val();
-	        important == false;
-	        if(important == 'on'){
-	        	important = true;
-	        } 
+			var important = false;
+         	if($("#important").is(':checked')){
+            	important = true;
+         	} 
+			console.log(important);
 	        if(title == ''){
 	        	title = '제목 없음';
 	        }
