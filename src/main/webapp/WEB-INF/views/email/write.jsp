@@ -58,15 +58,24 @@
 			var receiveId = $("#receivers").val();
 			console.log(receiveId);
 			var title = $("#title").val();
-			if(title == ''){
-				title = '제목 없음';
-			}
-			
-			var data = {receiveId : receiveId, 
-						title : title, 
-						content : content
-			}
-			console.log(data);
+			var important = $("#important").val();
+	        important == false;
+	        if(important == 'on'){
+	        	important = true;
+	        } 
+	        if(title == ''){
+	        	title = '제목 없음';
+	        }
+	        var contentId = $("#emailContentId").val();
+	        var tempId = $("#tempEmailId").val();
+	         
+	        var data = {
+	        	receiveId : receiveId, 
+	            title : title, 
+	            content : content,
+	            emailContentId : contentId,
+	            important : important
+	        }
 			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/email/tempsave",
@@ -79,8 +88,6 @@
 			});
 		}
 	</script>
-	
-	
 	
 </head>
 	<body>

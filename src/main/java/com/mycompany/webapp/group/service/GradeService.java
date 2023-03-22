@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import com.mycompany.webapp.group.model.Grade;
 import com.mycompany.webapp.group.repository.GradeRepository;
 
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 @Service
 public class GradeService implements IGradeService {
 	
@@ -22,14 +19,12 @@ public class GradeService implements IGradeService {
 	 */
 	@Override
 	public List<Grade> getGradeList() {
-		log.info("실행");
 		List<Grade> grades = gradeRepository.selectGrade();
 		return grades;
 	}
 
 	@Override
 	public int getDayOffByGradeId(int gradeId) {
-		log.info("실행");
 		int dayOff = gradeRepository.selectDayOff(gradeId);
 		return dayOff;
 	}

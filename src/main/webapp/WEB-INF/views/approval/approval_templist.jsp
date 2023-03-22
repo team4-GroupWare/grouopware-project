@@ -24,9 +24,6 @@
 		 	color : #97ACFC;
 		}
 		
-		/* .title {
-			text-overflow: ellipsis;
-		} */
 	</style>
 </head>
 
@@ -54,6 +51,8 @@
 		              		</div>
               				<!-- Table with hoverable rows -->
               				<form method="post" id="delete" action="${pageContext.request.contextPath}/approval/delete">
+              					<input type="hidden" id="deleteStatus" name="deleteStatus" value="1">
+
 	              				<table class="table table-hover" style="table-layout:fixed">
 	                				<thead>
 	                  					<tr>
@@ -79,7 +78,8 @@
 	                				<tbody>
 	                					<c:forEach var="approval" items="${approvals}" varStatus="index">
 	                						<tr>
-												<td><input name="approvalId" class="form-check-input" value="${approval.approvalId}" onclick='checkSelectAll()' type="checkbox"></td>						                    <td>${approval.categoryName}</td>
+												<td><input name="approvalId" class="form-check-input" value="${approval.approvalId}" onclick='checkSelectAll()' type="checkbox"></td>						                    
+												<td>${approval.categoryName}</td>
 							                    <td class="title" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><a href="${pageContext.request.contextPath}/approval/tempForm?approvalId=${approval.approvalId}">${approval.title}</a></td>
 							                    <td>${approval.empName} / ${approval.deptName}</td>
 							                    <c:if test="${approval.status eq '대기'}">

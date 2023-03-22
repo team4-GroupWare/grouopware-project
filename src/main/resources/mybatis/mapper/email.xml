@@ -246,7 +246,8 @@
 		select t.temp_email_id as tempEmailId,
 			   t.writer as sentId,
 			   t.temp_date as tempDate,
-			   c.title
+			   c.title,
+			   c.important
 		from temp_email t, email_content c
 		where t.email_content_id = c.email_content_id
 			  and writer = #{empId}
@@ -530,7 +531,8 @@
 			   c.title,
 			   c.content,
 			   t.received_emp_id as receiveId,
-			   c.email_content_id as emailContentId
+			   c.email_content_id as emailContentId,
+			   c.important
 		from temp_email t, email_content c
 		where t.email_content_id = c.email_content_id
 			  and temp_email_id = #{tempEmailId}
@@ -546,12 +548,11 @@
 	</update>
 	
 	<update id="updateEmailContent" parameterType="emailContent">
-	<![CDATA[
-		update email_content
-		set title = #{title}, content = #{content}
-		where email_content_id = #{emailContentId}
+		<![CDATA[
+			update email_content
+			set title = #{title}, content = #{content}, important=#{important}
+			where email_content_id = #{emailContentId}
 		]]>
-	
 	</update>
 	
 	<select id="selectReceiveEmailCountByEmailId" parameterType="int" resultType="int">
@@ -574,7 +575,8 @@
 		select t.temp_email_id as tempEmailId,
 			   t.writer as sentId,
 			   t.temp_date as tempDate,
-			   c.title
+			   c.title,
+			   c.important
 		from temp_email t, email_content c, employees e
 		where t.email_content_id = c.email_content_id 
 			  and t.writer = e.emp_Id
