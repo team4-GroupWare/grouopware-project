@@ -162,7 +162,7 @@
 		   FROM DUAL
 		CONNECT BY LEVEL <![CDATA[<]]>= (TO_DATE(#{date.endDateStr}, 'YYYY-MM-DD') - TO_DATE(#{date.startDateStr}, 'YYYY-MM-DD')) + 1
 		)
-		on(a.attendance_date = DT and a.emp_id = #{empId})
+		on(to_char(a.attendance_date,'YYYY-MM-DD') = to_char(DT,'YYYY-MM-DD') and a.emp_id = #{empId})
 		
 		when matched then
 		<if test="vacationCategoryId == 2  or vacationCategoryId == 3">
@@ -194,7 +194,7 @@
 	
 	<!-- 반려시 연차 다시 돌려주기 -->
 	<update id="updatedayoff" parameterType="map">
-		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="int" order="BEFORE">
+		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="double" order="BEFORE">
             SELECT
 			count_day as "countDay"
 			FROM vacation

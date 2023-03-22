@@ -53,8 +53,12 @@ public class VacationController {
 	 * @return : 부서List, 공휴일List를 model저장 -> vacation_writeform.jsp
 	 */
 	@GetMapping("/vacation/write")
-	public String write(Model model) {
+	public String write(Model model,HttpSession session) {
 		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empIdorigine = employee.getEmpId();
+		Employee updateEmp = employeeService.getEmp(empIdorigine);
+		session.setAttribute("loginEmployee", updateEmp);
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
 		for (Department dept : departments) {

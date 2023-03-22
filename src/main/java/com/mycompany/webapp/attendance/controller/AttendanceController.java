@@ -24,6 +24,7 @@ import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
 import com.mycompany.webapp.attendance.service.IAttendanceService;
 import com.mycompany.webapp.component.Holiday;
 import com.mycompany.webapp.employee.model.Employee;
+import com.mycompany.webapp.employee.service.IEmployeeService;
 import com.mycompany.webapp.overtime.service.IOvertimeService;
 
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +37,9 @@ public class AttendanceController {
 	
 	@Autowired
 	IOvertimeService overtimeService;
+	
+	@Autowired
+	IEmployeeService employeeService;
 	
 	/**
 	 * 사원의 오늘날짜 출근기록 조회
@@ -165,8 +169,12 @@ public class AttendanceController {
 	 * @return : attendance/attendance_info
 	 */
 	@GetMapping("/attendance/info")
-	public String attendanceInfo(Model model) {
+	public String attendanceInfo(Model model,HttpSession session) {
 		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empIdorigine = employee.getEmpId();
+		Employee updateEmp = employeeService.getEmp(empIdorigine);
+		session.setAttribute("loginEmployee", updateEmp);
 		Holiday h = new Holiday();
 		List<String> list = h.getCurMonday();
 		String title = list.get(0) + " ~ " + list.get(6);
