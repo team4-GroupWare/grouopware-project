@@ -61,7 +61,17 @@
 			}
 			var contentId = $("#emailContentId").val();
 			var tempId = $("#tempEmailId").val();
-			
+			var important = $("#important").val();
+         	if(important == 'on'){
+            	important = true;
+         	} else {
+            	important = false;
+         	}
+         	
+         	if(title == '') {
+            	title = '제목 없음';
+        	}
+
 			var data = {receiveId : receiveId, 
 						title : title, 
 						content : content,
@@ -170,7 +180,13 @@
 		                  <legend class="col-form-label col-sm-2 pt-0">중요 메일</legend>
 		                  <div class="col-sm-10">
 		                    <div class="form-check">
-		                      <input class="form-check-input" type="checkbox" name="important" id="important">
+							  <c:if test="${tempEmail.important eq true}">
+	                          	<input class="form-check-input" type="checkbox" name="important" id="important" checked>
+	                          </c:if>
+                            
+	                          <c:if test="${tempEmail.important eq false}">
+	                          	<input class="form-check-input" type="checkbox" name="important" id="important">
+	                          </c:if>
 		                      <label class="form-check-label" for="gridCheck1">
 		                      	중요
 		                      </label>
@@ -190,6 +206,7 @@
 		                
 		                <div class="row mb-3">
 		                  <div class="col-sm-12">
+		                  	 <input type="hidden" id="content" name="content">
 		                     <textarea id="tinymce-editor">
 		                		${tempEmail.content}
 		              		</textarea><!-- End TinyMCE Editor -->

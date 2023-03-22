@@ -169,7 +169,7 @@ public class AttendanceController {
 	 * @return : attendance/attendance_info
 	 */
 	@GetMapping("/attendance/info")
-	public String attendanceInfo(Model model,HttpSession session) {
+	public String attendanceInfo(Model model, HttpSession session) {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empIdorigine = employee.getEmpId();
@@ -179,7 +179,6 @@ public class AttendanceController {
 		List<String> list = h.getCurMonday();
 		String title = list.get(0) + " ~ " + list.get(6);
 		model.addAttribute("title", title);
-		
 		return "attendance/attendance_info";
 	}
 	

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -88,7 +87,6 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public String login(Employee employee, Model model, HttpSession session) {
 		log.info("실행");
-		log.info(employee);
 		EmployeeService.LoginResult loginResult = employeeService.login(employee);
 		if(loginResult == EmployeeService.LoginResult.WRONG_ID) {
 			//사용자의 아이디가 없는 경우
@@ -107,7 +105,6 @@ public class EmployeeController {
 			return "redirect:/employee/change";
 		}
 		Employee dbEmployee = employeeService.getEmp(employee.getEmpId());
-		log.info(dbEmployee);
 		session.setAttribute("loginEmployee", dbEmployee);
 		
 		return "redirect:/";
@@ -368,11 +365,6 @@ public class EmployeeController {
 			
 		}
 		
-//		if(originEmployee.getProfileData() !=null && !employee.getProfileContentType().equals("delete")) {
-//			//프로필 사진을 바꾸지 않거나 사진을 삭제함
-//			employee.setProfileContentType(originEmployee.getProfileContentType());
-//			employee.setProfileData(originEmployee.getProfileData());
-//		}
 		employeeService.updateEmployee(employee);
 		employee = employeeService.getEmp(employee.getEmpId());
 		session.setAttribute("loginEmployee", employee);
@@ -431,7 +423,5 @@ public class EmployeeController {
 		}
 		
 	}
-	
-	
 	
 }

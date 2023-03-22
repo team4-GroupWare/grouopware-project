@@ -97,6 +97,7 @@
               					<input type="hidden" id="lastSeq" name="lastSeq" value='${fn:length(approvalLines)}'>
               					<input type="hidden" id="approvalCategoryId" name="approvalCategoryId" value="${approval.approvalCategoryId}">
               					<input type="hidden" id="empId" name="empId" value="${approval.empId}">
+			              		<input type="hidden" id="deleteStatus" name="deleteStatus" value="2">
 			              		<div class="row mb-3">
 			              			<c:if test="${myTurn == 1}">
 				                  		<div class="col-sm-12 d-flex justify-content-end">

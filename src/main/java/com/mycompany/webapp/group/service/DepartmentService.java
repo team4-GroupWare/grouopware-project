@@ -8,20 +8,14 @@ import org.springframework.stereotype.Service;
 import com.mycompany.webapp.group.model.Department;
 import com.mycompany.webapp.group.repository.DepartmentRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class DepartmentService implements IDepartmentService {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 
-	/**
-	 * 
-	 */
+	//부서 목록
 	@Override
 	public List<Department> getDeptList() {
-		log.info("실행");
 		List<Department> departments = departmentRepository.selectDeptList();
 		return departments;
 	}
