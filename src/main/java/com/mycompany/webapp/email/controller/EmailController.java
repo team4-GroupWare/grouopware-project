@@ -14,11 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,7 +59,6 @@ public class EmailController {
 		int emailRow = emailService.getReceiveEmailRows(employee.getEmpId());
 		Pager pager = new Pager(10, 5, emailRow, pageNo);
 		List<EmailList> emailList = emailService.getReceiveEmailList(pager, employee.getEmpId());
-		log.info("list 개수: "+emailList.size());
 		model.addAttribute("emailList", emailList);
 		model.addAttribute("pager", pager);
 		String type = "receive";
@@ -273,13 +270,12 @@ public class EmailController {
 		JSONObject jsonObject = new JSONObject();
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		emailDetail.setSendId(employee.getEmpId());
-		log.info(emailDetail);
 		String[] receiverArr = emailDetail.getReceiveId().split(",");
 		for(String receiveEmpId : receiverArr) {
 			String receiver = receiveEmpId.trim();
 			emailDetail.setReceiveId(receiver);
 			try {
-				int row = emailService.writeEmail(emailDetail);
+				emailService.writeEmail(emailDetail);
 			} catch (Exception e) {
 				jsonObject.put("result", "fail");
 				return "fail";
@@ -310,7 +306,6 @@ public class EmailController {
 	public String writeTempEmail(@RequestParam int tempEmailId, Model model) {
 		log.info("실행");
 		TempEmail tempEmail = emailService.getTempEmailDetail(tempEmailId);
-		log.info(tempEmail);
 		model.addAttribute("tempEmail", tempEmail);
 		return "email/temp";
 	}
@@ -328,7 +323,7 @@ public class EmailController {
 		log.info("실행");
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		tempEmail.setSentId(employee.getEmpId());
-		int row = emailService.tempSaveEmail(tempEmail);
+		emailService.tempSaveEmail(tempEmail);
 		String result = "성공";
 		return result;
 	}
@@ -344,10 +339,9 @@ public class EmailController {
 	@PostMapping(value="/tempupdate", produces="application/text; charset=UTF-8")
 	public String tempUpdate(@RequestBody TempEmail tempEmail, HttpSession session) {
 		log.info("실행");
-		log.info(tempEmail);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		tempEmail.setSentId(employee.getEmpId());
-		int row = emailService.updateTempEmail(tempEmail);
+		emailService.updateTempEmail(tempEmail);
 		String result = "성공";
 		return result;
 	}
@@ -405,10 +399,9 @@ public class EmailController {
 	public String throwAwayEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
 		log.info("실행");
 		String result = "fail";
-		int row = 0;
 		for(String emailIdStr : checkArr) {
 			int emailId = Integer.parseInt(emailIdStr);
-			row = emailService.throwAwayEmail(emailId, type);
+			emailService.throwAwayEmail(emailId, type);
 			result = "success";
 		}
 		return result;
@@ -425,10 +418,9 @@ public class EmailController {
 	public String deleteEmail(@RequestParam(value="checkArr") String[] checkArr, @RequestParam(value="type")String type) {
 		log.info("실행");
 		String result = "fail";
-		int row = 0;
 		for(String emailIdStr : checkArr) {
 			int emailId = Integer.parseInt(emailIdStr);
-			row = emailService.deleteEmail(emailId, type);
+			emailService.deleteEmail(emailId, type);
 			result = "success";
 		}
 		return result;
@@ -444,10 +436,9 @@ public class EmailController {
 	public String restoreEmail(@RequestParam(value="checkArr") String[] checkArr) {
 		log.info("실행");
 		String result = "fail";
-		int row = 0;
 		for(String emailIdStr : checkArr) {
 			int emailId = Integer.parseInt(emailIdStr);
-			row = emailService.restoreEmail(emailId);
+			emailService.restoreEmail(emailId);
 			result = "success";
 		}
 		return result;
@@ -492,7 +483,7 @@ public class EmailController {
 	public String deleteDetail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
 		log.info("실행");
 		String type = "trash";
-		int row = emailService.deleteEmail(emailId, type);
+		emailService.deleteEmail(emailId, type);
 		return getTrashEmail(model, session, 1);
 	}
 	
@@ -509,7 +500,7 @@ public class EmailController {
 	public String trashEmail(@RequestParam("emailId") int emailId, @RequestParam("type") String type, Model model, HttpSession session) {
 		log.info("실행");
 		String result="";
-		int row = emailService.throwAwayEmail(emailId, type);
+		emailService.throwAwayEmail(emailId, type);
 		return result;
 	}
 	
@@ -523,7 +514,7 @@ public class EmailController {
 	@GetMapping("/restoreEmail")
 	public String restoremail(@RequestParam int emailId, Model model, HttpSession session) {
 		log.info("실행");
-		int row = emailService.restoreEmail(emailId);
+		emailService.restoreEmail(emailId);
 		return getTrashEmail(model, session, 1);
 	}
 
@@ -537,7 +528,7 @@ public class EmailController {
 	@GetMapping("/cancelEmail")
 	public String cancelEmail(@RequestParam("emailId") int emailId, Model model, HttpSession session) {
 		log.info("실행");
-		int row = emailService.cancelEmail(emailId);
+		emailService.cancelEmail(emailId);
 		return getSendEmail(model, session, 1);
 	}
 	
@@ -552,7 +543,6 @@ public class EmailController {
 		log.info("실행");
 		EmailFile emailFile = emailService.getFile(emailFileId);
 		final HttpHeaders headers = new HttpHeaders();
-		log.info(emailFile.getEmailFileContentType());
 		String[] mtypes = emailFile.getEmailFileContentType().split("/");
 		headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 		headers.setContentLength(emailFile.getEmailFileSize());
@@ -617,7 +607,5 @@ public class EmailController {
 		
 		return "email/emaillistpart";
 	}
-	
-	
 	
 }

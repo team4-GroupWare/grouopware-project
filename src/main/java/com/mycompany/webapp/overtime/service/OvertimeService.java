@@ -10,10 +10,7 @@ import com.mycompany.webapp.component.Pager;
 import com.mycompany.webapp.overtime.model.Overtime;
 import com.mycompany.webapp.overtime.repository.OvertimeRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class OvertimeService implements IOvertimeService {
 	@Autowired
 	private OvertimeRepository overtimeRepository;
@@ -25,13 +22,11 @@ public class OvertimeService implements IOvertimeService {
 
 	@Override
 	public int getOvertimeRow(String empId, String status, int type) {
-		log.info("실행");
 		return overtimeRepository.selectOvertimeRow(empId, status, type);
 	}
 
 	@Override
 	public List<Overtime> getOvertimeList(Pager pager, String empId, String status, int type) {
-		log.info("실행");
 		return overtimeRepository.selectOvertimeList(pager, empId, status, type);
 	}
 
@@ -48,16 +43,13 @@ public class OvertimeService implements IOvertimeService {
 	@Transactional
 	@Override
 	public int overTimeProcess(Overtime overtime) {
-		log.info("실행");
 		
 		if (overtime.getType().equals("y")) {
 			//attendance 행 업데이트
 			overtimeRepository.updateOvertimeAtt(overtime);
-			log.info("실행");
 		}
 		// overtime 행 업데이트
 		overtimeRepository.updateOvertime(overtime);
-		log.info("실행");
 
 		return 2;
 	}
@@ -69,9 +61,8 @@ public class OvertimeService implements IOvertimeService {
 
 	@Override
 	public int deleteOvertime(Overtime overtime) {
-		log.info("실행");
 		int delete = overtimeRepository.deleteOvertime(overtime);
-		return 1;
+		return delete;
 	}
 
 }

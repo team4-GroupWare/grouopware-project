@@ -94,7 +94,7 @@ public class NoticeBoardController {
 	 */
 	@PostMapping("/write")
 	public String writeBoard(NoticeBoard noticeBoard) {
-		log.info("=실행");
+		log.info("실행");
 		
 		try{
 			noticeBoard.setNoticeContent(noticeBoard.getNoticeContent().replace("\r\n", "<br>"));
@@ -131,20 +131,11 @@ public class NoticeBoardController {
 			boardCateId = 1;
 		}
 		
-		//공지사항 목록
+		//게시글 목록
 		List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
-		
-		log.info("===========boardList===================");
-		log.info(boardList);
-		//사내경조사 목록
-		//List<NoticeBoard> boardList = noticeBoardService.selectMainBoardListByCategory(boardCateId);
 		
 		model.addAttribute("boardCateId", boardCateId);
 		model.addAttribute("boardList", boardList);
-		
-		/*if(boardCateId == 1) {
-			return "board/main_boardlist";
-		}*/
 		
 		return "board/main_boardlist";
 	}
