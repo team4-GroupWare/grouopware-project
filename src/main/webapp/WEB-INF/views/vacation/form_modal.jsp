@@ -86,16 +86,17 @@ input[type=radio]:checked+label{
 				</div> -->
 				
 				<!-- 순서 변경 버튼 -->
-				<div class="row d-flex justify-content-start">
+				<div class="row d-flex justify-content-start mb-2">
 					<div class="col-12" >
-						<form name="emp-search">
+					<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="40px" height="40px">
+						<!-- <form name="emp-search">
 							<div class="input-group me-auto p-2" style="width:200px">
 			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
 			               		<button class="input-group-text" id="basic-addon1" onclick="searchEmp()">
 				              		<i class="bi bi-search"></i>
 				             	</button>
 			              	</div>
-						</form>
+						</form> -->
 					</div>
 				</div>
 				
