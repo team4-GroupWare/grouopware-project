@@ -53,8 +53,13 @@ public class VacationController {
 	 * @return : 부서List, 공휴일List를 model저장 -> vacation_writeform.jsp
 	 */
 	@GetMapping("/vacation/write")
-	public String write(Model model) {
+	public String write(Model model, HttpSession session) {
 		log.info("실행");
+		Employee employee = (Employee) session.getAttribute("loginEmployee");
+		String empIdorigine = employee.getEmpId();
+		Employee updateEmp = employeeService.getEmp(empIdorigine);
+		session.setAttribute("loginEmployee", updateEmp);
+		
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
 		for (Department dept : departments) {
@@ -90,7 +95,6 @@ public class VacationController {
 	public Vacation getEmployeeInfo(@RequestParam String empId, Model model) {
 		log.info("실행");
 		Vacation vacation = vacationService.getApprovalEmp(empId);
-		log.info(vacation);
 		return vacation;
 	}
 
@@ -171,7 +175,6 @@ public class VacationController {
 		model.addAttribute("vacationDetail", vacationDetail);
 		model.addAttribute("vacationDate", vacationDate);
 		model.addAttribute("vacation", vacation);
-		log.info(vacationDetail);
 		return "vacation/vacation_detail";
 	}
 	
@@ -186,13 +189,9 @@ public class VacationController {
 		log.info("실행");
 		List<VacationDate> vacationDate = vacationService.getVacationDate(vacation.getVacationId());
 		vacation.setVacationDate(vacationDate);
-		int vacationProcess = vacationService.processVacation(vacation);
-		Employee employee = (Employee) session.getAttribute("loginEmployee");
-		String empIdorigine = employee.getEmpId();
-		Employee updateEmp = employeeService.getEmp(empIdorigine);
-		session.setAttribute("loginEmployee", updateEmp);
+		vacationService.processVacation(vacation);
+		
 		return "success";
-
 	}
 	
 	/**
@@ -204,13 +203,12 @@ public class VacationController {
 	@ResponseBody
 	public String delete(@ModelAttribute Vacation vacation, HttpSession session) {
 		log.info("실행");
-		int vacationDelete = vacationService.deleteVacation(vacation);
+		vacationService.deleteVacation(vacation);
 		Employee employee = (Employee) session.getAttribute("loginEmployee");
 		String empIdorigine = employee.getEmpId();
 		Employee updateEmp = employeeService.getEmp(empIdorigine);
 		session.setAttribute("loginEmployee", updateEmp);
 		return "success";
-
 	}
 
 }

@@ -7,9 +7,6 @@ import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
 
 public interface IAttendanceService {
 	
-	/*스케쥴러 테스트 */
-	void ThisWeek(String date);
-	
 	/*사원의 오늘날짜 출근기록 조회*/
 	Attendance getAttendance(String attDate, String empId);
 	

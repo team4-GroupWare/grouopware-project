@@ -223,7 +223,7 @@ public class ApprovalController {
 		} else if (approval.getTempApproval().equals("n")) { //제출일 경우 내 문서함 목록으로 return
 			uri.setUri("/approval/mylist");
 		}
-		//log.info("uri : " + uri);
+		
 		return uri;
 	}
 	
@@ -493,13 +493,17 @@ public class ApprovalController {
 	 * @return
 	 */
 	@PostMapping("/delete")
-	public String deleteApproval(@RequestParam("approvalId") int[] approvalId) {
-		log.info("deleteApproval실행");
+	public String deleteApproval(@RequestParam("approvalId") int[] approvalId, @RequestParam("deleteStatus") int deleteStatus) {
+		log.info("실행");
+		
 		for(int i = 0; i < approvalId.length; i++) {
-			log.info("approvalId : " + approvalId[i]);
 			approvalService.deleteApproval(approvalId[i]);
 		}
 		
-		return "redirect:/approval/templist";
+		if(deleteStatus == 1) {
+			return "redirect:/approval/templist";
+		} 
+		
+		return "redirect:/approval/mylist";
 	}
 }

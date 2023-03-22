@@ -9,12 +9,6 @@ import com.mycompany.webapp.attendance.model.AttendanceMonthStatus;
 
 public interface AttendanceRepository {
 	
-	/*스케쥴러 테스트*/
-	public List<String> selectTotalEmpId();
-	
-	/*스케쥴러 테스트*/
-	public void insertThisWeek(@Param("clock_in")String clock_in,@Param("clock_out")String clock_out,@Param("empId")String empId, @Param("date")String date);
-	
 	/*사원의 오늘날짜 출근기록 조회*/
 	public Attendance selectAttendance(@Param("attDate")String attDate, @Param("empId")String empId);
 	

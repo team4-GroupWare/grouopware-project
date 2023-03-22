@@ -15,10 +15,7 @@ import com.mycompany.webapp.employee.model.EmployeePassword;
 import com.mycompany.webapp.employee.repository.EmployeeRepository;
 import com.mycompany.webapp.exception.AlreadyExistingIdException;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class EmployeeService implements IEmployeeService {
 	/**
 	 * 
@@ -41,10 +38,8 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public LoginResult login(Employee employee) {
-		log.info("실행");
 		//비밀번호 복호화
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		log.info(employee.getEmpId());
 		Employee dbEmployee = getEmployee(employee.getEmpId());
 		if(dbEmployee == null) {
 			return LoginResult.WRONG_ID;
@@ -94,7 +89,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int getTotalRows() {
-		log.info("실행");
 		return employeeRepository.selectEmpCount();
 	}
 
@@ -105,7 +99,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public Employee getEmp(String empId) {
-		log.info("실행");
 		return employeeRepository.selectByEmpId(empId);
 	}
 
@@ -116,7 +109,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int getSearchEmpRows(Employee employee, int deptId) {
-		log.info("실행");
 		return employeeRepository.selectSearchEmpCount(employee, deptId);
 	}
 
@@ -139,7 +131,6 @@ public class EmployeeService implements IEmployeeService {
 	 * @return int : 반영된 행수
 	 */
 	public int register(Employee employee) throws Exception{
-		log.info("실행");
 		int checkId = employeeRepository.selectEmpId(employee.getEmpId());
 		//아이디가 이미 존재하면 예외를 발생시킴
 		if(checkId==1) {
@@ -160,7 +151,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public List<Employee> getSearchEmpList(Pager pager, Employee employee, int deptId) {
-		log.info("실행");
 		return employeeRepository.selectSearchEmpList(pager, employee, deptId);
 	}
 	
@@ -173,7 +163,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public List<Employee> getEmpList(int teamid) {
-		log.info("실행");
 		return employeeRepository.selectEmpListByTeamId(teamid);
 	}
 
@@ -184,7 +173,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int updateEmployee(Employee employee) {
-		log.info("실행");
 		//업데이트한 파일이 존재하면 파일을 VO에 다시 저장함
 		if(employee.getAttachFiles() != null && employee.getAttachFiles().getSize() != 0) {
 			try {
@@ -204,7 +192,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int checkPassword(String oldPwd, String empId) {
-		log.info("실행");
 		int row = 0;
 		
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -225,8 +212,6 @@ public class EmployeeService implements IEmployeeService {
 	 */
 	@Override
 	public int updatePassword(String newPwd, String empId) {
-		log.info("실행");
-		
 		//패스워드 암호화
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		String pwd = pe.encode(newPwd);

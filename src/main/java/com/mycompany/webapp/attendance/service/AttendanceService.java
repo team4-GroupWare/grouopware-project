@@ -18,20 +18,6 @@ public class AttendanceService implements IAttendanceService {
 	@Autowired
 	AttendanceRepository attendanceRepository;
 	
-	/*	스케쥴러 테스트 */
-	@Override
-	public void ThisWeek(String date) {
-		log.info("실행");
-		// 1-1 전체 사원의 아이디 조회
-		List<String> totalEmpId = attendanceRepository.selectTotalEmpId();
-		log.info(totalEmpId);
-		String clock_in = date+" 08:43:00";
-		String clock_out = date+" 18:47:00";
-		for(String empId : totalEmpId ) {
-			attendanceRepository.insertThisWeek(clock_in,clock_out,empId,date);
-		}
-	}
-	
 	/*사원의 오늘날짜 출근기록 조회*/
 	@Override
 	public Attendance getAttendance(String attDate, String empId) {
@@ -73,13 +59,11 @@ public class AttendanceService implements IAttendanceService {
 	public void addEmpAtt(String today) {
 		//결근
 		List<String> empAbsent = attendanceRepository.selectEmpAbsent(today);
-		log.info(empAbsent);
 		for (String absentEmp : empAbsent) {
 			attendanceRepository.insertEmpAbsent(absentEmp, today);
 		}
 		//퇴근미처리
 		List<Integer> outEmp = attendanceRepository.selectNotOutEmp(today);
-		log.info(outEmp);
 		for (int empNotOut : outEmp) {
 			attendanceRepository.updateEmpOut(empNotOut);
 		}
