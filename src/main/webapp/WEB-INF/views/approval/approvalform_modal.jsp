@@ -186,14 +186,14 @@ input[type=radio]:checked+label{
 				<!-- 순서 변경 버튼 -->
 				<div class="row d-flex justify-content-end">
 					<div class="col-9" >
-						<form name="emp-search">
+						<!-- <form name="emp-search">
 							<div class="input-group me-auto p-2" style="width:200px">
 			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
 			               		<button class="input-group-text" id="basic-addon1" onclick="searchEmp()">
 				              		<i class="bi bi-search"></i>
 				             	</button>
 			              	</div>
-						</form>
+						</form> -->
 					</div>
 					<div class="col-3">
 						<div class="d-flex justify-content-end mt-2" style="vertical-align:bottom">
