@@ -267,8 +267,6 @@ public class AttendanceController {
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("YY.MM");
 		String month = simpleDateFormat2.format(date);
 		AttendanceMonthStatus attendanceMonthStatus = attendanceService.getMonthCount(empId,month);
-		log.info(attendanceMonthStatus);
-		
 		
 		return attendanceMonthStatus;
 	}
