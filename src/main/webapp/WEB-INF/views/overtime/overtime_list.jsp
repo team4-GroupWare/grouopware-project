@@ -55,11 +55,11 @@
 				<div class="card" style="height: 620px">
 					<div class="card-body px-5">
 						<h5 class="card-title"></h5>
-						<table class="table table-hover" style="text-align: center">
+						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th scope="col" width="10%">번호</th>
-									<th scope="col" width="20%">기안자</th>
+									<th scope="col" width="20%" >문서번호</th>
+									<th scope="col" width="10%">기안자</th>
 									<th scope="col" width="20%">근무신청 시간</th>
 									<th scope="col" width="20%">근무신청 날짜</th>
 									<th scope="col" width="10%">
@@ -109,7 +109,7 @@
 							<tbody>
 								<c:forEach var="overtime" items="${overtimeList}" varStatus="index">
 									<tr onClick='location.href="${pageContext.request.contextPath}/overtime/detail?overtimeId=${overtime.overtimeId}&pageNo=${pager.pageNo}&status=${status}"'>
-										<td>${overtime.overtimeId}</td>
+										<td>OV-${20230000+overtime.overtimeId}</td>
 										<td>${overtime.empName}</td>
 										<td>${overtime.workTime}시간</td>
 										<fmt:formatDate var="workDate" value="${overtime.workDate}" pattern="yyyy.MM.dd"/>
