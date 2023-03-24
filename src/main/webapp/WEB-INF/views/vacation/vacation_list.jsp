@@ -63,11 +63,12 @@
               				<table class="table table-hover">
                 				<thead>
                   					<tr>
-					                    <th scope="col" width="20%">문서번호</th>
-					                    <th scope="col" width="20%">휴가종류</th>
+					                    <th scope="col" width="17%">문서번호</th>
+					                    <th scope="col" width="13%">기안자</th>
+					                    <th scope="col" width="15%">휴가종류</th>
 					                    <th scope="col" width="30%">기간</th>
 					                    <th scope="col" width="15%">일수</th>
-					                    <th scope="col" width="15%">
+					                    <th scope="col" width="10%">
 						                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
 						                    <c:if test="${not empty status}">
 						                    <span class="d-none d-md-block dropdown-toggle ps-2">${status}</span>
@@ -115,6 +116,7 @@
                 						<tr onClick='location.href="${pageContext.request.contextPath}/vacation/detail?vacationId=${vacation.vacationId}&pageNo=${pager.pageNo}&status=${status}"'>
 						                    <%-- <th scope="row">${index.count}</th> --%>
 						                    <td>VA-${20230000+vacation.vacationId}</td>
+						                    <td>${vacation.name}</td>
 						                    <td>${vacation.vacationName}</td>
 						                    <td>${vacation.startDate} ~ ${vacation.endDate}</td>
 						                    <td>${vacation.countDay}</td>
