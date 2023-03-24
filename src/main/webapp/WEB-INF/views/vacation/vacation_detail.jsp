@@ -217,7 +217,7 @@
 									<div class="col">
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label">직급</div>
-											<div class="col-lg-9 col-md-8">차장</div>
+											<div class="col-lg-9 col-md-8">${vacationDetail.gradeName}</div>
 										</div>
 										<div class="row mb-4">
 											<div class="col-lg-3 col-md-4 label">팀</div>
