@@ -27,9 +27,7 @@
 			if(receivers == ''){
 				$('#inputName').modal('show');
 			} else {
-				console.log(receivers);
 				var receiverArr = receivers.split(",");
-				console.log(receiverArr);
 				var count = 0;
 				for(var i=0; i<receiverArr.length;i++){
 					if(receiverArr[i].trim()==empId){
@@ -38,7 +36,6 @@
 				}
 				
 				if(count != 1){
-					console.log("성공");
 					var title = $("#title").val();
 					if(title == ''){
 						$("#title").val('제목 없음');
@@ -65,7 +62,6 @@
          	if($("#important").is(':checked')){
             	important = true;
          	} 
-			console.log(important);
          	if(title == '') {
             	title = '제목 없음';
         	}
@@ -77,7 +73,6 @@
 						tempEmailId : tempId,
 						important : important
 			}
-			console.log(data);
 			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/email/tempupdate",
@@ -85,7 +80,6 @@
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"
 			}).done((data)=> {
-				console.log("성공: "+data);
 				$("#tempModal").modal('show');	
 			});
 		}

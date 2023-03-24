@@ -85,7 +85,6 @@ input[type=radio]:checked+label{
 					</div>
 				</div> -->
 				
-				<!--  -->
 				<%-- <div class="row d-flex justify-content-start mb-2">
 					<div class="col-12 mb-0" >
 					<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="50px" height="50px">
