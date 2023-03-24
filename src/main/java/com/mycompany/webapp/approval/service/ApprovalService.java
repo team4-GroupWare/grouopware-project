@@ -17,8 +17,6 @@ import com.mycompany.webapp.approval.repository.ApprovalRepository;
 import com.mycompany.webapp.component.MultipartFileResolver;
 import com.mycompany.webapp.component.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
 public class ApprovalService implements IApprovalService {
 	

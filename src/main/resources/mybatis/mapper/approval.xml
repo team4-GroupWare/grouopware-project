@@ -77,10 +77,8 @@
 			content = #{content}, 
 			approval_category_id = #{approvalCategoryId}, 
 			status = default, 
-			temp_approval = #{tempApproval}
-			<if test="refEmpId != null">
-				, ref_emp_id = #{refEmpId}
-			</if>
+			temp_approval = #{tempApproval},
+			ref_emp_id = #{refEmpId, jdbcType=VARCHAR}
 		WHERE emp_id = #{empId}
 			AND approval_id = #{approvalId}
 	</update>

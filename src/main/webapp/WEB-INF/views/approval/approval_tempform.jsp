@@ -57,6 +57,12 @@
 				if(!$("#title").val()) {
 					$("#title").attr("value", "(제목없음)");
 				}
+				console.log(document.getElementById("refEmpId").value);
+				
+				console.log("refEmpId : " );
+				/* if(!$("#refEmpId").val()) {
+					$("#refEmpId").attr("value", null);
+				} */
 					
 		        $("#content").val(content);
 		        $("#tempApproval").val("y");
@@ -69,14 +75,15 @@
 		    	$.ajax({
 		    	    method: 'POST',
 		    	    url: path+'/approval/updateTemp',
-		    	    dataType: 'json',
 		    	    data: formData,
 		    	    success: function(data) {
-		    	    	//console.log(data.uri);
-		    	    	location.replace(path+data.uri);
+		    	    	location.replace(path+"/approval/templist");
 		    	    },
-		    	    error: function(err) {
-		    	    	alert(err);
+		    	    error: function(request, statust, error) {
+		    	    	//alert(err);
+	    	    	 	console.log("code: " + request.status);
+	    	         	console.log("message: " + request.responseText);
+	    	         	console.log("error: " + error);
 		    	        return;
 		    	    }
 		    	})
@@ -117,9 +124,7 @@
 		    	    processData: false,
 		    		cache: false,
 		    	    success: function(data) {
-		    	    	let url = path + data.uri;
-		    	    	console.log("url: " + url)
-		    	    	location.replace(url);
+		    	    	location.replace(path+"/approval/mylist");
 		    	    },
 		    	    error: function (xhr, desc, err) {
 		    	        console.log('에러');
@@ -210,26 +215,29 @@
                 				<div class="row mb-3">
                   					<label for="inputText" class="col-sm-2 col-form-label"><b>참조</b></label>
 	                  				<div class="col-sm-10 d-flex">
-	                  					<c:if test="${manager != null}">
-	                  						<input id = "reference" type="text" style="width:260px;" class="form-control" value="${manager.name} (${manager.gradeName})" readonly>
-	                  						<input id = "refEmpId" type="hidden" name="refEmpId" style="width:260px;" class="form-control" value="${manager.empId}">
-	                  						<input id= "checkBoxId" class="form-check-input my-auto" type="checkbox" style="margin-left: 10px;" checked>
+	                  					<c:if test="${refEmp != null}">
+	                  						<input id="reference" type="text" style="width:260px;" class="form-control" value="[경영지원실]${manager.empId}  ${manager.name} (${manager.gradeName})" readonly>
+	                  						<input id="refEmpId" type="hidden" name="refEmpId" style="width:260px;" class="form-control" value="${manager.empId}">
+	                  						<input class="checkBoxId form-check-input my-auto" type="checkbox" style="margin-left: 10px;" checked>
 	                  					</c:if>
-	                  					<c:if test="${manager == null}">
-	                  						<input id = "reference" type="text" style="width:260px;" class="form-control" value="" disabled>
+	                  					<c:if test="${refEmp == null}">
+	                  						<input id="reference" type="text" style="width:260px;" class="form-control" value="" disabled>
+	                  						<input class="checkBoxId form-check-input my-auto" type="checkbox" style="margin-left: 10px;">
 	                  					</c:if>
 	                  				</div>
 	                  				<script>
 	                  				$(document).ready(function(){
-	                  				    $("#checkBoxId").change(function() {
-	                  				        if($("#checkBoxId").is(":checked")){
+	                  				    $(".checkBoxId").change(function() {
+	                  				        if($(".checkBoxId").is(":checked")){
 	                  				          	$('#reference').attr("disabled", false); 
 	                  				        	$('#refEmpId').attr("disabled", false); 
-	                  				        	$('#reference').attr("value", "${manager.name} (${manager.gradeName})"); 
+	                  				        	$('#reference').attr("value", "[경영지원실] ${manager.name} (${manager.gradeName})");
+	                  				        	$('#refEmpId').attr("value", "${manager.empId}"); 
 	                  				        } else {
 	                  				          	$('#reference').attr("value", ""); 
 	                  				          	$('#reference').attr("disabled", true); 
-	                  				          	$('#refEmpId').attr("disabled", true); 
+	                  				          	$('#refEmpId').attr("disabled", true);
+	                  				            $('#refEmpId').attr("value", null); 
 	                  				        }
 	                  				    });
 	                  				});
