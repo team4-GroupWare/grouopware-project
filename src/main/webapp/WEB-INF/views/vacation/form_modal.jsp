@@ -69,7 +69,7 @@ input[type=radio]:checked+label{
 			</div>
 			
 			<!-- Body -->
-			<div class="modal-body">
+			<div class="modal-body py-0">
 				
 				<!-- search -->
 				<!-- <div class="row mb-3">
@@ -85,10 +85,9 @@ input[type=radio]:checked+label{
 					</div>
 				</div> -->
 				
-				<!-- 순서 변경 버튼 -->
-				<div class="row d-flex justify-content-start mb-2">
-					<div class="col-12" >
-						<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="40px" height="40px">
+				<%-- <div class="row d-flex justify-content-start mb-2">
+					<div class="col-12 mb-0" >
+					<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="50px" height="50px">
 						<!-- <form name="emp-search">
 							<div class="input-group me-auto p-2" style="width:200px">
 			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
@@ -98,11 +97,13 @@ input[type=radio]:checked+label{
 			              	</div>
 						</form> -->
 					</div>
-				</div>
+				</div> --%>
 				
 				<!-- Content -->
 				<div class="row m-0">
-					
+					<div class="col-12 p-0 my-1" >
+						<img src="${pageContext.request.contextPath}/resources/assets/img/logo2.png" style="opacity: 0.3" width="60px" height="30px">
+					</div>
 					<!-- 부서 선택 -->
 					<div class="col-6 border m-0" style="min-height:300px">
 						<div class="mt-3" id="box">
