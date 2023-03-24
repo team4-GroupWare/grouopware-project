@@ -58,8 +58,8 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th scope="col" width="20%" >문서번호</th>
-									<th scope="col" width="10%">기안자</th>
+									<th scope="col" width="17%" >문서번호</th>
+									<th scope="col" width="13%">기안자</th>
 									<th scope="col" width="20%">근무신청 시간</th>
 									<th scope="col" width="20%">근무신청 날짜</th>
 									<th scope="col" width="10%">
