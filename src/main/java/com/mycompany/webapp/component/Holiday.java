@@ -18,7 +18,13 @@ import com.ibm.icu.util.ChineseCalendar;
 @Component
 public class Holiday {
 	public static void main(String[] args) {
+		/*Holiday holiday = new Holiday();
+		List<String> holifomat = new ArrayList<>();
+		List<String> holi = holiday.holidayArray("2023");
+		System.out.println(holi.toString());
 		
+		holiday.SolarDays("2023", "0101");
+		System.out.println();*/
 	}
 	
 	public List<String> holidaysFomat(String yyyy){
@@ -123,7 +129,7 @@ public class Holiday {
 
 		// 음력 휴일
 
-		String prev_seol = LocalDate.parse(Lunar2Solar(yyyy + "0101"), formatter).minusDays(1).toString().replace("-",
+		/*String prev_seol = LocalDate.parse(Lunar2Solar(yyyy + "0101"), formatter).minusDays(1).toString().replace("-",
 				"");
 		holidaysSet.add(yyyy + prev_seol.substring(4)); // ""
 		holidaysSet.add(yyyy + SolarDays(yyyy, "0101")); // 설날
@@ -132,7 +138,7 @@ public class Holiday {
 		holidaysSet.add(yyyy + SolarDays(yyyy, "0814")); // ""
 		holidaysSet.add(yyyy + SolarDays(yyyy, "0815")); // 추석
 		holidaysSet.add(yyyy + SolarDays(yyyy, "0816")); // ""
-
+*/
 		try {
 			// 어린이날 대체공휴일 검사 : 어린이날은 토요일, 일요일인 경우 그 다음 평일을 대체공유일로 지정
 

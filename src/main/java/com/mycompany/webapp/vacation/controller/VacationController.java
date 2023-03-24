@@ -59,7 +59,6 @@ public class VacationController {
 		String empIdorigine = employee.getEmpId();
 		Employee updateEmp = employeeService.getEmp(empIdorigine);
 		session.setAttribute("loginEmployee", updateEmp);
-		
 		List<List<Team>> teams = new ArrayList<>();
 		List<Department> departments = departmentService.getDeptList();
 		for (Department dept : departments) {

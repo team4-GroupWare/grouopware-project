@@ -175,12 +175,10 @@ public class AttendanceController {
 		String empIdorigine = employee.getEmpId();
 		Employee updateEmp = employeeService.getEmp(empIdorigine);
 		session.setAttribute("loginEmployee", updateEmp);
-		
 		Holiday h = new Holiday();
 		List<String> list = h.getCurMonday();
 		String title = list.get(0) + " ~ " + list.get(6);
 		model.addAttribute("title", title);
-		
 		return "attendance/attendance_info";
 	}
 	
@@ -269,8 +267,6 @@ public class AttendanceController {
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("YY.MM");
 		String month = simpleDateFormat2.format(date);
 		AttendanceMonthStatus attendanceMonthStatus = attendanceService.getMonthCount(empId,month);
-		log.info(attendanceMonthStatus);
-		
 		
 		return attendanceMonthStatus;
 	}

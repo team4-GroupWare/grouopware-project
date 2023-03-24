@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+ 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
     	<property name="exceptionMappings">
         	<props>
             	<prop key="java.lang.RuntimeException">
@@ -16,5 +16,5 @@
          	</props>
       	</property>
       	<property name="defaultErrorView" value="error/runtime"/>
-   	</bean> -->
+   	</bean>
 </beans>

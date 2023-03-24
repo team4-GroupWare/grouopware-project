@@ -194,7 +194,7 @@
 	
 	<!-- 반려시 연차 다시 돌려주기 -->
 	<update id="updatedayoff" parameterType="map">
-		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="int" order="BEFORE">
+		<selectKey keyColumn="count_day" keyProperty="countDay" resultType="double" order="BEFORE">
             SELECT
 			count_day as "countDay"
 			FROM vacation

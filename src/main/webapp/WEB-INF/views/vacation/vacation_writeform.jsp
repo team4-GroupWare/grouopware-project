@@ -79,6 +79,7 @@
 							<form class="profile-overview " method="post" id="vacation_form" action="${pageContext.request.contextPath}/vacation/write">
 								<input type="hidden" id="empId" name="empId" value="${loginEmployee.empId}">
 								<script>
+								
 								$(function (){
 									$('input[type=radio][name=vacationType]').on('click', function() {
 										var chkValue = $('input[type=radio][name=vacationType]:checked').val();

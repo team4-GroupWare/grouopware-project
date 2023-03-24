@@ -186,6 +186,7 @@ input[type=radio]:checked+label{
 				<!-- 순서 변경 버튼 -->
 				<div class="row d-flex justify-content-end">
 					<div class="col-9" >
+						<img src="${pageContext.request.contextPath}/resources/assets/img/exaint_logo.png" width="60px" height="60px">
 						<!-- <form name="emp-search">
 							<div class="input-group me-auto p-2" style="width:200px">
 			               		<input name="keyword" type="text" class="form-control" placeholder="이름으로 검색" aria-label="이름으로 검색" aria-describedby="basic-addon1" value=""></input>
