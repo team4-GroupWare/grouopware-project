@@ -91,6 +91,7 @@
 			c.vacation_name as "vacationName",
 	        t.team_name as "teamName",
 	        d.dept_name as "deptName",
+	        g.grade_name as "gradeName",
 	        approval_emp_id as "approvalEmpId",
 	        e.name as "name",
 	        status,
@@ -99,11 +100,12 @@
 	        content, 
 	        count_day as "countDay",
 	        vacation_approval_date as "vacationApprovalDate"
-		from vacation v , employees e, departments d, teams t,vacation_category c
+		from vacation v , employees e, departments d, teams t,vacation_category c, grade g
 		where vacation_id = #{vacationId}
 	        and e.emp_id = v.emp_id 
 	        and e.dept_id= d.dept_id 
-	        and e.team_id= t.team_id 
+	        and e.team_id= t.team_id
+	        and e.grade_id= g.grade_id 
 	        and c.vacation_category_id= v.vacation_category_id
 	</select>
 	
