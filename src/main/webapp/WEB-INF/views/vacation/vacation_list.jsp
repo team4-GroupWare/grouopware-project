@@ -63,7 +63,7 @@
               				<table class="table table-hover">
                 				<thead>
                   					<tr>
-					                    <th scope="col" width="20%">번호</th>
+					                    <th scope="col" width="20%">문서번호</th>
 					                    <th scope="col" width="20%">휴가종류</th>
 					                    <th scope="col" width="30%">기간</th>
 					                    <th scope="col" width="15%">일수</th>
@@ -114,7 +114,7 @@
                 					<c:forEach var="vacation" items="${vacationList}" varStatus="index">
                 						<tr onClick='location.href="${pageContext.request.contextPath}/vacation/detail?vacationId=${vacation.vacationId}&pageNo=${pager.pageNo}&status=${status}"'>
 						                    <%-- <th scope="row">${index.count}</th> --%>
-						                    <td>${vacation.vacationId}</td>
+						                    <td>VA-${20230000+vacation.vacationId}</td>
 						                    <td>${vacation.vacationName}</td>
 						                    <td>${vacation.startDate} ~ ${vacation.endDate}</td>
 						                    <td>${vacation.countDay}</td>
