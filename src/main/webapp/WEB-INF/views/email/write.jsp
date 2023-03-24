@@ -10,7 +10,6 @@
 		//에디터
 		$(function(){
 			var form= $('#origincontent').val();
-			console.log(form);
 		    tinymce.init({
 		        // Select the element(s) to add TinyMCE to using any valid CSS selector
 		        selector: "#tinymce-editor",
@@ -30,7 +29,6 @@
 				$('#inputName').modal('show');
 			} else {
 				var receiverArr = receivers.split(",");
-				console.log(receiverArr);
 				var count = 0;
 				for(var i=0; i<receiverArr.length;i++){
 					if(receiverArr[i].trim()==empId){
@@ -39,7 +37,6 @@
 				}
 				
 				if(count != 1){
-					console.log("성공");
 					var title = $("#title").val();
 					if(title == ''){
 						$("#title").val('제목 없음');
@@ -56,13 +53,11 @@
 			var content = tinymce.get("tinymce-editor").getContent();
 			$("#content").attr('value', content);
 			var receiveId = $("#receivers").val();
-			console.log(receiveId);
 			var title = $("#title").val();
-			var important = $("#important").val();
-	        important == false;
-	        if(important == 'on'){
-	        	important = true;
-	        } 
+			var important = false;
+         	if($("#important").is(':checked')){
+            	important = true;
+         	} 
 	        if(title == ''){
 	        	title = '제목 없음';
 	        }
@@ -83,7 +78,6 @@
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8"
 			}).done((data)=> {
-				console.log("성공: "+data);
 				$("#tempModal").modal('show');	
 			});
 		}
