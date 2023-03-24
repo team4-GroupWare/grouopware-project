@@ -15,7 +15,7 @@ public class AttendanceScheduler {
 	IAttendanceService attendanceService;
 
 	// 23시 59분에 퇴근/결근 넣어주기
-	@Scheduled(cron = "30 59 23 * * 1-5")
+	//@Scheduled(cron = "30 59 23 * * 1-5")
 	public void addAtt18() {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
