@@ -214,7 +214,7 @@
 	                  				        if($("#checkBoxId").is(":checked")){
 	                  				          	$('#reference').attr("disabled", false); 
 	                  				        	$('#refEmpId').attr("disabled", false); 
-	                  				        	$('#reference').attr("value", "${manager.name} (${manager.gradeName})"); 
+	                  				        	$('#reference').attr("value", "[경영지원실] ${manager.name} (${manager.gradeName})"); 
 	                  				        } else {
 	                  				          	$('#reference').attr("value", ""); 
 	                  				          	$('#reference').attr("disabled", true); 

@@ -160,6 +160,7 @@ public class ApprovalController {
 		List<ApprovalCategory> approval_category = approvalService.getCategory();
 		
 		List<List<Team>> teams = new ArrayList<>();
+		
 		//부서 목록
 		List<Department> departments = departmentService.getDeptList();
 		
@@ -178,11 +179,18 @@ public class ApprovalController {
 		
 		//임시저장한 내용 불러오기
 		Approval approval = approvalService.getApprovalDetail(approvalId);
+		
 		//카테고리 양식
 		String form = approvalService.getApprovalForm(approval.getApprovalCategoryId());
+		
 		//전자결재 결재선 리스트
 		List<ApprovalLine> approvalLines = approvalService.getApprovalLineList(approvalId);
 		
+		//참조자
+		if(approval.getRefEmpId() != null) {
+			Employee refEmp = employeeService.getEmp(approval.getRefEmpId());
+			model.addAttribute("refEmp", refEmp);
+		}
 		model.addAttribute("departments", departments);
 		model.addAttribute("teams", teams);
 		model.addAttribute("approval_category", approval_category);
